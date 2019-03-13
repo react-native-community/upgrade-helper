@@ -1,4 +1,4 @@
-https://pvinis.github.io/purge-web/
+https://pvinis.github.io/purge-web
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
