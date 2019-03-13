@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/purge-web/static/media/logo.5d5d9eef.svg"
   },
   {
-    "revision": "85c8db77f251d4a487d1bbf32d71034a",
+    "revision": "75db34bc72b6cc78c9b43de4d3f79ad5",
     "url": "/purge-web/index.html"
   }
 ];
