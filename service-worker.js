@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/pvinis/purge-web/precache-manifest.6ec7a99314939888bec6a71f53bdcdd7.js"
+  "/pvinis/purge-web/precache-manifest.a8d8413cbb436a3f53937ecea9ddee4f.js"
 );
 
 workbox.clientsClaim();
