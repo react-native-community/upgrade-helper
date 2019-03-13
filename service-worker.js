@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/pvinis/purge-web/precache-manifest.a8d8413cbb436a3f53937ecea9ddee4f.js"
+  "/purge-web/precache-manifest.8f5b02e74e381b57f2883bc373674898.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/pvinis/purge-web/index.html", {
+workbox.routing.registerNavigationRoute("/purge-web/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
