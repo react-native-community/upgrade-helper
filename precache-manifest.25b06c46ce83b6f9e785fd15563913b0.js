@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "8398edce3f13c407b2b3",
+    "revision": "51a3eb59fee17d442d4b",
     "url": "/purge-web/static/css/main.2378bba7.chunk.css"
   },
   {
-    "revision": "8398edce3f13c407b2b3",
-    "url": "/purge-web/static/js/main.7718ddbd.chunk.js"
+    "revision": "51a3eb59fee17d442d4b",
+    "url": "/purge-web/static/js/main.cbc4d560.chunk.js"
   },
   {
     "revision": "ac0e094b698dbf50cc58",
@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/purge-web/static/media/logo.5d5d9eef.svg"
   },
   {
-    "revision": "c8ecf812db917995cbf10facf3e8fd03",
+    "revision": "07c6323ef8fbb7b8c1a4d2dc0286deed",
     "url": "/purge-web/index.html"
   }
 ];
