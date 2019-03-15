@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native-web'
 import * as R from 'ramda'
 import GitHubButton from 'react-github-btn'
+import semver from 'semver'
 
 import logo from './logo.svg';
 import './App.css';
@@ -53,9 +54,17 @@ class App extends Component {
               items={this.state.versions}
               onValueChange={toVersion => this.setState({ toVersion })}
             />
-            <a href={`https://github.com/pvinis/rn-diff-purge/compare/version/${this.state.fromVersion}..version/${this.state.toVersion}`}>
-              <Text>Diff here</Text>
-            </a>
+            <View style={{ flexDirection: 'column' }}>
+              <a href={`https://github.com/pvinis/rn-diff-purge/compare/version/${this.state.fromVersion}..version/${this.state.toVersion}`}>
+                <Text>Diff here</Text>
+              </a>
+              <a href={`https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/diffs/${this.state.fromVersion}..${this.state.toVersion}.diff`}>
+                <Text>Patch here</Text>
+              </a>
+              {(this.state.fromVersion !== '' && semver.gt(this.state.fromVersion, this.state.toVersion)) && (
+                <Text style={{ color: 'orange' }}>You are downgrading. Are you sure?</Text>
+              )}
+            </View>
           </View>
         </header>
       </div>
