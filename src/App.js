@@ -55,13 +55,13 @@ const App = (props) => {
           />
           <View style={{ flexDirection: 'column' }}>
             <ReactGA.OutboundLink
-              eventLabel={`diff-${fromVersion}-${toVersion}`}
+              eventLabel={`diff--${fromVersion}--${toVersion}`}
               to={`https://github.com/pvinis/rn-diff-purge/compare/version/${fromVersion}..version/${toVersion}`}
             >
               <Text>Diff here</Text>
             </ReactGA.OutboundLink>
             <ReactGA.OutboundLink
-              eventLabel={`patch-${fromVersion}-${toVersion}`}
+              eventLabel={`patch--${fromVersion}--${toVersion}`}
               to={`https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/diffs/${fromVersion}..${toVersion}.diff`}
             >
               <Text>Patch here</Text>
