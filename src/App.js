@@ -3,6 +3,7 @@ import { View } from 'react-native-web'
 import * as R from 'ramda'
 import GitHubButton from 'react-github-btn'
 import semver from 'semver'
+import ReactGA from 'react-ga'
 
 import logo from './logo.svg';
 import './App.css';
@@ -29,6 +30,11 @@ const App = (props) => {
 
   useEffect(() => { fetchVersions() }, [])
 
+  useEffect(() => {
+    ReactGA.initialize('UA-136307971-1')
+    ReactGA.pageview('/')
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">
@@ -48,12 +54,18 @@ const App = (props) => {
             onValueChange={setToVersion}
           />
           <View style={{ flexDirection: 'column' }}>
-            <a href={`https://github.com/pvinis/rn-diff-purge/compare/version/${fromVersion}..version/${toVersion}`}>
+            <ReactGA.OutboundLink
+              eventLabel={`diff-${fromVersion}-${toVersion}`}
+              to={`https://github.com/pvinis/rn-diff-purge/compare/version/${fromVersion}..version/${toVersion}`}
+            >
               <Text>Diff here</Text>
-            </a>
-            <a href={`https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/diffs/${fromVersion}..${toVersion}.diff`}>
+            </ReactGA.OutboundLink>
+            <ReactGA.OutboundLink
+              eventLabel={`patch-${fromVersion}-${toVersion}`}
+              to={`https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/diffs/${fromVersion}..${toVersion}.diff`}
+            >
               <Text>Patch here</Text>
-            </a>
+            </ReactGA.OutboundLink>
             {(toVersion !== '' && semver.gt(fromVersion, toVersion)) && (
               <Text style={{ color: 'orange' }}>You are downgrading. Are you sure?</Text>
             )}
