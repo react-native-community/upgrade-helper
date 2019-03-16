@@ -38,7 +38,7 @@ const App = (props) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Text h1>Upgrade your React Native app 🎉</Text>
+        <Text h1>Upgrade your React Native apps 🎉</Text>
         <View style={{ flexDirection: 'row' }}>
           <Text>powered by </Text><Text bold>rn-diff-purge</Text>
         </View>
