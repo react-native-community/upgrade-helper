@@ -7,8 +7,8 @@ import { Text } from '.'
 
 const Dropdown = (props) => {
   return (
-    <View>
-      <Text>{props.title}</Text>
+    <View style={{ alignItems: 'flex-start', paddingHorizontal: '8px' }}>
+      <Text style={{ fontStyle: 'italic' }}>{props.title}</Text>
       <Picker {...props}>
         {R.map(item => (
           <Picker.Item key={item} label={item} value={item} />

@@ -8,7 +8,7 @@ import ReactGA from 'react-ga'
 import logo from './logo.svg';
 import './App.css';
 
-import { Text, Dropdown } from './components'
+import { Text, Dropdown, Link } from './components'
 
 
 const App = (props) => {
@@ -24,7 +24,7 @@ const App = (props) => {
     const text = await response.text()
     const versions = R.split('\n')(text)
     setVersions(versions)
-    setFromVersion(versions[0])
+    setFromVersion(versions[1])
     setToVersion(versions[0])
   }
 
@@ -38,38 +38,58 @@ const App = (props) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Text>RN diff PURGE</Text>
+        <Text h1>Upgrade your React Native app 🎉</Text>
+        <View style={{ flexDirection: 'row' }}>
+          <Text>powered by </Text><Text bold>rn-diff-purge</Text>
+        </View>
         <img src={logo} className="App-logo" alt="logo" />
         <GitHubButton href="https://github.com/pvinis/rn-diff-purge" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star pvinis/rn-diff-purge on GitHub">Star</GitHubButton>
-        <Text>Get diff:</Text>
-        <View style={{ flexDirection: 'row' }}>
+        <Text h2>Get diff</Text>
+        <View style={{ flexDirection: 'row', marginVertical: '30px', }}>
           <Dropdown
-            title='From'
+            title='From:'
             items={versions}
+            selectedValue={fromVersion}
             onValueChange={setFromVersion}
           />
           <Dropdown
-            title='To'
+            title='To:'
             items={versions}
+            selectedValue={toVersion}
             onValueChange={setToVersion}
           />
-          <View style={{ flexDirection: 'column' }}>
-            <ReactGA.OutboundLink
-              eventLabel={`diff--${fromVersion}--${toVersion}`}
-              to={`https://github.com/pvinis/rn-diff-purge/compare/version/${fromVersion}..version/${toVersion}`}
-            >
-              <Text>Diff here</Text>
-            </ReactGA.OutboundLink>
-            <ReactGA.OutboundLink
-              eventLabel={`patch--${fromVersion}--${toVersion}`}
-              to={`https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/diffs/${fromVersion}..${toVersion}.diff`}
-            >
-              <Text>Patch here</Text>
-            </ReactGA.OutboundLink>
-            {(toVersion !== '' && semver.gt(fromVersion, toVersion)) && (
-              <Text style={{ color: 'orange' }}>You are downgrading. Are you sure?</Text>
-            )}
-          </View>
+        </View>
+        <View style={{ flexDirection: 'column' }}>
+          {(toVersion !== '' && semver.gt(fromVersion, toVersion)) && (
+            <Text style={{ color: 'orange' }}>You are downgrading. Are you sure?</Text>
+          )}
+          <Link margins
+            to={`https://github.com/pvinis/rn-diff-purge/compare/version/${fromVersion}..version/${toVersion}`}
+            eventLabel={`diff--${fromVersion}--${toVersion}`}
+          >
+            Diff here
+          </Link>
+          <Link margins
+            to={`https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/diffs/${fromVersion}..${toVersion}.diff`}
+            eventLabel={`patch--${fromVersion}--${toVersion}`}
+          >
+            Patch here
+          </Link>
+        </View>
+        <View style={{ position: 'absolute', bottom: '8px', right: '8px', flexDirection: 'row' }}>
+          <Text>made with 💜 by </Text>
+          <Text bold>pvinis</Text>
+          <Text> (</Text>
+          <Link
+            to='https://github.com/pvinis'
+            eventLabel='github--pvinis'
+          >github</Link>
+          <Text>, </Text>
+          <Link
+            to='https://twitter.com/pvinis'
+            eventLabel='twitter--pvinis'
+          >twitter</Link>
+          <Text>)</Text>
         </View>
       </header>
     </div>
