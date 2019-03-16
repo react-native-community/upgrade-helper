@@ -16,18 +16,18 @@ const App = (props) => {
   const [fromVersion, setFromVersion] = useState('')
   const [toVersion, setToVersion] = useState('')
 
-  useEffect(
-    async () => {
-      const response = await fetch(
-        'https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/VERSIONS'
-      )
-      const text = response.text()
-      const versions = R.split('\n')(text)
-      setVersions(versions)
-      setFromVersion(versions[0])
-      setToVersion(versions[0])
-    }
-  )
+  const fetchVersions = async () => {
+    const response = await fetch(
+      'https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/VERSIONS'
+    )
+    const text = await response.text()
+    const versions = R.split('\n')(text)
+    setVersions(versions)
+    setFromVersion(versions[0])
+    setToVersion(versions[0])
+  }
+
+  useEffect(() => { fetchVersions() }, [])
 
   return (
     <div className="App">
@@ -54,7 +54,7 @@ const App = (props) => {
             <a href={`https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/diffs/${fromVersion}..${toVersion}.diff`}>
               <Text>Patch here</Text>
             </a>
-            {(fromVersion !== '' && semver.gt(fromVersion, toVersion)) && (
+            {(toVersion !== '' && semver.gt(fromVersion, toVersion)) && (
               <Text style={{ color: 'orange' }}>You are downgrading. Are you sure?</Text>
             )}
           </View>
