@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "license": "MIT",
   "dependencies": {
-    "eslint": "^5.15.3",
     "ramda": "^0.26.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
