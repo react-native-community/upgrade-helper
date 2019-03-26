@@ -1,21 +1,20 @@
-import React from 'react'
-import { Picker, View } from 'react-native-web'
-import * as R from 'ramda'
+import React from "react";
+import { Picker, View } from "react-native-web";
+import * as R from "ramda";
 
-import Text from '../Text'
+import Text from "../Text";
 
-
-const Dropdown = (props) => {
+const Dropdown = props => {
   return (
-    <View style={{ alignItems: 'flex-start', paddingHorizontal: '8px' }}>
-      <Text style={{ fontStyle: 'italic' }}>{props.title}</Text>
+    <View style={{ alignItems: "flex-start", paddingHorizontal: "8px" }}>
+      <Text style={{ fontStyle: "italic" }}>{props.title}</Text>
       <Picker {...props}>
-        {R.map(item => (
-          <Picker.Item key={item} label={item} value={item} />
-        ))(props.items)}
+        {R.map(item => <Picker.Item key={item} label={item} value={item} />)(
+          props.items
+        )}
       </Picker>
     </View>
-  )
-}
+  );
+};
 
-export default Dropdown
+export default Dropdown;
