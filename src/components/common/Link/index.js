@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native-web'
 import ReactGA from 'react-ga'
 
-import { Text } from '.'
+import Text from '../Text'
 
 
 const Link = (props) => {

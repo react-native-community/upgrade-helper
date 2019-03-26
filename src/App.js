@@ -8,7 +8,7 @@ import ReactGA from 'react-ga'
 import logo from './logo.svg';
 import './App.css';
 
-import { Text, Dropdown, Link } from './components'
+import { Text, Dropdown, Link } from './components/common'
 
 
 const App = (props) => {

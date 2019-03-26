@@ -2,7 +2,7 @@ import React from 'react'
 import { Picker, View } from 'react-native-web'
 import * as R from 'ramda'
 
-import { Text } from '.'
+import Text from '../Text'
 
 
 const Dropdown = (props) => {
