@@ -21,15 +21,6 @@
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build"
   },
-  "eslintConfig": {
-    "extends": "react-app",
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "jsx-a11y/accessible-emoji": 0
-    }
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
