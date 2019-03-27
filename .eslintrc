@@ -1,0 +1,7 @@
+{
+  "extends": "react-app",
+  "plugins": ["prettier"],
+  "rules": {
+    "jsx-a11y/accessible-emoji": 0
+  }
+}
