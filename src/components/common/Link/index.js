@@ -1,9 +1,9 @@
-import React from "react";
-import { View } from "react-native-web";
-import ReactGA from "react-ga";
+import React from 'react';
+import { View } from 'react-native-web';
+import ReactGA from 'react-ga';
 
-import styles from "./styles";
-import Text from "../Text";
+import styles from './styles';
+import Text from '../Text';
 
 const Link = props => {
   const { margins } = props;

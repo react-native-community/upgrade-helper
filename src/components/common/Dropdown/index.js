@@ -1,9 +1,9 @@
-import React from "react";
-import { Picker, View } from "react-native-web";
-import * as R from "ramda";
+import React from 'react';
+import { Picker, View } from 'react-native-web';
+import * as R from 'ramda';
 
-import styles from "./styles";
-import Text from "../Text";
+import styles from './styles';
+import Text from '../Text';
 
 const Dropdown = props => {
   return (

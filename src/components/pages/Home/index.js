@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { View } from "react-native-web";
-import * as R from "ramda";
-import GitHubButton from "react-github-btn";
-import semver from "semver";
-import ReactGA from "react-ga";
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native-web';
+import * as R from 'ramda';
+import GitHubButton from 'react-github-btn';
+import semver from 'semver';
+import ReactGA from 'react-ga';
 
-import logo from "../../../logo.svg";
-import "./styles.css";
+import logo from '../../../logo.svg';
+import './styles.css';
 
-import { Text, Dropdown, Link } from "../../common";
+import { Text, Dropdown, Link } from '../../common';
 
 const Home = props => {
   const [versions, setVersions] = useState([]);
-  const [fromVersion, setFromVersion] = useState("");
-  const [toVersion, setToVersion] = useState("");
+  const [fromVersion, setFromVersion] = useState('');
+  const [toVersion, setToVersion] = useState('');
 
   const fetchVersions = async () => {
     const response = await fetch(
-      "https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/VERSIONS"
+      'https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/VERSIONS'
     );
     const text = await response.text();
-    const versions = R.split("\n")(text);
+    const versions = R.split('\n')(text);
     setVersions(versions);
     setFromVersion(versions[1]);
     setToVersion(versions[0]);
@@ -31,15 +31,15 @@ const Home = props => {
   }, []);
 
   useEffect(() => {
-    ReactGA.initialize("UA-136307971-1");
-    ReactGA.pageview("/");
+    ReactGA.initialize('UA-136307971-1');
+    ReactGA.pageview('/');
   }, []);
 
   return (
     <div className="Home">
       <header className="Home-header">
         <Text h1>Upgrade your React Native apps 🎉</Text>
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: 'row' }}>
           <Text>powered by </Text>
           <Text bold>rn-diff-purge</Text>
         </View>
@@ -54,7 +54,7 @@ const Home = props => {
           Star
         </GitHubButton>
         <Text h2>Get diff</Text>
-        <View style={{ flexDirection: "row", marginVertical: "30px" }}>
+        <View style={{ flexDirection: 'row', marginVertical: '30px' }}>
           <Dropdown
             title="From:"
             items={versions}
@@ -68,9 +68,9 @@ const Home = props => {
             onValueChange={setToVersion}
           />
         </View>
-        <View style={{ flexDirection: "column" }}>
-          {toVersion !== "" && semver.gt(fromVersion, toVersion) && (
-            <Text style={{ color: "orange" }}>
+        <View style={{ flexDirection: 'column' }}>
+          {toVersion !== '' && semver.gt(fromVersion, toVersion) && (
+            <Text style={{ color: 'orange' }}>
               You are downgrading. Are you sure?
             </Text>
           )}
@@ -91,10 +91,10 @@ const Home = props => {
         </View>
         <View
           style={{
-            position: "absolute",
-            bottom: "8px",
-            right: "8px",
-            flexDirection: "row"
+            position: 'absolute',
+            bottom: '8px',
+            right: '8px',
+            flexDirection: 'row'
           }}
         >
           <Text>made with 💜 by </Text>

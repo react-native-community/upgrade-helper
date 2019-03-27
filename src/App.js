@@ -1,5 +1,5 @@
-import React from "react";
-import { Home } from "./components/pages";
+import React from 'react';
+import { Home } from './components/pages';
 
 const App = props => <Home />;
 

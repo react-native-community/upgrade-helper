@@ -1,7 +1,7 @@
-import React from "react";
-import { Text as RText } from "react-native-web";
+import React from 'react';
+import { Text as RText } from 'react-native-web';
 
-import styles from "./styles";
+import styles from './styles';
 
 const Text = props => {
   const { h1, h2, bold, link, style, ...rest } = props;
