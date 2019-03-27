@@ -15,4 +15,4 @@ export default {
     borderBottomWidth: '1px',
     borderBottomStyle: 'solid'
   }
-};
+}

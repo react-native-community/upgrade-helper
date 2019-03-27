@@ -4,4 +4,4 @@ export default {
     paddingHorizontal: '8px'
   },
   title: { fontStyle: 'italic' }
-};
+}

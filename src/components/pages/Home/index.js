@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { View } from 'react-native-web';
-import * as R from 'ramda';
-import GitHubButton from 'react-github-btn';
-import semver from 'semver';
-import ReactGA from 'react-ga';
+import React, { useEffect, useState } from 'react'
+import { View } from 'react-native-web'
+import * as R from 'ramda'
+import GitHubButton from 'react-github-btn'
+import semver from 'semver'
+import ReactGA from 'react-ga'
 
-import logo from '../../../logo.svg';
-import './styles.css';
+import logo from '../../../logo.svg'
+import './styles.css'
 
-import { Text, Dropdown, Link } from '../../common';
+import { Text, Dropdown, Link } from '../../common'
 
 const Home = props => {
-  const [versions, setVersions] = useState([]);
-  const [fromVersion, setFromVersion] = useState('');
-  const [toVersion, setToVersion] = useState('');
+  const [versions, setVersions] = useState([])
+  const [fromVersion, setFromVersion] = useState('')
+  const [toVersion, setToVersion] = useState('')
 
   const fetchVersions = async () => {
     const response = await fetch(
       'https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/VERSIONS'
-    );
-    const text = await response.text();
-    const versions = R.split('\n')(text);
-    setVersions(versions);
-    setFromVersion(versions[1]);
-    setToVersion(versions[0]);
-  };
+    )
+    const text = await response.text()
+    const versions = R.split('\n')(text)
+    setVersions(versions)
+    setFromVersion(versions[1])
+    setToVersion(versions[0])
+  }
 
   useEffect(() => {
-    fetchVersions();
-  }, []);
+    fetchVersions()
+  }, [])
 
   useEffect(() => {
-    ReactGA.initialize('UA-136307971-1');
-    ReactGA.pageview('/');
-  }, []);
+    ReactGA.initialize('UA-136307971-1')
+    ReactGA.pageview('/')
+  }, [])
 
   return (
     <div className="Home">
@@ -111,7 +111,7 @@ const Home = props => {
         </View>
       </header>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
