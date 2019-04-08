@@ -83,7 +83,7 @@ const Home = props => {
           </Link>
           <Link
             margins
-            to={`https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/diffs/${fromRelease}..${toRelease}.diff`}
+            to={`https://raw.githubusercontent.com/pvinis/rn-diff-purge/diffs/diffs/${fromRelease}..${toRelease}.diff`}
             eventLabel={`patch--${fromRelease}--${toRelease}`}
           >
             Patch here
