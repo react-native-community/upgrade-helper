@@ -11,23 +11,23 @@ import './styles.css'
 import { Text, Dropdown, Link } from '../../common'
 
 const Home = props => {
-  const [versions, setVersions] = useState([])
-  const [fromVersion, setFromVersion] = useState('')
-  const [toVersion, setToVersion] = useState('')
+  const [releases, setReleases] = useState([])
+  const [fromRelease, setFromRelease] = useState('')
+  const [toRelease, setToRelease] = useState('')
 
-  const fetchVersions = async () => {
+  const fetchReleases = async () => {
     const response = await fetch(
-      'https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/VERSIONS'
+      'https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/RELEASES'
     )
     const text = await response.text()
-    const versions = R.split('\n')(text)
-    setVersions(versions)
-    setFromVersion(versions[1])
-    setToVersion(versions[0])
+    const releases = R.split('\n')(text)
+    setReleases(releases)
+    setFromRelease(releases[1])
+    setToRelease(releases[0])
   }
 
   useEffect(() => {
-    fetchVersions()
+    fetchReleases()
   }, [])
 
   useEffect(() => {
@@ -57,34 +57,34 @@ const Home = props => {
         <View style={{ flexDirection: 'row', marginVertical: '30px' }}>
           <Dropdown
             title="From:"
-            items={versions}
-            selectedValue={fromVersion}
-            onValueChange={setFromVersion}
+            items={releases}
+            selectedValue={fromRelease}
+            onValueChange={setFromRelease}
           />
           <Dropdown
             title="To:"
-            items={versions}
-            selectedValue={toVersion}
-            onValueChange={setToVersion}
+            items={releases}
+            selectedValue={toRelease}
+            onValueChange={setToRelease}
           />
         </View>
         <View style={{ flexDirection: 'column' }}>
-          {toVersion !== '' && semver.gt(fromVersion, toVersion) && (
+          {toRelease !== '' && semver.gt(fromRelease, toRelease) && (
             <Text style={{ color: 'orange' }}>
               You are downgrading. Are you sure?
             </Text>
           )}
           <Link
             margins
-            to={`https://github.com/pvinis/rn-diff-purge/compare/version/${fromVersion}..version/${toVersion}`}
-            eventLabel={`diff--${fromVersion}--${toVersion}`}
+            to={`https://github.com/pvinis/rn-diff-purge/compare/release/${fromRelease}..release/${toRelease}`}
+            eventLabel={`diff--${fromRelease}--${toRelease}`}
           >
             Diff here
           </Link>
           <Link
             margins
-            to={`https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/diffs/${fromVersion}..${toVersion}.diff`}
-            eventLabel={`patch--${fromVersion}--${toVersion}`}
+            to={`https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/diffs/${fromRelease}..${toRelease}.diff`}
+            eventLabel={`patch--${fromRelease}--${toRelease}`}
           >
             Patch here
           </Link>
