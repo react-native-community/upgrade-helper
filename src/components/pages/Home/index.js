@@ -17,7 +17,7 @@ const Home = props => {
 
   const fetchReleases = async () => {
     const response = await fetch(
-      'https://raw.githubusercontent.com/pvinis/rn-diff-purge/master/RELEASES'
+      'https://raw.githubusercontent.com/react-native-community/rn-diff-purge/master/RELEASES'
     )
     const text = await response.text()
     const releases = R.split('\n')(text)
@@ -45,11 +45,11 @@ const Home = props => {
         </View>
         <img src={logo} className="Home-logo" alt="logo" />
         <GitHubButton
-          href="https://github.com/pvinis/rn-diff-purge"
+          href="https://github.com/react-native-community/rn-diff-purge"
           data-icon="octicon-star"
           data-size="large"
           data-show-count="true"
-          aria-label="Star pvinis/rn-diff-purge on GitHub"
+          aria-label="Star react-native-community/rn-diff-purge on GitHub"
         >
           Star
         </GitHubButton>
@@ -76,14 +76,14 @@ const Home = props => {
           )}
           <Link
             margins
-            to={`https://github.com/pvinis/rn-diff-purge/compare/release/${fromRelease}..release/${toRelease}`}
+            to={`https://github.com/react-native-community/rn-diff-purge/compare/release/${fromRelease}..release/${toRelease}`}
             eventLabel={`diff--${fromRelease}--${toRelease}`}
           >
             Diff here
           </Link>
           <Link
             margins
-            to={`https://raw.githubusercontent.com/pvinis/rn-diff-purge/diffs/diffs/${fromRelease}..${toRelease}.diff`}
+            to={`https://raw.githubusercontent.com/react-native-community/rn-diff-purge/diffs/diffs/${fromRelease}..${toRelease}.diff`}
             eventLabel={`patch--${fromRelease}--${toRelease}`}
           >
             Patch here
