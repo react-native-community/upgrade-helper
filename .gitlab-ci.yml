@@ -1,7 +1,7 @@
 image: node:latest
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
+  key: ${CI_COMMIT_SHA}
   paths:
     - node_modules/
     - build/
