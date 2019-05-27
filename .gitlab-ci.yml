@@ -1,11 +1,18 @@
 image: node:latest
 
+Build:
+  stage: build
+
+  before_script:
+    - yarn install
+  script:
+    - yarn build
+
 Deploy to GH Pages:
   stage: deploy
 
   before_script:
     - git config --global user.email $GH_EMAIL
     - git config --global user.name $GH_NAME
-    - yarn install
   script:
-    - yarn deploy
+    - yarn deploy-ci
