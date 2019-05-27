@@ -1,14 +1,16 @@
 {
-  "main.css": "/purge-web/static/css/main.97a14562.chunk.css",
-  "main.js": "/purge-web/static/js/main.791687ea.chunk.js",
-  "main.js.map": "/purge-web/static/js/main.791687ea.chunk.js.map",
-  "runtime~main.js": "/purge-web/static/js/runtime~main.1fbd653a.js",
-  "runtime~main.js.map": "/purge-web/static/js/runtime~main.1fbd653a.js.map",
-  "static/js/2.ed74cd5e.chunk.js": "/purge-web/static/js/2.ed74cd5e.chunk.js",
-  "static/js/2.ed74cd5e.chunk.js.map": "/purge-web/static/js/2.ed74cd5e.chunk.js.map",
-  "index.html": "/purge-web/index.html",
-  "precache-manifest.3e3fb30b4f71974846ff9dd13d7f8a8b.js": "/purge-web/precache-manifest.3e3fb30b4f71974846ff9dd13d7f8a8b.js",
-  "service-worker.js": "/purge-web/service-worker.js",
-  "static/css/main.97a14562.chunk.css.map": "/purge-web/static/css/main.97a14562.chunk.css.map",
-  "static/media/logo.svg": "/purge-web/static/media/logo.5d5d9eef.svg"
+  "files": {
+    "main.css": "/purge-web/static/css/main.5f88173a.chunk.css",
+    "main.js": "/purge-web/static/js/main.a3b98bd6.chunk.js",
+    "main.js.map": "/purge-web/static/js/main.a3b98bd6.chunk.js.map",
+    "runtime~main.js": "/purge-web/static/js/runtime~main.1fbd653a.js",
+    "runtime~main.js.map": "/purge-web/static/js/runtime~main.1fbd653a.js.map",
+    "static/js/2.a1676396.chunk.js": "/purge-web/static/js/2.a1676396.chunk.js",
+    "static/js/2.a1676396.chunk.js.map": "/purge-web/static/js/2.a1676396.chunk.js.map",
+    "index.html": "/purge-web/index.html",
+    "precache-manifest.10ae7664f1de757ab628469f99d7daf1.js": "/purge-web/precache-manifest.10ae7664f1de757ab628469f99d7daf1.js",
+    "service-worker.js": "/purge-web/service-worker.js",
+    "static/css/main.5f88173a.chunk.css.map": "/purge-web/static/css/main.5f88173a.chunk.css.map",
+    "static/media/logo.svg": "/purge-web/static/media/logo.5d5d9eef.svg"
+  }
 }
