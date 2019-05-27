@@ -29,7 +29,7 @@
   ],
   "devDependencies": {
     "gh-pages": "^2.0.1",
-    "prettier": "1.16.4"
+    "prettier": "1.17.1"
   },
   "homepage": "https://pvinis.github.io/purge-web"
 }
