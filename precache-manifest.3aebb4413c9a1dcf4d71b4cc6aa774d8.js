@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5f9a89501109be53e4f543946a0d5f47",
+    "revision": "2f5d0258b2a594ba7297c77b58ab9e3e",
     "url": "/purge-web/index.html"
   },
   {
-    "revision": "6cf90197522f6b9fd049",
+    "revision": "8e6d50304e764b6159f0",
     "url": "/purge-web/static/css/main.5f88173a.chunk.css"
   },
   {
-    "revision": "7d277834241e389c85ff",
-    "url": "/purge-web/static/js/2.a1676396.chunk.js"
+    "revision": "3793a1da0acd4cc68578",
+    "url": "/purge-web/static/js/2.37a6b9a0.chunk.js"
   },
   {
-    "revision": "6cf90197522f6b9fd049",
-    "url": "/purge-web/static/js/main.a3b98bd6.chunk.js"
+    "revision": "8e6d50304e764b6159f0",
+    "url": "/purge-web/static/js/main.2c1e5747.chunk.js"
   },
   {
     "revision": "ac0e094b698dbf50cc58",
