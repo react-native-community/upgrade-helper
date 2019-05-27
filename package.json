@@ -26,7 +26,7 @@
     "lint": "eslint . --cache --report-unused-disable-directives",
     "eject": "react-scripts eject",
     "predeploy": "yarn build",
-    "deploy": "gh-pages --repo -d build",
+    "deploy": "gh-pages -d build",
     "deploy-ci": "gh-pages --repo https://$GH_TOKEN@github.com/pvinis/purge-web.git -d build"
   },
   "browserslist": {
