@@ -38,7 +38,7 @@ const Home = props => {
   return (
     <div className="Home">
       <header className="Home-header">
-        <Text h1>Upgrade your React Native apps 🎉</Text>
+        <Text h1>Upgrade your React Native apps <span role='img' aria-label='party popper'>🎉</span></Text>
         <View style={{ flexDirection: 'row' }}>
           <Text>powered by </Text>
           <Text bold>rn-diff-purge</Text>
@@ -97,7 +97,7 @@ const Home = props => {
             flexDirection: 'row'
           }}
         >
-          <Text>made with 💜 by </Text>
+          <Text>made with <span role='img' aria-label='love'>💜</span> by </Text>
           <Text bold>pvinis</Text>
           <Text> (</Text>
           <Link to="https://github.com/pvinis" eventLabel="github--pvinis">
