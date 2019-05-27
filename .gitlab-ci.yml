@@ -1,3 +1,5 @@
+image: node
+
 Deploy:
   before_script:
     - yarn install
