@@ -1,6 +1,12 @@
-image: node
+image: node:latest
 
-Deploy:
+Deploy to GH Pages:
+  stage: deploy
+
+  before_install:
+    - git config --global user.email $GH_EMAIL
+    - git config --global user.name $GH_NAME
+
   before_script:
     - yarn install
   script:
