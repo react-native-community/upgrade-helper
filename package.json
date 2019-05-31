@@ -4,6 +4,8 @@
   "homepage": "https://pvinis.github.io/purge-web",
   "license": "MIT",
   "dependencies": {
+    "antd": "^3.19.1",
+    "markdown-to-jsx": "^6.9.4",
     "ramda": "^0.26.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
@@ -11,7 +13,8 @@
     "react-github-btn": "^1.0.0",
     "react-native-web": "^0.11.0",
     "react-scripts": "3.0.1",
-    "semver": "^6.0.0"
+    "semver": "^6.0.0",
+    "styled-components": "^4.2.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
