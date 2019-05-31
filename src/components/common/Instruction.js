@@ -23,12 +23,12 @@ const ToggleInstructionDescriptionButton = styled(Button)`
   &,
   &:hover,
   &:focus {
-    font-size: 13px;
-    color: rgba(27, 31, 35, 0.5);
+    font-size: 9px;
+    color: rgba(27, 31, 35, 0.7);
     width: 23px;
     height: 23px;
     border-color: transparent;
-    margin-left: 10px;
+    margin-left: 5px;
     transform: ${props => (props.isOpened ? 'rotate(180deg)' : 'initial')};
     transition: transform 0.4s ease-in-out;
   }
@@ -57,7 +57,7 @@ const Instruction = ({ title, description, canBeChecked = true }) => {
           <ToggleInstructionDescriptionButton
             type="dashed"
             shape="circle"
-            icon="caret-down"
+            icon="down"
             isOpened={isOpened}
             onClick={() => setIsOpened(!isOpened)}
           />
