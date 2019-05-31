@@ -19,6 +19,16 @@ const InstructionCheckbox = styled(props => (
   margin-left: 0px;
 `
 
+const Description = styled(({ children, ...props }) => (
+  <Markdown {...props} forceBlock>
+    {Array.isArray(children.props.children)
+      ? children.props.children.join('')
+      : children.props.children}
+  </Markdown>
+))`
+  margin-left: 24px;
+`
+
 const ToggleInstructionDescriptionButton = styled(Button)`
   &,
   &:hover,
@@ -64,13 +74,7 @@ const Instruction = ({ title, description, canBeChecked = true }) => {
         )}
       </InstructionCheckbox>
 
-      {description && isOpened && (
-        <Markdown options={{ forceBlock: true }}>
-          {Array.isArray(description.props.children)
-            ? description.props.children.join('')
-            : description.props.children}
-        </Markdown>
-      )}
+      {description && isOpened && <Description>{description}</Description>}
     </Fragment>
   )
 }
