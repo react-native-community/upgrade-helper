@@ -16,6 +16,7 @@ const InstructionCheckbox = styled(props => (
 ))`
   display: block;
   text-decoration: ${props => (props.isDone ? 'line-through' : 'none')};
+  margin-left: 0px;
 `
 
 const ToggleInstructionDescriptionButton = styled(Button)`
@@ -33,12 +34,16 @@ const ToggleInstructionDescriptionButton = styled(Button)`
   }
 `
 
-const Instruction = ({ title, description, canBeChecked }) => {
+const Instruction = ({ title, description, canBeChecked = true }) => {
   const [isDone, setIsDone] = useState(false)
   const [isOpened, setIsOpened] = useState(false)
 
+  const titleContent = Array.isArray(title.props.children)
+    ? title.props.children.join('')
+    : title.props.children
+
   if (!canBeChecked) {
-    return <Markdown forceBlock>{title.props.children}</Markdown>
+    return <Markdown forceBlock>{titleContent}</Markdown>
   }
 
   return (
@@ -46,28 +51,28 @@ const Instruction = ({ title, description, canBeChecked }) => {
       <InstructionCheckbox
         isDone={isDone}
         setIsDone={setIsDone}
-        title={title.props.children}
+        title={titleContent}
       >
-        <ToggleInstructionDescriptionButton
-          type="dashed"
-          shape="circle"
-          icon="caret-down"
-          isOpened={isOpened}
-          onClick={() => setIsOpened(!isOpened)}
-        />
+        {description && (
+          <ToggleInstructionDescriptionButton
+            type="dashed"
+            shape="circle"
+            icon="caret-down"
+            isOpened={isOpened}
+            onClick={() => setIsOpened(!isOpened)}
+          />
+        )}
       </InstructionCheckbox>
 
       {description && isOpened && (
         <Markdown options={{ forceBlock: true }}>
-          {description.props.children}
+          {Array.isArray(description.props.children)
+            ? description.props.children.join('')
+            : description.props.children}
         </Markdown>
       )}
     </Fragment>
   )
-}
-
-Instruction.defaultProps = {
-  canBeChecked: true
 }
 
 export default Instruction

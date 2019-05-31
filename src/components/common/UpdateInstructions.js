@@ -5,7 +5,8 @@ import { Card } from 'antd'
 import {
   INSTRUCTION_PLATFORMS,
   INSTRUCTION_CATEGORIES,
-  RELEASED_VERSIONS
+  RELEASED_VERSIONS,
+  PACKAGE_MANAGERS
 } from '../../utils'
 import Instruction from './Instruction'
 
@@ -32,21 +33,66 @@ const renderAndroidInstructions = ({ version, category, ...props }) =>
 const renderIOSInstructions = ({ version, category }) =>
   renderPlatformInstructions(version[category][INSTRUCTION_PLATFORMS.IOS])
 
-const Instructions = ({ category, canBeChecked = true, versions }) => (
+const InstallationInstructions = ({ packageManager, release }) => {
+  const installationCommand = PACKAGE_MANAGERS[packageManager].command
+
+  return (
+    <Fragment>
+      <Instruction
+        title={
+          <Fragment>
+            Install new React Native by running `
+            {installationCommand(`react-native@${release.version}`)}`
+          </Fragment>
+        }
+      />
+
+      <Instruction
+        title={
+          <Fragment>
+            Install new React version by running `
+            {installationCommand(`react@${release.reactVersion}`)}`
+          </Fragment>
+        }
+      />
+    </Fragment>
+  )
+}
+
+const Instructions = ({
+  category,
+  canBeChecked = true,
+  versions,
+  packageManager
+}) => (
   <Fragment>
     <Title>{category}</Title>
 
-    {versions.map(version => {
-      return renderAndroidInstructions({
-        version,
-        category,
-        canBeChecked
-      })
-    })}
+    {versions.map(version => (
+      <Fragment>
+        {category === INSTRUCTION_CATEGORIES.CHANGES && (
+          <InstallationInstructions
+            release={version}
+            packageManager={packageManager}
+          />
+        )}
+
+        {renderAndroidInstructions({
+          version,
+          category,
+          canBeChecked
+        })}
+      </Fragment>
+    ))}
   </Fragment>
 )
 
-const UpdateInstructions = ({ showUpdateGuide, fromVersion, toVersion }) => {
+const UpdateInstructions = ({
+  showUpdateGuide,
+  packageManager,
+  fromVersion,
+  toVersion
+}) => {
   if (!showUpdateGuide) {
     return null
   }
@@ -61,11 +107,13 @@ const UpdateInstructions = ({ showUpdateGuide, fromVersion, toVersion }) => {
         category={INSTRUCTION_CATEGORIES.ADDED}
         canBeChecked={false}
         versions={versions}
+        packageManager={packageManager}
       />
 
       <Instructions
         category={INSTRUCTION_CATEGORIES.CHANGES}
         versions={versions}
+        packageManager={packageManager}
       />
     </Fragment>
   )
