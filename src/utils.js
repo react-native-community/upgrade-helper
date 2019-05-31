@@ -18,9 +18,9 @@ export const RELEASES_URL =
 
 export const PACKAGE_MANAGERS = {
   yarn: {
-    command: 'yarn add'
+    command: pkg => `yarn add ${pkg}`
   },
   npm: {
-    command: 'npm install'
+    command: pkg => `npm install ${pkg} --save`
   }
 }
