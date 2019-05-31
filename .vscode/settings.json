@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "prettier.disableLanguages": ["js"],
+  "prettier.eslintIntegration": true
+}
