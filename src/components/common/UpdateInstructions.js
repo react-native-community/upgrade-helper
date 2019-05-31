@@ -20,6 +20,7 @@ const releasedVersions = RELEASED_VERSIONS.map(
 )
 
 const renderPlatformInstructions = (instructions, props) =>
+  instructions &&
   instructions.map(({ title, description }) => (
     <Instruction {...props} title={title} description={description} />
   ))
@@ -30,8 +31,11 @@ const renderAndroidInstructions = ({ version, category, ...props }) =>
     props
   )
 
-const renderIOSInstructions = ({ version, category }) =>
-  renderPlatformInstructions(version[category][INSTRUCTION_PLATFORMS.IOS])
+const renderIOSInstructions = ({ version, category, ...props }) =>
+  renderPlatformInstructions(
+    version[category][INSTRUCTION_PLATFORMS.IOS],
+    props
+  )
 
 const InstallationInstructions = ({ packageManager, release }) => {
   const installationCommand = PACKAGE_MANAGERS[packageManager].command
@@ -68,22 +72,32 @@ const Instructions = ({
   <Fragment>
     <Title>{category}</Title>
 
-    {versions.map(version => (
-      <Fragment>
-        {category === INSTRUCTION_CATEGORIES.CHANGES && (
-          <InstallationInstructions
-            release={version}
-            packageManager={packageManager}
-          />
-        )}
+    {versions.map((version, key) => {
+      const isLatestVersion = key === 0
 
-        {renderAndroidInstructions({
-          version,
-          category,
-          canBeChecked
-        })}
-      </Fragment>
-    ))}
+      return (
+        <Fragment>
+          {isLatestVersion && category === INSTRUCTION_CATEGORIES.CHANGES && (
+            <InstallationInstructions
+              release={version}
+              packageManager={packageManager}
+            />
+          )}
+
+          {renderAndroidInstructions({
+            version,
+            category,
+            canBeChecked
+          })}
+
+          {renderIOSInstructions({
+            version,
+            category,
+            canBeChecked
+          })}
+        </Fragment>
+      )
+    })}
   </Fragment>
 )
 
