@@ -1,5 +1,2 @@
-import Text from './Text'
-import Link from './Link'
-import Dropdown from './Dropdown'
-
-export { Text, Link, Dropdown }
+export { default as Select } from './Select'
+export { default as PackageManagerSelector } from './PackageManagerSelector'
