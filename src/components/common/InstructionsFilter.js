@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Popover, Button, Checkbox } from 'antd'
-import { instructionCategories } from '../../utils'
+import { INSTRUCTION_CATEGORIES } from '../../utils'
 
-const options = instructionCategories.map(category => ({
+const options = Object.keys(INSTRUCTION_CATEGORIES).map(category => ({
   label: category,
   value: category
 }))
