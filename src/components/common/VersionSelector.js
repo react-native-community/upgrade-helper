@@ -8,6 +8,14 @@ const Selectors = styled.div`
   justify-content: space-between;
 `
 
+const FromVersionSelector = styled(Select)`
+  padding-right: 5px;
+`
+
+const ToVersionSelector = styled(Select)`
+  padding-left: 5px;
+`
+
 const VersionSelector = ({
   fromVersion,
   toVersion,
@@ -39,7 +47,7 @@ const VersionSelector = ({
       <h1>React Native update guide</h1>
 
       <Selectors>
-        <Select
+        <FromVersionSelector
           title="What's your current React Native version?"
           loading={isLoading}
           value={fromVersion}
@@ -47,7 +55,7 @@ const VersionSelector = ({
           onChange={chosenVersion => setFromVersion(chosenVersion)}
         />
 
-        <Select
+        <ToVersionSelector
           title="To which version would you like to update?"
           loading={isLoading}
           value={toVersion}
