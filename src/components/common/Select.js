@@ -5,7 +5,7 @@ import { Select as AntdSelect } from 'antd'
 const { Option } = AntdSelect
 
 const SelectBoxContainer = styled.div`
-  width: 470px;
+  width: 100%;
 `
 const SelectBox = styled(AntdSelect)`
   width: 100%;
