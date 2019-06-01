@@ -67,8 +67,9 @@ const Instructions = ({
   category,
   canBeChecked = true,
   versions,
-  packageManager
-}) => (
+  packageManager,
+  filters
+}) => filters.includes(category) && (
   <Fragment>
     <Title>{category}</Title>
 
@@ -105,7 +106,8 @@ const UpdateInstructions = ({
   showUpdateGuide,
   packageManager,
   fromVersion,
-  toVersion
+  toVersion,
+  filters
 }) => {
   if (!showUpdateGuide) {
     return null
@@ -122,12 +124,14 @@ const UpdateInstructions = ({
         canBeChecked={false}
         versions={versions}
         packageManager={packageManager}
+        filters={filters}
       />
 
       <Instructions
         category={INSTRUCTION_CATEGORIES.CHANGES}
         versions={versions}
         packageManager={packageManager}
+        filters={filters}
       />
     </Fragment>
   )

@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Card, Button } from 'antd'
 import { PackageManagerSelector } from '../common'
-import { PACKAGE_MANAGERS } from '../../utils'
+import { PACKAGE_MANAGERS, instructionCategories } from '../../utils'
 import VersionSelector from '../common/VersionSelector'
 import UpdateInstructions from '../common/UpdateInstructions'
+import InstructionsFilter from '../common/InstructionsFilter'
 
 const packageManagers = Object.keys(PACKAGE_MANAGERS)
 
@@ -42,6 +43,7 @@ const Home = () => {
   const [toVersion, setToVersion] = useState('')
   const [packageManager, setPackageManager] = useState(packageManagers[0])
   const [showUpdateGuide, setShowUpdateGuide] = useState(false)
+  const [filters, setFilters] = useState(instructionCategories)
 
   return (
     <Page>
@@ -70,11 +72,14 @@ const Home = () => {
       </Container>
 
       <UpdateInstructionsContainer showUpdateGuide={showUpdateGuide}>
+        <InstructionsFilter filters={filters} setFilters={setFilters} />
+
         <UpdateInstructions
           fromVersion={fromVersion}
           toVersion={toVersion}
           packageManager={packageManager}
           showUpdateGuide={showUpdateGuide}
+          filters={filters}
         />
       </UpdateInstructionsContainer>
     </Page>
