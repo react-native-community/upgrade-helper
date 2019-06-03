@@ -67,7 +67,6 @@ const VersionSelector = ({
   const [toVersionList, setToVersionList] = useState([])
 
   useEffect(() => {
-    console.log('running useeffect1')
     const fetchVersions = async () => {
       const response = await fetch(RELEASES_URL)
 
