@@ -2,7 +2,8 @@ import React from 'react'
 import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
 
-const Link = styled.a`
+// eslint-disable-next-line jsx-a11y/anchor-has-content
+const Link = styled(props => <a target="_blank" {...props} rel="noopener" />)`
   text-decoration: none;
   color: #045dc1;
 `
