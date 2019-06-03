@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import styled from 'styled-components'
+import semver from 'semver'
 import { RELEASES_URL } from '../../utils'
 import { Select } from './'
 
@@ -15,6 +16,36 @@ const FromVersionSelector = styled(Select)`
 const ToVersionSelector = styled(Select)`
   padding-left: 5px;
 `
+
+// Filters out release candidates from `releasedVersion` with the exception of
+// the release candidates from the latest version only if the latest is a release candidate itself
+const getReleasedVersionsWithoutCandidates = (
+  releasedVersions,
+  toVersionToBeSet
+) => {
+  const isLatestAReleaseCandidate = semver.prerelease(toVersionToBeSet) !== null
+  const toVersion = semver.valid(semver.coerce(toVersionToBeSet))
+
+  return releasedVersions.filter(
+    releasedVersion =>
+      semver.prerelease(releasedVersion) === null ||
+      (isLatestAReleaseCandidate &&
+        semver.compare(
+          toVersion,
+          semver.valid(semver.coerce(releasedVersion))
+        ) === 0)
+  )
+}
+
+// Finds the first minor release (which in react-native is the major) when compared to another version
+const getFirstMajorRelease = (releasedVersions, versionToCompare) =>
+  releasedVersions.find(
+    releasedVersion =>
+      semver.diff(
+        semver.valid(semver.coerce(releasedVersion)),
+        semver.valid(semver.coerce(versionToCompare))
+      ) === 'minor'
+  )
 
 const VersionSelector = ({
   fromVersion,
@@ -32,9 +63,13 @@ const VersionSelector = ({
 
       const releasedVersions = text.split('\n')
 
-      setVersions(releasedVersions)
-      setFromVersion(releasedVersions[1])
-      setToVersion(releasedVersions[0])
+      const toVersionToBeSet = releasedVersions[0]
+
+      setVersions(
+        getReleasedVersionsWithoutCandidates(releasedVersions, toVersionToBeSet)
+      )
+      setFromVersion(getFirstMajorRelease(releasedVersions, toVersionToBeSet))
+      setToVersion(toVersionToBeSet)
 
       setLoading(false)
     }
