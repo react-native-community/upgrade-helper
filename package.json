@@ -1,7 +1,7 @@
 {
   "name": "web",
   "version": "0.1.0",
-  "homepage": "https://pvinis.github.io/purge-web",
+  "homepage": "https://react-native-community.github.io/purge-web",
   "license": "MIT",
   "dependencies": {
     "ramda": "^0.26.1",
@@ -27,7 +27,7 @@
     "eject": "react-scripts eject",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build",
-    "deploy-ci": "gh-pages --repo https://$GH_TOKEN@github.com/pvinis/purge-web.git -d build"
+    "deploy-ci": "gh-pages --repo https://$GH_TOKEN@github.com/react-native-community/purge-web.git -d build"
   },
   "browserslist": {
     "production": [
