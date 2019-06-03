@@ -43,7 +43,7 @@ const Home = () => {
   const [toVersion, setToVersion] = useState('')
   const [packageManager, setPackageManager] = useState(packageManagers[0])
   const [showUpdateGuide, setShowUpdateGuide] = useState(false)
-  const [filters, setFilters] = useState(Object.keys(INSTRUCTION_CATEGORIES))
+  const [filters, setFilters] = useState(Object.values(INSTRUCTION_CATEGORIES))
 
   return (
     <Page>

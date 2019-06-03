@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Popover, Button, Checkbox } from 'antd'
 import { INSTRUCTION_CATEGORIES } from '../../utils'
 
-const options = Object.keys(INSTRUCTION_CATEGORIES).map(category => ({
+const options = Object.values(INSTRUCTION_CATEGORIES).map(category => ({
   label: category,
   value: category
 }))
@@ -18,7 +18,13 @@ const InstructionsFilter = ({ filters, setFilters }) => {
 
   return (
     <FilterPopover
-      content={<Checkbox.Group options={options} defaultValue={filters} onChange={setFilters} />}
+      content={
+        <Checkbox.Group
+          options={options}
+          defaultValue={filters}
+          onChange={setFilters}
+        />
+      }
       trigger="hover"
       placement="left"
       visible={isVisible}
