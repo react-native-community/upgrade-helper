@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import semver from 'semver'
 import styled from 'styled-components'
-import { Card } from 'antd'
+import { Empty } from 'antd'
 import {
   INSTRUCTION_PLATFORMS,
   INSTRUCTION_CATEGORIES,
@@ -19,23 +19,23 @@ const releasedVersions = RELEASED_VERSIONS.map(
   version => require(`../versions/${version}`).default
 )
 
-const renderPlatformInstructions = (instructions, props) =>
+const renderPlatformInstructions = ({ instructions, props }) =>
   instructions &&
   instructions.map(({ title, description }) => (
     <Instruction {...props} title={title} description={description} />
   ))
 
 const renderAndroidInstructions = ({ version, category, ...props }) =>
-  renderPlatformInstructions(
-    version[category][INSTRUCTION_PLATFORMS.ANDROID],
+  renderPlatformInstructions({
+    instructions: version[category][INSTRUCTION_PLATFORMS.ANDROID],
     props
-  )
+  })
 
 const renderIOSInstructions = ({ version, category, ...props }) =>
-  renderPlatformInstructions(
-    version[category][INSTRUCTION_PLATFORMS.IOS],
+  renderPlatformInstructions({
+    instructions: version[category][INSTRUCTION_PLATFORMS.IOS],
     props
-  )
+  })
 
 const InstallationInstructions = ({ packageManager, release }) => {
   const installationCommand = PACKAGE_MANAGERS[packageManager].command
@@ -69,38 +69,39 @@ const Instructions = ({
   versions,
   packageManager,
   filters
-}) => filters.includes(category) && (
-  <Fragment>
-    <Title>{category}</Title>
+}) =>
+  filters.includes(category) && (
+    <Fragment>
+      <Title>{category}</Title>
 
-    {versions.map((version, key) => {
-      const isLatestVersion = key === 0
+      {versions.map((version, key) => {
+        const isLatestVersion = key === 0
 
-      return (
-        <Fragment>
-          {isLatestVersion && category === INSTRUCTION_CATEGORIES.CHANGES && (
-            <InstallationInstructions
-              release={version}
-              packageManager={packageManager}
-            />
-          )}
+        return (
+          <Fragment>
+            {isLatestVersion && category === INSTRUCTION_CATEGORIES.CHANGES && (
+              <InstallationInstructions
+                release={version}
+                packageManager={packageManager}
+              />
+            )}
 
-          {renderAndroidInstructions({
-            version,
-            category,
-            canBeChecked
-          })}
+            {renderAndroidInstructions({
+              version,
+              category,
+              canBeChecked
+            })}
 
-          {renderIOSInstructions({
-            version,
-            category,
-            canBeChecked
-          })}
-        </Fragment>
-      )
-    })}
-  </Fragment>
-)
+            {renderIOSInstructions({
+              version,
+              category,
+              canBeChecked
+            })}
+          </Fragment>
+        )
+      })}
+    </Fragment>
+  )
 
 const UpdateInstructions = ({
   showUpdateGuide,
@@ -116,6 +117,12 @@ const UpdateInstructions = ({
   const versions = releasedVersions.filter(({ version }) =>
     semver.satisfies(version, `>= ${fromVersion} <= ${toVersion}`)
   )
+
+  if (versions.length === 0) {
+    return (
+      <Empty description="No instructions found for the selected versions" />
+    )
+  }
 
   return (
     <Fragment>
