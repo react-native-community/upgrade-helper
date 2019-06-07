@@ -1,13 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Card, Button } from 'antd'
-import { PackageManagerSelector } from '../common'
-import { PACKAGE_MANAGERS, INSTRUCTION_CATEGORIES } from '../../utils'
+import { Card } from 'antd'
 import VersionSelector from '../common/VersionSelector'
-import UpdateInstructions from '../common/UpdateInstructions'
-import InstructionsFilter from '../common/InstructionsFilter'
-
-const packageManagers = Object.keys(PACKAGE_MANAGERS)
+import DiffViewer from '../common/DiffViewer'
 
 const Page = styled.div`
   display: flex;
@@ -18,70 +13,32 @@ const Page = styled.div`
 `
 
 const Container = styled(Card)`
-  width: 70%;
-`
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  max-height: ${props => (props.showUpdateGuide ? 0 : '600px')};
-  height: auto;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
-`
-
-const UpdateInstructionsContainer = styled(({ showUpdateGuide, ...props }) => (
-  <Container {...props} />
-))`
-  margin-top: 30px;
-  opacity: ${props => (props.showUpdateGuide ? 1 : 0)}
-  transition: opacity 1s ease-in-out;
+  width: 90%;
+  border-radius: 3px;
 `
 
 const Home = () => {
   const [fromVersion, setFromVersion] = useState('')
   const [toVersion, setToVersion] = useState('')
-  const [packageManager, setPackageManager] = useState(packageManagers[0])
-  const [showUpdateGuide, setShowUpdateGuide] = useState(false)
-  const [filters, setFilters] = useState(Object.values(INSTRUCTION_CATEGORIES))
+  const [showDiff, setShowDiff] = useState(false)
+
+  const handleShowDiff = ({ fromVersion, toVersion }) => {
+    setFromVersion(fromVersion)
+    setToVersion(toVersion)
+    setShowDiff(true)
+  }
 
   return (
     <Page>
       <Container>
-        <VersionSelector
-          fromVersion={fromVersion}
-          toVersion={toVersion}
-          setFromVersion={setFromVersion}
-          setToVersion={setToVersion}
-        />
-
-        <PackageManagerSelector
-          value={packageManager}
-          onChange={setPackageManager}
-        />
-
-        <ButtonContainer showUpdateGuide={showUpdateGuide}>
-          <Button
-            type="primary"
-            size="large"
-            onClick={() => setShowUpdateGuide(true)}
-          >
-            Show me how to update!
-          </Button>
-        </ButtonContainer>
+        <VersionSelector showDiff={handleShowDiff} />
       </Container>
 
-      <UpdateInstructionsContainer showUpdateGuide={showUpdateGuide}>
-        <InstructionsFilter filters={filters} setFilters={setFilters} />
-
-        <UpdateInstructions
-          fromVersion={fromVersion}
-          toVersion={toVersion}
-          packageManager={packageManager}
-          showUpdateGuide={showUpdateGuide}
-          filters={filters}
-        />
-      </UpdateInstructionsContainer>
+      <DiffViewer
+        showDiff={showDiff}
+        fromVersion={fromVersion}
+        toVersion={toVersion}
+      />
     </Page>
   )
 }

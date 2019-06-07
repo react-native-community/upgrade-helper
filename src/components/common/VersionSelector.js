@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { Button } from 'antd'
 import semver from 'semver'
 import { RELEASES_URL } from '../../utils'
 import { Select } from './'
@@ -15,6 +16,14 @@ const FromVersionSelector = styled(Select)`
 
 const ToVersionSelector = styled(Select)`
   padding-left: 5px;
+`
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  height: auto;
+  overflow: hidden;
+  margin-top: 25px;
 `
 
 // Filters out release candidates from `releasedVersion` with the exception of
@@ -55,25 +64,20 @@ const getFirstMajorRelease = ({ releasedVersions, versionToCompare }) =>
       ) === 'minor'
   )
 
-const VersionSelector = ({
-  fromVersion,
-  toVersion,
-  setFromVersion,
-  setToVersion
-}) => {
+const VersionSelector = ({ showDiff }) => {
   const [isLoading, setLoading] = useState(true)
   const [allVersions, setAllVersions] = useState([])
   const [fromVersionList, setFromVersionList] = useState([])
   const [toVersionList, setToVersionList] = useState([])
+
+  const [localFromVersion, setLocalFromVersion] = useState('')
+  const [localToVersion, setLocalToVersion] = useState('')
 
   useEffect(() => {
     const fetchVersions = async () => {
       const response = await fetch(RELEASES_URL)
 
       const allVersionsFromResponse = (await response.text()).split('\n')
-
-      allVersionsFromResponse.unshift('0.60.0-rc.2')
-      allVersionsFromResponse.unshift('0.60.0-rc.3')
 
       const toVersionToBeSet = allVersionsFromResponse[0]
 
@@ -86,7 +90,7 @@ const VersionSelector = ({
       setAllVersions(sanitizedVersions)
 
       // Get first major release before latest
-      const fromVersion = getFirstMajorRelease({
+      const fromVersionToBeSet = getFirstMajorRelease({
         releasedVersions: sanitizedVersions,
         versionToCompare: toVersionToBeSet
       })
@@ -100,17 +104,17 @@ const VersionSelector = ({
       setToVersionList(
         getReleasedVersions({
           releasedVersions: sanitizedVersions,
-          minVersion: fromVersion
+          minVersion: fromVersionToBeSet
         })
       )
-      setFromVersion(fromVersion)
-      setToVersion(toVersionToBeSet)
+      setLocalFromVersion(fromVersionToBeSet)
+      setLocalToVersion(toVersionToBeSet)
 
       setLoading(false)
     }
 
     fetchVersions()
-  }, [setFromVersion, setToVersion])
+  }, [setLocalFromVersion, setLocalToVersion])
 
   useEffect(() => {
     if (isLoading) {
@@ -126,10 +130,10 @@ const VersionSelector = ({
     setToVersionList(
       getReleasedVersions({
         releasedVersions: allVersions,
-        minVersion: fromVersion
+        minVersion: localFromVersion
       })
     )
-  }, [allVersions, fromVersion, isLoading, toVersion])
+  }, [isLoading, allVersions, localFromVersion])
 
   return (
     <Fragment>
@@ -139,19 +143,34 @@ const VersionSelector = ({
         <FromVersionSelector
           title="What's your current React Native version?"
           loading={isLoading}
-          value={fromVersion}
+          value={localFromVersion}
           options={fromVersionList}
-          onChange={chosenVersion => setFromVersion(chosenVersion)}
+          onChange={chosenVersion => setLocalFromVersion(chosenVersion)}
         />
 
         <ToVersionSelector
           title="To which version would you like to update?"
           loading={isLoading}
-          value={toVersion}
+          value={localToVersion}
           options={toVersionList}
-          onChange={chosenVersion => setToVersion(chosenVersion)}
+          onChange={chosenVersion => setLocalToVersion(chosenVersion)}
         />
       </Selectors>
+
+      <ButtonContainer>
+        <Button
+          type="primary"
+          size="large"
+          onClick={() =>
+            showDiff({
+              fromVersion: localFromVersion,
+              toVersion: localToVersion
+            })
+          }
+        >
+          Show me how to update!
+        </Button>
+      </ButtonContainer>
     </Fragment>
   )
 }
