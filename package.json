@@ -1,17 +1,14 @@
 {
-  "name": "web",
+  "name": "upgrade-helper",
   "version": "0.1.0",
   "homepage": "https://react-native-community.github.io/upgrade-helper",
   "license": "MIT",
   "dependencies": {
     "antd": "^3.19.1",
-    "ramda": "^0.26.1",
     "react": "^16.8.0",
     "react-diff-view": "^2.1.3",
     "react-dom": "^16.8.0",
-    "react-ga": "^2.5.7",
     "react-github-btn": "^1.0.0",
-    "react-native-web": "^0.11.0",
     "react-scripts": "3.0.1",
     "semver": "^6.0.0",
     "styled-components": "^4.2.0"
