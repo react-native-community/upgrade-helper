@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Tag, Icon, Button } from 'antd'
-
-const removeAppPathPrefix = path => path.replace(/RnDiffApp\//, '')
+import { removeAppPathPrefix } from '../../../utils'
 
 const FileRenameArrow = styled(props => <Icon {...props} type="right" />)`
   font-size: 10px;
