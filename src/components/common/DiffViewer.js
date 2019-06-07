@@ -60,6 +60,8 @@ const DiffViewer = ({
         <Diff
           key={`${diff.oldRevision}${diff.newRevision}`}
           {...diff}
+          fromVersion={fromVersion}
+          toVersion={toVersion}
           selectedChanges={selectedChanges}
           onToggleChangeSelection={onToggleChangeSelection}
         />

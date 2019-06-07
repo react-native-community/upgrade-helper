@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Diff as RDiff, Hunk, markEdits, tokenize } from 'react-diff-view'
 import DiffHeader from './DiffHeader'
+import { getComments } from './DiffComment'
 
 const Container = styled.div`
   border: 1px solid #ddd;
@@ -25,16 +26,12 @@ const DiffView = styled(RDiff)`
     padding: 0;
     text-align: center;
     font-size: 12px;
+    cursor: auto;
   }
 
   td.diff-gutter .diff-line-normal {
     background-color: #cdffd8;
     border-color: #bef5cb;
-  }
-
-  td.diff-gutter:hover {
-    cursor: pointer;
-    color: rgba(27, 31, 35, 0.6);
   }
 
   td.diff-code {
@@ -56,14 +53,7 @@ const DiffView = styled(RDiff)`
 const isDiffCollapsedByDefault = ({ type, hunks }) =>
   type === 'delete' || hunks.length > 5
 
-const Diff = ({
-  oldPath,
-  newPath,
-  type,
-  hunks,
-  selectedChanges,
-  onToggleChangeSelection
-}) => {
+const Diff = ({ oldPath, newPath, type, hunks, fromVersion, toVersion }) => {
   const [isDiffCollapsed, setIsDiffCollapsed] = useState(
     isDiffCollapsedByDefault({ type, hunks })
   )
@@ -84,7 +74,7 @@ const Diff = ({
           viewType="split"
           diffType={type}
           hunks={hunks}
-          selectedChanges={selectedChanges}
+          widgets={getComments({ newPath, fromVersion, toVersion })}
         >
           {hunks => {
             const options = {
@@ -94,12 +84,7 @@ const Diff = ({
             const tokens = tokenize(hunks, options)
 
             return hunks.map(hunk => (
-              <Hunk
-                key={hunk.content}
-                hunk={hunk}
-                tokens={tokens}
-                gutterEvents={{ onClick: onToggleChangeSelection }}
-              />
+              <Hunk key={hunk.content} hunk={hunk} tokens={tokens} />
             ))
           }}
         </DiffView>
