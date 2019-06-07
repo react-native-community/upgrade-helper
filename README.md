@@ -1,4 +1,4 @@
-https://react-native-community.github.io/purge-web
+https://react-native-community.github.io/upgrade-helper
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
