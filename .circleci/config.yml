@@ -39,7 +39,7 @@ jobs:
               git config --global user.email $GH_EMAIL
               git config --global user.name $GH_NAME
 
-              yarn gh-pages -d build --message "[skip ci] Updates"
+              yarn gh-pages -d build --message "[skip ci] Updates" --repo https://$GH_TOKEN@github.com/react-native-community/upgrade-helper.git
             else
               echo "Skipping deploy."
             fi
