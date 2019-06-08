@@ -34,6 +34,11 @@ const DiffView = styled(RDiff)`
     border-color: #bef5cb;
   }
 
+  td.diff-gutter:hover {
+    cursor: pointer;
+    color: rgba(27, 31, 35, 0.6);
+  }
+
   td.diff-code {
     font-size: 12px;
     color: #24292e;
@@ -53,7 +58,16 @@ const DiffView = styled(RDiff)`
 const isDiffCollapsedByDefault = ({ type, hunks }) =>
   type === 'delete' || hunks.length > 5
 
-const Diff = ({ oldPath, newPath, type, hunks, fromVersion, toVersion }) => {
+const Diff = ({
+  oldPath,
+  newPath,
+  type,
+  hunks,
+  fromVersion,
+  toVersion,
+  selectedChanges,
+  onToggleChangeSelection
+}) => {
   const [isDiffCollapsed, setIsDiffCollapsed] = useState(
     isDiffCollapsedByDefault({ type, hunks })
   )
@@ -75,6 +89,7 @@ const Diff = ({ oldPath, newPath, type, hunks, fromVersion, toVersion }) => {
           diffType={type}
           hunks={hunks}
           widgets={getComments({ newPath, fromVersion, toVersion })}
+          selectedChanges={selectedChanges}
         >
           {hunks => {
             const options = {
@@ -84,7 +99,12 @@ const Diff = ({ oldPath, newPath, type, hunks, fromVersion, toVersion }) => {
             const tokens = tokenize(hunks, options)
 
             return hunks.map(hunk => (
-              <Hunk key={hunk.content} hunk={hunk} tokens={tokens} />
+              <Hunk
+                key={hunk.content}
+                hunk={hunk}
+                tokens={tokens}
+                gutterEvents={{ onClick: onToggleChangeSelection }}
+              />
             ))
           }}
         </DiffView>
