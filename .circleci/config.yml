@@ -40,7 +40,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - 'c0:e4:2e:d8:9b:a2:fd:cb:d5:f0:04:df:20:14:a1:4a'
+            - '38:fa:ea:6f:43:0d:f8:5d:5c:5c:92:ed:3e:bb:1f:06'
       - restore_cache_checkout
       - run_yarn
       - run:
