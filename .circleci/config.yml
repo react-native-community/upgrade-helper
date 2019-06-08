@@ -40,7 +40,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - 'a6:f0:0c:fb:6f:52:09:e2:1c:84:c6:0d:03:23:89:3a'
+            - 'c0:e4:2e:d8:9b:a2:fd:cb:d5:f0:04:df:20:14:a1:4a'
       - restore_cache_checkout
       - run_yarn
       - run:
@@ -53,7 +53,7 @@ jobs:
               git config --global user.email $GH_EMAIL
               git config --global user.name $GH_NAME
 
-              gh-pages -d build --message "[skip ci] Updates"
+              yarn gh-pages -d build --message "[skip ci] Updates"
             else
               echo "Skipping deploy."
             fi
