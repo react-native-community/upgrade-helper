@@ -49,7 +49,7 @@ jobs:
       - run:
           name: Deploy
           command: |
-            if [[ $CIRCLE_PROJECT_USERNAME == "react-native-community" && -z $CI_PULL_REQUEST && -z $CIRCLE_PR_USERNAME ]]; then
+            if [[ $CIRCLE_PROJECT_USERNAME == "react-native-community" ]]; then
               git config --global user.email $GH_EMAIL
               git config --global user.name $GH_NAME
 
