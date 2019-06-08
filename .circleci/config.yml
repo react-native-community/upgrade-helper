@@ -28,9 +28,6 @@ jobs:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/upgrade-helper
-      - add_ssh_keys:
-          fingerprints:
-            - '38:fa:ea:6f:43:0d:f8:5d:5c:5c:92:ed:3e:bb:1f:06'
       - run_yarn
       - run:
           name: Build
