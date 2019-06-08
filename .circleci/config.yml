@@ -61,11 +61,12 @@ workflows:
   # If we are on master, deploy
   deploy:
     jobs:
-      - setup:
-          filters:
-            branches:
-              only:
-                - master
+      - setup
+      # :
+      # filters:
+      #   branches:
+      #     only:
+      #       - master
 
       - deploy:
           requires:
