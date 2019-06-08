@@ -29,21 +29,29 @@ const getLineNumberWithType = ({ lineChangeType, lineNumber }) =>
 
 const getComments = ({ newPath, fromVersion, toVersion }) => {
   const newPathSanitized = removeAppPathPrefix(newPath)
+  const cleanedToVersion = semver.valid(semver.coerce(toVersion))
 
   const versionsInDiff = releasedVersions.filter(
     ({ version, comments }) =>
-      (semver.lt(version, toVersion) || semver.gt(version, fromVersion)) &&
+      semver.lte(version, cleanedToVersion) &&
+      semver.gt(version, fromVersion) &&
       comments.some(({ fileName }) => fileName === newPathSanitized)
   )
 
   return versionsInDiff.reduce((allComments, version) => {
     const comments = version.comments.reduce(
-      (versionComments, { lineChangeType, lineNumber, content }) => ({
-        ...versionComments,
-        [getLineNumberWithType({ lineChangeType, lineNumber })]: (
-          <DiffComment content={content} />
-        )
-      }),
+      (versionComments, { fileName, lineChangeType, lineNumber, content }) => {
+        if (fileName !== newPathSanitized) {
+          return versionComments
+        }
+
+        return {
+          ...versionComments,
+          [getLineNumberWithType({ lineChangeType, lineNumber })]: (
+            <DiffComment content={content} />
+          )
+        }
+      },
       {}
     )
 
