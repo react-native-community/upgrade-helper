@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/purge-web/static/css/main.bb9eb706.chunk.css",
-    "main.js": "/purge-web/static/js/main.420caf7f.chunk.js",
-    "main.js.map": "/purge-web/static/js/main.420caf7f.chunk.js.map",
-    "runtime~main.js": "/purge-web/static/js/runtime~main.1fbd653a.js",
-    "runtime~main.js.map": "/purge-web/static/js/runtime~main.1fbd653a.js.map",
-    "static/css/2.873f960c.chunk.css": "/purge-web/static/css/2.873f960c.chunk.css",
-    "static/js/2.d45082b0.chunk.js": "/purge-web/static/js/2.d45082b0.chunk.js",
-    "static/js/2.d45082b0.chunk.js.map": "/purge-web/static/js/2.d45082b0.chunk.js.map",
-    "index.html": "/purge-web/index.html",
-    "precache-manifest.e061b9e406dea514b491e94a4aacc290.js": "/purge-web/precache-manifest.e061b9e406dea514b491e94a4aacc290.js",
-    "service-worker.js": "/purge-web/service-worker.js",
-    "static/css/2.873f960c.chunk.css.map": "/purge-web/static/css/2.873f960c.chunk.css.map",
-    "static/css/main.bb9eb706.chunk.css.map": "/purge-web/static/css/main.bb9eb706.chunk.css.map",
-    "static/media/logo.svg": "/purge-web/static/media/logo.5d5d9eef.svg"
+    "main.css": "/upgrade-helper/static/css/main.bb9eb706.chunk.css",
+    "main.js": "/upgrade-helper/static/js/main.541a4da8.chunk.js",
+    "main.js.map": "/upgrade-helper/static/js/main.541a4da8.chunk.js.map",
+    "runtime~main.js": "/upgrade-helper/static/js/runtime~main.fb077bdb.js",
+    "runtime~main.js.map": "/upgrade-helper/static/js/runtime~main.fb077bdb.js.map",
+    "static/css/2.69c7541c.chunk.css": "/upgrade-helper/static/css/2.69c7541c.chunk.css",
+    "static/js/2.5919ac15.chunk.js": "/upgrade-helper/static/js/2.5919ac15.chunk.js",
+    "static/js/2.5919ac15.chunk.js.map": "/upgrade-helper/static/js/2.5919ac15.chunk.js.map",
+    "index.html": "/upgrade-helper/index.html",
+    "precache-manifest.978f6895f43bd5e8449908fc66d1d128.js": "/upgrade-helper/precache-manifest.978f6895f43bd5e8449908fc66d1d128.js",
+    "service-worker.js": "/upgrade-helper/service-worker.js",
+    "static/css/2.69c7541c.chunk.css.map": "/upgrade-helper/static/css/2.69c7541c.chunk.css.map",
+    "static/css/main.bb9eb706.chunk.css.map": "/upgrade-helper/static/css/main.bb9eb706.chunk.css.map",
+    "static/media/logo.svg": "/upgrade-helper/static/media/logo.5d5d9eef.svg"
   }
 }
