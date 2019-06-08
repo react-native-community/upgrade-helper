@@ -1,0 +1,72 @@
+version: 2.1
+executors:
+  node10:
+    docker:
+      - image: circleci/node:10
+commands:
+  restore_cache_checkout:
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+
+  run_yarn:
+    steps:
+      - restore_cache:
+          keys:
+            - v1-yarn-{{ .Branch }}
+      - run:
+          name: yarn install
+          command: yarn install --no-progress --non-interactive --cache-folder ~/.cache/yarn
+      - save_cache:
+          paths:
+            - node_modules
+            - ~/.cache/yarn
+          key: v1-yarn-{{ .Branch }}
+jobs:
+  # Checks out the repository, and persists to cache.
+  setup:
+    executor: node10
+    working_directory: ~/upgrade-helper
+    steps:
+      - checkout
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/upgrade-helper
+  # Deploy website to GitHub Pages
+  deploy:
+    executor: node10
+    working_directory: ~/upgrade-helper
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 'a6:f0:0c:fb:6f:52:09:e2:1c:84:c6:0d:03:23:89:3a'
+      - restore_cache_checkout
+      - run_yarn
+      - run:
+          name: Build
+          command: yarn build
+      - run:
+          name: Deploy
+          command: |
+            if [[ $CIRCLE_PROJECT_USERNAME == "react-native-community" && -z $CI_PULL_REQUEST && -z $CIRCLE_PR_USERNAME ]]; then
+              git config --global user.email $GH_EMAIL
+              git config --global user.name $GH_NAME
+
+              gh-pages -d build --message "[skip ci] Updates"
+            else
+              echo "Skipping deploy."
+            fi
+workflows:
+  # If we are on master, deploy
+  deploy:
+    jobs:
+      - setup:
+          filters:
+            branches:
+              only:
+                - master
+
+      - deploy:
+          requires:
+            - setup

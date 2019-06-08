@@ -23,11 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "lint": "eslint . --cache --report-unused-disable-directives",
-    "eject": "react-scripts eject",
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d build",
-    "deploy-ci": "gh-pages --repo https://$GH_TOKEN@github.com/react-native-community/upgrade-helper.git -d build"
+    "lint": "eslint . --cache --report-unused-disable-directives"
   },
   "browserslist": {
     "production": [
