@@ -8,17 +8,17 @@ export default {
       lineChangeType: 'add',
       content: (
         <Fragment>
-          This change is a really **cool** change that you will love!
+          This is a really **cool** change that you will love!
         </Fragment>
       )
     },
     {
-      fileName: 'package.json',
-      lineNumber: 12,
-      lineChangeType: 'add',
+      fileName: 'App.js',
+      lineNumber: 19,
+      lineChangeType: 'delete',
       content: (
         <Fragment>
-          This another change is a really *cool* change that you will love!
+          I don't even need to talk about this one, it's `A-M-A-Z-I-N-G`!
         </Fragment>
       )
     }
