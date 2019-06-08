@@ -4,11 +4,6 @@ executors:
     docker:
       - image: circleci/node:10
 commands:
-  restore_cache_checkout:
-    steps:
-      - restore_cache:
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-
   run_yarn:
     steps:
       - restore_cache:
@@ -23,8 +18,8 @@ commands:
             - ~/.cache/yarn
           key: v1-yarn-{{ .Branch }}
 jobs:
-  # Checks out the repository, and persists to cache.
-  setup:
+  # Deploy website to GitHub Pages
+  deploy:
     executor: node10
     working_directory: ~/upgrade-helper
     steps:
@@ -33,15 +28,9 @@ jobs:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/upgrade-helper
-  # Deploy website to GitHub Pages
-  deploy:
-    executor: node10
-    working_directory: ~/upgrade-helper
-    steps:
       - add_ssh_keys:
           fingerprints:
             - '38:fa:ea:6f:43:0d:f8:5d:5c:5c:92:ed:3e:bb:1f:06'
-      - restore_cache_checkout
       - run_yarn
       - run:
           name: Build
@@ -53,7 +42,7 @@ jobs:
               git config --global user.email $GH_EMAIL
               git config --global user.name $GH_NAME
 
-              yarn gh-pages -d build --message "[skip ci] Updates" --repo https://github.com/react-native-community/upgrade-helper.git
+              yarn gh-pages -d build --message "[skip ci] Updates"
             else
               echo "Skipping deploy."
             fi
@@ -61,13 +50,9 @@ workflows:
   # If we are on master, deploy
   deploy:
     jobs:
-      - setup
-      # :
       # filters:
       #   branches:
       #     only:
       #       - master
 
-      - deploy:
-          requires:
-            - setup
+      - deploy
