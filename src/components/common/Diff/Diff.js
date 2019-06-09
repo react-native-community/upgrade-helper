@@ -61,6 +61,9 @@ const Diff = ({
   newPath,
   type,
   hunks,
+  diffKey,
+  isDiffCompleted,
+  onCompleteDiff,
   selectedChanges,
   onToggleChangeSelection
 }) => {
@@ -74,12 +77,15 @@ const Diff = ({
         oldPath={oldPath}
         newPath={newPath}
         type={type}
+        diffKey={diffKey}
         hasDiff={hunks.length > 0}
         isDiffCollapsed={isDiffCollapsed}
         setIsDiffCollapsed={setIsDiffCollapsed}
+        isDiffCompleted={isDiffCompleted}
+        onCompleteDiff={onCompleteDiff}
       />
 
-      {!isDiffCollapsed && (
+      {!isDiffCollapsed && !isDiffCompleted && (
         <DiffView
           viewType="split"
           diffType={type}
@@ -108,4 +114,11 @@ const Diff = ({
   )
 }
 
-export default Diff
+/*
+  Return true if passing `nextProps` to render would return
+  the same result as passing prevProps to render, otherwise return false
+*/
+const arePropsEqual = (prevProps, nextProps) =>
+  prevProps.isDiffCompleted === nextProps.isDiffCompleted;
+
+export default React.memo(Diff, arePropsEqual)
