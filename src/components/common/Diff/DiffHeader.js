@@ -135,9 +135,7 @@ const DiffHeader = styled(
           <CollapseDiffButton
             isDiffCompleted={isDiffCompleted}
             isDiffCollapsed={isDiffCollapsed}
-            onClick={() =>
-              setIsDiffCollapsed(!isDiffCollapsed)
-            }
+            onClick={() => setIsDiffCollapsed(!isDiffCollapsed)}
           />
         </Fragment>
       </HeaderButtonsContainer>

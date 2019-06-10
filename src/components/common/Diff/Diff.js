@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Diff as RDiff, Hunk, markEdits, tokenize } from 'react-diff-view'
 import DiffHeader from './DiffHeader'
