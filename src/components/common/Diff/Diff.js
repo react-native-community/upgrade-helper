@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Diff as RDiff, Hunk, markEdits, tokenize } from 'react-diff-view'
 import DiffHeader from './DiffHeader'
@@ -54,7 +54,7 @@ const DiffView = styled(RDiff)`
 
 // Diff will be collapsed by default if the file has been deleted or has more than 5 hunks
 const isDiffCollapsedByDefault = ({ type, hunks }) =>
-  type === 'delete' || hunks.length > 5
+  type === 'delete' || hunks.length > 5 ? true : undefined
 
 const Diff = ({
   oldPath,
@@ -71,6 +71,10 @@ const Diff = ({
     isDiffCollapsedByDefault({ type, hunks })
   )
 
+  if (isDiffCompleted && isDiffCollapsed === undefined) {
+    setIsDiffCollapsed(true)
+  }
+
   return (
     <Container>
       <DiffHeader
@@ -85,7 +89,7 @@ const Diff = ({
         onCompleteDiff={onCompleteDiff}
       />
 
-      {!isDiffCollapsed && !isDiffCompleted && (
+      {!isDiffCollapsed && (
         <DiffView
           viewType="split"
           diffType={type}
@@ -119,6 +123,6 @@ const Diff = ({
   the same result as passing prevProps to render, otherwise return false
 */
 const arePropsEqual = (prevProps, nextProps) =>
-  prevProps.isDiffCompleted === nextProps.isDiffCompleted;
+  prevProps.isDiffCompleted === nextProps.isDiffCompleted
 
 export default React.memo(Diff, arePropsEqual)

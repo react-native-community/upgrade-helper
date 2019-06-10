@@ -28,12 +28,12 @@ const DiffViewer = ({
 
   const handleCompleteDiff = diffKey => {
     if (completedDiffs.includes(diffKey)) {
-      return setCompletedDiffs(
-        completedDiffs.filter(completedDiff => completedDiff !== diffKey)
+      return setCompletedDiffs(prevCompletedDiffs =>
+        prevCompletedDiffs.filter(completedDiff => completedDiff !== diffKey)
       )
     }
 
-    return setCompletedDiffs([...completedDiffs, diffKey])
+    setCompletedDiffs(prevCompletedDiffs => [...prevCompletedDiffs, diffKey])
   }
 
   useEffect(() => {

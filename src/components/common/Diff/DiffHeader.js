@@ -75,23 +75,27 @@ const CompleteDiffButton = styled(
     />
   )
 )`
-  font-size: 10px;
+  font-size: 12px;
   line-height: 0;
   border-width: 0px;
   width: 20px;
   height: 20px;
   padding-top: 5px;
+  &,
   &:hover,
   &:focus {
-    color: ${({ isDiffCompleted }) => isDiffCompleted ? '#52c41a' : '#24292e'}
+    color: ${({ isDiffCompleted }) =>
+      isDiffCompleted ? '#52c41a' : '#24292e'};
   }
 `
 
-const CollapseDiffButton = styled(({ isDiffCollapsed, ...props }) => (
-  <Button {...props} type="link" icon="up" />
-))`
+const CollapseDiffButton = styled(
+  ({ isDiffCollapsed, isDiffCompleted, ...props }) => (
+    <Button {...props} type="link" icon="up" />
+  )
+)`
   color: #24292e;
-  font-size: 10px;
+  font-size: 12px;
   transform: ${({ isDiffCollapsed }) =>
     isDiffCollapsed ? 'rotate(-180deg)' : 'initial'};
   transition: transform 0.2s ease-in-out;
@@ -129,8 +133,11 @@ const DiffHeader = styled(
             onCompleteDiff={onCompleteDiff}
           />
           <CollapseDiffButton
+            isDiffCompleted={isDiffCompleted}
             isDiffCollapsed={isDiffCollapsed}
-            onClick={() => setIsDiffCollapsed(!isDiffCollapsed)}
+            onClick={() =>
+              setIsDiffCollapsed(!isDiffCollapsed)
+            }
           />
         </Fragment>
       </HeaderButtonsContainer>
