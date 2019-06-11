@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Tag, Icon, Button } from 'antd'
 
@@ -80,7 +80,7 @@ const CompleteDiffButton = styled(
   border-width: 0px;
   width: 20px;
   height: 20px;
-  padding-top: 5px;
+  margin: 5px 8px 0;
   &,
   &:hover,
   &:focus {
@@ -91,13 +91,13 @@ const CompleteDiffButton = styled(
 
 const CollapseDiffButton = styled(
   ({ isDiffCollapsed, isDiffCompleted, ...props }) => (
-    <Button {...props} type="link" icon="up" />
+    <Button {...props} type="link" icon="down" />
   )
 )`
   color: #24292e;
-  font-size: 12px;
+  font-size: 10px;
   transform: ${({ isDiffCollapsed }) =>
-    isDiffCollapsed ? 'rotate(-180deg)' : 'initial'};
+    isDiffCollapsed ? 'rotate(-90deg)' : 'initial'};
   transition: transform 0.2s ease-in-out;
   transform-origin: center;
   line-height: 0;
@@ -122,22 +122,20 @@ const DiffHeader = styled(
     ...props
   }) => (
     <div {...props}>
+      <CollapseDiffButton
+        isDiffCompleted={isDiffCompleted}
+        isDiffCollapsed={isDiffCollapsed}
+        onClick={() => setIsDiffCollapsed(!isDiffCollapsed)}
+      />
       <FileName oldPath={oldPath} newPath={newPath} type={type} />{' '}
       <FileStatus type={type} />
       <BinaryBadge visible={!hasDiff} />
       <HeaderButtonsContainer hasDiff={hasDiff}>
-        <Fragment>
-          <CompleteDiffButton
-            diffKey={diffKey}
-            isDiffCompleted={isDiffCompleted}
-            onCompleteDiff={onCompleteDiff}
-          />
-          <CollapseDiffButton
-            isDiffCompleted={isDiffCompleted}
-            isDiffCollapsed={isDiffCollapsed}
-            onClick={() => setIsDiffCollapsed(!isDiffCollapsed)}
-          />
-        </Fragment>
+        <CompleteDiffButton
+          diffKey={diffKey}
+          isDiffCompleted={isDiffCompleted}
+          onCompleteDiff={onCompleteDiff}
+        />
       </HeaderButtonsContainer>
     </div>
   )
