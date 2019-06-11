@@ -13,6 +13,10 @@ export const RELEASES_URL = `https://raw.githubusercontent.com/${RN_DIFF_REPO}/m
 export const getDiffPatchURL = ({ fromVersion, toVersion }) =>
   `https://raw.githubusercontent.com/${RN_DIFF_REPO}/diffs/diffs/${fromVersion}..${toVersion}.diff`
 
+// `path` must contain `RnDiffApp` prefix
+export const getBinaryFileURL = ({ version, path }) =>
+  `https://github.com/${RN_DIFF_REPO}/raw/release/${version}/${path}`
+
 export const removeAppPathPrefix = path => path.replace(/RnDiffApp\//, '')
 
 export const getVersionsInDiff = ({ fromVersion, toVersion }) => {
