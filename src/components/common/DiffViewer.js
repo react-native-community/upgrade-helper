@@ -5,6 +5,7 @@ import 'react-diff-view/style/index.css'
 import { getDiffPatchURL } from '../../utils'
 import Diff from './Diff/Diff'
 import Loading from './Loading'
+import UsefulContentSection from './UsefulContentSection'
 
 const Container = styled.div`
   width: 90%;
@@ -54,6 +55,8 @@ const DiffViewer = ({
 
   return (
     <Container>
+      <UsefulContentSection fromVersion={fromVersion} toVersion={toVersion} />
+
       {diff.map(diff => (
         <Diff
           key={`${diff.oldRevision}${diff.newRevision}`}
