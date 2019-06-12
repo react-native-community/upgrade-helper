@@ -98,7 +98,7 @@ const CompleteDiffButton = styled(
     />
   )
 )`
-  font-size: 12px;
+  font-size: 13px;
   line-height: 0;
   border-width: 0px;
   width: 20px;
