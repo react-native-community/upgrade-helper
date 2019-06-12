@@ -1,5 +1,7 @@
 https://react-native-community.github.io/upgrade-helper
 
+[![CircleCI](https://circleci.com/gh/react-native-community/upgrade-helper.svg?style=svg)](https://circleci.com/gh/react-native-community/upgrade-helper)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
