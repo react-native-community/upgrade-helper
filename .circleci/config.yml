@@ -47,7 +47,7 @@ workflows:
   version: 2.1
   deploy-to-gh-pages:
     jobs:
-      - deploy
+      - deploy:
           filters:
             branches:
               only:
