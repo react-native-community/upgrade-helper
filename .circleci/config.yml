@@ -3,6 +3,8 @@ executors:
   node10:
     docker:
       - image: circleci/node:10
+
+
 commands:
   run_yarn:
     steps:
@@ -17,6 +19,8 @@ commands:
             - node_modules
             - ~/.cache/yarn
           key: v1-yarn-{{ .Branch }}
+
+
 jobs:
   # Deploy website to GitHub Pages
   deploy:
@@ -43,6 +47,8 @@ jobs:
             else
               echo "Skipping deploy."
             fi
+
+
 workflows:
   version: 2.1
   deploy-to-gh-pages:
