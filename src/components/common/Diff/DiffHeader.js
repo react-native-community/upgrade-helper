@@ -61,22 +61,21 @@ const HeaderButtonsContainer = styled(props => <div {...props} />)`
   float: right;
 `
 
-const DownloadFileButton = styled(
-  ({ visible, toVersion, newPath, ...props }) =>
-    visible ? (
-      <Button
-        {...props}
-        type="ghost"
-        shape="circle"
-        icon="download"
-        onClick={() =>
-          (window.location = getBinaryFileURL({
-            version: toVersion,
-            path: newPath
-          }))
-        }
-      />
-    ) : null
+const DownloadFileButton = styled(({ visible, toVersion, newPath, ...props }) =>
+  visible ? (
+    <Button
+      {...props}
+      type="ghost"
+      shape="circle"
+      icon="download"
+      onClick={() =>
+        (window.location = getBinaryFileURL({
+          version: toVersion,
+          path: newPath
+        }))
+      }
+    />
+  ) : null
 )`
   color: #24292e;
   font-size: 12px;
@@ -85,7 +84,7 @@ const DownloadFileButton = styled(
   &:focus {
     color: #24292e;
   }
-  `
+`
   
 const CompleteDiffButton = styled(
   ({ diffKey, isDiffCompleted, onCompleteDiff, ...props }) => (
