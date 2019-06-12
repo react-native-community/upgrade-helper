@@ -60,6 +60,8 @@ const DiffViewer = ({
         <Diff
           key={`${diff.oldRevision}${diff.newRevision}`}
           {...diff}
+          // otakustay/react-diff-view#49
+          type={diff.type === 'new' ? 'add' : diff.type}
           selectedChanges={selectedChanges}
           onToggleChangeSelection={onToggleChangeSelection}
         />
