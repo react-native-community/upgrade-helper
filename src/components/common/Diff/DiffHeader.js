@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import { Tag, Icon, Button } from 'antd'
-import { removeAppPathPrefix } from '../../../utils'
+import { removeAppPathPrefix, getBinaryFileURL } from '../../../utils'
 
 const FileRenameArrow = styled(props => <Icon {...props} type="right" />)`
   font-size: 10px;
@@ -57,16 +57,42 @@ const BinaryBadge = ({ visible, ...props }) =>
     </Tag>
   )
 
-const HeaderButtonsContainer = styled(
-  ({ hasDiff, ...props }) => hasDiff && <div {...props} />
-)`
+const HeaderButtonsContainer = styled(props => <div {...props} />)`
   float: right;
 `
 
-const CollapseDiffButton = styled(({ isDiffCollapsed, ...props }) => (
-  <Button {...props} type="link" icon="up" />
-))`
+const DownloadFileButton = styled(
+  ({ visible, toVersion, newPath, ...props }) =>
+    visible && (
+      <Button
+        {...props}
+        type="ghost"
+        shape="circle"
+        icon="download"
+        onClick={() =>
+          (window.location = getBinaryFileURL({
+            version: toVersion,
+            path: newPath
+          }))
+        }
+      />
+    )
+)`
   color: #24292e;
+  font-size: 12px;
+  border-width: 0;
+  &:hover,
+  &:focus {
+    color: #24292e;
+  }
+`
+
+const CollapseDiffButton = styled(
+  ({ visible, isDiffCollapsed, ...props }) =>
+    visible && <Button {...props} type="link" icon="up" />
+)`
+  color: #24292e;
+  margin-right: 2px;
   font-size: 10px;
   transform: ${({ isDiffCollapsed }) =>
     isDiffCollapsed ? 'rotate(-180deg)' : 'initial'};
@@ -84,6 +110,7 @@ const DiffHeader = styled(
   ({
     oldPath,
     newPath,
+    toVersion,
     type,
     hasDiff,
     isDiffCollapsed,
@@ -94,11 +121,19 @@ const DiffHeader = styled(
       <FileName oldPath={oldPath} newPath={newPath} type={type} />{' '}
       <FileStatus type={type} />
       <BinaryBadge visible={!hasDiff} />
-      <HeaderButtonsContainer hasDiff={hasDiff}>
-        <CollapseDiffButton
-          isDiffCollapsed={isDiffCollapsed}
-          onClick={() => setIsDiffCollapsed(!isDiffCollapsed)}
-        />
+      <HeaderButtonsContainer>
+        <Fragment>
+          <DownloadFileButton
+            visible={!hasDiff}
+            toVersion={toVersion}
+            newPath={newPath}
+          />
+          <CollapseDiffButton
+            visible={hasDiff}
+            isDiffCollapsed={isDiffCollapsed}
+            onClick={() => setIsDiffCollapsed(!isDiffCollapsed)}
+          />
+        </Fragment>
       </HeaderButtonsContainer>
     </div>
   )

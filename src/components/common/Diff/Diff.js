@@ -77,6 +77,7 @@ const Diff = ({
       <DiffHeader
         oldPath={oldPath}
         newPath={newPath}
+        toVersion={toVersion}
         type={type}
         hasDiff={hunks.length > 0}
         isDiffCollapsed={isDiffCollapsed}

@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import semver from 'semver'
-import { versions } from '../../../releases'
-import { removeAppPathPrefix } from '../../../utils'
+import { removeAppPathPrefix, getVersionsInDiff } from '../../../utils'
 import Markdown from '../Markdown'
 
 const Container = styled.div`
@@ -19,22 +17,14 @@ const LINE_CHANGE_TYPES = {
   NEUTRAL: 'N'
 }
 
-const releasedVersions = versions.map(version => ({
-  ...require(`../../../releases/${version}`).default,
-  version
-}))
-
 const getLineNumberWithType = ({ lineChangeType, lineNumber }) =>
   `${LINE_CHANGE_TYPES[lineChangeType.toUpperCase()]}${lineNumber}`
 
 const getComments = ({ newPath, fromVersion, toVersion }) => {
   const newPathSanitized = removeAppPathPrefix(newPath)
-  const cleanedToVersion = semver.valid(semver.coerce(toVersion))
 
-  const versionsInDiff = releasedVersions.filter(
-    ({ version, comments }) =>
-      semver.lte(version, cleanedToVersion) &&
-      semver.gt(version, fromVersion) &&
+  const versionsInDiff = getVersionsInDiff({ fromVersion, toVersion }).filter(
+    ({ comments }) =>
       comments.some(({ fileName }) => fileName === newPathSanitized)
   )
 

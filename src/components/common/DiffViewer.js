@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { parseDiff, withChangeSelect } from 'react-diff-view'
 import 'react-diff-view/style/index.css'
+import { getDiffPatchURL } from '../../utils'
 import Diff from './Diff/Diff'
 import Loading from './Loading'
+import UsefulContentSection from './UsefulContentSection'
 
 const Container = styled.div`
   width: 90%;
 `
-
-const getPatchURL = ({ fromVersion, toVersion }) =>
-  `https://raw.githubusercontent.com/react-native-community/rn-diff-purge/diffs/diffs/${fromVersion}..${toVersion}.diff`
 
 const DiffViewer = ({
   showDiff,
@@ -31,7 +30,7 @@ const DiffViewer = ({
       setLoading(true)
 
       const response = await (await fetch(
-        getPatchURL({ fromVersion, toVersion })
+        getDiffPatchURL({ fromVersion, toVersion })
       )).text()
 
       setDiff(
@@ -56,6 +55,8 @@ const DiffViewer = ({
 
   return (
     <Container>
+      <UsefulContentSection fromVersion={fromVersion} toVersion={toVersion} />
+
       {diff.map(diff => (
         <Diff
           key={`${diff.oldRevision}${diff.newRevision}`}
