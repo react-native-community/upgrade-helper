@@ -51,11 +51,11 @@ const FileStatus = ({ type, ...props }) => {
 }
 
 const BinaryBadge = ({ visible, ...props }) =>
-  visible && (
+  visible ? (
     <Tag {...props} color="cyan">
       BINARY
     </Tag>
-  )
+  ) : null
 
 const HeaderButtonsContainer = styled(props => <div {...props} />)`
   float: right;
@@ -63,7 +63,7 @@ const HeaderButtonsContainer = styled(props => <div {...props} />)`
 
 const DownloadFileButton = styled(
   ({ visible, toVersion, newPath, ...props }) =>
-    visible && (
+    visible ? (
       <Button
         {...props}
         type="ghost"
@@ -76,7 +76,7 @@ const DownloadFileButton = styled(
           }))
         }
       />
-    )
+    ) : null
 )`
   color: #24292e;
   font-size: 12px;
@@ -85,17 +85,42 @@ const DownloadFileButton = styled(
   &:focus {
     color: #24292e;
   }
+  `
+  
+const CompleteDiffButton = styled(
+  ({ diffKey, isDiffCompleted, onCompleteDiff, ...props }) => (
+    <Button
+      {...props}
+      type="ghost"
+      shape="circle"
+      icon="check"
+      onClick={() => onCompleteDiff(diffKey)}
+    />
+  )
+)`
+  font-size: 12px;
+  line-height: 0;
+  border-width: 0px;
+  width: 20px;
+  height: 20px;
+  margin: 5px 8px 0;
+  &,
+  &:hover,
+  &:focus {
+    color: ${({ isDiffCompleted }) =>
+      isDiffCompleted ? '#52c41a' : '#24292e'};
+  }
 `
 
 const CollapseDiffButton = styled(
   ({ visible, isDiffCollapsed, ...props }) =>
-    visible && <Button {...props} type="link" icon="up" />
+    visible ? <Button {...props} type="link" icon="down" /> : null
 )`
   color: #24292e;
   margin-right: 2px;
   font-size: 10px;
   transform: ${({ isDiffCollapsed }) =>
-    isDiffCollapsed ? 'rotate(-180deg)' : 'initial'};
+    isDiffCollapsed ? 'rotate(-90deg)' : 'initial'};
   transition: transform 0.2s ease-in-out;
   transform-origin: center;
   line-height: 0;
@@ -112,12 +137,20 @@ const DiffHeader = styled(
     newPath,
     toVersion,
     type,
+    diffKey,
     hasDiff,
     isDiffCollapsed,
     setIsDiffCollapsed,
+    isDiffCompleted,
+    onCompleteDiff,
     ...props
   }) => (
     <div {...props}>
+      <CollapseDiffButton
+        visible={hasDiff}
+        isDiffCollapsed={isDiffCollapsed}
+        onClick={() => setIsDiffCollapsed(!isDiffCollapsed)}
+      />
       <FileName oldPath={oldPath} newPath={newPath} type={type} />{' '}
       <FileStatus type={type} />
       <BinaryBadge visible={!hasDiff} />
@@ -128,10 +161,10 @@ const DiffHeader = styled(
             toVersion={toVersion}
             newPath={newPath}
           />
-          <CollapseDiffButton
-            visible={hasDiff}
-            isDiffCollapsed={isDiffCollapsed}
-            onClick={() => setIsDiffCollapsed(!isDiffCollapsed)}
+          <CompleteDiffButton
+            diffKey={diffKey}
+            isDiffCompleted={isDiffCompleted}
+            onCompleteDiff={onCompleteDiff}
           />
         </Fragment>
       </HeaderButtonsContainer>

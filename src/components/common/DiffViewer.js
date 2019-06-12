@@ -11,6 +11,9 @@ const Container = styled.div`
   width: 90%;
 `
 
+const getDiffKey = ({ oldRevision, newRevision }) =>
+  `${oldRevision}${newRevision}`
+
 const DiffViewer = ({
   showDiff,
   fromVersion,
@@ -20,6 +23,17 @@ const DiffViewer = ({
 }) => {
   const [isLoading, setLoading] = useState(true)
   const [diff, setDiff] = useState(null)
+  const [completedDiffs, setCompletedDiffs] = useState([])
+
+  const handleCompleteDiff = diffKey => {
+    if (completedDiffs.includes(diffKey)) {
+      return setCompletedDiffs(prevCompletedDiffs =>
+        prevCompletedDiffs.filter(completedDiff => completedDiff !== diffKey)
+      )
+    }
+
+    setCompletedDiffs(prevCompletedDiffs => [...prevCompletedDiffs, diffKey])
+  }
 
   useEffect(() => {
     if (!showDiff) {
@@ -57,16 +71,23 @@ const DiffViewer = ({
     <Container>
       <UsefulContentSection fromVersion={fromVersion} toVersion={toVersion} />
 
-      {diff.map(diff => (
-        <Diff
-          key={`${diff.oldRevision}${diff.newRevision}`}
-          {...diff}
-          fromVersion={fromVersion}
-          toVersion={toVersion}
-          selectedChanges={selectedChanges}
-          onToggleChangeSelection={onToggleChangeSelection}
-        />
-      ))}
+      {diff.map(diff => {
+        const diffKey = getDiffKey(diff)
+
+        return (
+          <Diff
+            key={`${diff.oldRevision}${diff.newRevision}`}
+            {...diff}
+            diffKey={diffKey}
+            fromVersion={fromVersion}
+            toVersion={toVersion}
+            isDiffCompleted={completedDiffs.includes(diffKey)}
+            onCompleteDiff={handleCompleteDiff}
+            selectedChanges={selectedChanges}
+            onToggleChangeSelection={onToggleChangeSelection}
+          />
+        )
+      })}
     </Container>
   )
 }
