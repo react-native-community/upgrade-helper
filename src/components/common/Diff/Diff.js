@@ -54,13 +54,16 @@ const DiffView = styled(RDiff)`
 
 // Diff will be collapsed by default if the file has been deleted or has more than 5 hunks
 const isDiffCollapsedByDefault = ({ type, hunks }) =>
-  type === 'delete' || hunks.length > 5
+  type === 'delete' || hunks.length > 5 ? true : undefined
 
 const Diff = ({
   oldPath,
   newPath,
   type,
   hunks,
+  diffKey,
+  isDiffCompleted,
+  onCompleteDiff,
   selectedChanges,
   onToggleChangeSelection
 }) => {
@@ -68,15 +71,22 @@ const Diff = ({
     isDiffCollapsedByDefault({ type, hunks })
   )
 
+  if (isDiffCompleted && isDiffCollapsed === undefined) {
+    setIsDiffCollapsed(true)
+  }
+
   return (
     <Container>
       <DiffHeader
         oldPath={oldPath}
         newPath={newPath}
         type={type}
+        diffKey={diffKey}
         hasDiff={hunks.length > 0}
         isDiffCollapsed={isDiffCollapsed}
         setIsDiffCollapsed={setIsDiffCollapsed}
+        isDiffCompleted={isDiffCompleted}
+        onCompleteDiff={onCompleteDiff}
       />
 
       {!isDiffCollapsed && (
@@ -108,4 +118,11 @@ const Diff = ({
   )
 }
 
-export default Diff
+/*
+  Return true if passing `nextProps` to render would return
+  the same result as passing prevProps to render, otherwise return false
+*/
+const arePropsEqual = (prevProps, nextProps) =>
+  prevProps.isDiffCompleted === nextProps.isDiffCompleted
+
+export default React.memo(Diff, arePropsEqual)

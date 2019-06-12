@@ -64,13 +64,40 @@ const HeaderButtonsContainer = styled(
   float: right;
 `
 
-const CollapseDiffButton = styled(({ isDiffCollapsed, ...props }) => (
-  <Button {...props} type="link" icon="up" />
-))`
+const CompleteDiffButton = styled(
+  ({ diffKey, isDiffCompleted, onCompleteDiff, ...props }) => (
+    <Button
+      {...props}
+      type="ghost"
+      shape="circle"
+      icon="check"
+      onClick={() => onCompleteDiff(diffKey)}
+    />
+  )
+)`
+  font-size: 12px;
+  line-height: 0;
+  border-width: 0px;
+  width: 20px;
+  height: 20px;
+  margin: 5px 8px 0;
+  &,
+  &:hover,
+  &:focus {
+    color: ${({ isDiffCompleted }) =>
+      isDiffCompleted ? '#52c41a' : '#24292e'};
+  }
+`
+
+const CollapseDiffButton = styled(
+  ({ isDiffCollapsed, isDiffCompleted, ...props }) => (
+    <Button {...props} type="link" icon="down" />
+  )
+)`
   color: #24292e;
   font-size: 10px;
   transform: ${({ isDiffCollapsed }) =>
-    isDiffCollapsed ? 'rotate(-180deg)' : 'initial'};
+    isDiffCollapsed ? 'rotate(-90deg)' : 'initial'};
   transition: transform 0.2s ease-in-out;
   transform-origin: center;
   line-height: 0;
@@ -86,19 +113,28 @@ const DiffHeader = styled(
     oldPath,
     newPath,
     type,
+    diffKey,
     hasDiff,
     isDiffCollapsed,
     setIsDiffCollapsed,
+    isDiffCompleted,
+    onCompleteDiff,
     ...props
   }) => (
     <div {...props}>
+      <CollapseDiffButton
+        isDiffCompleted={isDiffCompleted}
+        isDiffCollapsed={isDiffCollapsed}
+        onClick={() => setIsDiffCollapsed(!isDiffCollapsed)}
+      />
       <FileName oldPath={oldPath} newPath={newPath} type={type} />{' '}
       <FileStatus type={type} />
       <BinaryBadge visible={!hasDiff} />
       <HeaderButtonsContainer hasDiff={hasDiff}>
-        <CollapseDiffButton
-          isDiffCollapsed={isDiffCollapsed}
-          onClick={() => setIsDiffCollapsed(!isDiffCollapsed)}
+        <CompleteDiffButton
+          diffKey={diffKey}
+          isDiffCompleted={isDiffCompleted}
+          onCompleteDiff={onCompleteDiff}
         />
       </HeaderButtonsContainer>
     </div>

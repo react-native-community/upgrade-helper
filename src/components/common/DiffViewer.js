@@ -12,6 +12,9 @@ const Container = styled.div`
 const getPatchURL = ({ fromVersion, toVersion }) =>
   `https://raw.githubusercontent.com/react-native-community/rn-diff-purge/diffs/diffs/${fromVersion}..${toVersion}.diff`
 
+const getDiffKey = ({ oldRevision, newRevision }) =>
+  `${oldRevision}${newRevision}`
+
 const DiffViewer = ({
   showDiff,
   fromVersion,
@@ -21,6 +24,17 @@ const DiffViewer = ({
 }) => {
   const [isLoading, setLoading] = useState(true)
   const [diff, setDiff] = useState(null)
+  const [completedDiffs, setCompletedDiffs] = useState([])
+
+  const handleCompleteDiff = diffKey => {
+    if (completedDiffs.includes(diffKey)) {
+      return setCompletedDiffs(prevCompletedDiffs =>
+        prevCompletedDiffs.filter(completedDiff => completedDiff !== diffKey)
+      )
+    }
+
+    setCompletedDiffs(prevCompletedDiffs => [...prevCompletedDiffs, diffKey])
+  }
 
   useEffect(() => {
     if (!showDiff) {
@@ -56,14 +70,21 @@ const DiffViewer = ({
 
   return (
     <Container>
-      {diff.map(diff => (
-        <Diff
-          key={`${diff.oldRevision}${diff.newRevision}`}
-          {...diff}
-          selectedChanges={selectedChanges}
-          onToggleChangeSelection={onToggleChangeSelection}
-        />
-      ))}
+      {diff.map(diff => {
+        const diffKey = getDiffKey(diff)
+
+        return (
+          <Diff
+            key={`${diff.oldRevision}${diff.newRevision}`}
+            {...diff}
+            diffKey={diffKey}
+            isDiffCompleted={completedDiffs.includes(diffKey)}
+            onCompleteDiff={handleCompleteDiff}
+            selectedChanges={selectedChanges}
+            onToggleChangeSelection={onToggleChangeSelection}
+          />
+        )
+      })}
     </Container>
   )
 }
