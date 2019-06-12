@@ -44,12 +44,11 @@ jobs:
               echo "Skipping deploy."
             fi
 workflows:
-  # If we are on master, deploy
-  deploy:
+  version: 2.1
+  deploy-to-gh-pages:
     jobs:
-      # filters:
-      #   branches:
-      #     only:
-      #       - master
-
-      - deploy
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
