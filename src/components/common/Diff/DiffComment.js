@@ -25,6 +25,8 @@ const getComments = ({ newPath, fromVersion, toVersion }) => {
 
   const versionsInDiff = getVersionsInDiff({ fromVersion, toVersion }).filter(
     ({ comments }) =>
+      comments &&
+      comments.length > 0 &&
       comments.some(({ fileName }) => fileName === newPathSanitized)
   )
 
