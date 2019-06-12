@@ -23,6 +23,10 @@ const Home = () => {
   const [showDiff, setShowDiff] = useState(false)
 
   const handleShowDiff = ({ fromVersion, toVersion }) => {
+    if (fromVersion === toVersion) {
+      return
+    }
+
     setFromVersion(fromVersion)
     setToVersion(toVersion)
     setShowDiff(true)
