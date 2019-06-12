@@ -20,6 +20,9 @@ commands:
 jobs:
   # Deploy website to GitHub Pages
   deploy:
+    branches:
+      only:
+        - master
     executor: node10
     working_directory: ~/upgrade-helper
     steps:
@@ -44,12 +47,6 @@ jobs:
               echo "Skipping deploy."
             fi
 workflows:
-  # If we are on master, deploy
-  deploy:
+  deploy-to-gh-pages:
     jobs:
-      # filters:
-      #   branches:
-      #     only:
-      #       - master
-
       - deploy
