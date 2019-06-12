@@ -168,7 +168,7 @@ const VersionSelector = ({ showDiff }) => {
             })
           }
         >
-          Show me how to update!
+          Show me how to upgrade!
         </Button>
       </ButtonContainer>
     </Fragment>
