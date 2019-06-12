@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Diff as RDiff, Hunk, markEdits, tokenize } from 'react-diff-view'
 import DiffHeader from './DiffHeader'
+import { getComments } from './DiffComment'
 
 const Container = styled.div`
   border: 1px solid #ddd;
@@ -25,6 +26,7 @@ const DiffView = styled(RDiff)`
     padding: 0;
     text-align: center;
     font-size: 12px;
+    cursor: auto;
   }
 
   td.diff-gutter .diff-line-normal {
@@ -61,6 +63,8 @@ const Diff = ({
   newPath,
   type,
   hunks,
+  fromVersion,
+  toVersion,
   diffKey,
   isDiffCompleted,
   onCompleteDiff,
@@ -80,6 +84,7 @@ const Diff = ({
       <DiffHeader
         oldPath={oldPath}
         newPath={newPath}
+        toVersion={toVersion}
         type={type}
         diffKey={diffKey}
         hasDiff={hunks.length > 0}
@@ -94,6 +99,7 @@ const Diff = ({
           viewType="split"
           diffType={type}
           hunks={hunks}
+          widgets={getComments({ newPath, fromVersion, toVersion })}
           selectedChanges={selectedChanges}
         >
           {hunks => {
