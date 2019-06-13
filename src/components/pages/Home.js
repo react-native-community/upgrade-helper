@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Card } from 'antd'
 import GitHubButton from 'react-github-btn'
+import ReactGA from 'react-ga'
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
 
@@ -36,6 +37,13 @@ const Home = () => {
   const [fromVersion, setFromVersion] = useState('')
   const [toVersion, setToVersion] = useState('')
   const [showDiff, setShowDiff] = useState(false)
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.initialize('UA-136307971-1')
+      ReactGA.pageview('/')
+    }
+  }, [])
 
   const handleShowDiff = ({ fromVersion, toVersion }) => {
     setFromVersion(fromVersion)
