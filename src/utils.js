@@ -1,26 +1,29 @@
-export const INSTRUCTION_PLATFORMS = {
-  IOS: 'iOS',
-  ANDROID: 'Android'
-}
+import semver from 'semver'
+import { versions } from './releases'
 
-export const INSTRUCTION_CATEGORIES = {
-  ADDED: 'Added',
-  WARNINGS: 'Warnings',
-  CHANGES: 'Changes',
-  BREAKING_CHANGES: 'Breaking Changes',
-  TROUBLESHOOTING: 'Troubleshooting'
-}
+const RN_DIFF_REPO = 'react-native-community/rn-diff-purge'
 
-export const RELEASED_VERSIONS = ['0.59.0']
+const releasedVersions = versions.map(version => ({
+  ...require(`./releases/${version}`).default,
+  version
+}))
 
-export const RELEASES_URL =
-  'https://raw.githubusercontent.com/react-native-community/rn-diff-purge/master/RELEASES'
+export const RELEASES_URL = `https://raw.githubusercontent.com/${RN_DIFF_REPO}/master/RELEASES`
 
-export const PACKAGE_MANAGERS = {
-  yarn: {
-    command: pkg => `yarn add ${pkg}`
-  },
-  npm: {
-    command: pkg => `npm install ${pkg} --save`
-  }
+export const getDiffPatchURL = ({ fromVersion, toVersion }) =>
+  `https://raw.githubusercontent.com/${RN_DIFF_REPO}/diffs/diffs/${fromVersion}..${toVersion}.diff`
+
+// `path` must contain `RnDiffApp` prefix
+export const getBinaryFileURL = ({ version, path }) =>
+  `https://github.com/${RN_DIFF_REPO}/raw/release/${version}/${path}`
+
+export const removeAppPathPrefix = path => path.replace(/RnDiffApp\//, '')
+
+export const getVersionsInDiff = ({ fromVersion, toVersion }) => {
+  const cleanedToVersion = semver.valid(semver.coerce(toVersion))
+
+  return releasedVersions.filter(
+    ({ version }) =>
+      semver.lte(version, cleanedToVersion) && semver.gt(version, fromVersion)
+  )
 }

@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { parseDiff, withChangeSelect } from 'react-diff-view'
 import 'react-diff-view/style/index.css'
+import { getDiffPatchURL } from '../../utils'
 import Diff from './Diff/Diff'
 import Loading from './Loading'
+import UsefulContentSection from './UsefulContentSection'
 
 const Container = styled.div`
   width: 90%;
 `
 
-const getPatchURL = ({ fromVersion, toVersion }) =>
-  `https://raw.githubusercontent.com/react-native-community/rn-diff-purge/diffs/diffs/${fromVersion}..${toVersion}.diff`
+const getDiffKey = ({ oldRevision, newRevision }) =>
+  `${oldRevision}${newRevision}`
 
 const DiffViewer = ({
   showDiff,
@@ -21,6 +23,17 @@ const DiffViewer = ({
 }) => {
   const [isLoading, setLoading] = useState(true)
   const [diff, setDiff] = useState(null)
+  const [completedDiffs, setCompletedDiffs] = useState([])
+
+  const handleCompleteDiff = diffKey => {
+    if (completedDiffs.includes(diffKey)) {
+      return setCompletedDiffs(prevCompletedDiffs =>
+        prevCompletedDiffs.filter(completedDiff => completedDiff !== diffKey)
+      )
+    }
+
+    setCompletedDiffs(prevCompletedDiffs => [...prevCompletedDiffs, diffKey])
+  }
 
   useEffect(() => {
     if (!showDiff) {
@@ -31,7 +44,7 @@ const DiffViewer = ({
       setLoading(true)
 
       const response = await (await fetch(
-        getPatchURL({ fromVersion, toVersion })
+        getDiffPatchURL({ fromVersion, toVersion })
       )).text()
 
       setDiff(
@@ -56,16 +69,27 @@ const DiffViewer = ({
 
   return (
     <Container>
-      {diff.map(diff => (
-        <Diff
-          key={`${diff.oldRevision}${diff.newRevision}`}
-          {...diff}
-          // otakustay/react-diff-view#49
-          type={diff.type === 'new' ? 'add' : diff.type}
-          selectedChanges={selectedChanges}
-          onToggleChangeSelection={onToggleChangeSelection}
-        />
-      ))}
+      <UsefulContentSection fromVersion={fromVersion} toVersion={toVersion} />
+
+      {diff.map(diff => {
+        const diffKey = getDiffKey(diff)
+
+        return (
+          <Diff
+            key={`${diff.oldRevision}${diff.newRevision}`}
+            {...diff}
+             // otakustay/react-diff-view#49
+            type={diff.type === 'new' ? 'add' : diff.type}
+            diffKey={diffKey}
+            fromVersion={fromVersion}
+            toVersion={toVersion}
+            isDiffCompleted={completedDiffs.includes(diffKey)}
+            onCompleteDiff={handleCompleteDiff}
+            selectedChanges={selectedChanges}
+            onToggleChangeSelection={onToggleChangeSelection}
+          />
+        )
+      })}
     </Container>
   )
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Diff as RDiff, Hunk, markEdits, tokenize } from 'react-diff-view'
 import DiffHeader from './DiffHeader'
+import { getComments } from './DiffComment'
 
 const Container = styled.div`
   border: 1px solid #ddd;
@@ -25,6 +26,7 @@ const DiffView = styled(RDiff)`
     padding: 0;
     text-align: center;
     font-size: 12px;
+    cursor: auto;
   }
 
   td.diff-gutter .diff-line-normal {
@@ -54,13 +56,18 @@ const DiffView = styled(RDiff)`
 
 // Diff will be collapsed by default if the file has been deleted or has more than 5 hunks
 const isDiffCollapsedByDefault = ({ type, hunks }) =>
-  type === 'delete' || hunks.length > 5
+  type === 'delete' || hunks.length > 5 ? true : undefined
 
 const Diff = ({
   oldPath,
   newPath,
   type,
   hunks,
+  fromVersion,
+  toVersion,
+  diffKey,
+  isDiffCompleted,
+  onCompleteDiff,
   selectedChanges,
   onToggleChangeSelection
 }) => {
@@ -68,15 +75,23 @@ const Diff = ({
     isDiffCollapsedByDefault({ type, hunks })
   )
 
+  if (isDiffCompleted && isDiffCollapsed === undefined) {
+    setIsDiffCollapsed(true)
+  }
+
   return (
     <Container>
       <DiffHeader
         oldPath={oldPath}
         newPath={newPath}
+        toVersion={toVersion}
         type={type}
+        diffKey={diffKey}
         hasDiff={hunks.length > 0}
         isDiffCollapsed={isDiffCollapsed}
         setIsDiffCollapsed={setIsDiffCollapsed}
+        isDiffCompleted={isDiffCompleted}
+        onCompleteDiff={onCompleteDiff}
       />
 
       {!isDiffCollapsed && (
@@ -84,6 +99,7 @@ const Diff = ({
           viewType="split"
           diffType={type}
           hunks={hunks}
+          widgets={getComments({ newPath, fromVersion, toVersion })}
           selectedChanges={selectedChanges}
         >
           {hunks => {
@@ -108,4 +124,11 @@ const Diff = ({
   )
 }
 
-export default Diff
+/*
+  Return true if passing `nextProps` to render would return
+  the same result as passing prevProps to render, otherwise return false
+*/
+const arePropsEqual = (prevProps, nextProps) =>
+  prevProps.isDiffCompleted === nextProps.isDiffCompleted
+
+export default React.memo(Diff, arePropsEqual)
