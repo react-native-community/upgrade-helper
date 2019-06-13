@@ -225,12 +225,10 @@ const VersionSelector = ({ showDiff }) => {
       })
     )
 
-    if (hasVersionsFromURL) {
-      updateURLVersions({
-        fromVersion: localFromVersion,
-        toVersion: localToVersion
-      })
-    }
+    updateURLVersions({
+      fromVersion: localFromVersion,
+      toVersion: localToVersion
+    })
   }, [
     isLoading,
     allVersions,
