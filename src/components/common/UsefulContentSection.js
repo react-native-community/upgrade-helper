@@ -8,7 +8,7 @@ const Container = styled.div`
   position: relative;
   margin-top: 16px;
   color: rgba(0, 0, 0, 0.65);
-  max-height: ${({ isVisible }) => (isVisible ? '500px' : 0)}
+  max-height: ${({ isVisible }) => (isVisible ? '800px' : 0)}
   overflow: hidden;
   transition: max-height 0.4s ease-out;
 `
