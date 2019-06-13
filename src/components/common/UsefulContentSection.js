@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react'
 import styled from 'styled-components'
 import { Button } from 'antd'
-import { getVersionsInDiff } from '../../utils'
+import { getVersionsInDiff, getChangelogURL } from '../../utils'
 import { Link } from './Markdown'
 
 const Container = styled.div`
@@ -53,6 +53,13 @@ const CloseButton = styled(({ isVisible, setVisibility, ...props }) => (
   }
 `
 
+const ReleaseSeparator = styled.hr`
+  margin: 15px 0;
+  background-color: #e1e4e8;
+  height: 0.25em;
+  border: 0;
+`
+
 const List = styled.ol`
   padding-inline-start: 18px;
   margin: 10px 0 0;
@@ -70,6 +77,8 @@ const UsefulContentSection = ({ fromVersion, toVersion }) => {
     return null
   }
 
+  const hasMoreThanOneRelease = versions.length > 1
+
   return (
     <Container isVisible={isVisible}>
       <InnerContainer>
@@ -79,19 +88,37 @@ const UsefulContentSection = ({ fromVersion, toVersion }) => {
 
         <CloseButton isVisible={isVisible} setVisibility={setVisibility} />
 
-        {versions.map(({ usefulContent }, key) => (
-          <Fragment key={key}>
-            <span>{usefulContent.description}</span>
+        {versions.map(({ usefulContent, version }, key) => {
+          const versionWithoutEndingZero = version.slice(0, 4)
 
-            <List>
-              {usefulContent.links.map(({ url, title }, key) => (
-                <li key={`${url}${key}`}>
-                  <Link href={url}>{title}</Link>
-                </li>
-              ))}
-            </List>
-          </Fragment>
-        ))}
+          const links = [
+            ...usefulContent.links,
+            {
+              title: `React Native ${versionWithoutEndingZero} changelog`,
+              url: getChangelogURL({ version: versionWithoutEndingZero })
+            }
+          ]
+
+          return (
+            <Fragment key={key}>
+              {key > 0 && <ReleaseSeparator />}
+
+              {hasMoreThanOneRelease && (
+                <h3>Release {versionWithoutEndingZero}</h3>
+              )}
+
+              <span>{usefulContent.description}</span>
+
+              <List>
+                {links.map(({ url, title }, key) => (
+                  <li key={`${url}${key}`}>
+                    <Link href={url}>{title}</Link>
+                  </li>
+                ))}
+              </List>
+            </Fragment>
+          )
+        })}
       </InnerContainer>
     </Container>
   )
