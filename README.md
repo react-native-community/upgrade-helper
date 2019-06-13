@@ -1,48 +1,47 @@
-https://react-native-community.github.io/upgrade-helper
+# Upgrade Helper
 
 [![CircleCI](https://circleci.com/gh/react-native-community/upgrade-helper.svg?style=svg)](https://circleci.com/gh/react-native-community/upgrade-helper)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
+[Open the tool!](https://react-native-community.github.io/upgrade-helper)
+
+A web tool to help you upgrading your React Native app with ease 🚀
+
+![image](https://user-images.githubusercontent.com/6207220/59149165-90821780-8a12-11e9-97ef-d77c821f3bde.png)
+
+## How it works
+
+The **Upgrade Helper** tool aims to provide the full set of changes happening between any two versions, based on the previous work done in the [rn-diff-purge](https://github.com/react-native-community/rn-diff-purge) project:
+
+> This repository exposes an untouched React Native app generated with the CLI react-native init RnDiffApp. Each new React Native release causes a new project to be created, removing the old one, and getting a diff between them. This way, the diff is always clean, always in sync with the changes of the init template.
+
+This will help you see what changes you need to do in your code.
+
+Aside from this, the tool provides you a couple of cool extra features:
+
+- inline comments to help you with more insights about precise files
+- a set of links with further explanations on what the version you are upgrading to
+- an handy "done" button near each file to help you keep track of your process
+- a download button for new binary files
+- ...and we are planning many more features! Check the [enhacement tag](https://github.com/react-native-community/upgrade-helper/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement) in the issue section.
+
+## Contributing
+
+If you want to help us making this better, you can start by forking the project and follow these steps to testing it out locally:
+
+1. Clone the project
+1. Run `yarn install`
+1. Run `yarn start`
+1. Open `http://localhost:3000`
+1. Select starting & target versions
+1. Click the `Show me how to update` button
+
+After which, you can create a branch in which making your changes, and then open a PR against this repo following the provided template 🤗
+
+## Acknowledgments
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## License
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project is released under the MIT license (check the LICENSE file for details).
