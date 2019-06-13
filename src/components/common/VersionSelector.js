@@ -199,7 +199,9 @@ const VersionSelector = ({ showDiff }) => {
 
       setHasVersionsFromURL(doesHaveVersionsInURL)
 
-      upgradeButtonEl.current.props.onClick()
+      if (doesHaveVersionsInURL) {
+        upgradeButtonEl.current.props.onClick()
+      }
     }
 
     fetchVersions()
