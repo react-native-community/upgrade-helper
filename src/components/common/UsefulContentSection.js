@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { Button } from 'antd'
 import { getVersionsInDiff, getChangelogURL } from '../../utils'
@@ -28,13 +28,13 @@ const Icon = styled(props => (
   margin: 0px 10px;
 `
 
-const CloseButton = styled(({ isVisible, setVisibility, ...props }) => (
+const CloseButton = styled(({ toggleVisibility, ...props }) => (
   <Button
     {...props}
     type="ghost"
     shape="circle"
     icon="close"
-    onClick={() => setVisibility(!isVisible)}
+    onClick={toggleVisibility}
   />
 ))`
   float: right;
@@ -45,7 +45,7 @@ const CloseButton = styled(({ isVisible, setVisibility, ...props }) => (
   border-width: 0px;
   width: 20px;
   height: 20px;
-  padding-right: 8px;
+  margin-right: 8px;
   &,
   &:hover,
   &:focus {
@@ -65,63 +65,81 @@ const List = styled.ol`
   margin: 10px 0 0;
 `
 
-const UsefulContentSection = ({ fromVersion, toVersion }) => {
-  const [isVisible, setVisibility] = useState(true)
-
-  const versions = getVersionsInDiff({ fromVersion, toVersion })
-  const doesAnyVersionHaveUsefulContent = versions.some(
-    ({ usefulContent }) => !!usefulContent
-  )
-
-  if (!doesAnyVersionHaveUsefulContent) {
-    return null
+class UsefulContentSection extends Component {
+  state = {
+    isVisible: true,
   }
 
-  const hasMoreThanOneRelease = versions.length > 1
+  shouldComponentUpdate(nextProps, nextState) {
+    // Only re-render component if it has reloaded the diff on the parent
+    const hasLoaded = this.props.isLoading && !nextProps.isLoading
+    // or if it has been hidden
+    const hasBeenHidden = this.state.isVisible && !nextState.isVisible
 
-  return (
-    <Container isVisible={isVisible}>
-      <InnerContainer>
-        <h2>
-          <Icon /> Useful content for upgrading
-        </h2>
+    return hasLoaded || hasBeenHidden;
+  }
 
-        <CloseButton isVisible={isVisible} setVisibility={setVisibility} />
+  handleToggleVisibility = () => this.setState(({ isVisible }) => ({ isVisible: !isVisible }));
 
-        {versions.map(({ usefulContent, version }, key) => {
-          const versionWithoutEndingZero = version.slice(0, 4)
+  render() {
+    const { fromVersion, toVersion } = this.props
+    const { isVisible } = this.state
 
-          const links = [
-            ...usefulContent.links,
-            {
-              title: `React Native ${versionWithoutEndingZero} changelog`,
-              url: getChangelogURL({ version: versionWithoutEndingZero })
-            }
-          ]
+    const versions = getVersionsInDiff({ fromVersion, toVersion })
+    const doesAnyVersionHaveUsefulContent = versions.some(
+      ({ usefulContent }) => !!usefulContent
+    )
+  
+    if (!doesAnyVersionHaveUsefulContent) {
+      return null
+    }
+  
+    const hasMoreThanOneRelease = versions.length > 1
 
-          return (
-            <Fragment key={key}>
-              {key > 0 && <ReleaseSeparator />}
-
-              {hasMoreThanOneRelease && (
-                <h3>Release {versionWithoutEndingZero}</h3>
-              )}
-
-              <span>{usefulContent.description}</span>
-
-              <List>
-                {links.map(({ url, title }, key) => (
-                  <li key={`${url}${key}`}>
-                    <Link href={url}>{title}</Link>
-                  </li>
-                ))}
-              </List>
-            </Fragment>
-          )
-        })}
-      </InnerContainer>
-    </Container>
-  )
+    return (
+      <Container isVisible={isVisible}>
+        <InnerContainer>
+          <h2>
+            <Icon /> Useful content for upgrading
+          </h2>
+  
+          <CloseButton toggleVisibility={this.handleToggleVisibility} />
+  
+          {versions.map(({ usefulContent, version }, key) => {
+            const versionWithoutEndingZero = version.slice(0, 4)
+  
+            const links = [
+              ...usefulContent.links,
+              {
+                title: `React Native ${versionWithoutEndingZero} changelog`,
+                url: getChangelogURL({ version: versionWithoutEndingZero })
+              }
+            ]
+  
+            return (
+              <Fragment key={key}>
+                {key > 0 && <ReleaseSeparator />}
+  
+                {hasMoreThanOneRelease && (
+                  <h3>Release {versionWithoutEndingZero}</h3>
+                )}
+  
+                <span>{usefulContent.description}</span>
+  
+                <List>
+                  {links.map(({ url, title }, key) => (
+                    <li key={`${url}${key}`}>
+                      <Link href={url}>{title}</Link>
+                    </li>
+                  ))}
+                </List>
+              </Fragment>
+            )
+          })}
+        </InnerContainer>
+      </Container>
+    )
+  }
 }
 
 export default UsefulContentSection

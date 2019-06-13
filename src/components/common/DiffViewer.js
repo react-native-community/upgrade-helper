@@ -69,7 +69,7 @@ const DiffViewer = ({
 
   return (
     <Container>
-      <UsefulContentSection fromVersion={fromVersion} toVersion={toVersion} />
+      <UsefulContentSection isLoading={isLoading} fromVersion={fromVersion} toVersion={toVersion} />
 
       {diff.map(diff => {
         const diffKey = getDiffKey(diff)
