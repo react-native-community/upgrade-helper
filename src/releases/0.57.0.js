@@ -8,11 +8,6 @@ export default {
         url:
           'https://reactnative.thenativebits.com/courses/upgrading-react-native/upgrade-to-react-native-0.57/'
       }
-      // {
-      //   title: 'React Native 0.59 changelog',
-      //   url:
-      //     'https://github.com/react-native-community/releases/blob/master/CHANGELOG.md#059'
-      // }
     ]
   }
 }
