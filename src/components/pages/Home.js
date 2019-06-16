@@ -5,6 +5,7 @@ import GitHubButton from 'react-github-btn'
 import ReactGA from 'react-ga'
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
+import { homepage } from '../../../package.json'
 
 const Page = styled.div`
   display: flex;
@@ -55,7 +56,7 @@ const Home = () => {
     <Page>
       <Container>
         <TitleContainer>
-          <h1>React Native upgrade guide</h1>
+          <a href={homepage}><h1>React Native upgrade guide</h1></a>
 
           <StarButton
             href="https://github.com/react-native-community/upgrade-helper"
