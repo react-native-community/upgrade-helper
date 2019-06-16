@@ -137,8 +137,6 @@ const VersionSelector = ({ showDiff }) => {
 
   return (
     <Fragment>
-      <h1>React Native update guide</h1>
-
       <Selectors>
         <FromVersionSelector
           title="What's your current React Native version?"
