@@ -2,8 +2,10 @@ import React, { Fragment, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button } from 'antd'
 import semver from 'semver'
+
 import { RELEASES_URL } from '../../utils'
 import { Select } from './'
+import { homepage } from '../../../package.json'
 
 const Selectors = styled.div`
   display: flex;
@@ -137,7 +139,7 @@ const VersionSelector = ({ showDiff }) => {
 
   return (
     <Fragment>
-      <h1>React Native upgrade guide</h1>
+      <a href={homepage}><h1>React Native upgrade guide</h1></a>
 
       <Selectors>
         <FromVersionSelector
