@@ -137,7 +137,7 @@ const VersionSelector = ({ showDiff }) => {
 
   return (
     <Fragment>
-      <h1>React Native update guide</h1>
+      <h1>React Native upgrade guide</h1>
 
       <Selectors>
         <FromVersionSelector
