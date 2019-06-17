@@ -29,9 +29,14 @@ const ButtonContainer = styled.div`
 
 const getVersionsInURL = () => {
   if (window.location.search) {
-    // Parses `/?fromVersion=VERSION&toVersion=VERSION` from URL
+    // Parses `/?from=VERSION&toVersion=VERSION` from URL
+    const { from: fromVersion, to: toVersion } = queryString.parse(
+      window.location.search
+    )
+
     return {
-      ...queryString.parse(window.location.search)
+      fromVersion,
+      toVersion
     }
   }
 
@@ -118,7 +123,7 @@ const doesVersionExist = ({ version, allVersions, minVersion }) => {
 
 const updateURLVersions = ({ fromVersion, toVersion }) => {
   const newURL = window.location.search
-    ? `/?fromVersion=${fromVersion}&toVersion=${toVersion}`
+    ? `/?from=${fromVersion}&to=${toVersion}`
     : `/${fromVersion}..${toVersion}`
 
   window.history.replaceState(null, null, newURL)
