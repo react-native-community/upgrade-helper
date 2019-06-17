@@ -29,7 +29,7 @@ const ButtonContainer = styled.div`
 
 const getVersionsInURL = () => {
   if (window.location.search) {
-    // Parses `/?from=VERSION&toVersion=VERSION` from URL
+    // Parses `/?from=VERSION&to=VERSION` from URL
     const { from: fromVersion, to: toVersion } = queryString.parse(
       window.location.search
     )
