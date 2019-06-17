@@ -229,11 +229,6 @@ const VersionSelector = ({ showDiff }) => {
         minVersion: localFromVersion
       })
     )
-
-    updateURLVersions({
-      fromVersion: localFromVersion,
-      toVersion: localToVersion
-    })
   }, [
     isLoading,
     allVersions,
@@ -241,6 +236,18 @@ const VersionSelector = ({ showDiff }) => {
     localToVersion,
     hasVersionsFromURL
   ])
+
+  const onShowDiff = ({ fromVersion, toVersion }) => {
+    showDiff({
+      fromVersion,
+      toVersion
+    })
+
+    updateURLVersions({
+      fromVersion: localFromVersion,
+      toVersion: localToVersion
+    })
+  }
 
   return (
     <Fragment>
@@ -268,7 +275,7 @@ const VersionSelector = ({ showDiff }) => {
           type="primary"
           size="large"
           onClick={() =>
-            showDiff({
+            onShowDiff({
               fromVersion: localFromVersion,
               toVersion: localToVersion
             })
