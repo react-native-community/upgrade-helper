@@ -122,11 +122,12 @@ const doesVersionExist = ({ version, allVersions, minVersion }) => {
 }
 
 const updateURLVersions = ({ fromVersion, toVersion }) => {
+  const pageURL = window.location.href.replace(window.location.search, '')
   const newURL = window.location.search
-    ? `/?from=${fromVersion}&to=${toVersion}`
-    : `/${fromVersion}..${toVersion}`
+    ? `?from=${fromVersion}&to=${toVersion}`
+    : `${fromVersion}..${toVersion}`
 
-  window.history.replaceState(null, null, newURL)
+  window.history.replaceState(null, null, `${pageURL}${newURL}`)
 }
 
 const VersionSelector = ({ showDiff }) => {
