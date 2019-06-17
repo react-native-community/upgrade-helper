@@ -1,6 +1,6 @@
 # Upgrade Helper
 
-[![CircleCI](https://circleci.com/gh/react-native-community/upgrade-helper.svg?style=svg)](https://circleci.com/gh/react-native-community/upgrade-helper)
+[![CircleCI](https://circleci.com/gh/react-native-community/upgrade-helper.svg?style=shield)](https://circleci.com/gh/react-native-community/upgrade-helper)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 [Open the tool!](https://react-native-community.github.io/upgrade-helper)
