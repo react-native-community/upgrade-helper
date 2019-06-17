@@ -27,3 +27,9 @@ export const getVersionsInDiff = ({ fromVersion, toVersion }) => {
       semver.lte(version, cleanedToVersion) && semver.gt(version, fromVersion)
   )
 }
+
+export const getChangelogURL = ({ version }) =>
+  `https://github.com/react-native-community/releases/blob/master/CHANGELOG.md#${version.replace(
+    '.',
+    ''
+  )}`

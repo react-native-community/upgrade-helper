@@ -1,14 +1,14 @@
-import React, { useState, Fragment } from 'react'
+import React, { Component, Fragment } from 'react'
 import styled from 'styled-components'
 import { Button } from 'antd'
-import { getVersionsInDiff } from '../../utils'
+import { getVersionsInDiff, getChangelogURL } from '../../utils'
 import { Link } from './Markdown'
 
 const Container = styled.div`
   position: relative;
   margin-top: 16px;
   color: rgba(0, 0, 0, 0.65);
-  max-height: ${({ isVisible }) => (isVisible ? '500px' : 0)}
+  max-height: ${({ isVisible }) => (isVisible ? '800px' : 0)}
   overflow: hidden;
   transition: max-height 0.4s ease-out;
 `
@@ -28,13 +28,13 @@ const Icon = styled(props => (
   margin: 0px 10px;
 `
 
-const CloseButton = styled(({ isVisible, setVisibility, ...props }) => (
+const CloseButton = styled(({ toggleVisibility, ...props }) => (
   <Button
     {...props}
     type="ghost"
     shape="circle"
     icon="close"
-    onClick={() => setVisibility(!isVisible)}
+    onClick={toggleVisibility}
   />
 ))`
   float: right;
@@ -45,7 +45,7 @@ const CloseButton = styled(({ isVisible, setVisibility, ...props }) => (
   border-width: 0px;
   width: 20px;
   height: 20px;
-  padding-right: 8px;
+  margin-right: 8px;
   &,
   &:hover,
   &:focus {
@@ -53,48 +53,93 @@ const CloseButton = styled(({ isVisible, setVisibility, ...props }) => (
   }
 `
 
+const ReleaseSeparator = styled.hr`
+  margin: 15px 0;
+  background-color: #e1e4e8;
+  height: 0.25em;
+  border: 0;
+`
+
 const List = styled.ol`
   padding-inline-start: 18px;
   margin: 10px 0 0;
 `
 
-const UsefulContentSection = ({ fromVersion, toVersion }) => {
-  const [isVisible, setVisibility] = useState(true)
-
-  const versions = getVersionsInDiff({ fromVersion, toVersion })
-  const doesAnyVersionHaveUsefulContent = versions.some(
-    ({ usefulContent }) => !!usefulContent
-  )
-
-  if (!doesAnyVersionHaveUsefulContent) {
-    return null
+class UsefulContentSection extends Component {
+  state = {
+    isVisible: true,
   }
 
-  return (
-    <Container isVisible={isVisible}>
-      <InnerContainer>
-        <h2>
-          <Icon /> Useful content for upgrading
-        </h2>
+  shouldComponentUpdate(nextProps, nextState) {
+    // Only re-render component if it has reloaded the diff on the parent
+    const hasLoaded = this.props.isLoading && !nextProps.isLoading
+    // or if it has been hidden
+    const hasBeenHidden = this.state.isVisible && !nextState.isVisible
 
-        <CloseButton isVisible={isVisible} setVisibility={setVisibility} />
+    return hasLoaded || hasBeenHidden;
+  }
 
-        {versions.map(({ usefulContent }, key) => (
-          <Fragment key={key}>
-            <span>{usefulContent.description}</span>
+  handleToggleVisibility = () => this.setState(({ isVisible }) => ({ isVisible: !isVisible }));
 
-            <List>
-              {usefulContent.links.map(({ url, title }, key) => (
-                <li key={`${url}${key}`}>
-                  <Link href={url}>{title}</Link>
-                </li>
-              ))}
-            </List>
-          </Fragment>
-        ))}
-      </InnerContainer>
-    </Container>
-  )
+  render() {
+    const { fromVersion, toVersion } = this.props
+    const { isVisible } = this.state
+
+    const versions = getVersionsInDiff({ fromVersion, toVersion })
+    const doesAnyVersionHaveUsefulContent = versions.some(
+      ({ usefulContent }) => !!usefulContent
+    )
+  
+    if (!doesAnyVersionHaveUsefulContent) {
+      return null
+    }
+  
+    const hasMoreThanOneRelease = versions.length > 1
+
+    return (
+      <Container isVisible={isVisible}>
+        <InnerContainer>
+          <h2>
+            <Icon /> Useful content for upgrading
+          </h2>
+  
+          <CloseButton toggleVisibility={this.handleToggleVisibility} />
+  
+          {versions.map(({ usefulContent, version }, key) => {
+            const versionWithoutEndingZero = version.slice(0, 4)
+  
+            const links = [
+              ...usefulContent.links,
+              {
+                title: `React Native ${versionWithoutEndingZero} changelog`,
+                url: getChangelogURL({ version: versionWithoutEndingZero })
+              }
+            ]
+  
+            return (
+              <Fragment key={key}>
+                {key > 0 && <ReleaseSeparator />}
+  
+                {hasMoreThanOneRelease && (
+                  <h3>Release {versionWithoutEndingZero}</h3>
+                )}
+  
+                <span>{usefulContent.description}</span>
+  
+                <List>
+                  {links.map(({ url, title }, key) => (
+                    <li key={`${url}${key}`}>
+                      <Link href={url}>{title}</Link>
+                    </li>
+                  ))}
+                </List>
+              </Fragment>
+            )
+          })}
+        </InnerContainer>
+      </Container>
+    )
+  }
 }
 
 export default UsefulContentSection
