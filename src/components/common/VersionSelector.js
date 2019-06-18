@@ -28,28 +28,14 @@ const ButtonContainer = styled.div`
 `
 
 const getVersionsInURL = () => {
-  if (window.location.search) {
-    // Parses `/?from=VERSION&to=VERSION` from URL
-    const { from: fromVersion, to: toVersion } = queryString.parse(
-      window.location.search
-    )
+  // Parses `/?from=VERSION&to=VERSION` from URL
+  const { from: fromVersion, to: toVersion } = queryString.parse(
+    window.location.search
+  )
 
-    return {
-      fromVersion,
-      toVersion
-    }
-  }
-
-  if (window.location.pathname) {
-    // Parses `/VERSION...VERSION` from URL
-    const [fromVersion, toVersion] = window.location.pathname
-      .replace(/\//, '')
-      .split('..')
-
-    return {
-      fromVersion,
-      toVersion
-    }
+  return {
+    fromVersion,
+    toVersion
   }
 }
 
@@ -123,9 +109,7 @@ const doesVersionExist = ({ version, allVersions, minVersion }) => {
 
 const updateURLVersions = ({ fromVersion, toVersion }) => {
   const pageURL = window.location.href.replace(window.location.search, '')
-  const newURL = window.location.search
-    ? `?from=${fromVersion}&to=${toVersion}`
-    : `${fromVersion}..${toVersion}`
+  const newURL = `?from=${fromVersion}&to=${toVersion}`
 
   window.history.replaceState(null, null, `${pageURL}${newURL}`)
 }
