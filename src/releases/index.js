@@ -1,1 +1,6 @@
-export const versions = ['0.59.0', '0.58.0', '0.57.0']
+const versions = ['0.59', '0.58', '0.57']
+
+export default versions.map(version => ({
+  ...require(`./${version}`).default,
+  version
+}))
