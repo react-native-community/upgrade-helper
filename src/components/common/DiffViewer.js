@@ -6,6 +6,7 @@ import { getDiffPatchURL } from '../../utils'
 import Diff from './Diff/Diff'
 import Loading from './Loading'
 import UsefulContentSection from './UsefulContentSection'
+import CompletedFilesCounter from './CompletedFilesCounter'
 
 const Container = styled.div`
   width: 90%;
@@ -38,6 +39,8 @@ const DiffViewer = ({
     setCompletedDiffs(prevCompletedDiffs => [...prevCompletedDiffs, diffKey])
   }
 
+  const resetCompletedDiff = () => setCompletedDiffs([])
+
   useEffect(() => {
     if (!showDiff) {
       return
@@ -56,6 +59,8 @@ const DiffViewer = ({
         )
       )
 
+      resetCompletedDiff()
+
       setLoading(false)
     }
 
@@ -72,11 +77,16 @@ const DiffViewer = ({
 
   return (
     <Container>
-      <UsefulContentSection isLoading={isLoading} fromVersion={fromVersion} toVersion={toVersion} />
+      <UsefulContentSection
+        isLoading={isLoading}
+        fromVersion={fromVersion}
+        toVersion={toVersion}
+      />
       {(diff.length !== completedDiffs.length) ? <Title>Undone</Title> : null}
       {diff.map(diff => {
         // Undone Section
         const diffKey = getDiffKey(diff)
+
         if (!completedDiffs.includes(diffKey)) {
           return (
             <Diff
@@ -124,6 +134,11 @@ const DiffViewer = ({
         }
         return null
       })}
+
+      <CompletedFilesCounter
+        completed={completedDiffs.length}
+        total={diff.length}
+      />
     </Container>
   )
 }

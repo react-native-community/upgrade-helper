@@ -1,12 +1,7 @@
 import semver from 'semver'
-import { versions } from './releases'
+import versions from './releases'
 
 const RN_DIFF_REPO = 'react-native-community/rn-diff-purge'
-
-const releasedVersions = versions.map(version => ({
-  ...require(`./releases/${version}`).default,
-  version
-}))
 
 export const RELEASES_URL = `https://raw.githubusercontent.com/${RN_DIFF_REPO}/master/RELEASES`
 
@@ -22,10 +17,15 @@ export const removeAppPathPrefix = path => path.replace(/RnDiffApp\//, '')
 export const getVersionsInDiff = ({ fromVersion, toVersion }) => {
   const cleanedToVersion = semver.valid(semver.coerce(toVersion))
 
-  return releasedVersions.filter(
-    ({ version }) =>
-      semver.lte(version, cleanedToVersion) && semver.gt(version, fromVersion)
-  )
+  return versions.filter(({ version }) => {
+    const cleanedVersion = semver.coerce(version)
+
+    // `cleanedVersion` can't be newer than `cleanedToVersion` nor older (or equal) than `fromVersion`
+    return (
+      semver.compare(cleanedToVersion, cleanedVersion) !== -1 &&
+      ![0, -1].includes(semver.compare(cleanedVersion, fromVersion))
+    )
+  })
 }
 
 export const getChangelogURL = ({ version }) =>
