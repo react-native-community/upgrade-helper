@@ -10,6 +10,9 @@ import UsefulContentSection from './UsefulContentSection'
 const Container = styled.div`
   width: 90%;
 `
+const Title = styled.h1`
+margin-top: 0.5em;
+`
 
 const getDiffKey = ({ oldRevision, newRevision }) =>
   `${oldRevision}${newRevision}`
@@ -70,25 +73,56 @@ const DiffViewer = ({
   return (
     <Container>
       <UsefulContentSection isLoading={isLoading} fromVersion={fromVersion} toVersion={toVersion} />
-
+      {(diff.length !== completedDiffs.length) ? <Title>Undone</Title> : null}
       {diff.map(diff => {
+        // Undone Section
         const diffKey = getDiffKey(diff)
-
-        return (
-          <Diff
-            key={`${diff.oldRevision}${diff.newRevision}`}
-            {...diff}
-             // otakustay/react-diff-view#49
-            type={diff.type === 'new' ? 'add' : diff.type}
-            diffKey={diffKey}
-            fromVersion={fromVersion}
-            toVersion={toVersion}
-            isDiffCompleted={completedDiffs.includes(diffKey)}
-            onCompleteDiff={handleCompleteDiff}
-            selectedChanges={selectedChanges}
-            onToggleChangeSelection={onToggleChangeSelection}
-          />
-        )
+        if (!completedDiffs.includes(diffKey)) {
+          return (
+            <Diff
+              key={`${diff.oldRevision}${diff.newRevision}`}
+              {...diff}
+               // otakustay/react-diff-view#49
+              type={diff.type === 'new' ? 'add' : diff.type}
+              diffKey={diffKey}
+              fromVersion={fromVersion}
+              toVersion={toVersion}
+              isDiffCompleted={completedDiffs.includes(diffKey)}
+              onCompleteDiff={handleCompleteDiff}
+              selectedChanges={selectedChanges}
+              onToggleChangeSelection={onToggleChangeSelection}
+            />
+          )
+        }
+        return null
+      })}
+      {(diff.length === completedDiffs.length)
+        ? <Title>Your upgrade is done 🎉🎉</Title>
+        : (completedDiffs.length > 0)
+          ? <Title>Done</Title>
+          : null
+      }
+      {diff.map(diff => {
+        // Done Section
+        const diffKey = getDiffKey(diff)
+        if (completedDiffs.includes(diffKey)) {
+          return (
+            <Diff
+              key={`${diff.oldRevision}${diff.newRevision}`}
+              {...diff}
+               // otakustay/react-diff-view#49
+              type={diff.type === 'new' ? 'add' : diff.type}
+              diffKey={diffKey}
+              fromVersion={fromVersion}
+              toVersion={toVersion}
+              isDiffCompleted={completedDiffs.includes(diffKey)}
+              onCompleteDiff={handleCompleteDiff}
+              selectedChanges={selectedChanges}
+              onToggleChangeSelection={onToggleChangeSelection}
+            />
+          )
+        }
+        return null
       })}
     </Container>
   )
