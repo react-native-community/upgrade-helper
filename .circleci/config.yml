@@ -4,8 +4,17 @@ executors:
     docker:
       - image: circleci/node:10
 
-
 commands:
+  restore_cache_checkout:
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+
+  run_checkout:
+    steps:
+      - checkout
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
   run_yarn:
     steps:
       - restore_cache:
@@ -20,10 +29,9 @@ commands:
             - ~/.cache/yarn
           key: v1-yarn-{{ .Branch }}
 
-
 jobs:
-  # Deploy website to GitHub Pages
-  deploy:
+  # Checkout code and caches it
+  setup:
     executor: node10
     working_directory: ~/upgrade-helper
     steps:
@@ -32,6 +40,24 @@ jobs:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/upgrade-helper
+
+  # Run lint and tests
+  test:
+    executor: node10
+    working_directory: ~/upgrade-helper
+
+    steps:
+      - restore_cache_checkout
+      - run_yarn
+      - run: yarn run lint
+      - run: yarn run test --runInBand
+
+  # Deploy website to GitHub Pages
+  deploy:
+    executor: node10
+    working_directory: ~/upgrade-helper
+    steps:
+      - restore_cache_checkout
       - run_yarn
       - run:
           name: Build
@@ -48,13 +74,23 @@ jobs:
               echo "Skipping deploy."
             fi
 
-
 workflows:
   version: 2.1
+  tests:
+    jobs:
+      - setup
+
+      - test:
+          requires:
+            - setup
   deploy-to-gh-pages:
     jobs:
-      - deploy:
+      - setup:
           filters:
             branches:
               only:
                 - master
+
+      - deploy:
+          requires:
+            - setup
