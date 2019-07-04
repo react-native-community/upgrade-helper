@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { Alert } from 'antd'
 import { parseDiff, withChangeSelect } from 'react-diff-view'
 import 'react-diff-view/style/index.css'
 import { getDiffPatchURL } from '../../utils'
@@ -82,7 +83,6 @@ const DiffViewer = ({
         fromVersion={fromVersion}
         toVersion={toVersion}
       />
-      {(diff.length !== completedDiffs.length) ? <Title>Undone</Title> : null}
       {diff.map(diff => {
         // Undone Section
         const diffKey = getDiffKey(diff)
@@ -106,11 +106,10 @@ const DiffViewer = ({
         }
         return null
       })}
+      {(completedDiffs.length > 0) ? <Title>Done</Title> : null}
       {(diff.length === completedDiffs.length)
-        ? <Title>Your upgrade is done 🎉🎉</Title>
-        : (completedDiffs.length > 0)
-          ? <Title>Done</Title>
-          : null
+        ? <Alert message="Your upgrade is done 🎉🎉" type="success" showIcon closable />
+        : null
       }
       {diff.map(diff => {
         // Done Section
