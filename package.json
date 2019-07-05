@@ -4,8 +4,10 @@
   "homepage": "https://react-native-community.github.io/upgrade-helper",
   "license": "MIT",
   "dependencies": {
+    "@mdx-js/react": "^1.0.21",
     "@testing-library/react": "^8.0.2",
     "antd": "^3.19.1",
+    "inline-mdx.macro": "1.0.0-alpha.2",
     "markdown-to-jsx": "^6.10.2",
     "query-string": "^6.7.0",
     "react": "^16.8.0",
