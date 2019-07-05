@@ -1,7 +1,9 @@
+/* @jsx mdx */
 import React from 'react'
 import styled from 'styled-components'
 import { removeAppPathPrefix, getVersionsInDiff } from '../../../utils'
 import Markdown from '../Markdown'
+import { mdx } from '@mdx-js/react'
 
 const Container = styled.div`
   margin: 10px;
@@ -54,13 +56,11 @@ const getComments = ({ newPath, fromVersion, toVersion }) => {
   }, {})
 }
 
-const DiffComment = ({ content }) => {
-  return (
-    <Container>
-      <Markdown>{content.props.children}</Markdown>
-    </Container>
-  )
-}
+const DiffComment = ({ content: Content }) => (
+  <Container>
+    <Content />
+  </Container>
+)
 
 export { getComments }
 export default DiffComment
