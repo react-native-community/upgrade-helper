@@ -87,25 +87,26 @@ const DownloadFileButton = styled(({ visible, toVersion, newPath, ...props }) =>
 `
 
 const CompleteDiffButton = styled(
-  ({ diffKey, isDiffCompleted, onCompleteDiff, ...props }) => (
-    (isDiffCompleted)
-      ? (<Popover content="↩️">
-          <Button
-            {...props}
-            type="ghost"
-            shape="circle"
-            icon="check"
-            onClick={() => onCompleteDiff(diffKey)}
-          />
-          </Popover>)
-      : (<Button
+  ({ diffKey, isDiffCompleted, onCompleteDiff, ...props }) =>
+    isDiffCompleted ? (
+      <Popover content="↩️">
+        <Button
           {...props}
           type="ghost"
           shape="circle"
           icon="check"
           onClick={() => onCompleteDiff(diffKey)}
-          />)
-  )
+        />
+      </Popover>
+    ) : (
+      <Button
+        {...props}
+        type="ghost"
+        shape="circle"
+        icon="check"
+        onClick={() => onCompleteDiff(diffKey)}
+      />
+    )
 )`
   font-size: 13px;
   line-height: 0;
@@ -121,9 +122,8 @@ const CompleteDiffButton = styled(
   }
 `
 
-const CollapseDiffButton = styled(
-  ({ visible, isDiffCollapsed, ...props }) =>
-    visible ? <Button {...props} type="link" icon="down" /> : null
+const CollapseDiffButton = styled(({ visible, isDiffCollapsed, ...props }) =>
+  visible ? <Button {...props} type="link" icon="down" /> : null
 )`
   color: #24292e;
   margin-right: 2px;

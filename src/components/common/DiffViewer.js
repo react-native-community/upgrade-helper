@@ -13,7 +13,7 @@ const Container = styled.div`
   width: 90%;
 `
 const Title = styled.h1`
-margin-top: 0.5em;
+  margin-top: 0.5em;
 `
 
 const getDiffKey = ({ oldRevision, newRevision }) =>
@@ -92,7 +92,7 @@ const DiffViewer = ({
             <Diff
               key={`${diff.oldRevision}${diff.newRevision}`}
               {...diff}
-               // otakustay/react-diff-view#49
+              // otakustay/react-diff-view#49
               type={diff.type === 'new' ? 'add' : diff.type}
               diffKey={diffKey}
               fromVersion={fromVersion}
@@ -106,11 +106,15 @@ const DiffViewer = ({
         }
         return null
       })}
-      {(completedDiffs.length > 0) ? <Title>Done</Title> : null}
-      {(diff.length === completedDiffs.length)
-        ? <Alert message="Your upgrade is done 🎉🎉" type="success" showIcon closable />
-        : null
-      }
+      {completedDiffs.length > 0 ? <Title>Done</Title> : null}
+      {diff.length === completedDiffs.length ? (
+        <Alert
+          message="Your upgrade is done 🎉🎉"
+          type="success"
+          showIcon
+          closable
+        />
+      ) : null}
       {diff.map(diff => {
         // Done Section
         const diffKey = getDiffKey(diff)
@@ -119,7 +123,7 @@ const DiffViewer = ({
             <Diff
               key={`${diff.oldRevision}${diff.newRevision}`}
               {...diff}
-               // otakustay/react-diff-view#49
+              // otakustay/react-diff-view#49
               type={diff.type === 'new' ? 'add' : diff.type}
               diffKey={diffKey}
               fromVersion={fromVersion}
