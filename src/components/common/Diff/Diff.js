@@ -100,6 +100,7 @@ const Diff = ({
           diffType={type}
           hunks={hunks}
           widgets={getComments({ newPath, fromVersion, toVersion })}
+          optimizeSelection={true}
           selectedChanges={selectedChanges}
         >
           {hunks => {

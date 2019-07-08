@@ -48,8 +48,6 @@ const CompletedFilesCounter = styled(({ completed, total, ...props }) => (
   color: #7dadda;
   transform: ${({ completed }) =>
     completed ? 'translateY(0px)' : 'translateY(70px)'};
-  width: fit-content;
-  height: fit-content;
   display: flex;
   align-self: flex-end;
   transition: transform 0.3s;
