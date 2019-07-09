@@ -14,15 +14,23 @@ exports[`renders without crashing 1`] = `
         <div
           class="sc-kEYyzF fEebBv"
         >
+          <img
+            alt="React Native upgrade helper logo"
+            class="sc-kkGfuU kCopwy"
+            src="logo.svg"
+            title="React Native upgrade helper logo"
+          />
           <a
             href="https://react-native-community.github.io/upgrade-helper"
           >
-            <h1>
+            <h1
+              class="sc-iAyFgw ixxwvO"
+            >
               React Native upgrade guide
             </h1>
           </a>
           <div
-            class="sc-kkGfuU emfoKJ"
+            class="sc-hSdWYo inYTmX"
           >
             <div>
               ReactGitHubBtn - 

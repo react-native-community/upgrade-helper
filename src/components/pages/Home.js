@@ -6,6 +6,7 @@ import ReactGA from 'react-ga'
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
 import { homepage } from '../../../package.json'
+import logo from '../../logo.svg'
 
 const Page = styled.div`
   display: flex;
@@ -25,12 +26,21 @@ const TitleContainer = styled.div`
   align-items: center;
 `
 
+const LogoImg = styled.img`
+  width: 100px;
+`
+
+const TitleHeader = styled.h1`
+  margin: 0;
+  margin-left: 15px;
+`
+
 const StarButton = styled(({ className, ...props }) => (
   <div className={className}>
     <GitHubButton {...props} />
   </div>
 ))`
-  margin-bottom: 5px;
+  margin-top: 10px;
   margin-left: 15px;
 `
 
@@ -60,7 +70,15 @@ const Home = () => {
     <Page>
       <Container>
         <TitleContainer>
-          <a href={homepage}><h1>React Native upgrade guide</h1></a>
+          <LogoImg
+            alt="React Native upgrade helper logo"
+            title="React Native upgrade helper logo"
+            src={logo}
+          />
+
+          <a href={homepage}>
+            <TitleHeader>React Native upgrade guide</TitleHeader>
+          </a>
 
           <StarButton
             href="https://github.com/react-native-community/upgrade-helper"
