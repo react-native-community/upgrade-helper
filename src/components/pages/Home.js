@@ -28,6 +28,7 @@ const TitleContainer = styled.div`
 
 const LogoImg = styled.img`
   width: 100px;
+  margin-bottom: 15px;
 `
 
 const TitleHeader = styled.h1`
