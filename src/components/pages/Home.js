@@ -6,7 +6,7 @@ import ReactGA from 'react-ga'
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
 import { homepage } from '../../../package.json'
-import logo from '../../logo.svg'
+import logo from '../../assets/logo.svg'
 
 const Page = styled.div`
   display: flex;
@@ -28,6 +28,7 @@ const TitleContainer = styled.div`
 
 const LogoImg = styled.img`
   width: 100px;
+  margin-bottom: 15px;
 `
 
 const TitleHeader = styled.h1`
