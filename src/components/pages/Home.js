@@ -6,7 +6,7 @@ import ReactGA from 'react-ga'
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
 import { homepage } from '../../../package.json'
-import logo from '../../logo.svg'
+import logo from '../../assets/logo.svg'
 
 const Page = styled.div`
   display: flex;
