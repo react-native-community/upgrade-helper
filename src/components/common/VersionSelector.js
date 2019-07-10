@@ -246,7 +246,7 @@ const VersionSelector = ({ showDiff }) => {
         />
 
         <ToVersionSelector
-          title="To which version would you like to update?"
+          title="To which version would you like to upgrade?"
           loading={isLoading}
           value={localToVersion}
           options={toVersionList}
