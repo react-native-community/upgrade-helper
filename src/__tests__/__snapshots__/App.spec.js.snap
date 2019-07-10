@@ -16,7 +16,7 @@ exports[`renders without crashing 1`] = `
         >
           <img
             alt="React Native upgrade helper logo"
-            class="sc-kkGfuU kCopwy"
+            class="sc-kkGfuU hnQnKK"
             src="logo.svg"
             title="React Native upgrade helper logo"
           />
@@ -101,7 +101,7 @@ exports[`renders without crashing 1`] = `
             class="sc-bdVaJa UoSJW"
           >
             <h4>
-              To which version would you like to update?
+              To which version would you like to upgrade?
             </h4>
             <div
               class="ant-select-lg sc-ifAKCX dTveGH sc-bwzfXH jwfMIB ant-select ant-select-enabled ant-select-loading"
