@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { Button } from 'antd'
+import { Button, Popover } from 'antd'
 import semver from 'semver'
 import queryString from 'query-string'
 import { RELEASES_URL } from '../../utils'
@@ -15,7 +15,15 @@ const FromVersionSelector = styled(Select)`
   padding-right: 5px;
 `
 
-const ToVersionSelector = styled(Select)`
+const ToVersionSelector = styled(({ popover, ...props }) =>
+  popover ? (
+    React.cloneElement(popover, {
+      children: <Select {...props} />
+    })
+  ) : (
+    <Select {...props} />
+  )
+)`
   padding-left: 5px;
 `
 
@@ -250,6 +258,15 @@ const VersionSelector = ({ showDiff }) => {
           loading={isLoading}
           value={localToVersion}
           options={toVersionList}
+          popover={
+            localToVersion === '0.60.1' && (
+              <Popover
+                visible={true}
+                placement="topLeft"
+                content="We recommend using the latest 0.60 patch release instead of 0.60.1."
+              />
+            )
+          }
           onChange={chosenVersion => setLocalToVersion(chosenVersion)}
         />
       </Selectors>
