@@ -23,7 +23,7 @@ Aside from this, the tool provides you a couple of cool extra features:
 - a set of links with further explanations on what the version you are upgrading to
 - a handy "done" button near each file to help you keep track of your process
 - a download button for new binary files
-- ...and we are planning many more features! Check the [enhacement tag](https://github.com/react-native-community/upgrade-helper/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement) in the issue section.
+- ...and we are planning many more features! Check the [enhancement tag](https://github.com/react-native-community/upgrade-helper/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement) in the issue section.
 
 ## Contributing
 
