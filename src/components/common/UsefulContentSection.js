@@ -67,7 +67,7 @@ const List = styled.ol`
 
 class UsefulContentSection extends Component {
   state = {
-    isVisible: true,
+    isVisible: true
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -76,10 +76,11 @@ class UsefulContentSection extends Component {
     // or if it has been hidden
     const hasBeenHidden = this.state.isVisible && !nextState.isVisible
 
-    return hasLoaded || hasBeenHidden;
+    return hasLoaded || hasBeenHidden
   }
 
-  handleToggleVisibility = () => this.setState(({ isVisible }) => ({ isVisible: !isVisible }));
+  handleToggleVisibility = () =>
+    this.setState(({ isVisible }) => ({ isVisible: !isVisible }))
 
   render() {
     const { fromVersion, toVersion } = this.props
@@ -89,11 +90,11 @@ class UsefulContentSection extends Component {
     const doesAnyVersionHaveUsefulContent = versions.some(
       ({ usefulContent }) => !!usefulContent
     )
-  
+
     if (!doesAnyVersionHaveUsefulContent) {
       return null
     }
-  
+
     const hasMoreThanOneRelease = versions.length > 1
 
     return (
@@ -102,12 +103,12 @@ class UsefulContentSection extends Component {
           <h2>
             <Icon /> Useful content for upgrading
           </h2>
-  
+
           <CloseButton toggleVisibility={this.handleToggleVisibility} />
-  
+
           {versions.map(({ usefulContent, version }, key) => {
             const versionWithoutEndingZero = version.slice(0, 4)
-  
+
             const links = [
               ...usefulContent.links,
               {
@@ -115,17 +116,17 @@ class UsefulContentSection extends Component {
                 url: getChangelogURL({ version: versionWithoutEndingZero })
               }
             ]
-  
+
             return (
               <Fragment key={key}>
                 {key > 0 && <ReleaseSeparator />}
-  
+
                 {hasMoreThanOneRelease && (
                   <h3>Release {versionWithoutEndingZero}</h3>
                 )}
-  
+
                 <span>{usefulContent.description}</span>
-  
+
                 <List>
                   {links.map(({ url, title }, key) => (
                     <li key={`${url}${key}`}>

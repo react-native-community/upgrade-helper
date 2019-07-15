@@ -10,8 +10,8 @@ export default {
           'Official blog post about the major changes on React Native 0.60',
         url:
           'https://facebook.github.io/react-native/blog/2019/07/03/version-60'
-      },
-    ],
+      }
+    ]
   },
   comments: [
     {
@@ -20,23 +20,23 @@ export default {
       lineChangeType: 'add',
       content: (
         <Fragment>
-          All these libraries below have been removed from the Xcode project file and now live in the Podfile.
-          Cocoapods handles the linking now.
+          All these libraries below have been removed from the Xcode project
+          file and now live in the Podfile. Cocoapods handles the linking now.
           Here you can add more libraries with native modules.
         </Fragment>
-        )
-      },
+      )
+    },
     {
       fileName: 'ios/RnDiffApp.xcodeproj/project.pbxproj',
       lineNumber: 9,
       lineChangeType: 'neutral',
       content: (
         <Fragment>
-            Click
-            [here](https://github.com/react-native-community/upgrade-helper/issues/47)
-            for an explanation and some help with upgrading this file.
+          Click
+          [here](https://github.com/react-native-community/upgrade-helper/issues/47)
+          for an explanation and some help with upgrading this file.
         </Fragment>
-        )
-      },
-    ],
-  }
+      )
+    }
+  ]
+}

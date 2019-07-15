@@ -85,7 +85,7 @@ const DownloadFileButton = styled(({ visible, toVersion, newPath, ...props }) =>
     color: #24292e;
   }
 `
-  
+
 const CompleteDiffButton = styled(
   ({ diffKey, isDiffCompleted, onCompleteDiff, ...props }) => (
     <Button
@@ -111,9 +111,8 @@ const CompleteDiffButton = styled(
   }
 `
 
-const CollapseDiffButton = styled(
-  ({ visible, isDiffCollapsed, ...props }) =>
-    visible ? <Button {...props} type="link" icon="down" /> : null
+const CollapseDiffButton = styled(({ visible, isDiffCollapsed, ...props }) =>
+  visible ? <Button {...props} type="link" icon="down" /> : null
 )`
   color: #24292e;
   margin-right: 2px;
