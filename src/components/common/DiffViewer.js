@@ -5,6 +5,7 @@ import { parseDiff, withChangeSelect } from 'react-diff-view'
 import 'react-diff-view/style/index.css'
 import { getDiffPatchURL } from '../../utils'
 import Diff from './Diff/Diff'
+import DiffSection from './Diff/DiffSection'
 import Loading from './Loading'
 import UsefulContentSection from './UsefulContentSection'
 import CompletedFilesCounter from './CompletedFilesCounter'
@@ -83,7 +84,18 @@ const DiffViewer = ({
         fromVersion={fromVersion}
         toVersion={toVersion}
       />
-      {diff.map(diff => {
+      <DiffSection
+        isDoneSection={false}
+        diff={diff}
+        getDiffKey={getDiffKey}
+        completedDiffs={completedDiffs}
+        fromVersion={fromVersion}
+        toVersion={toVersion}
+        handleCompleteDiff={handleCompleteDiff}
+        selectedChanges={selectedChanges}
+        onToggleChangeSelection={onToggleChangeSelection}
+      />
+      {/* {diff.map(diff => {
         // Undone Section
         const diffKey = getDiffKey(diff)
 
@@ -104,8 +116,8 @@ const DiffViewer = ({
             />
           )
         }
-        return null
-      })}
+        return nullscD
+      })} */}
       {completedDiffs.length > 0 ? <Title>Done</Title> : null}
       {diff.length === completedDiffs.length ? (
         <Alert
