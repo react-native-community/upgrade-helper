@@ -19,7 +19,7 @@
   </a>
 </p>
 
-![Image showing a screenshot of Upgrade Helper with the phrase "You are gonna love this!"](https://user-images.githubusercontent.com/6207220/61242113-32e59700-a745-11e9-9861-886d18a61ca9.png)
+![Image showing a screenshot of Upgrade Helper with the phrase "You are gonna love this!"](https://user-images.githubusercontent.com/6207220/61379297-8cfe6d80-a8a7-11e9-8bf2-d83bfe93c9f2.png)
 
 ## 🎩 How it works
 
