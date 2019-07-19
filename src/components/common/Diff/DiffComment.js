@@ -3,7 +3,22 @@ import styled from 'styled-components'
 import { removeAppPathPrefix, getVersionsInDiff } from '../../../utils'
 import Markdown from '../Markdown'
 
-const Container = styled.div`
+const CommentContainer = styled.div`
+  position: relative;
+`
+
+const CommentCheckbox = styled.input`
+  display: inline-block;
+  position: absolute;
+  top: 2px;
+  left: -8px;
+  cursor: pointer;
+  &:checked + div {
+    display: none;
+  }
+`
+
+const CommentContent = styled.div`
   margin: 10px;
   border: 1px solid #ddd;
   padding: 16px;
@@ -56,9 +71,12 @@ const getComments = ({ newPath, fromVersion, toVersion }) => {
 
 const DiffComment = ({ content }) => {
   return (
-    <Container>
-      <Markdown>{content.props.children}</Markdown>
-    </Container>
+    <CommentContainer>
+      <CommentCheckbox type="checkbox" />
+      <CommentContent>
+        <Markdown>{content.props.children}</Markdown>
+      </CommentContent>
+    </CommentContainer>
   )
 }
 
