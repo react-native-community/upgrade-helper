@@ -1,21 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { Button } from 'antd'
 import { removeAppPathPrefix, getVersionsInDiff } from '../../../utils'
 import Markdown from '../Markdown'
 
 const CommentContainer = styled.div`
   position: relative;
-`
-
-const CommentCheckbox = styled.input`
-  display: inline-block;
-  position: absolute;
-  top: 2px;
-  left: -8px;
-  cursor: pointer;
-  &:checked + div {
-    display: none;
-  }
 `
 
 const CommentContent = styled.div`
@@ -24,6 +14,16 @@ const CommentContent = styled.div`
   padding: 16px;
   border-radius: 3px;
   color: #000;
+`
+
+const CommentButton = styled(Button)`
+  height: 16px;
+  width: 16px;
+  position: absolute;
+  top: 1px;
+  left: -10px;
+  font-size: 8px;
+  cursor: 'pointer';
 `
 
 const LINE_CHANGE_TYPES = {
@@ -70,12 +70,21 @@ const getComments = ({ newPath, fromVersion, toVersion }) => {
 }
 
 const DiffComment = ({ content }) => {
+  const [displayComment, toggleComment] = useState(true)
+
   return (
     <CommentContainer>
-      <CommentCheckbox type="checkbox" />
-      <CommentContent>
-        <Markdown>{content.props.children}</Markdown>
-      </CommentContent>
+      <CommentButton
+        shape="circle"
+        type="primary"
+        onClick={() => toggleComment(!displayComment)}
+        icon={displayComment ? 'close' : 'message'}
+      />
+      {displayComment && (
+        <CommentContent>
+          <Markdown>{content.props.children}</Markdown>
+        </CommentContent>
+      )}
     </CommentContainer>
   )
 }
