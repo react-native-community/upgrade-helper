@@ -37,6 +37,30 @@ export default {
           for an explanation and some help with upgrading this file.
         </Fragment>
       )
+    },
+    {
+      fileName: 'ios/RnDiffApp/Info.plist',
+      lineNumber: 8,
+      lineChangeType: 'add',
+      content: (
+        <Fragment>
+          This name change was caused by an issue on `react-native init`
+          command, please ignore it. For more information [click
+          here](https://github.com/react-native-community/cli/issues/561).
+        </Fragment>
+      )
+    },
+    {
+      fileName: 'android/app/src/main/res/values/strings.xml',
+      lineNumber: 2,
+      lineChangeType: 'add',
+      content: (
+        <Fragment>
+          This name change was caused by an issue on `react-native init`
+          command, please ignore it. For more information [click
+          here](https://github.com/react-native-community/cli/issues/561).
+        </Fragment>
+      )
     }
   ]
 }
