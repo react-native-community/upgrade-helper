@@ -37,6 +37,26 @@ export default {
           for an explanation and some help with upgrading this file.
         </Fragment>
       )
-    }
+    },
+    {
+      fileName: 'ios/RnDiffApp/Info.plist ',
+      lineNumber: 8,
+      lineChangeType: 'add',
+      content: (
+        <Fragment>
+          This name change is a bug in the `init` process. Please ignore.
+        </Fragment>
+      )
+    },
+    {
+      fileName: 'android/app/src/main/res/values/strings.xml  ',
+      lineNumber: 2,
+      lineChangeType: 'add',
+      content: (
+        <Fragment>
+          This name change is a bug in the `init` process. Please ignore.
+        </Fragment>
+      )
+    },
   ]
 }
