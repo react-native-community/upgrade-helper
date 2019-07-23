@@ -39,7 +39,7 @@ export default {
       )
     },
     {
-      fileName: 'ios/RnDiffApp/Info.plist ',
+      fileName: 'ios/RnDiffApp/Info.plist',
       lineNumber: 8,
       lineChangeType: 'add',
       content: (
@@ -49,7 +49,7 @@ export default {
       )
     },
     {
-      fileName: 'android/app/src/main/res/values/strings.xml  ',
+      fileName: 'android/app/src/main/res/values/strings.xml',
       lineNumber: 2,
       lineChangeType: 'add',
       content: (
