@@ -44,7 +44,9 @@ export default {
       lineChangeType: 'add',
       content: (
         <Fragment>
-          This name change is a bug in the `init` process. Please ignore.
+          This name change was caused by an issue on `react-native init`
+          command, please ignore it. For more information [click
+          here](https://github.com/react-native-community/cli/issues/561).
         </Fragment>
       )
     },
@@ -54,9 +56,11 @@ export default {
       lineChangeType: 'add',
       content: (
         <Fragment>
-          This name change is a bug in the `init` process. Please ignore.
+          This name change was caused by an issue on `react-native init`
+          command, please ignore it. For more information [click
+          here](https://github.com/react-native-community/cli/issues/561).
         </Fragment>
       )
-    },
+    }
   ]
 }
