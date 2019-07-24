@@ -37,6 +37,17 @@ const DiffViewer = ({
     setCompletedDiffs(prevCompletedDiffs => [...prevCompletedDiffs, diffKey])
   }
 
+  const renderUpgradeDoneMessage = ({ diff, completedDiffs }) =>
+    diff.length === completedDiffs.length ? (
+      <Alert
+        style={{ marginTop: 16 }}
+        message="Your upgrade is done 🎉🎉"
+        type="success"
+        showIcon
+        closable
+      />
+    ) : null
+
   const resetCompletedDiff = () => setCompletedDiffs([])
 
   useEffect(() => {
@@ -92,14 +103,7 @@ const DiffViewer = ({
         selectedChanges={selectedChanges}
         onToggleChangeSelection={onToggleChangeSelection}
       />
-      {diff.length === completedDiffs.length ? (
-        <Alert
-          message="Your upgrade is done 🎉🎉"
-          type="success"
-          showIcon
-          closable
-        />
-      ) : null}
+      {renderUpgradeDoneMessage({ diff, completedDiffs })}
       <DiffSection
         isDoneSection={true}
         key="done"
