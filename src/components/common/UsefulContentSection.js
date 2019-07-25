@@ -6,11 +6,11 @@ import { Link } from './Markdown'
 
 const Container = styled.div`
   position: relative;
-  margin-top: 16px;
+  margin-top: ${({ isVisible }) => (isVisible ? '16px' : 0)}
   color: rgba(0, 0, 0, 0.65);
   max-height: ${({ isVisible }) => (isVisible ? '800px' : 0)}
   overflow: hidden;
-  transition: max-height 0.4s ease-out;
+  transition: max-height 0.4s ease-out, margin-top 0.4s ease-out 0.2s;
 `
 
 const InnerContainer = styled.div`
