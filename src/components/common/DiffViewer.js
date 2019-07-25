@@ -38,7 +38,7 @@ const DiffViewer = ({
   }
 
   const renderUpgradeDoneMessage = ({ diff, completedDiffs }) =>
-    diff.length === completedDiffs.length ? (
+    diff.length === completedDiffs.length && (
       <Alert
         style={{ marginTop: 16 }}
         message="Your upgrade is done 🎉🎉"
@@ -46,7 +46,7 @@ const DiffViewer = ({
         showIcon
         closable
       />
-    ) : null
+    )
 
   const resetCompletedDiff = () => setCompletedDiffs([])
 

@@ -19,7 +19,8 @@ const DiffSection = ({
   onToggleChangeSelection
 }) => (
   <div>
-    {title && completedDiffs.length > 0 ? <Title>{title}</Title> : null}
+    {title && completedDiffs.length > 0 && <Title>{title}</Title>}
+
     {diff.map(diffFile => {
       const diffKey = getDiffKey(diffFile)
       const isDiffCompleted = completedDiffs.includes(diffKey)
