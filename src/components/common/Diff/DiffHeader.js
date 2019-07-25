@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
-import { Tag, Icon, Button } from 'antd'
+import { Tag, Icon, Button, Popover } from 'antd'
 import { removeAppPathPrefix, getBinaryFileURL } from '../../../utils'
 
 const FileRenameArrow = styled(props => <Icon {...props} type="right" />)`
@@ -87,15 +87,26 @@ const DownloadFileButton = styled(({ visible, toVersion, newPath, ...props }) =>
 `
 
 const CompleteDiffButton = styled(
-  ({ diffKey, isDiffCompleted, onCompleteDiff, ...props }) => (
-    <Button
-      {...props}
-      type="ghost"
-      shape="circle"
-      icon="check"
-      onClick={() => onCompleteDiff(diffKey)}
-    />
-  )
+  ({ diffKey, isDiffCompleted, onCompleteDiff, ...props }) =>
+    isDiffCompleted ? (
+      <Popover content="↩️">
+        <Button
+          {...props}
+          type="ghost"
+          shape="circle"
+          icon="check"
+          onClick={() => onCompleteDiff(diffKey)}
+        />
+      </Popover>
+    ) : (
+      <Button
+        {...props}
+        type="ghost"
+        shape="circle"
+        icon="check"
+        onClick={() => onCompleteDiff(diffKey)}
+      />
+    )
 )`
   font-size: 13px;
   line-height: 0;

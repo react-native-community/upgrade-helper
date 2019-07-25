@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { Alert } from 'antd'
 import { parseDiff, withChangeSelect } from 'react-diff-view'
 import 'react-diff-view/style/index.css'
 import { getDiffPatchURL } from '../../utils'
-import Diff from './Diff/Diff'
+import DiffSection from './Diff/DiffSection'
 import Loading from './Loading'
 import UsefulContentSection from './UsefulContentSection'
 import CompletedFilesCounter from './CompletedFilesCounter'
@@ -35,6 +36,17 @@ const DiffViewer = ({
 
     setCompletedDiffs(prevCompletedDiffs => [...prevCompletedDiffs, diffKey])
   }
+
+  const renderUpgradeDoneMessage = ({ diff, completedDiffs }) =>
+    diff.length === completedDiffs.length && (
+      <Alert
+        style={{ marginTop: 16 }}
+        message="Your upgrade is done 🎉🎉"
+        type="success"
+        showIcon
+        closable
+      />
+    )
 
   const resetCompletedDiff = () => setCompletedDiffs([])
 
@@ -72,6 +84,17 @@ const DiffViewer = ({
     return <Loading />
   }
 
+  const diffSectionProps = {
+    diff: diff,
+    getDiffKey: getDiffKey,
+    completedDiffs: completedDiffs,
+    fromVersion: fromVersion,
+    toVersion: toVersion,
+    handleCompleteDiff: handleCompleteDiff,
+    selectedChanges: selectedChanges,
+    onToggleChangeSelection: onToggleChangeSelection
+  }
+
   return (
     <Container>
       <UsefulContentSection
@@ -80,25 +103,11 @@ const DiffViewer = ({
         toVersion={toVersion}
       />
 
-      {diff.map(diff => {
-        const diffKey = getDiffKey(diff)
+      <DiffSection {...diffSectionProps} isDoneSection={false} />
 
-        return (
-          <Diff
-            key={`${diff.oldRevision}${diff.newRevision}`}
-            {...diff}
-            // otakustay/react-diff-view#49
-            type={diff.type === 'new' ? 'add' : diff.type}
-            diffKey={diffKey}
-            fromVersion={fromVersion}
-            toVersion={toVersion}
-            isDiffCompleted={completedDiffs.includes(diffKey)}
-            onCompleteDiff={handleCompleteDiff}
-            selectedChanges={selectedChanges}
-            onToggleChangeSelection={onToggleChangeSelection}
-          />
-        )
-      })}
+      {renderUpgradeDoneMessage({ diff, completedDiffs })}
+
+      <DiffSection {...diffSectionProps} isDoneSection={true} title="Done" />
 
       <CompletedFilesCounter
         completed={completedDiffs.length}
