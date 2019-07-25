@@ -27,7 +27,7 @@ const DiffSection = ({
 
       // If it's the "done" section, it shouldn't show if it's not completed
       if (isDoneSection !== isDiffCompleted) {
-        return
+        return null
       }
 
       return (
