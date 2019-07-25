@@ -84,6 +84,17 @@ const DiffViewer = ({
     return <Loading />
   }
 
+  const diffSectionProps = {
+    diff: diff,
+    getDiffKey: getDiffKey,
+    completedDiffs: completedDiffs,
+    fromVersion: fromVersion,
+    toVersion: toVersion,
+    handleCompleteDiff: handleCompleteDiff,
+    selectedChanges: selectedChanges,
+    onToggleChangeSelection: onToggleChangeSelection
+  }
+
   return (
     <Container>
       <UsefulContentSection
@@ -91,32 +102,13 @@ const DiffViewer = ({
         fromVersion={fromVersion}
         toVersion={toVersion}
       />
-      <DiffSection
-        key="undone"
-        isDoneSection={false}
-        diff={diff}
-        getDiffKey={getDiffKey}
-        completedDiffs={completedDiffs}
-        fromVersion={fromVersion}
-        toVersion={toVersion}
-        handleCompleteDiff={handleCompleteDiff}
-        selectedChanges={selectedChanges}
-        onToggleChangeSelection={onToggleChangeSelection}
-      />
+
+      <DiffSection {...diffSectionProps} isDoneSection={false} />
+
       {renderUpgradeDoneMessage({ diff, completedDiffs })}
-      <DiffSection
-        isDoneSection={true}
-        key="done"
-        title="Done"
-        diff={diff}
-        getDiffKey={getDiffKey}
-        completedDiffs={completedDiffs}
-        fromVersion={fromVersion}
-        toVersion={toVersion}
-        handleCompleteDiff={handleCompleteDiff}
-        selectedChanges={selectedChanges}
-        onToggleChangeSelection={onToggleChangeSelection}
-      />
+
+      <DiffSection {...diffSectionProps} isDoneSection={true} title="Done" />
+
       <CompletedFilesCounter
         completed={completedDiffs.length}
         total={diff.length}
