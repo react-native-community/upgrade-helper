@@ -1,15 +1,27 @@
-# Upgrade Helper
+<p align="center">
+  <img src="/src/assets/logo.svg" width="150" />
+</p>
 
-[![CircleCI](https://circleci.com/gh/react-native-community/upgrade-helper.svg?style=shield)](https://circleci.com/gh/react-native-community/upgrade-helper)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+<h1 align="center">Upgrade Helper</h1>
 
-[Open the tool!](https://react-native-community.github.io/upgrade-helper)
+<p align="center">
+  A web tool to help you upgrading your React Native app with ease! 🚀
+</p>
 
-A web tool to help you upgrading your React Native app with ease 🚀
+<p align="center">
+  <a href="https://circleci.com/gh/react-native-community/upgrade-helper"><img src="https://circleci.com/gh/react-native-community/upgrade-helper.svg?style=shield" alt="PRs Welcome" title="PRs Welcome"></a>
+  <a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=shield" alt="CircleCI" title="CircleCI"></a>
+</p>
 
-![image](https://user-images.githubusercontent.com/6207220/59149165-90821780-8a12-11e9-97ef-d77c821f3bde.png)
+<p align="center">
+  <a href="https://react-native-community.github.io/upgrade-helper">
+    Open the tool!
+  </a>
+</p>
 
-## How it works
+![Image showing a screenshot of Upgrade Helper with the phrase "You are gonna love this!"](https://user-images.githubusercontent.com/6207220/61382138-7a3a6780-a8ac-11e9-8c74-b4cb4830e131.png)
+
+## 🎩 How it works
 
 The **Upgrade Helper** tool aims to provide the full set of changes happening between any two versions, based on the previous work done in the [rn-diff-purge](https://github.com/react-native-community/rn-diff-purge) project:
 
@@ -23,9 +35,9 @@ Aside from this, the tool provides you a couple of cool extra features:
 - a set of links with further explanations on what the version you are upgrading to
 - a handy "done" button near each file to help you keep track of your process
 - a download button for new binary files
-- ...and we are planning many more features! Check the [enhacement tag](https://github.com/react-native-community/upgrade-helper/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement) in the issue section.
+- ...and we are planning many more features! Check the [enhancement tag](https://github.com/react-native-community/upgrade-helper/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement) in the issue section.
 
-## Contributing
+## 💻 Contributing
 
 If you want to help us making this better, you can start by forking the project and follow these steps to testing it out locally:
 
@@ -38,10 +50,10 @@ If you want to help us making this better, you can start by forking the project 
 
 After which, you can create a branch to to make your changes and then open a PR against this repository following the provided template 🤗
 
-## Acknowledgments
+## 📣 Acknowledgments
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), [React-Diff-View](https://github.com/otakustay/react-diff-view), and [Inline-Mdx.Macro](https://github.com/hamlim/inline-mdx.macro).
 
-## License
+## 📝 License
 
 This project is released under the MIT license (check the LICENSE file for details).

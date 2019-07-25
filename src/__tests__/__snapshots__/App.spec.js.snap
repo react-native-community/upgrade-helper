@@ -3,26 +3,34 @@
 exports[`renders without crashing 1`] = `
 <div>
   <div
-    class="sc-hMqMXs gpzZwD"
+    class="sc-kkGfuU fSarIH"
   >
     <div
-      class="ant-card sc-kEYyzF kiyBcg ant-card-bordered"
+      class="ant-card sc-iAyFgw clyMNI ant-card-bordered"
     >
       <div
         class="ant-card-body"
       >
         <div
-          class="sc-kkGfuU dVEktx"
+          class="sc-hSdWYo cWiSKh"
         >
+          <img
+            alt="React Native upgrade helper logo"
+            class="sc-eHgmQL ipiMpj"
+            src="logo.svg"
+            title="React Native upgrade helper logo"
+          />
           <a
             href="https://react-native-community.github.io/upgrade-helper"
           >
-            <h1>
+            <h1
+              class="sc-cvbbAY fZSBVE"
+            >
               React Native upgrade guide
             </h1>
           </a>
           <div
-            class="sc-iAyFgw ktSVqK"
+            class="sc-jWBwVP hwAcbY"
           >
             <div>
               ReactGitHubBtn - 
@@ -93,7 +101,7 @@ exports[`renders without crashing 1`] = `
             class="sc-bdVaJa UoSJW"
           >
             <h4>
-              To which version would you like to update?
+              To which version would you like to upgrade?
             </h4>
             <div
               class="ant-select-lg sc-ifAKCX dTveGH sc-bwzfXH jwfMIB ant-select ant-select-enabled ant-select-loading"
