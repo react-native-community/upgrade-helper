@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Diff from './Diff'
 
@@ -18,16 +18,7 @@ const DiffSection = ({
   selectedChanges,
   onToggleChangeSelection
 }) => {
-  let diffRefMap = {}
-
-  const toggleAll = collapse => {
-    for (let diffKey in diffRefMap) {
-      let diffRef = diffRefMap[diffKey] && diffRefMap[diffKey].current
-      if (diffRef && diffRef.isDiffCollapsed !== collapse) {
-        diffRef.setIsDiffCollapsed(collapse)
-      }
-    }
-  }
+  const [areAllCollapsed, setAllCollapsed] = useState(undefined)
 
   return (
     <div>
@@ -42,13 +33,9 @@ const DiffSection = ({
           return null
         }
 
-        // If a ref already exist for the given diffKey, use it. Otherwise, create a new one.
-        diffRefMap[diffKey] = diffRefMap[diffKey] || React.createRef()
-
         return (
           <Diff
             key={`${diffFile.oldRevision}${diffFile.newRevision}`}
-            ref={diffRefMap[diffKey]}
             {...diffFile}
             // otakustay/react-diff-view#49
             type={diffFile.type === 'new' ? 'add' : diffFile.type}
@@ -59,7 +46,8 @@ const DiffSection = ({
             onCompleteDiff={handleCompleteDiff}
             selectedChanges={selectedChanges}
             onToggleChangeSelection={onToggleChangeSelection}
-            toggleAll={collapse => toggleAll(collapse)}
+            areAllCollapsed={areAllCollapsed}
+            setAllCollapsed={setAllCollapsed}
           />
         )
       })}

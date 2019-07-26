@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle, forwardRef } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Diff as RDiff, Hunk, markEdits, tokenize } from 'react-diff-view'
 import DiffHeader from './DiffHeader'
@@ -58,35 +58,30 @@ const DiffView = styled(RDiff)`
 const isDiffCollapsedByDefault = ({ type, hunks }) =>
   type === 'delete' || hunks.length > 5 ? true : undefined
 
-const Diff = (
-  {
-    oldPath,
-    newPath,
-    type,
-    hunks,
-    fromVersion,
-    toVersion,
-    diffKey,
-    isDiffCompleted,
-    onCompleteDiff,
-    selectedChanges,
-    onToggleChangeSelection,
-    toggleAll
-  },
-  ref
-) => {
+const Diff = ({
+  oldPath,
+  newPath,
+  type,
+  hunks,
+  fromVersion,
+  toVersion,
+  diffKey,
+  isDiffCompleted,
+  onCompleteDiff,
+  selectedChanges,
+  onToggleChangeSelection,
+  areAllCollapsed,
+  setAllCollapsed
+}) => {
   const [isDiffCollapsed, setIsDiffCollapsed] = useState(
     isDiffCollapsedByDefault({ type, hunks })
   )
 
-  if (isDiffCompleted && isDiffCollapsed === undefined) {
+  if (areAllCollapsed !== undefined && areAllCollapsed !== isDiffCollapsed) {
+    setIsDiffCollapsed(areAllCollapsed)
+  } else if (isDiffCompleted && isDiffCollapsed === undefined) {
     setIsDiffCollapsed(true)
   }
-
-  useImperativeHandle(ref, () => ({
-    setIsDiffCollapsed,
-    isDiffCollapsed
-  }))
 
   return (
     <Container>
@@ -98,10 +93,11 @@ const Diff = (
         diffKey={diffKey}
         hasDiff={hunks.length > 0}
         isDiffCollapsed={isDiffCollapsed}
-        setIsDiffCollapsed={(collapse, shiftKey) => {
-          if (shiftKey) {
-            toggleAll(collapse)
+        setIsDiffCollapsed={(collapse, altKey) => {
+          if (altKey) {
+            setAllCollapsed(collapse)
           } else {
+            setAllCollapsed(undefined)
             setIsDiffCollapsed(collapse)
           }
         }}
@@ -145,6 +141,7 @@ const Diff = (
   the same result as passing prevProps to render, otherwise return false
 */
 const arePropsEqual = (prevProps, nextProps) =>
-  prevProps.isDiffCompleted === nextProps.isDiffCompleted
+  prevProps.isDiffCompleted === nextProps.isDiffCompleted &&
+  prevProps.areAllCollapsed === nextProps.areAllCollapsed
 
-export default React.memo(forwardRef(Diff), arePropsEqual)
+export default React.memo(Diff, arePropsEqual)
