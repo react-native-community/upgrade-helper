@@ -158,7 +158,9 @@ const DiffHeader = styled(
       <CollapseDiffButton
         visible={hasDiff}
         isDiffCollapsed={isDiffCollapsed}
-        onClick={() => setIsDiffCollapsed(!isDiffCollapsed)}
+        onClick={({ shiftKey }) =>
+          setIsDiffCollapsed(!isDiffCollapsed, shiftKey)
+        }
       />
       <FileName oldPath={oldPath} newPath={newPath} type={type} />{' '}
       <FileStatus type={type} />

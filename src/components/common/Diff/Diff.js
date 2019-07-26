@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useImperativeHandle, forwardRef } from 'react'
 import styled from 'styled-components'
 import { Diff as RDiff, Hunk, markEdits, tokenize } from 'react-diff-view'
 import DiffHeader from './DiffHeader'
@@ -58,19 +58,23 @@ const DiffView = styled(RDiff)`
 const isDiffCollapsedByDefault = ({ type, hunks }) =>
   type === 'delete' || hunks.length > 5 ? true : undefined
 
-const Diff = ({
-  oldPath,
-  newPath,
-  type,
-  hunks,
-  fromVersion,
-  toVersion,
-  diffKey,
-  isDiffCompleted,
-  onCompleteDiff,
-  selectedChanges,
-  onToggleChangeSelection
-}) => {
+const Diff = (
+  {
+    oldPath,
+    newPath,
+    type,
+    hunks,
+    fromVersion,
+    toVersion,
+    diffKey,
+    isDiffCompleted,
+    onCompleteDiff,
+    selectedChanges,
+    onToggleChangeSelection,
+    toggleAll
+  },
+  ref
+) => {
   const [isDiffCollapsed, setIsDiffCollapsed] = useState(
     isDiffCollapsedByDefault({ type, hunks })
   )
@@ -78,6 +82,11 @@ const Diff = ({
   if (isDiffCompleted && isDiffCollapsed === undefined) {
     setIsDiffCollapsed(true)
   }
+
+  useImperativeHandle(ref, () => ({
+    setIsDiffCollapsed,
+    isDiffCollapsed
+  }))
 
   return (
     <Container>
@@ -89,7 +98,13 @@ const Diff = ({
         diffKey={diffKey}
         hasDiff={hunks.length > 0}
         isDiffCollapsed={isDiffCollapsed}
-        setIsDiffCollapsed={setIsDiffCollapsed}
+        setIsDiffCollapsed={(collapse, shiftKey) => {
+          if (shiftKey) {
+            toggleAll(collapse)
+          } else {
+            setIsDiffCollapsed(collapse)
+          }
+        }}
         isDiffCompleted={isDiffCompleted}
         onCompleteDiff={onCompleteDiff}
       />
@@ -132,4 +147,4 @@ const Diff = ({
 const arePropsEqual = (prevProps, nextProps) =>
   prevProps.isDiffCompleted === nextProps.isDiffCompleted
 
-export default React.memo(Diff, arePropsEqual)
+export default React.memo(forwardRef(Diff), arePropsEqual)
