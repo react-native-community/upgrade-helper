@@ -32,6 +32,12 @@
     "test": "react-scripts test",
     "lint": "eslint . --cache --report-unused-disable-directives"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged --pattern \"src/**/*.*(js|jsx)\"",
+      "pre-push": "npm run lint"
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",
