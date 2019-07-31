@@ -177,12 +177,12 @@ const DiffHeader = styled(
       <HeaderButtonsContainer>
         <Fragment>
           <ViewFileButton
-            visible={hasDiff}
+            visible={hasDiff && type !== 'delete'}
             version={toVersion}
             path={newPath}
           />
           <DownloadFileButton
-            visible={!hasDiff}
+            visible={!hasDiff && type !== 'delete'}
             version={toVersion}
             path={newPath}
           />
