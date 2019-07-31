@@ -86,6 +86,25 @@ const DownloadFileButton = styled(({ visible, toVersion, newPath, ...props }) =>
   }
 `
 
+const ViewFileButton = styled(({ visible, toVersion, newPath, ...props }) =>
+  visible ? (
+    <Button
+      {...props}
+      type="link"
+      target="_blank"
+      href={getBinaryFileURL({
+        version: toVersion,
+        path: newPath
+      })}
+    >
+      View file
+    </Button>
+  ) : null
+)`
+  font-size: 12px;
+  color: #24292e;
+`
+
 const CompleteDiffButton = styled(
   ({ diffKey, isDiffCompleted, onCompleteDiff, ...props }) =>
     isDiffCompleted ? (
@@ -167,6 +186,11 @@ const DiffHeader = styled(
         <Fragment>
           <DownloadFileButton
             visible={!hasDiff}
+            toVersion={toVersion}
+            newPath={newPath}
+          />
+          <ViewFileButton
+            visible={hasDiff}
             toVersion={toVersion}
             newPath={newPath}
           />
