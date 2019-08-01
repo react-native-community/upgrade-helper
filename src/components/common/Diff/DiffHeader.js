@@ -61,19 +61,15 @@ const HeaderButtonsContainer = styled(props => <div {...props} />)`
   float: right;
 `
 
-const DownloadFileButton = styled(({ visible, toVersion, newPath, ...props }) =>
+const DownloadFileButton = styled(({ visible, version, path, ...props }) =>
   visible ? (
     <Button
       {...props}
       type="ghost"
       shape="circle"
       icon="download"
-      onClick={() =>
-        (window.location = getBinaryFileURL({
-          version: toVersion,
-          path: newPath
-        }))
-      }
+      target="_blank"
+      href={getBinaryFileURL({ version, path })}
     />
   ) : null
 )`
@@ -86,27 +82,42 @@ const DownloadFileButton = styled(({ visible, toVersion, newPath, ...props }) =>
   }
 `
 
-const CompleteDiffButton = styled(
-  ({ diffKey, isDiffCompleted, onCompleteDiff, ...props }) =>
-    isDiffCompleted ? (
-      <Popover content="↩️">
-        <Button
-          {...props}
-          type="ghost"
-          shape="circle"
-          icon="check"
-          onClick={() => onCompleteDiff(diffKey)}
-        />
-      </Popover>
-    ) : (
+const ViewFileButton = styled(({ visible, version, path, ...props }) =>
+  visible ? (
+    <Button
+      {...props}
+      type="link"
+      target="_blank"
+      href={getBinaryFileURL({ version, path })}
+    >
+      View file
+    </Button>
+  ) : null
+)`
+  font-size: 12px;
+  color: #24292e;
+`
+
+const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
+  visible ? (
+    <Popover content="↩️">
       <Button
         {...props}
         type="ghost"
         shape="circle"
         icon="check"
-        onClick={() => onCompleteDiff(diffKey)}
+        onClick={onClick}
       />
-    )
+    </Popover>
+  ) : (
+    <Button
+      {...props}
+      type="ghost"
+      shape="circle"
+      icon="check"
+      onClick={onClick}
+    />
+  )
 )`
   font-size: 13px;
   line-height: 0;
@@ -165,15 +176,19 @@ const DiffHeader = styled(
       <BinaryBadge visible={!hasDiff} />
       <HeaderButtonsContainer>
         <Fragment>
+          <ViewFileButton
+            visible={hasDiff && type !== 'delete'}
+            version={toVersion}
+            path={newPath}
+          />
           <DownloadFileButton
-            visible={!hasDiff}
-            toVersion={toVersion}
-            newPath={newPath}
+            visible={!hasDiff && type !== 'delete'}
+            version={toVersion}
+            path={newPath}
           />
           <CompleteDiffButton
-            diffKey={diffKey}
-            isDiffCompleted={isDiffCompleted}
-            onCompleteDiff={onCompleteDiff}
+            visible={isDiffCompleted}
+            onClick={() => onCompleteDiff(diffKey)}
           />
         </Fragment>
       </HeaderButtonsContainer>
