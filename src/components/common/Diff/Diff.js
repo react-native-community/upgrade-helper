@@ -69,13 +69,17 @@ const Diff = ({
   isDiffCompleted,
   onCompleteDiff,
   selectedChanges,
-  onToggleChangeSelection
+  onToggleChangeSelection,
+  areAllCollapsed,
+  setAllCollapsed
 }) => {
   const [isDiffCollapsed, setIsDiffCollapsed] = useState(
     isDiffCollapsedByDefault({ type, hunks })
   )
 
-  if (isDiffCompleted && isDiffCollapsed === undefined) {
+  if (areAllCollapsed !== undefined && areAllCollapsed !== isDiffCollapsed) {
+    setIsDiffCollapsed(areAllCollapsed)
+  } else if (isDiffCompleted && isDiffCollapsed === undefined) {
     setIsDiffCollapsed(true)
   }
 
@@ -89,7 +93,14 @@ const Diff = ({
         diffKey={diffKey}
         hasDiff={hunks.length > 0}
         isDiffCollapsed={isDiffCollapsed}
-        setIsDiffCollapsed={setIsDiffCollapsed}
+        setIsDiffCollapsed={(collapse, altKey) => {
+          if (altKey) {
+            return setAllCollapsed(collapse)
+          }
+
+          setAllCollapsed(undefined)
+          setIsDiffCollapsed(collapse)
+        }}
         isDiffCompleted={isDiffCompleted}
         onCompleteDiff={onCompleteDiff}
       />
@@ -130,6 +141,7 @@ const Diff = ({
   the same result as passing prevProps to render, otherwise return false
 */
 const arePropsEqual = (prevProps, nextProps) =>
-  prevProps.isDiffCompleted === nextProps.isDiffCompleted
+  prevProps.isDiffCompleted === nextProps.isDiffCompleted &&
+  prevProps.areAllCollapsed === nextProps.areAllCollapsed
 
 export default React.memo(Diff, arePropsEqual)
