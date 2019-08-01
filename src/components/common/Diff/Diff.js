@@ -95,11 +95,11 @@ const Diff = ({
         isDiffCollapsed={isDiffCollapsed}
         setIsDiffCollapsed={(collapse, altKey) => {
           if (altKey) {
-            setAllCollapsed(collapse)
-          } else {
-            setAllCollapsed(undefined)
-            setIsDiffCollapsed(collapse)
+            return setAllCollapsed(collapse)
           }
+
+          setAllCollapsed(undefined)
+          setIsDiffCollapsed(collapse)
         }}
         isDiffCompleted={isDiffCompleted}
         onCompleteDiff={onCompleteDiff}
