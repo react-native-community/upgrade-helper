@@ -1,4 +1,4 @@
 [build]
   base    = "upgrade-helper/"
   publish = "upgrade-helper/build/"
-  command = "sed -i -e \"s|const baseUrl .*|const baseUrl = '/';|g\" siteConfig.js && yarn install && node netlify-reduce-versions && yarn sync-community-repos && yarn build"
+  command = "yarn run predeploy"
