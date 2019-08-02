@@ -3,28 +3,18 @@ import styled from 'styled-components'
 import ContentLoader from 'react-content-loader'
 
 const TitleLoader = () => (
-  <ContentLoader
-    height={40}
-    speed={1}
-    primaryColor={'#ffff'}
-    secondaryColor={'#e8e8e8'}
-  >
-    <rect rx="3" ry="3" width="100" height="8" />{' '}
+  <ContentLoader speed={1} primaryColor="#b3b3b3" secondaryColor="#e6e6e6">
+    <rect rx="3" ry="3" width="100" height="7" />{' '}
   </ContentLoader>
 )
 const DiffLoader = () => (
-  <ContentLoader
-    height={140}
-    speed={1}
-    primaryColor={'#ffff'}
-    secondaryColor={'#9992'}
-  >
+  <ContentLoader speed={1} primaryColor="#b3b3b3" secondaryColor="#e6e6e6">
     <rect x="0" y="7" rx="4" ry="4" width="90%" height="13" />{' '}
-    <rect x="0" y="37" rx="4" ry="4" width="80%" height="13" />{' '}
-    <rect x="0" y="60" rx="3" ry="3" width="70%" height="10" />
-    <rect x="0" y="97" rx="4" ry="4" width="90%" height="13" />{' '}
-    <rect x="0" y="124" rx="4" ry="4" width="80%" height="13" />{' '}
-    <rect x="0" y="154" rx="3" ry="3" width="70%" height="10" />
+    <rect x="0" y="30" rx="4" ry="4" width="80%" height="13" />{' '}
+    <rect x="0" y="53" rx="3" ry="3" width="70%" height="10" />
+    <rect x="0" y="90" rx="4" ry="4" width="90%" height="13" />{' '}
+    <rect x="0" y="113" rx="4" ry="4" width="80%" height="13" />{' '}
+    <rect x="0" y="143" rx="3" ry="3" width="70%" height="10" />
   </ContentLoader>
 )
 
@@ -36,7 +26,6 @@ const SkeletonContainer = styled.div`
   border-radius: 3px;
   max-height: '800px';
   overflow: hidden;
-  transition: max-height 0.4s ease-out;
 `
 
 const Header = styled.div`
@@ -44,23 +33,21 @@ const Header = styled.div`
   line-height: 32px;
   background-color: #fafbfc;
   border: 1px solid #e8e8e8;
-  padding: 5px 10px;
+  padding: 10px 5px;
   height: 40px;
 `
 
 const DiffDisplay = styled.div`
-  color: #24292e;
-  background-color: #;
   border-radius: 3px;
   padding: 5px 10px;
   height: 400px;
   column-count: 2;
   align-items: center;
 `
-export default class UsefulContentNoData extends Component<Props> {
+export default class UsefulContentNoData extends Component {
   render() {
     return (
-      <Fragment key={'noData'}>
+      <Fragment key="noData">
         <SkeletonContainer>
           <Header>
             <TitleLoader />
