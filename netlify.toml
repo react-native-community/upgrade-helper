@@ -1,4 +1,4 @@
 [build]
   base    = "upgrade-helper/"
-  publish = "upgrade-helper/build/"
+  publish = "/build"
   command = "yarn run predeploy"
