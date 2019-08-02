@@ -35,7 +35,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged --pattern \"src/**/*.*(js|jsx)\"",
-      "pre-push": "npm run lint"
+      "pre-push": "yarn run lint"
     }
   },
   "browserslist": {
