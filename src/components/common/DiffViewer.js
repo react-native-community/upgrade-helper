@@ -99,17 +99,6 @@ const DiffViewer = ({
     onToggleChangeSelection: onToggleChangeSelection
   }
 
-  const diffSectionProps = {
-    diff: diff,
-    getDiffKey: getDiffKey,
-    completedDiffs: completedDiffs,
-    fromVersion: fromVersion,
-    toVersion: toVersion,
-    handleCompleteDiff: handleCompleteDiff,
-    selectedChanges: selectedChanges,
-    onToggleChangeSelection: onToggleChangeSelection
-  }
-
   return (
     <Container>
       <UsefulContentSection
