@@ -4,7 +4,7 @@ import { parseDiff, withChangeSelect } from 'react-diff-view'
 import 'react-diff-view/style/index.css'
 import { getDiffPatchURL } from '../../utils'
 import Diff from './Diff/Diff'
-import DiffNoData from './NoData/DiffNoData'
+import DiffNoData from './Diff/DiffLoading'
 import UsefulContentSection from './UsefulContentSection'
 import CompletedFilesCounter from './CompletedFilesCounter'
 
