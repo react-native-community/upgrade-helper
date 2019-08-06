@@ -22,13 +22,21 @@
     "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.1.0",
     "gh-pages": "^2.0.0",
-    "prettier": "^1.18.2"
+    "husky": "^3.0.1",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "lint": "eslint . --cache --report-unused-disable-directives"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged --pattern \"src/**/*.*(js|jsx)\"",
+      "pre-push": "yarn run lint"
+    }
   },
   "browserslist": {
     "production": [
