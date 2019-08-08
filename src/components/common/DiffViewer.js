@@ -5,7 +5,7 @@ import { parseDiff, withChangeSelect } from 'react-diff-view'
 import 'react-diff-view/style/index.css'
 import { getDiffPatchURL } from '../../utils'
 import DiffSection from './Diff/DiffSection'
-import Loading from './Loading'
+import DiffLoading from './Diff/DiffLoading'
 import UsefulContentSection from './UsefulContentSection'
 import CompletedFilesCounter from './CompletedFilesCounter'
 
@@ -81,7 +81,11 @@ const DiffViewer = ({
   }
 
   if (isLoading) {
-    return <Loading />
+    return (
+      <Container>
+        <DiffLoading />
+      </Container>
+    )
   }
 
   const diffSectionProps = {
