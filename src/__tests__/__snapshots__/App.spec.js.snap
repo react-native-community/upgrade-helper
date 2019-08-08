@@ -3,20 +3,20 @@
 exports[`renders without crashing 1`] = `
 <div>
   <div
-    class="sc-iAyFgw iDnRlv"
+    class="sc-eHgmQL dxdtuN"
   >
     <div
-      class="ant-card sc-hSdWYo khBoCO ant-card-bordered"
+      class="ant-card sc-cvbbAY bxvjdJ ant-card-bordered"
     >
       <div
         class="ant-card-body"
       >
         <div
-          class="sc-eHgmQL fFTaty"
+          class="sc-jWBwVP jZcPPp"
         >
           <img
             alt="React Native upgrade helper logo"
-            class="sc-cvbbAY hMWHFp"
+            class="sc-brqgnP fmaJMF"
             src="logo.svg"
             title="React Native upgrade helper logo"
           />
@@ -24,13 +24,13 @@ exports[`renders without crashing 1`] = `
             href="https://react-native-community.github.io/upgrade-helper"
           >
             <h1
-              class="sc-jWBwVP fPZkvZ"
+              class="sc-cMljjf hulHqW"
             >
               React Native upgrade guide
             </h1>
           </a>
           <div
-            class="sc-brqgnP jVBWaH"
+            class="sc-jAaTju iflkUG"
           >
             <div>
               ReactGitHubBtn - 
