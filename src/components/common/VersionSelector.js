@@ -77,39 +77,38 @@ const getReleasedVersionsWithoutCandidates = ({
 }) => {
   const isToVersionAReleaseCandidate = semver.prerelease(toVersion) !== null
   const isLatestAReleaseCandidate = semver.prerelease(latestVersion) !== null
-  console.log('toversion: ', toVersion)
-  console.log('latestVersion', latestVersion)
-  console.log('is latest a release candidate', isLatestAReleaseCandidate)
-
+  // if toVersion is latest && if the current iterated value(split at dash) === toVersion
+  //  ^^^^ is release candidate
   return releasedVersions.filter(releasedVersion => {
     // console.log(releasedVersion.split('-'))
     const splitByDash = releasedVersion.split('-')
     if (splitByDash.length > 1) {
       console.log('first', splitByDash[0])
-      console.log('second', latestVersion)
+      console.log('second', toVersion)
 
-      if (splitByDash[0] === toVersion) {
+      if (toVersion && splitByDash[0] === toVersion) {
         console.log(
-          `${
-            splitByDash[0]
-          } === ${latestVersion}, we should add to final result!`
+          `${releasedVersion} === ${toVersion}, we should add to final result!`
         )
+        return true
       }
+    } else {
+      return true
     }
 
-    return (
-      semver.prerelease(releasedVersion) === null ||
-      (isToVersionAReleaseCandidate &&
-        compareReleaseCandidateVersions({
-          version: toVersion,
-          versionToCompare: releasedVersion
-        })) ||
-      (isLatestAReleaseCandidate &&
-        compareReleaseCandidateVersions({
-          version: latestVersion,
-          versionToCompare: releasedVersion
-        }))
-    )
+    // return (
+    //   semver.prerelease(releasedVersion) === null ||
+    //   (isToVersionAReleaseCandidate &&
+    //     compareReleaseCandidateVersions({
+    //       version: toVersion,
+    //       versionToCompare: releasedVersion
+    //     })) ||
+    //   (isLatestAReleaseCandidate &&
+    //     compareReleaseCandidateVersions({
+    //       version: latestVersion,
+    //       versionToCompare: releasedVersion
+    //     }))
+    // )
   })
 }
 
