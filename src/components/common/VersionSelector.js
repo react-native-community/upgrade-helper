@@ -57,6 +57,19 @@ const compareReleaseCandidateVersions = ({ version, versionToCompare }) =>
 // Filters out release candidates from `releasedVersion` with the exception of
 // the release candidates from the latest version & target version that comes from the URL
 // but only if any of them is a release candidate
+const getReleasedVersionsWithNewestCandidates = ({
+  releasedVersions,
+  toVersion,
+  latestVersion
+}) => {
+  const isToVersionAReleaseCandidate = semver.prerelease(toVersion) !== null
+  const isLatestAReleaseCandidate = semver.prerelease(latestVersion) !== null
+}
+
+// if the current iterated value is a release candidate && current iterated
+//   value is (up to -) is === latest version ... include it ... otherwise filter everything
+//   else out (:thumbsup:)
+
 const getReleasedVersionsWithoutCandidates = ({
   releasedVersions,
   toVersion,
@@ -64,9 +77,27 @@ const getReleasedVersionsWithoutCandidates = ({
 }) => {
   const isToVersionAReleaseCandidate = semver.prerelease(toVersion) !== null
   const isLatestAReleaseCandidate = semver.prerelease(latestVersion) !== null
+  console.log('toversion: ', toVersion)
+  console.log('latestVersion', latestVersion)
+  console.log('is latest a release candidate', isLatestAReleaseCandidate)
 
-  return releasedVersions.filter(
-    releasedVersion =>
+  return releasedVersions.filter(releasedVersion => {
+    // console.log(releasedVersion.split('-'))
+    const splitByDash = releasedVersion.split('-')
+    if (splitByDash.length > 1) {
+      console.log('first', splitByDash[0])
+      console.log('second', latestVersion)
+
+      if (splitByDash[0] === toVersion) {
+        console.log(
+          `${
+            splitByDash[0]
+          } === ${latestVersion}, we should add to final result!`
+        )
+      }
+    }
+
+    return (
       semver.prerelease(releasedVersion) === null ||
       (isToVersionAReleaseCandidate &&
         compareReleaseCandidateVersions({
@@ -78,7 +109,8 @@ const getReleasedVersionsWithoutCandidates = ({
           version: latestVersion,
           versionToCompare: releasedVersion
         }))
-  )
+    )
+  })
 }
 
 const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) =>
@@ -165,6 +197,13 @@ const VersionSelector = ({ showDiff }) => {
         toVersion: toVersionToBeSet,
         latestVersion
       })
+      // const sanitizedVersions = getReleasedVersionsWithNewestCandidates({
+      //   releasedVersions: allVersionsFromResponse,
+      //   toVersion: toVersionToBeSet,
+      //   latestVersion
+      // })
+
+      // const sanitizedVersions = allVersionsFromResponse
 
       setAllVersions(sanitizedVersions)
 
