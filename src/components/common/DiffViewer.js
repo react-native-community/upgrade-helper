@@ -7,6 +7,8 @@ import { getDiffPatchURL } from '../../utils'
 import DiffSection from './Diff/DiffSection'
 import DiffLoading from './Diff/DiffLoading'
 import UsefulContentSection from './UsefulContentSection'
+import ViewStyleOptions from './Diff/DiffViewStyleOptions'
+
 import CompletedFilesCounter from './CompletedFilesCounter'
 
 const Container = styled.div`
@@ -49,6 +51,8 @@ const DiffViewer = ({
     )
 
   const resetCompletedDiff = () => setCompletedDiffs([])
+
+  const [diffViewStyle, setViewStyle] = useState('unified')
 
   useEffect(() => {
     if (!showDiff) {
@@ -106,8 +110,13 @@ const DiffViewer = ({
         fromVersion={fromVersion}
         toVersion={toVersion}
       />
+      <ViewStyleOptions setViewStyle={setViewStyle} />
 
-      <DiffSection {...diffSectionProps} isDoneSection={false} />
+      <DiffSection
+        {...diffSectionProps}
+        isDoneSection={false}
+        diffViewStyle={diffViewStyle}
+      />
 
       {renderUpgradeDoneMessage({ diff, completedDiffs })}
 
