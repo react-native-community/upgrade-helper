@@ -1,13 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button } from 'antd'
-
-const Options = Button.Group
+import { Radio } from 'antd'
 
 const Container = styled.div`
   position: relative;
   border-width: 1px;
-  margin-top: 10px;
+  margin-top: 16px;
   flex-direction: row-reverse;
   display: flex;
 `
@@ -15,10 +13,14 @@ const Container = styled.div`
 const DiffViewStyleOptions = styled(({ setViewStyle, ...props }) => {
   return (
     <Container>
-      <Options>
-        <Button onClick={() => setViewStyle('split')}>Split</Button>
-        <Button onClick={() => setViewStyle('unified')}>Unified</Button>
-      </Options>
+      <Radio.Group>
+        <Radio.Button value="split" onChange={() => setViewStyle('split')}>
+          Split
+        </Radio.Button>
+        <Radio.Button value="unified" onChange={() => setViewStyle('unified')}>
+          Unified
+        </Radio.Button>
+      </Radio.Group>
     </Container>
   )
 })`
