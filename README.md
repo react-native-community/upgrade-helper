@@ -2,7 +2,7 @@
   <img src="/src/assets/logo.svg" width="150" />
 </p>
 
-<h1 align="center">Upgrade Helper</h1>
+<h1 align="center">Upgrade  Helper</h1>
 
 <p align="center">
   A web tool to help you upgrading your React Native app with ease! 🚀
