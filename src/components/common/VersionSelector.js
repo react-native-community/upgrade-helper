@@ -54,26 +54,10 @@ const compareReleaseCandidateVersions = ({ version, versionToCompare }) =>
     semver.valid(semver.coerce(versionToCompare))
   ) === 0
 
-// Filters out release candidates from `releasedVersion` with the exception of
-// the release candidates from the latest version & target version that comes from the URL
-// but only if any of them is a release candidate
-const getReleasedVersionsWithNewestCandidates = ({
-  releasedVersions,
-  toVersion,
-  latestVersion
-}) => {
-  const isToVersionAReleaseCandidate = semver.prerelease(toVersion) !== null
-  const isLatestAReleaseCandidate = semver.prerelease(latestVersion) !== null
-}
-
-// if the current iterated value is a release candidate && current iterated
-//   value is (up to -) is === latest version ... include it ... otherwise filter everything
-//   else out (:thumbsup:)
 const isFromVersionAReleaseCandidate = (from, to) => {
   const splitCandidate = from.split('-')
   if (splitCandidate.length > 1) {
     if (to && splitCandidate[0] === to) {
-      console.log(`${from} === ${to}, we should add to final result!`)
       return true
     }
   } else {
@@ -122,22 +106,6 @@ const getReleasedVersionsWithoutCandidates = (
       )
     })
   }
-  return releasedVersions.filter(releasedVersion => {
-    return (
-      isFromVersionAReleaseCandidate(releasedVersion, toVersion) ||
-      semver.prerelease(releasedVersion) === null ||
-      (isToVersionAReleaseCandidate &&
-        compareReleaseCandidateVersions({
-          version: toVersion,
-          versionToCompare: releasedVersion
-        })) ||
-      (isLatestAReleaseCandidate &&
-        compareReleaseCandidateVersions({
-          version: latestVersion,
-          versionToCompare: releasedVersion
-        }))
-    )
-  })
 }
 
 const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) =>
@@ -145,7 +113,9 @@ const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) =>
     releasedVersion =>
       releasedVersion.length > 0 &&
       ((maxVersion && semver.lt(releasedVersion, maxVersion)) ||
-        (minVersion && semver.gt(releasedVersion, minVersion)))
+        (minVersion &&
+          semver.gt(releasedVersion, minVersion) &&
+          !releasedVersion.includes('rc')))
   )
 
 // Finds the first minor release (which in react-native is the major) when compared to another version
@@ -250,6 +220,7 @@ const VersionSelector = ({ showDiff }) => {
           minVersion: fromVersionToBeSet
         })
       )
+
       setLocalFromVersion(fromVersionToBeSet)
       setLocalToVersion(toVersionToBeSet)
 
