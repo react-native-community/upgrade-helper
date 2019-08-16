@@ -60,51 +60,29 @@ const isFromAValidReleaseCandidate = (from, to, latest) =>
   compareReleaseCandidateVersions({ version: from, versionToCompare: to }) &&
   compareReleaseCandidateVersions({ version: from, versionToCompare: latest })
 
-const getReleasedVersionsWithoutCandidates = (
-  { releasedVersions, toVersion, latestVersion },
-  getWithCandidates = true
-) => {
+const getReleasedVersionsWithCandidates = ({
+  releasedVersions,
+  toVersion,
+  latestVersion
+}) => {
   const isToVersionAReleaseCandidate = semver.prerelease(toVersion) !== null
   const isLatestAReleaseCandidate = semver.prerelease(latestVersion) !== null
-
-  if (getWithCandidates) {
-    return releasedVersions.filter(releasedVersion => {
-      return (
-        isFromAValidReleaseCandidate(
-          releasedVersion,
-          toVersion,
-          latestVersion
-        ) ||
-        semver.prerelease(releasedVersion) === null ||
-        (isToVersionAReleaseCandidate &&
-          compareReleaseCandidateVersions({
-            version: toVersion,
-            versionToCompare: releasedVersion
-          })) ||
-        (isLatestAReleaseCandidate &&
-          compareReleaseCandidateVersions({
-            version: latestVersion,
-            versionToCompare: releasedVersion
-          }))
-      )
-    })
-  } else {
-    return releasedVersions.filter(releasedVersion => {
-      return (
-        semver.prerelease(releasedVersion) === null ||
-        (isToVersionAReleaseCandidate &&
-          compareReleaseCandidateVersions({
-            version: toVersion,
-            versionToCompare: releasedVersion
-          })) ||
-        (isLatestAReleaseCandidate &&
-          compareReleaseCandidateVersions({
-            version: latestVersion,
-            versionToCompare: releasedVersion
-          }))
-      )
-    })
-  }
+  return releasedVersions.filter(releasedVersion => {
+    return (
+      isFromAValidReleaseCandidate(releasedVersion, toVersion, latestVersion) ||
+      semver.prerelease(releasedVersion) === null ||
+      (isToVersionAReleaseCandidate &&
+        compareReleaseCandidateVersions({
+          version: toVersion,
+          versionToCompare: releasedVersion
+        })) ||
+      (isLatestAReleaseCandidate &&
+        compareReleaseCandidateVersions({
+          version: latestVersion,
+          versionToCompare: releasedVersion
+        }))
+    )
+  })
 }
 
 const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) =>
@@ -188,7 +166,7 @@ const VersionSelector = ({ showDiff }) => {
         : latestVersion
 
       // Remove `rc` versions from the array of versions
-      const sanitizedVersions = getReleasedVersionsWithoutCandidates(
+      const sanitizedVersions = getReleasedVersionsWithCandidates(
         {
           releasedVersions: allVersionsFromResponse,
           toVersion: toVersionToBeSet,
