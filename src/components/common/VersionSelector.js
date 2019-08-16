@@ -54,16 +54,11 @@ const compareReleaseCandidateVersions = ({ version, versionToCompare }) =>
     semver.valid(semver.coerce(versionToCompare))
   ) === 0
 
-const isFromVersionAReleaseCandidate = (from, to) => {
-  const splitCandidate = from.split('-')
-  if (splitCandidate.length > 1) {
-    if (to && splitCandidate[0] === to) {
-      return true
-    }
-  } else {
-    return false
-  }
-}
+// from, to, && latest
+const isFromAValidReleaseCandidate = (from, to, latest) =>
+  semver.prerelease(from) &&
+  compareReleaseCandidateVersions({ version: from, versionToCompare: to }) &&
+  compareReleaseCandidateVersions({ version: from, versionToCompare: latest })
 
 const getReleasedVersionsWithoutCandidates = (
   { releasedVersions, toVersion, latestVersion },
@@ -75,7 +70,11 @@ const getReleasedVersionsWithoutCandidates = (
   if (getWithCandidates) {
     return releasedVersions.filter(releasedVersion => {
       return (
-        isFromVersionAReleaseCandidate(releasedVersion, toVersion) ||
+        isFromAValidReleaseCandidate(
+          releasedVersion,
+          toVersion,
+          latestVersion
+        ) ||
         semver.prerelease(releasedVersion) === null ||
         (isToVersionAReleaseCandidate &&
           compareReleaseCandidateVersions({
