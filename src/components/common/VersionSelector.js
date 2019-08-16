@@ -54,7 +54,7 @@ const compareReleaseCandidateVersions = ({ version, versionToCompare }) =>
     semver.valid(semver.coerce(versionToCompare))
   ) === 0
 
-// from, to, && latest
+// Compare `from` rc version to `to` and check if rc is one of latest version
 const isFromAValidReleaseCandidate = (from, to, latest) =>
   semver.prerelease(from) &&
   compareReleaseCandidateVersions({ version: from, versionToCompare: to }) &&
