@@ -52,7 +52,7 @@ const DiffViewer = ({
 
   const resetCompletedDiff = () => setCompletedDiffs([])
 
-  const [diffViewStyle, setViewStyle] = useState('unified')
+  const [diffViewStyle, setViewStyle] = useState('split')
 
   useEffect(() => {
     if (!showDiff) {
