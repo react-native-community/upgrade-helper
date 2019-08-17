@@ -55,7 +55,7 @@ const compareReleaseCandidateVersions = ({ version, versionToCompare }) =>
   ) === 0
 
 // Compare `from` rc version to `to` and check if rc is one of latest version
-const isFromAValidReleaseCandidate = (from, to, latest) =>
+const isFromAValidReleaseCandidate = ({ from, to, latest }) =>
   semver.prerelease(from) &&
   compareReleaseCandidateVersions({ version: from, versionToCompare: to }) &&
   compareReleaseCandidateVersions({ version: from, versionToCompare: latest })
@@ -67,9 +67,14 @@ const getReleasedVersionsWithCandidates = ({
 }) => {
   const isToVersionAReleaseCandidate = semver.prerelease(toVersion) !== null
   const isLatestAReleaseCandidate = semver.prerelease(latestVersion) !== null
+
   return releasedVersions.filter(releasedVersion => {
     return (
-      isFromAValidReleaseCandidate(releasedVersion, toVersion, latestVersion) ||
+      isFromAValidReleaseCandidate({
+        from: releasedVersion,
+        to: toVersion,
+        latest: latestVersion
+      }) ||
       semver.prerelease(releasedVersion) === null ||
       (isToVersionAReleaseCandidate &&
         compareReleaseCandidateVersions({
