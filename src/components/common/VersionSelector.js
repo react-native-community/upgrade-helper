@@ -59,6 +59,8 @@ const isFromAValidReleaseCandidate = ({ from, to, latest }) =>
   semver.prerelease(from) &&
   compareReleaseCandidateVersions({ version: from, versionToCompare: latest })
 
+// Filters out release candidates from `releasedVersion` with the
+// exception of the release candidates from the latest version
 const getReleasedVersionsWithCandidates = ({
   releasedVersions,
   toVersion,
