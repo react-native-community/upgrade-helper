@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Radio } from 'antd'
 
@@ -10,30 +10,28 @@ const Container = styled.div`
   display: flex;
 `
 
-const DiffViewStyleOptions = styled(({ setViewStyle, ...props }) => {
-  const [viewStyle, changeActiveView] = useState(
-    localStorage.getItem('viewStyle')
-  )
-
-  const handleChange = e => {
-    changeActiveView(e.target.value)
-    setViewStyle(e.target.value)
-    localStorage.setItem('viewStyle', e.target.value)
+const DiffViewStyleOptions = styled(
+  ({ handleViewStyleChange, diffViewStyle }) => {
+    return (
+      <Container>
+        <Radio.Group value={diffViewStyle}>
+          <Radio.Button
+            value="split"
+            onChange={() => handleViewStyleChange('split')}
+          >
+            Split
+          </Radio.Button>
+          <Radio.Button
+            value="unified"
+            onChange={() => handleViewStyleChange('unified')}
+          >
+            Unified
+          </Radio.Button>
+        </Radio.Group>
+      </Container>
+    )
   }
-
-  return (
-    <Container>
-      <Radio.Group value={viewStyle}>
-        <Radio.Button value="split" onChange={handleChange}>
-          Split
-        </Radio.Button>
-        <Radio.Button value="unified" onChange={handleChange}>
-          Unified
-        </Radio.Button>
-      </Radio.Group>
-    </Container>
-  )
-})`
+)`
   float: right;
   position: absolute;
   top: 10px;

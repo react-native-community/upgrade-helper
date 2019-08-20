@@ -52,7 +52,14 @@ const DiffViewer = ({
 
   const resetCompletedDiff = () => setCompletedDiffs([])
 
-  const [diffViewStyle, setViewStyle] = useState('split')
+  const [diffViewStyle, setViewStyle] = useState(
+    localStorage.getItem('viewStyle') || 'split'
+  )
+
+  const handleViewStyleChange = newViewStyle => {
+    setViewStyle(newViewStyle)
+    localStorage.setItem('viewStyle', newViewStyle)
+  }
 
   useEffect(() => {
     if (!showDiff) {
@@ -110,7 +117,10 @@ const DiffViewer = ({
         fromVersion={fromVersion}
         toVersion={toVersion}
       />
-      <ViewStyleOptions setViewStyle={setViewStyle} />
+      <ViewStyleOptions
+        handleViewStyleChange={handleViewStyleChange}
+        diffViewStyle={diffViewStyle}
+      />
 
       <DiffSection
         {...diffSectionProps}
