@@ -88,7 +88,6 @@ const getReleasedVersionsWithCandidates = ({
     return (
       isFromAValidReleaseCandidate({
         fromVersion: releasedVersion,
-        latestVersion,
         latestMajorReleaseVersion
       }) ||
       semver.prerelease(releasedVersion) === null ||
