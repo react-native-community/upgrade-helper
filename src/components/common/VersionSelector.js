@@ -174,14 +174,11 @@ const VersionSelector = ({ showDiff }) => {
         : latestVersion
 
       // Remove `rc` versions from the array of versions
-      const sanitizedVersions = getReleasedVersionsWithCandidates(
-        {
-          releasedVersions: allVersionsFromResponse,
-          toVersion: toVersionToBeSet,
-          latestVersion
-        },
-        true
-      )
+      const sanitizedVersions = getReleasedVersionsWithCandidates({
+        releasedVersions: allVersionsFromResponse,
+        toVersion: toVersionToBeSet,
+        latestVersion
+      })
 
       setAllVersions(sanitizedVersions)
 
