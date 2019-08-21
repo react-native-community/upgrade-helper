@@ -71,7 +71,8 @@ const Diff = ({
   selectedChanges,
   onToggleChangeSelection,
   areAllCollapsed,
-  setAllCollapsed
+  setAllCollapsed,
+  diffViewStyle
 }) => {
   const [isDiffCollapsed, setIsDiffCollapsed] = useState(
     isDiffCollapsedByDefault({ type, hunks })
@@ -107,7 +108,7 @@ const Diff = ({
 
       {!isDiffCollapsed && (
         <DiffView
-          viewType="split"
+          viewType={diffViewStyle}
           diffType={type}
           hunks={hunks}
           widgets={getComments({ newPath, fromVersion, toVersion })}
@@ -142,6 +143,7 @@ const Diff = ({
 */
 const arePropsEqual = (prevProps, nextProps) =>
   prevProps.isDiffCompleted === nextProps.isDiffCompleted &&
-  prevProps.areAllCollapsed === nextProps.areAllCollapsed
+  prevProps.areAllCollapsed === nextProps.areAllCollapsed &&
+  prevProps.diffViewStyle === nextProps.diffViewStyle
 
 export default React.memo(Diff, arePropsEqual)

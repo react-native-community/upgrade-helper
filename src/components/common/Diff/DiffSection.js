@@ -16,7 +16,8 @@ const DiffSection = ({
   toVersion,
   handleCompleteDiff,
   selectedChanges,
-  onToggleChangeSelection
+  onToggleChangeSelection,
+  diffViewStyle
 }) => {
   const [areAllCollapsed, setAllCollapsed] = useState(undefined)
 
@@ -40,6 +41,7 @@ const DiffSection = ({
             // otakustay/react-diff-view#49
             type={diffFile.type === 'new' ? 'add' : diffFile.type}
             diffKey={diffKey}
+            diffViewStyle={diffViewStyle}
             fromVersion={fromVersion}
             toVersion={toVersion}
             isDiffCompleted={completedDiffs.includes(diffKey)}
