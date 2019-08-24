@@ -81,7 +81,8 @@ const isFromAValidReleaseCandidate = ({
 const getReleasedVersionsWithCandidates = ({
   releasedVersions,
   toVersion,
-  latestVersion
+  latestVersion,
+  showReleaseCandidates
 }) => {
   const isToVersionAReleaseCandidate = semver.prerelease(toVersion) !== null
   const isLatestAReleaseCandidate = semver.prerelease(latestVersion) !== null
@@ -89,12 +90,18 @@ const getReleasedVersionsWithCandidates = ({
     releasedVersions
   )
 
+  let validRC = false
+
   return releasedVersions.filter(releasedVersion => {
-    return (
-      isFromAValidReleaseCandidate({
+    if (showReleaseCandidates) {
+      validRC = isFromAValidReleaseCandidate({
         fromVersion: releasedVersion,
         latestMajorReleaseVersion
-      }) ||
+      })
+    }
+
+    return (
+      validRC ||
       semver.prerelease(releasedVersion) === null ||
       (isToVersionAReleaseCandidate &&
         compareReleaseCandidateVersions({
@@ -153,7 +160,7 @@ const updateURLVersions = ({ fromVersion, toVersion }) => {
   window.history.replaceState(null, null, `${pageURL}${newURL}`)
 }
 
-const VersionSelector = ({ showDiff }) => {
+const VersionSelector = ({ showDiff, showReleaseCandidates = false }) => {
   const [isLoading, setLoading] = useState(true)
   const [allVersions, setAllVersions] = useState([])
   const [fromVersionList, setFromVersionList] = useState([])
@@ -194,7 +201,8 @@ const VersionSelector = ({ showDiff }) => {
       const sanitizedVersions = getReleasedVersionsWithCandidates({
         releasedVersions: allVersionsFromResponse,
         toVersion: toVersionToBeSet,
-        latestVersion
+        latestVersion,
+        showReleaseCandidates
       })
 
       setAllVersions(sanitizedVersions)
@@ -235,7 +243,7 @@ const VersionSelector = ({ showDiff }) => {
     }
 
     fetchVersions()
-  }, [setLocalFromVersion, setLocalToVersion])
+  }, [setLocalFromVersion, setLocalToVersion, showReleaseCandidates])
 
   useEffect(() => {
     if (isLoading) {
@@ -259,7 +267,8 @@ const VersionSelector = ({ showDiff }) => {
     allVersions,
     localFromVersion,
     localToVersion,
-    hasVersionsFromURL
+    hasVersionsFromURL,
+    showReleaseCandidates
   ])
 
   const onShowDiff = ({ fromVersion, toVersion }) => {
