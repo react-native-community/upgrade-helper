@@ -5,6 +5,7 @@ import GitHubButton from 'react-github-btn'
 import ReactGA from 'react-ga'
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
+import Settings from '../common/Settings'
 import { homepage } from '../../../package.json'
 import logo from '../../assets/logo.svg'
 
@@ -49,6 +50,9 @@ const Home = () => {
   const [fromVersion, setFromVersion] = useState('')
   const [toVersion, setToVersion] = useState('')
   const [showDiff, setShowDiff] = useState(false)
+  const [settings, setSettings] = useState({
+    'show release candidates': true
+  })
 
   useEffect(() => {
     if (process.env.NODE_ENV === 'production') {
@@ -65,6 +69,15 @@ const Home = () => {
     setFromVersion(fromVersion)
     setToVersion(toVersion)
     setShowDiff(true)
+  }
+
+  const handleSettingsChange = settingsValues => {
+    const normalizedIncomingSettings = settingsValues.reduce((acc, val) => {
+      acc[val] = true
+      return acc
+    }, {})
+
+    setSettings(normalizedIncomingSettings)
   }
 
   return (
@@ -91,7 +104,12 @@ const Home = () => {
           </StarButton>
         </TitleContainer>
 
-        <VersionSelector showDiff={handleShowDiff} />
+        <Settings handleSettingsChange={handleSettingsChange} />
+
+        <VersionSelector
+          showDiff={handleShowDiff}
+          showReleaseCandidates={settings['show release candidates']}
+        />
       </Container>
 
       <DiffViewer
