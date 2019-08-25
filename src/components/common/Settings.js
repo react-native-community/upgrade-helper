@@ -8,7 +8,9 @@ const ApplyButton = styled(Button)`
 `
 const Settings = ({ handleSettingsChange }) => {
   const [popoverVisibility, setVisibility] = useState(false)
-  const [checkboxValues, setCheckboxValues] = useState([])
+  const [checkboxValues, setCheckboxValues] = useState([
+    'show release candidates'
+  ])
 
   const handleClickChange = visibility => setVisibility(visibility)
 
