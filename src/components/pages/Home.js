@@ -8,6 +8,7 @@ import DiffViewer from '../common/DiffViewer'
 import Settings from '../common/Settings'
 import { homepage } from '../../../package.json'
 import logo from '../../assets/logo.svg'
+import { SHOW_LATEST_RCS } from '../../utils'
 
 const Page = styled.div`
   display: flex;
@@ -52,7 +53,7 @@ const Home = () => {
   const [toVersion, setToVersion] = useState('')
   const [showDiff, setShowDiff] = useState(false)
   const [settings, setSettings] = useState({
-    'show release candidates': true
+    [`${SHOW_LATEST_RCS}`]: true
   })
 
   useEffect(() => {
@@ -109,7 +110,7 @@ const Home = () => {
 
         <VersionSelector
           showDiff={handleShowDiff}
-          showReleaseCandidates={settings['show release candidates']}
+          showReleaseCandidates={settings[SHOW_LATEST_RCS]}
         />
       </Container>
 
