@@ -44,6 +44,7 @@ const StarButton = styled(({ className, ...props }) => (
 ))`
   margin-top: 10px;
   margin-left: 15px;
+  margin-right: auto;
 `
 
 const Home = () => {
@@ -102,9 +103,9 @@ const Home = () => {
           >
             Star
           </StarButton>
-        </TitleContainer>
 
-        <Settings handleSettingsChange={handleSettingsChange} />
+          <Settings handleSettingsChange={handleSettingsChange} />
+        </TitleContainer>
 
         <VersionSelector
           showDiff={handleShowDiff}
