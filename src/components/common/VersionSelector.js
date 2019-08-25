@@ -160,7 +160,7 @@ const updateURLVersions = ({ fromVersion, toVersion }) => {
   window.history.replaceState(null, null, `${pageURL}${newURL}`)
 }
 
-const VersionSelector = ({ showDiff, showReleaseCandidates = false }) => {
+const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
   const [isLoading, setLoading] = useState(true)
   const [allVersions, setAllVersions] = useState([])
   const [fromVersionList, setFromVersionList] = useState([])
