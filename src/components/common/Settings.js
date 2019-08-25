@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
 import { Popover, Button, Checkbox } from 'antd'
 
-const Group = Checkbox.Group
-
+const ApplyButton = styled(Button)`
+  margin-top: 10px;
+  margin-right: 8px;
+`
 const Settings = ({ handleSettingsChange }) => {
   const [popoverVisibility, setVisibility] = useState(false)
   const [checkboxValues, setCheckboxValues] = useState([])
 
   const handleClickChange = visibility => setVisibility(visibility)
+
   const updateCheckboxValues = checkboxValues =>
     setCheckboxValues(checkboxValues)
 
@@ -20,8 +24,9 @@ const Settings = ({ handleSettingsChange }) => {
 
   return (
     <Popover
+      placement="bottomRight"
       content={
-        <Group
+        <Checkbox.Group
           onChange={updateCheckboxValues}
           defaultValue={['show release candidates']}
         >
@@ -30,9 +35,11 @@ const Settings = ({ handleSettingsChange }) => {
               show release candidates
             </Checkbox>
           </div>
-          <Button onClick={hidePopover}>Apply</Button>
+          <ApplyButton type="primary" onClick={hidePopover}>
+            Apply
+          </ApplyButton>
           <Button onClick={cancel}>Cancel</Button>
-        </Group>
+        </Checkbox.Group>
       }
       trigger="click"
       visible={popoverVisibility}
