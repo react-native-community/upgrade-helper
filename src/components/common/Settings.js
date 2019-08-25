@@ -34,10 +34,12 @@ const Settings = ({ handleSettingsChange }) => {
           <div>
             <Checkbox value={SHOW_LATEST_RCS}>{SHOW_LATEST_RCS}</Checkbox>
           </div>
-          <ApplyButton type="primary" onClick={hidePopover}>
+          <ApplyButton type="primary" size="small" onClick={hidePopover}>
             Apply
           </ApplyButton>
-          <Button onClick={cancel}>Cancel</Button>
+          <Button size="small" onClick={cancel}>
+            Cancel
+          </Button>
         </Checkbox.Group>
       }
       trigger="click"
