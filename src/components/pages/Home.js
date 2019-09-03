@@ -89,6 +89,12 @@ const Home = () => {
           >
             Star
           </StarButton>
+
+          <a href="https://osawards.com/reactnative">
+            <span style={{ fontSize: 30, position: 'absolute', right: '24px' }}>
+              Vote for us in the React Native Open Source Awards!
+            </span>
+          </a>
         </TitleContainer>
 
         <VersionSelector showDiff={handleShowDiff} />
