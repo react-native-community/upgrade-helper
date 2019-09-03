@@ -89,19 +89,6 @@ const Home = () => {
           >
             Star
           </StarButton>
-
-          <a
-            href="https://osawards.com/reactnative"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src="https://img.shields.io/badge/Open%20Source%20Awards-Vote-blue?logo=react&style=badge"
-              title="Vote for upgrade-helper on React Native Open Source Awards!"
-              alt="Vote for upgrade-helper on React Native Open Source Awards!"
-              style={{ marginLeft: 20, marginTop: 5 }}
-            />
-          </a>
         </TitleContainer>
 
         <VersionSelector showDiff={handleShowDiff} />
