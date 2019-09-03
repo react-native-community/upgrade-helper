@@ -5,7 +5,7 @@
 <h1 align="center">Upgrade Helper</h1>
 
 <p align="center">
-  A web tool to help you upgrading your React Native app with ease! 🚀
+  A web tool to help you upgrade your React Native app with ease! 🚀
 </p>
 
 <p align="center">
