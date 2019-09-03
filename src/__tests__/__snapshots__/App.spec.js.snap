@@ -39,12 +39,15 @@ exports[`renders without crashing 1`] = `
           </div>
           <a
             href="https://osawards.com/reactnative"
+            rel="noopener noreferrer"
+            target="_blank"
           >
-            <span
-              style="font-size: 30px; position: absolute; right: 24px;"
-            >
-              Vote for us in the React Native Open Source Awards!
-            </span>
+            <img
+              alt="Vote for upgrade-helper on React Native Open Source Awards!"
+              src="https://img.shields.io/badge/Open%20Source%20Awards-Vote-blue?logo=react&style=badge"
+              style="margin-left: 20px; margin-top: 5px;"
+              title="Vote for upgrade-helper on React Native Open Source Awards!"
+            />
           </a>
         </div>
         <div
