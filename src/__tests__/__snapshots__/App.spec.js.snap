@@ -45,7 +45,7 @@ exports[`renders without crashing 1`] = `
             <img
               alt="Vote for upgrade-helper on React Native Open Source Awards!"
               src="https://img.shields.io/badge/Open%20Source%20Awards-Vote-blue?logo=react&style=badge"
-              style="margin-left: 20px; margin-top: 5px;"
+              style="margin-left: 15px; margin-top: 5px;"
               title="Vote for upgrade-helper on React Native Open Source Awards!"
             />
           </a>
