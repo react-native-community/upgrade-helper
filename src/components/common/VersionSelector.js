@@ -72,8 +72,8 @@ const isFromAValidReleaseCandidate = ({
 }) =>
   semver.prerelease(fromVersion) &&
   compareReleaseCandidateVersions({
-    version: fromVersion,
-    versionToCompare: latestMajorReleaseVersion
+    version: latestMajorReleaseVersion,
+    versionToCompare: fromVersion
   })
 
 // Filters out release candidates from `releasedVersion` with the
@@ -93,7 +93,7 @@ const getReleasedVersionsWithCandidates = ({
   let validRC = false
 
   return releasedVersions.filter(releasedVersion => {
-    if (showReleaseCandidates) {
+    if (releasedVersion && showReleaseCandidates) {
       validRC = isFromAValidReleaseCandidate({
         fromVersion: releasedVersion,
         latestMajorReleaseVersion
@@ -122,9 +122,7 @@ const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) =>
     releasedVersion =>
       releasedVersion.length > 0 &&
       ((maxVersion && semver.lt(releasedVersion, maxVersion)) ||
-        (minVersion &&
-          semver.gt(releasedVersion, minVersion) &&
-          !releasedVersion.includes('rc')))
+        (minVersion && semver.gt(releasedVersion, minVersion)))
   )
 
 // Finds the first minor release (which in react-native is the major) when compared to another version
