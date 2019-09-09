@@ -37,18 +37,6 @@ exports[`renders without crashing 1`] = `
               Star
             </div>
           </div>
-          <a
-            href="https://osawards.com/reactnative"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <img
-              alt="Vote for upgrade-helper on React Native Open Source Awards!"
-              src="https://img.shields.io/badge/Open%20Source%20Awards-Vote-blue?logo=react&style=badge"
-              style="margin-left: 15px; margin-top: 5px;"
-              title="Vote for upgrade-helper on React Native Open Source Awards!"
-            />
-          </a>
         </div>
         <div
           class="sc-htpNat hqmgw"
