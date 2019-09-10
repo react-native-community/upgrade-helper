@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without crashing 1`] = `
+<div>
+  <div
+    class="sc-bdVaJa eYGfss"
+  >
+    <span
+      class="completedAmount"
+    />
+     /
+    <div
+      style="position: relative;"
+    />
+  </div>
+</div>
+`;
