@@ -78,7 +78,7 @@ const Home = () => {
           />
 
           <a href={homepage}>
-            <TitleHeader>React Native upgrade guide</TitleHeader>
+            <TitleHeader>React Native upgrade helper</TitleHeader>
           </a>
 
           <StarButton

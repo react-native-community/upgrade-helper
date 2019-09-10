@@ -26,14 +26,14 @@ exports[`renders without crashing 1`] = `
             <h1
               class="sc-jDwBTQ kdxkQr"
             >
-              React Native upgrade guide
+              React Native upgrade helper
             </h1>
           </a>
           <div
             class="sc-gPEVay iMFRcs"
           >
             <div>
-              ReactGitHubBtn - 
+              ReactGitHubBtn -
               Star
             </div>
           </div>
