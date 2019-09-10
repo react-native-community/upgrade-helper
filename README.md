@@ -53,7 +53,7 @@ After which, you can create a branch to to make your changes and then open a PR 
 
 ## 📣 Acknowledgments
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), [React-Diff-View](https://github.com/otakustay/react-diff-view), and [Inline-Mdx.Macro](https://github.com/hamlim/inline-mdx.macro).
+This project proudly uses [`rn-diff-purge`](https://github.com/react-native-community/rn-diff-purge), [`react-diff-view`](https://github.com/otakustay/react-diff-view) and [`create-react-app`](https://github.com/facebook/create-react-app).
 
 ## 📝 License
 
