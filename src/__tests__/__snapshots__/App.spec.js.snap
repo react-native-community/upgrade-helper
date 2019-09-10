@@ -33,7 +33,7 @@ exports[`renders without crashing 1`] = `
             class="sc-gPEVay iMFRcs"
           >
             <div>
-              ReactGitHubBtn -
+              ReactGitHubBtn - 
               Star
             </div>
           </div>
