@@ -123,7 +123,6 @@ exports[`renders without crashing 1`] = `
   >
     <button
       class="ant-btn ant-btn-primary ant-btn-lg"
-      data-testid="upgradeButtonEl"
       type="button"
     >
       <span>

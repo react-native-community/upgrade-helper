@@ -274,7 +274,6 @@ const VersionSelector = ({ showDiff }) => {
       <ButtonContainer>
         <Button
           ref={upgradeButtonEl}
-          data-testid="upgradeButtonEl"
           type="primary"
           size="large"
           onClick={() =>
