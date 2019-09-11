@@ -7,9 +7,3 @@ it('renders without crashing', () => {
 
   expect(container).toMatchSnapshot()
 })
-
-it('renders without crashing', () => {
-  const { container } = render(<Home />)
-
-  expect(container).toMatchSnapshot()
-})
