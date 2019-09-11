@@ -31,13 +31,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "lint": "eslint . --cache --report-unused-disable-directives",
-    "test:coverage": "react-scripts test --coverage && open coverage/lcov-report/index.html"
+    "lint": "eslint . --cache --report-unused-disable-directives"
   },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged --pattern \"src/**/*.*(js|jsx)\"",
-      "pre-push": "yarn run lint && react-scripts test"
+      "pre-push": "yarn run lint"
     }
   },
   "browserslist": {
