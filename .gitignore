@@ -28,3 +28,6 @@ yarn-error.log*
 # IDE
 .idea
 .vscode
+
+# testing
+/.jest

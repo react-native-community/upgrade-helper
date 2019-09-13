@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without crashing 1`] = `
+<div>
+  <img
+    alt="Loading"
+    class="sc-bdVaJa dRbStl"
+    logo="test.png"
+    src="loading.svg"
+    title="Loading"
+  />
+</div>
+`;
