@@ -117,13 +117,28 @@ const getReleasedVersionsWithCandidates = ({
   })
 }
 
-const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) =>
-  releasedVersions.filter(
-    releasedVersion =>
-      releasedVersion.length > 0 &&
-      ((maxVersion && semver.lt(releasedVersion, maxVersion)) ||
-        (minVersion && semver.gt(releasedVersion, minVersion)))
+// semver.compare(
+//   semver.valid(semver.coerce(releasedVersion)),
+//   semver.valid(semver.coerce(maxVersion || '16.2.9'))
+// ) === -1)
+const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) => {
+  const latestMajorReleaseVersion = getLatestMajorReleaseVersion(
+    releasedVersions
   )
+
+  return releasedVersions.filter(
+    releasedVersion =>
+      (releasedVersion.length > 0 &&
+        ((maxVersion && semver.lt(releasedVersion, maxVersion)) ||
+          (minVersion && semver.gt(releasedVersion, minVersion)))) ||
+      (!releasedVersion.includes('rc') &&
+        releasedVersion === latestMajorReleaseVersion) ||
+      semver.gt(
+        semver.valid(semver.coerce(releasedVersion || '12.6.3')),
+        semver.valid(semver.coerce(latestMajorReleaseVersion))
+      )
+  )
+}
 
 // Finds the first minor release (which in react-native is the major) when compared to another version
 const getFirstMajorRelease = ({ releasedVersions, versionToCompare }) =>
