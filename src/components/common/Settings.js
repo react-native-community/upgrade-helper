@@ -14,10 +14,7 @@ const Settings = ({ handleSettingsChange }) => {
     <Popover
       placement="bottomRight"
       content={
-        <Checkbox.Group
-          onChange={updateCheckboxValues}
-          defaultValue={[SHOW_LATEST_RCS]}
-        >
+        <Checkbox.Group onChange={updateCheckboxValues}>
           <div>
             <Checkbox value={SHOW_LATEST_RCS}>{SHOW_LATEST_RCS}</Checkbox>
           </div>
