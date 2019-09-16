@@ -53,7 +53,7 @@ const Home = () => {
   const [toVersion, setToVersion] = useState('')
   const [showDiff, setShowDiff] = useState(false)
   const [settings, setSettings] = useState({
-    [`${SHOW_LATEST_RCS}`]: true
+    [`${SHOW_LATEST_RCS}`]: false
   })
 
   useEffect(() => {
