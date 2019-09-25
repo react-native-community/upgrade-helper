@@ -90,17 +90,17 @@ const getReleasedVersionsWithCandidates = ({
     releasedVersions
   )
 
-  let validRC = false
   return releasedVersions.filter(releasedVersion => {
-    if (releasedVersion && showReleaseCandidates) {
-      validRC = isFromAValidReleaseCandidate({
+    // Show the release candidates of the latest version
+    const isLatestReleaseCandidate =
+      showReleaseCandidates &&
+      isFromAValidReleaseCandidate({
         fromVersion: releasedVersion,
         latestMajorReleaseVersion
       })
-    }
 
     return (
-      validRC ||
+      isLatestReleaseCandidate ||
       semver.prerelease(releasedVersion) === null ||
       (isToVersionAReleaseCandidate &&
         compareReleaseCandidateVersions({
