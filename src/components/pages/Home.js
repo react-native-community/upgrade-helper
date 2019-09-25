@@ -5,8 +5,10 @@ import GitHubButton from 'react-github-btn'
 import ReactGA from 'react-ga'
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
+import Settings from '../common/Settings'
 import { homepage } from '../../../package.json'
 import logo from '../../assets/logo.svg'
+import { SHOW_LATEST_RCS } from '../../utils'
 
 const Page = styled.div`
   display: flex;
@@ -43,12 +45,16 @@ const StarButton = styled(({ className, ...props }) => (
 ))`
   margin-top: 10px;
   margin-left: 15px;
+  margin-right: auto;
 `
 
 const Home = () => {
   const [fromVersion, setFromVersion] = useState('')
   const [toVersion, setToVersion] = useState('')
   const [showDiff, setShowDiff] = useState(false)
+  const [settings, setSettings] = useState({
+    [`${SHOW_LATEST_RCS}`]: false
+  })
 
   useEffect(() => {
     if (process.env.NODE_ENV === 'production') {
@@ -65,6 +71,15 @@ const Home = () => {
     setFromVersion(fromVersion)
     setToVersion(toVersion)
     setShowDiff(true)
+  }
+
+  const handleSettingsChange = settingsValues => {
+    const normalizedIncomingSettings = settingsValues.reduce((acc, val) => {
+      acc[val] = true
+      return acc
+    }, {})
+
+    setSettings(normalizedIncomingSettings)
   }
 
   return (
@@ -89,9 +104,14 @@ const Home = () => {
           >
             Star
           </StarButton>
+
+          <Settings handleSettingsChange={handleSettingsChange} />
         </TitleContainer>
 
-        <VersionSelector showDiff={handleShowDiff} />
+        <VersionSelector
+          showDiff={handleShowDiff}
+          showReleaseCandidates={settings[SHOW_LATEST_RCS]}
+        />
       </Container>
 
       <DiffViewer

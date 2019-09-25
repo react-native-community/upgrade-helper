@@ -33,3 +33,6 @@ export const getChangelogURL = ({ version }) =>
     '.',
     ''
   )}`
+
+// settings constants
+export const SHOW_LATEST_RCS = 'Show latest release candidates'

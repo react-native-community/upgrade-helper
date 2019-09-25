@@ -47,26 +47,50 @@ const getVersionsInURL = () => {
   }
 }
 
-// Compare versions by removing the `rc` from them, e.g. `0.60.0-rc.1` becomes `0.60.0`
 const compareReleaseCandidateVersions = ({ version, versionToCompare }) =>
-  semver.compare(
-    semver.valid(semver.coerce(version)),
-    semver.valid(semver.coerce(versionToCompare))
-  ) === 0
+  ['prepatch', null].includes(semver.diff(version, versionToCompare))
 
-// Filters out release candidates from `releasedVersion` with the exception of
-// the release candidates from the latest version & target version that comes from the URL
-// but only if any of them is a release candidate
-const getReleasedVersionsWithoutCandidates = ({
+const getLatestMajorReleaseVersion = releasedVersions =>
+  semver.valid(
+    semver.coerce(
+      releasedVersions.find(
+        releasedVersion =>
+          !semver.prerelease(releasedVersion) &&
+          semver.patch(releasedVersion) === 0
+      )
+    )
+  )
+
+// Check if `from` rc version is one of the latest major release (ie. 0.60.0)
+const checkLatestReleaseCandidate = ({ version, latestVersion }) =>
+  semver.prerelease(version) &&
+  compareReleaseCandidateVersions({
+    version: latestVersion,
+    versionToCompare: version
+  })
+
+// Filters out release candidates from `releasedVersion` with the
+// exception of the release candidates from the latest version
+const getReleasedVersionsWithCandidates = ({
   releasedVersions,
   toVersion,
-  latestVersion
+  latestVersion,
+  showReleaseCandidates
 }) => {
   const isToVersionAReleaseCandidate = semver.prerelease(toVersion) !== null
   const isLatestAReleaseCandidate = semver.prerelease(latestVersion) !== null
 
-  return releasedVersions.filter(
-    releasedVersion =>
+  return releasedVersions.filter(releasedVersion => {
+    // Show the release candidates of the latest version
+    const isLatestReleaseCandidate =
+      showReleaseCandidates &&
+      checkLatestReleaseCandidate({
+        version: releasedVersion,
+        latestVersion
+      })
+
+    return (
+      isLatestReleaseCandidate ||
       semver.prerelease(releasedVersion) === null ||
       (isToVersionAReleaseCandidate &&
         compareReleaseCandidateVersions({
@@ -78,16 +102,28 @@ const getReleasedVersionsWithoutCandidates = ({
           version: latestVersion,
           versionToCompare: releasedVersion
         }))
-  )
+    )
+  })
 }
 
-const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) =>
-  releasedVersions.filter(
+const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) => {
+  const latestMajorReleaseVersion = getLatestMajorReleaseVersion(
+    releasedVersions
+  )
+
+  const isVersionAReleaseAndOfLatest = version =>
+    version.includes('rc') &&
+    semver.valid(semver.coerce(version)) === latestMajorReleaseVersion
+
+  return releasedVersions.filter(
     releasedVersion =>
       releasedVersion.length > 0 &&
       ((maxVersion && semver.lt(releasedVersion, maxVersion)) ||
-        (minVersion && semver.gt(releasedVersion, minVersion)))
+        (minVersion &&
+          semver.gt(releasedVersion, minVersion) &&
+          !isVersionAReleaseAndOfLatest(releasedVersion)))
   )
+}
 
 // Finds the first minor release (which in react-native is the major) when compared to another version
 const getFirstMajorRelease = ({ releasedVersions, versionToCompare }) =>
@@ -122,7 +158,7 @@ const updateURLVersions = ({ fromVersion, toVersion }) => {
   window.history.replaceState(null, null, `${pageURL}${newURL}`)
 }
 
-const VersionSelector = ({ showDiff }) => {
+const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
   const [isLoading, setLoading] = useState(true)
   const [allVersions, setAllVersions] = useState([])
   const [fromVersionList, setFromVersionList] = useState([])
@@ -160,10 +196,11 @@ const VersionSelector = ({ showDiff }) => {
         : latestVersion
 
       // Remove `rc` versions from the array of versions
-      const sanitizedVersions = getReleasedVersionsWithoutCandidates({
+      const sanitizedVersions = getReleasedVersionsWithCandidates({
         releasedVersions: allVersionsFromResponse,
         toVersion: toVersionToBeSet,
-        latestVersion
+        latestVersion,
+        showReleaseCandidates
       })
 
       setAllVersions(sanitizedVersions)
@@ -188,6 +225,7 @@ const VersionSelector = ({ showDiff }) => {
           minVersion: fromVersionToBeSet
         })
       )
+
       setLocalFromVersion(fromVersionToBeSet)
       setLocalToVersion(toVersionToBeSet)
 
@@ -203,7 +241,7 @@ const VersionSelector = ({ showDiff }) => {
     }
 
     fetchVersions()
-  }, [setLocalFromVersion, setLocalToVersion])
+  }, [setLocalFromVersion, setLocalToVersion, showReleaseCandidates])
 
   useEffect(() => {
     if (isLoading) {
@@ -227,7 +265,8 @@ const VersionSelector = ({ showDiff }) => {
     allVersions,
     localFromVersion,
     localToVersion,
-    hasVersionsFromURL
+    hasVersionsFromURL,
+    showReleaseCandidates
   ])
 
   const onShowDiff = ({ fromVersion, toVersion }) => {
