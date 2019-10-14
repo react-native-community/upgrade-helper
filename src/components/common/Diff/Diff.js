@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Diff as RDiff, Hunk, markEdits, tokenize } from 'react-diff-view'
+import {
+  Diff as RDiff,
+  Hunk,
+  markEdits,
+  tokenize,
+  Decoration as DiffDecoration
+} from 'react-diff-view'
 import DiffHeader from './DiffHeader'
 import { getComments } from './DiffComment'
 
@@ -9,6 +15,17 @@ const Container = styled.div`
   border-radius: 3px;
   margin-bottom: 16px;
   margin-top: 16px;
+`
+
+const More = styled.div`
+  background-color: #f1f8ff;
+  margin-left: 30px;
+  padding-left: 4px;
+  color: '#1b1f23b3';
+`
+
+const Decoration = styled(DiffDecoration)`
+  background-color: #dbedff;
 `
 
 const DiffView = styled(RDiff)`
@@ -122,14 +139,17 @@ const Diff = ({
 
             const tokens = tokenize(hunks, options)
 
-            return hunks.map(hunk => (
+            return hunks.map(hunk => [
+              <Decoration key={'decoration-' + hunk.content}>
+                <More>{hunk.content}</More>
+              </Decoration>,
               <Hunk
                 key={hunk.content}
                 hunk={hunk}
                 tokens={tokens}
                 gutterEvents={{ onClick: onToggleChangeSelection }}
               />
-            ))
+            ])
           }}
         </DiffView>
       )}
