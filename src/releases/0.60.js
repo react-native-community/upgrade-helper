@@ -10,6 +10,11 @@ export default {
           'Official blog post about the major changes on React Native 0.60',
         url:
           'https://facebook.github.io/react-native/blog/2019/07/03/version-60'
+      },
+      {
+        title: 'Tutorial on upgrading to React Native 0.60',
+        url:
+          'https://reactnative.thenativebits.com/courses/upgrading-react-native/upgrade-to-react-native-0.60/'
       }
     ]
   },
