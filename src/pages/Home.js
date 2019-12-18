@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState  } from 'react'
 import styled from 'styled-components'
 import { Card } from 'antd'
 import GitHubButton from 'react-github-btn'
-import ReactGA from 'react-ga'
 
-import VersionSelector from '../common/VersionSelector'
-import DiffViewer from '../common/DiffViewer'
-import Settings from '../common/Settings'
-import { homepage } from '../../../package.json'
-import logo from '../../assets/logo.svg'
-import { SHOW_LATEST_RCS } from '../../utils'
+import VersionSelector from '../components/common/VersionSelector'
+import DiffViewer from '../components/common/DiffViewer'
+import { Settings } from '../components/Settings'
+import { homepage } from '../../package.json'
+import logo from '../assets/logo.svg'
+import { SHOW_LATEST_RCS } from '../utils'
 
 
 const Page = styled.div`
@@ -57,19 +56,12 @@ const StarButton = styled(({ className, ...props }) => (
 `
 
 export const Home = () => {
-	const [fromVersion, setFromVersion] = useState('')
-	const [toVersion, setToVersion] = useState('')
+	const [fromVersion, setFromVersion] = useState(null)
+	const [toVersion, setToVersion] = useState(null)
 	const [showDiff, setShowDiff] = useState(false)
 	const [settings, setSettings] = useState({
 		[`${SHOW_LATEST_RCS}`]: false,
 	})
-
-	useEffect(() => {
-		if (process.env.NODE_ENV === 'production') {
-			ReactGA.initialize('UA-136307971-1')
-			ReactGA.pageview('/')
-		}
-	}, [])
 
 	const handleShowDiff = ({ fromVersion, toVersion }) => {
 		if (fromVersion === toVersion) {
@@ -110,7 +102,7 @@ export const Home = () => {
 						data-show-count="true"
 						aria-label="Star react-native-community/upgrade-helper on GitHub"
 					>
-            Star
+						Star
 					</StarButton>
 
 					<Settings handleSettingsChange={handleSettingsChange} />
@@ -121,18 +113,13 @@ export const Home = () => {
 					showReleaseCandidates={settings[SHOW_LATEST_RCS]}
 				/>
 
-				<Subtitle>
-          Don't forget: `RnDiffApp` is a placeholder. When upgrading, all
-          instances of `RnDiffApp` should be `YourProjectName`, all `rndiffapp`
-          should be `yourprojectname` etc.
-				</Subtitle>
-			</Container>
+				<Subtitle>Don't forget: `RnDiffApp` is a placeholder. When upgrading, all instances of `RnDiffApp` should be `YourProjectName`, all `rndiffapp` should be `yourprojectname` etc.</Subtitle></Container>
 
-			<DiffViewer
+			{/* <DiffViewer
 				showDiff={showDiff}
 				fromVersion={fromVersion}
 				toVersion={toVersion}
-			/>
+			/> */}
 		</Page>
 	)
 }
