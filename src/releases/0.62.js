@@ -14,31 +14,12 @@ export default {
       content: (
         <Fragment>
           This line should not be here. Please ignore this. It will be removed
-          on an upcoming release.
-        </Fragment>
-      )
-    },
-    {
-      fileName:
-        'ios/RnDiffApp.xcodeproj/xcshareddata/xcschemes/RnDiffApp.xcscheme',
-      lineNumber: 0,
-      lineChangeType: 'delete',
-      content: (
-        <Fragment>
-          This file should not be deleted. The diff on this file is caused by
-          `.gitignore`. It will be fixed in an upcoming release.
-        </Fragment>
-      )
-    },
-    {
-      fileName:
-        'ios/RnDiffApp.xcodeproj/xcshareddata/xcschemes/RnDiffApp-tvOS.xcscheme',
-      lineNumber: 0,
-      lineChangeType: 'delete',
-      content: (
-        <Fragment>
-          This file should not be deleted. The diff on this file is caused by
-          `.gitignore`. It will be fixed in an upcoming release.
+          on an upcoming release. Because of this line, the files
+          `ios/RnDiffApp.xcodeproj/xcshareddata/xcschemes/RnDiffApp.xcscheme`
+          and
+          `ios/RnDiffApp.xcodeproj/xcshareddata/xcschemes/RnDiffApp-tvOS.xcscheme`
+          appear as deleted. They should not be deleted from your project.
+          Ignore these two changes as well.
         </Fragment>
       )
     }
