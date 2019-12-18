@@ -1,6 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import ReactGA from 'react-ga'
 
-import { Home } from './components/pages/Home'
+import { Config } from './config'
+import { Home } from './pages/Home'
 
 
-export const App = () => <Home />
+export const App = () => {
+
+	useEffect(() => {
+		if (process.env.NODE_ENV === 'production') {
+			ReactGA.initialize(Config.GoogleAnalytics)
+			ReactGA.pageview('/')
+		}
+	}, [])
+
+	return <Home />
+}
