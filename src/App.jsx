@@ -1,6 +1,6 @@
 import React from 'react'
-import Home from './components/pages/Home'
 
-const App = props => <Home />
+import { Home } from './components/pages/Home'
 
-export default App
+
+export const App = () => <Home />

@@ -3,12 +3,14 @@ import styled from 'styled-components'
 import { Card } from 'antd'
 import GitHubButton from 'react-github-btn'
 import ReactGA from 'react-ga'
+
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
 import Settings from '../common/Settings'
 import { homepage } from '../../../package.json'
 import logo from '../../assets/logo.svg'
 import { SHOW_LATEST_RCS } from '../../utils'
+
 
 const Page = styled.div`
   display: flex;
@@ -29,9 +31,9 @@ const TitleContainer = styled.div`
 `
 
 const Subtitle = styled.div({
-  display: 'flex',
-  alignItems: 'center',
-  marginTop: 50
+	display: 'flex',
+	alignItems: 'center',
+	marginTop: 50,
 })
 
 const LogoImg = styled.img`
@@ -45,94 +47,92 @@ const TitleHeader = styled.h1`
 `
 
 const StarButton = styled(({ className, ...props }) => (
-  <div className={className}>
-    <GitHubButton {...props} />
-  </div>
+	<div className={className}>
+		<GitHubButton {...props} />
+	</div>
 ))`
   margin-top: 10px;
   margin-left: 15px;
   margin-right: auto;
 `
 
-const Home = () => {
-  const [fromVersion, setFromVersion] = useState('')
-  const [toVersion, setToVersion] = useState('')
-  const [showDiff, setShowDiff] = useState(false)
-  const [settings, setSettings] = useState({
-    [`${SHOW_LATEST_RCS}`]: false
-  })
+export const Home = () => {
+	const [fromVersion, setFromVersion] = useState('')
+	const [toVersion, setToVersion] = useState('')
+	const [showDiff, setShowDiff] = useState(false)
+	const [settings, setSettings] = useState({
+		[`${SHOW_LATEST_RCS}`]: false,
+	})
 
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'production') {
-      ReactGA.initialize('UA-136307971-1')
-      ReactGA.pageview('/')
-    }
-  }, [])
+	useEffect(() => {
+		if (process.env.NODE_ENV === 'production') {
+			ReactGA.initialize('UA-136307971-1')
+			ReactGA.pageview('/')
+		}
+	}, [])
 
-  const handleShowDiff = ({ fromVersion, toVersion }) => {
-    if (fromVersion === toVersion) {
-      return
-    }
+	const handleShowDiff = ({ fromVersion, toVersion }) => {
+		if (fromVersion === toVersion) {
+			return
+		}
 
-    setFromVersion(fromVersion)
-    setToVersion(toVersion)
-    setShowDiff(true)
-  }
+		setFromVersion(fromVersion)
+		setToVersion(toVersion)
+		setShowDiff(true)
+	}
 
-  const handleSettingsChange = settingsValues => {
-    const normalizedIncomingSettings = settingsValues.reduce((acc, val) => {
-      acc[val] = true
-      return acc
-    }, {})
+	const handleSettingsChange = settingsValues => {
+		const normalizedIncomingSettings = settingsValues.reduce((acc, val) => {
+			acc[val] = true
+			return acc
+		}, {})
 
-    setSettings(normalizedIncomingSettings)
-  }
+		setSettings(normalizedIncomingSettings)
+	}
 
-  return (
-    <Page>
-      <Container>
-        <TitleContainer>
-          <LogoImg
-            alt="React Native upgrade helper logo"
-            title="React Native upgrade helper logo"
-            src={logo}
-          />
+	return (
+		<Page>
+			<Container>
+				<TitleContainer>
+					<LogoImg
+						alt="React Native upgrade helper logo"
+						title="React Native upgrade helper logo"
+						src={logo}
+					/>
 
-          <a href={homepage}>
-            <TitleHeader>React Native upgrade helper</TitleHeader>
-          </a>
+					<a href={homepage}>
+						<TitleHeader>React Native upgrade helper</TitleHeader>
+					</a>
 
-          <StarButton
-            href="https://github.com/react-native-community/upgrade-helper"
-            data-icon="octicon-star"
-            data-show-count="true"
-            aria-label="Star react-native-community/upgrade-helper on GitHub"
-          >
+					<StarButton
+						href="https://github.com/react-native-community/upgrade-helper"
+						data-icon="octicon-star"
+						data-show-count="true"
+						aria-label="Star react-native-community/upgrade-helper on GitHub"
+					>
             Star
-          </StarButton>
+					</StarButton>
 
-          <Settings handleSettingsChange={handleSettingsChange} />
-        </TitleContainer>
+					<Settings handleSettingsChange={handleSettingsChange} />
+				</TitleContainer>
 
-        <VersionSelector
-          showDiff={handleShowDiff}
-          showReleaseCandidates={settings[SHOW_LATEST_RCS]}
-        />
+				<VersionSelector
+					showDiff={handleShowDiff}
+					showReleaseCandidates={settings[SHOW_LATEST_RCS]}
+				/>
 
-        <Subtitle>
+				<Subtitle>
           Don't forget: `RnDiffApp` is a placeholder. When upgrading, all
           instances of `RnDiffApp` should be `YourProjectName`, all `rndiffapp`
           should be `yourprojectname` etc.
-        </Subtitle>
-      </Container>
+				</Subtitle>
+			</Container>
 
-      <DiffViewer
-        showDiff={showDiff}
-        fromVersion={fromVersion}
-        toVersion={toVersion}
-      />
-    </Page>
-  )
+			<DiffViewer
+				showDiff={showDiff}
+				fromVersion={fromVersion}
+				toVersion={toVersion}
+			/>
+		</Page>
+	)
 }
-
-export default Home
