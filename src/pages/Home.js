@@ -91,11 +91,9 @@ export const Home = () => {
 						title="React Native upgrade helper logo"
 						src={logo}
 					/>
-
 					<a href={homepage}>
 						<TitleHeader>React Native upgrade helper</TitleHeader>
 					</a>
-
 					<StarButton
 						href="https://github.com/react-native-community/upgrade-helper"
 						data-icon="octicon-star"

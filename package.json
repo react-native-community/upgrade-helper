@@ -30,7 +30,6 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "yarn lint"
     }
   },
   "homepage": "https://react-native-community.github.io/upgrade-helper",
