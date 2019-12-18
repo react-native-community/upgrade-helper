@@ -28,6 +28,12 @@ const TitleContainer = styled.div`
   align-items: center;
 `
 
+const Subtitle = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  marginTop: 50
+})
+
 const LogoImg = styled.img`
   width: 100px;
   margin-bottom: 15px;
@@ -112,6 +118,12 @@ const Home = () => {
           showDiff={handleShowDiff}
           showReleaseCandidates={settings[SHOW_LATEST_RCS]}
         />
+
+        <Subtitle>
+          Don't forget: `RnDiffApp` is a placeholder. When upgrading, all
+          instances of `RnDiffApp` should be `YourProjectName`, all `rndiffapp`
+          should be `yourprojectname` etc.
+        </Subtitle>
       </Container>
 
       <DiffViewer
