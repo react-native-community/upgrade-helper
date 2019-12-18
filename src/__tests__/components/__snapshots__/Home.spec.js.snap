@@ -16,7 +16,7 @@ exports[`renders without crashing 1`] = `
         >
           <img
             alt="React Native upgrade helper logo"
-            class="sc-gPEVay isecjX"
+            class="sc-iRbamj hSJLlj"
             src="logo.svg"
             title="React Native upgrade helper logo"
           />
@@ -24,13 +24,13 @@ exports[`renders without crashing 1`] = `
             href="https://react-native-community.github.io/upgrade-helper"
           >
             <h1
-              class="sc-iRbamj fwveLy"
+              class="sc-jlyJG iedCYU"
             >
               React Native upgrade helper
             </h1>
           </a>
           <div
-            class="sc-jlyJG dRjxEc"
+            class="sc-gipzik cQmkBi"
           >
             <div>
               ReactGitHubBtn - 
@@ -189,6 +189,11 @@ exports[`renders without crashing 1`] = `
               Show me how to upgrade!
             </span>
           </button>
+        </div>
+        <div
+          class="sc-gPEVay dSFvqX"
+        >
+          Don't forget: \`RnDiffApp\` is a placeholder. When upgrading, all instances of \`RnDiffApp\` should be \`YourProjectName\`, all \`rndiffapp\` should be \`yourprojectname\` etc.
         </div>
       </div>
     </div>
