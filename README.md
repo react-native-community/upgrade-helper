@@ -9,8 +9,8 @@
 </p>
 
 <p align="center">
-  <a href="https://circleci.com/gh/react-native-community/upgrade-helper"><img src="https://circleci.com/gh/react-native-community/upgrade-helper.svg?style=shield" alt="PRs Welcome" title="PRs Welcome"></a>
-  <a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=shield" alt="CircleCI" title="CircleCI"></a>
+  <a href="https://circleci.com/gh/react-native-community/upgrade-helper"><img src="https://circleci.com/gh/react-native-community/upgrade-helper.svg?style=shield" alt="CircleCI" title="CircleCI"></a>
+  <a href="http://makeapullrequest.com"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=shield" alt="PRs Welcome" title="PRs Welcome"></a>
 </p>
 
 <p align="center">
