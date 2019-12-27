@@ -44,6 +44,15 @@ const TitleHeader = styled.h1`
   margin-left: 15px;
 `
 
+const AppNameInput = styled.input`
+  border-radius: 5px;
+  outline: none;
+  border: solid 1px #ddd;
+  padding: 8px;
+  width: 50%;
+  margin-bottom: 8px;
+`
+
 const StarButton = styled(({ className, ...props }) => (
   <div className={className}>
     <GitHubButton {...props} />
@@ -61,6 +70,7 @@ const Home = () => {
   const [settings, setSettings] = useState({
     [`${SHOW_LATEST_RCS}`]: false
   })
+  const [appName, setAppName] = useState('')
 
   useEffect(() => {
     if (process.env.NODE_ENV === 'production') {
@@ -114,6 +124,14 @@ const Home = () => {
           <Settings handleSettingsChange={handleSettingsChange} />
         </TitleContainer>
 
+        <h4>Enter your App Name.</h4>
+        <AppNameInput
+          value={appName}
+          onChange={e => {
+            setAppName(e.target.value)
+          }}
+        />
+
         <VersionSelector
           showDiff={handleShowDiff}
           showReleaseCandidates={settings[SHOW_LATEST_RCS]}
@@ -130,6 +148,7 @@ const Home = () => {
         showDiff={showDiff}
         fromVersion={fromVersion}
         toVersion={toVersion}
+        appName={appName}
       />
     </Page>
   )

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import styled from 'styled-components'
 import { Alert } from 'antd'
 import { parseDiff, withChangeSelect } from 'react-diff-view'
@@ -23,7 +23,8 @@ const DiffViewer = ({
   fromVersion,
   toVersion,
   selectedChanges,
-  onToggleChangeSelection
+  onToggleChangeSelection,
+  appName
 }) => {
   const [isLoading, setLoading] = useState(true)
   const [diff, setDiff] = useState(null)
@@ -61,6 +62,16 @@ const DiffViewer = ({
     localStorage.setItem('viewStyle', newViewStyle)
   }
 
+  const replaceAppName = useCallback(
+    text => {
+      if (!appName) return text
+      return text
+        .replace(/RnDiffApp/g, appName)
+        .replace(/rndiffapp/g, appName.toLowerCase())
+    },
+    [appName]
+  )
+
   useEffect(() => {
     if (!showDiff) {
       return
@@ -74,7 +85,7 @@ const DiffViewer = ({
       )).text()
 
       setDiff(
-        parseDiff(response).sort(({ newPath }) =>
+        parseDiff(replaceAppName(response)).sort(({ newPath }) =>
           newPath.includes('package.json') ? -1 : 1
         )
       )
@@ -85,7 +96,7 @@ const DiffViewer = ({
     }
 
     fetchDiff()
-  }, [fromVersion, showDiff, toVersion])
+  }, [appName, fromVersion, replaceAppName, showDiff, toVersion])
 
   if (!showDiff) {
     return null
