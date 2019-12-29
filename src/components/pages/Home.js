@@ -44,15 +44,6 @@ const TitleHeader = styled.h1`
   margin-left: 15px;
 `
 
-const AppNameInput = styled.input`
-  border-radius: 5px;
-  outline: none;
-  border: solid 1px #ddd;
-  padding: 8px;
-  width: 50%;
-  margin-bottom: 8px;
-`
-
 const StarButton = styled(({ className, ...props }) => (
   <div className={className}>
     <GitHubButton {...props} />
@@ -121,16 +112,12 @@ const Home = () => {
             Star
           </StarButton>
 
-          <Settings handleSettingsChange={handleSettingsChange} />
+          <Settings
+            handleSettingsChange={handleSettingsChange}
+            appName={appName}
+            setAppName={setAppName}
+          />
         </TitleContainer>
-
-        <h4>Enter your App Name.</h4>
-        <AppNameInput
-          value={appName}
-          onChange={e => {
-            setAppName(e.target.value)
-          }}
-        />
 
         <VersionSelector
           showDiff={handleShowDiff}

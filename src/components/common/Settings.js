@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Popover, Button, Checkbox } from 'antd'
+import { Popover, Button, Checkbox, Form, Input } from 'antd'
 import { SHOW_LATEST_RCS } from '../../utils'
 
-const Settings = ({ handleSettingsChange }) => {
+const Settings = ({ handleSettingsChange, appName, setAppName }) => {
   const [popoverVisibility, setVisibility] = useState(false)
 
   const handleClickChange = visibility => setVisibility(visibility)
@@ -14,11 +14,23 @@ const Settings = ({ handleSettingsChange }) => {
     <Popover
       placement="bottomRight"
       content={
-        <Checkbox.Group onChange={updateCheckboxValues}>
-          <div>
-            <Checkbox value={SHOW_LATEST_RCS}>{SHOW_LATEST_RCS}</Checkbox>
-          </div>
-        </Checkbox.Group>
+        <Form>
+          <Form.Item>
+            <Checkbox.Group onChange={updateCheckboxValues}>
+              <div>
+                <Checkbox value={SHOW_LATEST_RCS}>{SHOW_LATEST_RCS}</Checkbox>
+              </div>
+            </Checkbox.Group>
+          </Form.Item>
+          <Form.Item label="Your AppName">
+            <Input
+              value={appName}
+              onChange={e => {
+                setAppName(e.target.value)
+              }}
+            />
+          </Form.Item>
+        </Form>
       }
       trigger="click"
       visible={popoverVisibility}
