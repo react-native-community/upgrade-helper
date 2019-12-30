@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Card } from 'antd'
+import { Alert, Card } from 'antd'
 import GitHubButton from 'react-github-btn'
 import ReactGA from 'react-ga'
 import VersionSelector from '../common/VersionSelector'
@@ -31,6 +31,7 @@ const TitleContainer = styled.div`
 const Subtitle = styled.div({
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'center',
   marginTop: 50
 })
 
@@ -58,6 +59,7 @@ const Home = () => {
   const [fromVersion, setFromVersion] = useState('')
   const [toVersion, setToVersion] = useState('')
   const [showDiff, setShowDiff] = useState(false)
+  const [showAppNameWarning, setAppNameWarning] = useState(false)
   const [settings, setSettings] = useState({
     [`${SHOW_LATEST_RCS}`]: false
   })
@@ -76,6 +78,7 @@ const Home = () => {
 
     setFromVersion(fromVersion)
     setToVersion(toVersion)
+    setAppNameWarning(true)
     setShowDiff(true)
   }
 
@@ -119,11 +122,18 @@ const Home = () => {
           showReleaseCandidates={settings[SHOW_LATEST_RCS]}
         />
 
-        <Subtitle>
-          Don't forget: `RnDiffApp` is a placeholder. When upgrading, all
+        {showAppNameWarning ? (
+          <Subtitle>
+            <Alert
+              message="Don't forget: `RnDiffApp` is a placeholder. When upgrading, all
           instances of `RnDiffApp` should be `YourProjectName`, all `rndiffapp`
-          should be `yourprojectname` etc.
-        </Subtitle>
+          should be `yourprojectname` etc."
+              type="warning"
+              closable
+              onClose={() => setAppNameWarning(false)}
+            />
+          </Subtitle>
+        ) : null}
       </Container>
 
       <DiffViewer
