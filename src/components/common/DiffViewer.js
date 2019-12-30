@@ -69,9 +69,8 @@ const DiffViewer = ({
     const fetchDiff = async () => {
       setLoading(true)
 
-      const response = await (await fetch(
-        getDiffPatchURL({ fromVersion, toVersion })
-      )).text()
+      let response = await fetch(getDiffPatchURL({ fromVersion, toVersion }))
+      response = response.text()
 
       setDiff(
         parseDiff(response).sort(({ newPath }) =>
