@@ -12,7 +12,7 @@ exports[`renders without crashing 1`] = `
         What's your current React Native version?
       </h4>
       <div
-        class="ant-select-lg sc-bxivhb iYdHlP sc-bwzfXH jwfMIB ant-select ant-select-enabled ant-select-loading"
+        class="ant-select-lg sc-bwzfXH jwfMIB sc-bxivhb iYdHlP ant-select ant-select-enabled ant-select-loading"
       >
         <div
           aria-autocomplete="list"
@@ -68,7 +68,7 @@ exports[`renders without crashing 1`] = `
         To which version would you like to upgrade?
       </h4>
       <div
-        class="ant-select-lg sc-ifAKCX dTveGH sc-bwzfXH jwfMIB ant-select ant-select-enabled ant-select-loading"
+        class="ant-select-lg sc-bwzfXH jwfMIB sc-ifAKCX dTveGH ant-select ant-select-enabled ant-select-loading"
       >
         <div
           aria-autocomplete="list"
