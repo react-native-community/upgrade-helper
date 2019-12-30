@@ -20,7 +20,7 @@
     "styled-components": "4.2.0"
   },
   "devDependencies": {
-    "eslint": "5.16.0",
+    "eslint": "6.6.0",
     "eslint-plugin-prettier": "3.1.0",
     "gh-pages": "2.0.1",
     "husky": "3.0.1",
