@@ -15,12 +15,13 @@
     "react-dom-confetti": "0.1.1",
     "react-ga": "2.5.7",
     "react-github-btn": "1.0.5",
-    "react-scripts": "3.0.1",
+    "react-scripts": "3.3.0",
     "semver": "6.1.0",
     "styled-components": "4.2.0"
   },
   "devDependencies": {
-    "eslint": "5.16.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "6.6.0",
     "eslint-plugin-prettier": "3.1.0",
     "gh-pages": "2.0.1",
     "husky": "3.0.1",
