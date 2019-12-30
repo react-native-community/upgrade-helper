@@ -3,7 +3,6 @@ import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
 
 export const Link = styled(props => (
-  // eslint-disable-next-line jsx-a11y/anchor-has-content
   <a target="_blank" {...props} rel="noopener" />
 ))`
   text-decoration: none;
