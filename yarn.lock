@@ -1317,7 +1317,7 @@
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
 
-"@testing-library/dom@^5.0.0":
+"@testing-library/dom@^5.6.1":
   version "5.6.1"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-5.6.1.tgz#705a1cb4a039b877c1e69e916824038e837ab637"
   integrity sha512-Y1T2bjtvQMewffn1CJ28kpgnuvPYKsBcZMagEH0ppfEMZPDc8AkkEnTk4smrGZKw0cblNB3lhM2FMnpfLExlHg==
@@ -1328,13 +1328,13 @@
     pretty-format "^24.8.0"
     wait-for-expect "^1.2.0"
 
-"@testing-library/react@8.0.2":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-8.0.2.tgz#e5df2102fca261b887ca5da803f3e520fe5eb8aa"
-  integrity sha512-CPne8wzJGs3mcUA4W7Mo/WVtjsZto4/54s6vIfgWQSDIxBGbJ3qipikSq3c9Jg8Sbncj3bTIoIrzbg+NYpQphA==
+"@testing-library/react@8.0.9":
+  version "8.0.9"
+  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-8.0.9.tgz#1ecd96bc3471b06dd2f9763b6e53a7ace28a54a2"
+  integrity sha512-I7zd+MW5wk8rQA5VopZgBfxGKUd91jgZ6Vzj2gMqFf2iGGtKwvI5SVTrIJcSFaOXK88T2EUsbsIKugDtoqOcZQ==
   dependencies:
-    "@babel/runtime" "^7.4.5"
-    "@testing-library/dom" "^5.0.0"
+    "@babel/runtime" "^7.5.5"
+    "@testing-library/dom" "^5.6.1"
 
 "@types/babel__core@^7.1.0":
   version "7.1.3"
