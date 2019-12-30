@@ -15,17 +15,17 @@
     "react-dom-confetti": "0.1.3",
     "react-ga": "2.7.0",
     "react-github-btn": "1.1.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "3.1.2",
     "semver": "7.1.0",
     "styled-components": "4.4.1"
   },
   "devDependencies": {
-    "eslint": "5.16.0",
     "eslint-plugin-prettier": "3.1.2",
     "gh-pages": "2.1.1",
     "husky": "3.1.0",
     "prettier": "1.19.1",
-    "pretty-quick": "2.0.1"
+    "pretty-quick": "2.0.1",
+    "typescript": "^3.7.4"
   },
   "scripts": {
     "start": "react-scripts start",
