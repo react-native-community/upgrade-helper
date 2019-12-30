@@ -15,7 +15,7 @@
     "react-dom-confetti": "0.1.1",
     "react-ga": "2.5.7",
     "react-github-btn": "1.0.5",
-    "react-scripts": "3.0.1",
+    "react-scripts": "3.3.0",
     "semver": "6.1.0",
     "styled-components": "4.2.0"
   },
