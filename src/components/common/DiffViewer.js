@@ -10,6 +10,7 @@ import UsefulContentSection from './UsefulContentSection'
 import ViewStyleOptions from './Diff/DiffViewStyleOptions'
 
 import CompletedFilesCounter from './CompletedFilesCounter'
+import { AppNameWarning } from './AppNameWarning'
 
 const Container = styled.div`
   width: 90%;
@@ -116,6 +117,9 @@ const DiffViewer = ({
         fromVersion={fromVersion}
         toVersion={toVersion}
       />
+
+      <AppNameWarning />
+
       <ViewStyleOptions
         handleViewStyleChange={handleViewStyleChange}
         diffViewStyle={diffViewStyle}
