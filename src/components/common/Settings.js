@@ -28,6 +28,7 @@ const Settings = ({ handleSettingsChange, appName, setAppName }) => {
               onChange={e => {
                 setAppName(e.target.value)
               }}
+              placeholder="MyAwesomeApp"
             />
           </Form.Item>
         </Form>
