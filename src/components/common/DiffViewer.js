@@ -8,7 +8,6 @@ import DiffSection from './Diff/DiffSection'
 import DiffLoading from './Diff/DiffLoading'
 import UsefulContentSection from './UsefulContentSection'
 import ViewStyleOptions from './Diff/DiffViewStyleOptions'
-
 import CompletedFilesCounter from './CompletedFilesCounter'
 
 const Container = styled.div`
@@ -95,7 +94,12 @@ const DiffViewer = ({
       setLoading(false)
     }
 
-    fetchDiff()
+    const debounce = setTimeout(() => {
+      fetchDiff()
+    }, 750)
+    return () => {
+      clearTimeout(debounce)
+    }
   }, [appName, fromVersion, replaceAppName, showDiff, toVersion])
 
   if (!showDiff) {
