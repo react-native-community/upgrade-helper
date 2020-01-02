@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
-import { Popover, Button, Checkbox, Form, Input } from 'antd'
+import { Popover, Button, Checkbox, Input } from 'antd'
 import { SHOW_LATEST_RCS } from '../../utils'
+import styled from 'styled-components'
 
+const InputContainer = styled.div({
+  marginTop: '16px'
+})
 const Settings = ({ handleSettingsChange, appName, setAppName }) => {
   const [popoverVisibility, setVisibility] = useState(false)
 
@@ -14,15 +18,14 @@ const Settings = ({ handleSettingsChange, appName, setAppName }) => {
     <Popover
       placement="bottomRight"
       content={
-        <Form>
-          <Form.Item>
-            <Checkbox.Group onChange={updateCheckboxValues}>
-              <div>
-                <Checkbox value={SHOW_LATEST_RCS}>{SHOW_LATEST_RCS}</Checkbox>
-              </div>
-            </Checkbox.Group>
-          </Form.Item>
-          <Form.Item label="Your AppName">
+        <>
+          <Checkbox.Group onChange={updateCheckboxValues}>
+            <div>
+              <Checkbox value={SHOW_LATEST_RCS}>{SHOW_LATEST_RCS}</Checkbox>
+            </div>
+          </Checkbox.Group>
+          <InputContainer>
+            <h4>What's your app name?</h4>
             <Input
               value={appName}
               onChange={e => {
@@ -30,8 +33,8 @@ const Settings = ({ handleSettingsChange, appName, setAppName }) => {
               }}
               placeholder="MyAwesomeApp"
             />
-          </Form.Item>
-        </Form>
+          </InputContainer>
+        </>
       }
       trigger="click"
       visible={popoverVisibility}
