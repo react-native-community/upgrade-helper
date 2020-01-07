@@ -19,7 +19,7 @@ const InlineCode = styled.em`
   padding: 0.2em 0.4em;
 `
 
-export default ({ forceBlock, options = {}, ...props }) => (
+export default ({ forceBlock = false, options = {}, ...props }) => (
   <Markdown
     {...props}
     options={{
