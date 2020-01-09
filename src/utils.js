@@ -1,4 +1,4 @@
-import semver from 'semver'
+import semver from 'semver/preload'
 import versions from './releases'
 
 const RN_DIFF_REPO = 'react-native-community/rn-diff-purge'
