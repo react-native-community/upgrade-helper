@@ -29,24 +29,18 @@ const Icon = styled(props => (
 `
 
 const CloseButton = styled(({ toggleVisibility, ...props }) => (
-  <Button
-    {...props}
-    type="ghost"
-    shape="circle"
-    icon="close"
-    onClick={toggleVisibility}
-  />
+  <Button {...props} type="link" icon="close" onClick={toggleVisibility} />
 ))`
   float: right;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 11px;
+  right: 12px;
   font-size: 12px;
   border-width: 0px;
   width: 20px;
   height: 20px;
   margin-right: 8px;
-  &,
+  color: rgba(0, 0, 0, 0.45);
   &:hover,
   &:focus {
     color: #24292e;

@@ -19,7 +19,7 @@ exports[`renders without crashing 1`] = `
          Useful content for upgrading
       </h2>
       <button
-        class="ant-btn sc-EHOje xNCZY ant-btn-ghost ant-btn-circle ant-btn-icon-only"
+        class="ant-btn sc-EHOje kMAZtT ant-btn-link ant-btn-icon-only"
         type="button"
       >
         <i
