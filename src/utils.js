@@ -12,7 +12,8 @@ export const getDiffPatchURL = ({ fromVersion, toVersion }) =>
 export const getBinaryFileURL = ({ version, path }) =>
   `https://github.com/${RN_DIFF_REPO}/raw/release/${version}/${path}`
 
-export const removeAppPathPrefix = path => path.replace(/RnDiffApp\//, '')
+export const removeAppPathPrefix = (path, appName) =>
+  path.replace(new RegExp(`${appName || 'RnDiffApp'}/`), '')
 
 export const getVersionsInDiff = ({ fromVersion, toVersion }) => {
   const cleanedToVersion = semver.valid(semver.coerce(toVersion))
