@@ -64,7 +64,9 @@ const DiffViewer = ({
 
   const replaceAppName = useCallback(
     text => {
+      console.log(appName)
       if (!appName) return text
+      console.log('blank', appName)
       return text
         .replace(/RnDiffApp/g, appName)
         .replace(/rndiffapp/g, appName.toLowerCase())
@@ -145,11 +147,17 @@ const DiffViewer = ({
         {...diffSectionProps}
         isDoneSection={false}
         diffViewStyle={diffViewStyle}
+        appName={appName}
       />
 
       {renderUpgradeDoneMessage({ diff, completedDiffs })}
 
-      <DiffSection {...diffSectionProps} isDoneSection={true} title="Done" />
+      <DiffSection
+        {...diffSectionProps}
+        isDoneSection={true}
+        title="Done"
+        appName={appName}
+      />
 
       <CompletedFilesCounter
         completed={completedDiffs.length}

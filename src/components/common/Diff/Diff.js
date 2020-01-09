@@ -89,7 +89,8 @@ const Diff = ({
   onToggleChangeSelection,
   areAllCollapsed,
   setAllCollapsed,
-  diffViewStyle
+  diffViewStyle,
+  appName
 }) => {
   const [isDiffCollapsed, setIsDiffCollapsed] = useState(
     isDiffCollapsedByDefault({ type, hunks })
@@ -121,6 +122,7 @@ const Diff = ({
         }}
         isDiffCompleted={isDiffCompleted}
         onCompleteDiff={onCompleteDiff}
+        appName={appName}
       />
 
       {!isDiffCollapsed && (
@@ -128,7 +130,7 @@ const Diff = ({
           viewType={diffViewStyle}
           diffType={type}
           hunks={hunks}
-          widgets={getComments({ newPath, fromVersion, toVersion })}
+          widgets={getComments({ newPath, fromVersion, toVersion, appName })}
           optimizeSelection={true}
           selectedChanges={selectedChanges}
         >
