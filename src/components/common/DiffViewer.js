@@ -145,11 +145,17 @@ const DiffViewer = ({
         {...diffSectionProps}
         isDoneSection={false}
         diffViewStyle={diffViewStyle}
+        appName={appName}
       />
 
       {renderUpgradeDoneMessage({ diff, completedDiffs })}
 
-      <DiffSection {...diffSectionProps} isDoneSection={true} title="Done" />
+      <DiffSection
+        {...diffSectionProps}
+        isDoneSection={true}
+        title="Done"
+        appName={appName}
+      />
 
       <CompletedFilesCounter
         completed={completedDiffs.length}
