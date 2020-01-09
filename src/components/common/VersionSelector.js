@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Button, Popover } from 'antd'
-import semver from 'semver'
+import semver from 'semver/preload'
 import queryString from 'query-string'
 import { RELEASES_URL } from '../../utils'
 import { Select } from './'
