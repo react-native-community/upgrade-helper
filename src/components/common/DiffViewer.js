@@ -64,9 +64,7 @@ const DiffViewer = ({
 
   const replaceAppName = useCallback(
     text => {
-      console.log(appName)
       if (!appName) return text
-      console.log('blank', appName)
       return text
         .replace(/RnDiffApp/g, appName)
         .replace(/rndiffapp/g, appName.toLowerCase())
