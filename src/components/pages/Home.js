@@ -55,6 +55,7 @@ const Home = () => {
   const [settings, setSettings] = useState({
     [`${SHOW_LATEST_RCS}`]: false
   })
+  const [appName, setAppName] = useState('')
 
   useEffect(() => {
     if (process.env.NODE_ENV === 'production') {
@@ -105,7 +106,11 @@ const Home = () => {
             Star
           </StarButton>
 
-          <Settings handleSettingsChange={handleSettingsChange} />
+          <Settings
+            handleSettingsChange={handleSettingsChange}
+            appName={appName}
+            setAppName={setAppName}
+          />
         </TitleContainer>
 
         <VersionSelector
@@ -118,6 +123,7 @@ const Home = () => {
         showDiff={showDiff}
         fromVersion={fromVersion}
         toVersion={toVersion}
+        appName={appName}
       />
     </Page>
   )
