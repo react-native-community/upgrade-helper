@@ -9,9 +9,9 @@ const FileRenameArrow = styled(props => <Icon {...props} type="right" />)`
   color: #f78206;
 `
 
-const FileName = ({ oldPath, newPath, type }) => {
-  const oldPathSanitized = removeAppPathPrefix(oldPath)
-  const newPathSanitized = removeAppPathPrefix(newPath)
+const FileName = ({ oldPath, newPath, type, appName }) => {
+  const oldPathSanitized = removeAppPathPrefix(oldPath, appName)
+  const newPathSanitized = removeAppPathPrefix(newPath, appName)
 
   if (type === 'delete') {
     return <span>{oldPathSanitized}</span>
@@ -163,6 +163,7 @@ const DiffHeader = styled(
     setIsDiffCollapsed,
     isDiffCompleted,
     onCompleteDiff,
+    appName,
     ...props
   }) => (
     <div {...props}>
@@ -171,7 +172,12 @@ const DiffHeader = styled(
         isDiffCollapsed={isDiffCollapsed}
         onClick={({ altKey }) => setIsDiffCollapsed(!isDiffCollapsed, altKey)}
       />
-      <FileName oldPath={oldPath} newPath={newPath} type={type} />{' '}
+      <FileName
+        oldPath={oldPath}
+        newPath={newPath}
+        type={type}
+        appName={appName}
+      />{' '}
       <FileStatus type={type} />
       <BinaryBadge visible={!hasDiff} />
       <HeaderButtonsContainer>
