@@ -5149,10 +5149,10 @@ humanize-url@^1.0.0:
     normalize-url "^1.0.0"
     strip-url-auth "^1.0.0"
 
-husky@4.0.4:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-4.0.4.tgz#f4aaee536c5bd0e4618451d0615f46b43a94816c"
-  integrity sha512-AS9ZyA1nRpPGe85MJIhPw73eXeOWt18NJ7C9lu8EcoiHH7HOv2aYzou9m7fme+hesv/ISsomXfhbOrM6Il94bg==
+husky@4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-4.0.6.tgz#b64206220ab940f091cb5f1c75672453eb39fc9f"
+  integrity sha512-OxsXXQXu/FYauV5GGhNpyN1yhQPQoDFUJwzHoshYc3wO//gC0PB9YNYLgBxKckfEce0FGEbzb498UecR3jNdZw==
   dependencies:
     chalk "^3.0.0"
     ci-info "^2.0.0"
