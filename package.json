@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@testing-library/react": "9.4.0",
-    "antd": "3.26.6",
+    "antd": "3.26.7",
     "markdown-to-jsx": "6.10.3",
     "query-string": "6.9.0",
     "react": "16.12.0",
