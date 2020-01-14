@@ -4,7 +4,7 @@ exports[`renders without crashing 1`] = `
 <div>
   <img
     alt="Loading"
-    class="sc-bdVaJa dRbStl"
+    class="sc-AykKC cqLuft"
     logo="test.png"
     src="loading.svg"
     title="Loading"

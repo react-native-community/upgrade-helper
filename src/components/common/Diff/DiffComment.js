@@ -17,11 +17,12 @@ const CommentContent = styled.div`
 `
 
 const CommentButton = styled(Button)`
-  height: 16px;
-  width: 16px;
+  min-width: initial;
+  width: 20px;
+  height: 20px;
   position: absolute;
-  top: 1px;
-  left: -10px;
+  top: -1px;
+  left: 5px;
   font-size: 8px;
   cursor: 'pointer';
 `
