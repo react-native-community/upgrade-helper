@@ -3,15 +3,15 @@
 exports[`renders without crashing 1`] = `
 <div>
   <div
-    class="sc-htpNat cxJeAb"
+    class="sc-AykKE dnSnnP"
   >
     <div
-      class="sc-bxivhb cnNsuz"
+      class="sc-AykKF dqdZRH"
     >
       <h2>
         <span
           aria-label="Close useful content section"
-          class="sc-ifAKCX dQIIsA"
+          class="sc-AykKG gpypFm"
           role="img"
         >
           📣
@@ -19,7 +19,7 @@ exports[`renders without crashing 1`] = `
          Useful content for upgrading
       </h2>
       <button
-        class="ant-btn sc-EHOje kMAZtT ant-btn-link ant-btn-icon-only"
+        class="ant-btn sc-AykKH cLLRHK ant-btn-link ant-btn-icon-only"
         type="button"
       >
         <i
@@ -46,11 +46,11 @@ exports[`renders without crashing 1`] = `
         React Native 0.61 includes Fast Refresh and more.
       </span>
       <ol
-        class="sc-gzVnrw emyMmg"
+        class="sc-AykKJ imPLGX"
       >
         <li>
           <a
-            class="sc-bdVaJa dFUFTG"
+            class="sc-AykKC csdPub"
             href="https://facebook.github.io/react-native/blog/2019/09/18/version-0.61"
             rel="noopener"
             target="_blank"
@@ -60,7 +60,7 @@ exports[`renders without crashing 1`] = `
         </li>
         <li>
           <a
-            class="sc-bdVaJa dFUFTG"
+            class="sc-AykKC csdPub"
             href="https://reactnative.thenativebits.com/courses/upgrading-react-native/upgrade-to-react-native-0.61/"
             rel="noopener"
             target="_blank"
@@ -70,7 +70,7 @@ exports[`renders without crashing 1`] = `
         </li>
         <li>
           <a
-            class="sc-bdVaJa dFUFTG"
+            class="sc-AykKC csdPub"
             href="https://github.com/react-native-community/releases/blob/master/CHANGELOG.md#061"
             rel="noopener"
             target="_blank"
