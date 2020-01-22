@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { Button, Popover } from 'antd'
 import semver from 'semver/preload'
 import queryString from 'query-string'
+import R from 'ramda'
+
 import { RELEASES_URL } from '../../utils'
 import { Select } from './'
 
@@ -106,23 +108,43 @@ const getReleasedVersionsWithCandidates = ({
   })
 }
 
-const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) => {
-  const latestMajorReleaseVersion = getLatestMajorReleaseVersion(
-    releasedVersions
-  )
+export const isRC = release => release.includes('rc')
 
-  const isVersionAReleaseAndOfLatest = version =>
-    version.includes('rc') &&
-    semver.valid(semver.coerce(version)) === latestMajorReleaseVersion
+export const filterReleases = (
+  releases,
+  { showRCs = 'all', minVersion, maxVersion } // defaults should be whatever will return the same results as the input
+) => {
+  let filteredReleases = releases
 
-  return releasedVersions.filter(
-    releasedVersion =>
-      releasedVersion.length > 0 &&
-      ((maxVersion && semver.lt(releasedVersion, maxVersion)) ||
-        (minVersion &&
-          semver.gt(releasedVersion, minVersion) &&
-          !isVersionAReleaseAndOfLatest(releasedVersion)))
-  )
+  switch (showRCs) {
+    case 'all':
+      break
+    case 'latest': {
+      let latestRelease = filteredReleases[0]
+      let earliestLatestReleaseIndex = R.findIndex(
+        release =>
+          semver.compare(
+            semver.coerce(release),
+            semver.coerce(latestRelease)
+          ) !== 0
+      )(filteredReleases)
+
+      let [latest, rest] = R.splitAt(
+        earliestLatestReleaseIndex,
+        filteredReleases
+      )
+      rest = R.reject(isRC)(rest)
+      filteredReleases = R.concat(latest, rest)
+      break
+    }
+    case 'none':
+      filteredReleases = R.reject(isRC)(filteredReleases)
+      break
+    default:
+      break
+  }
+
+  return filteredReleases
 }
 
 // Finds the first minor release (which in react-native is the major) when compared to another version
@@ -214,16 +236,10 @@ const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
           })
 
       setFromVersionList(
-        getReleasedVersions({
-          releasedVersions: sanitizedVersions,
-          maxVersion: toVersionToBeSet
-        })
+        filterReleases(sanitizedVersions, { maxVersion: toVersionToBeSet })
       )
       setToVersionList(
-        getReleasedVersions({
-          releasedVersions: sanitizedVersions,
-          minVersion: fromVersionToBeSet
-        })
+        filterReleases(sanitizedVersions, { minVersion: fromVersionToBeSet })
       )
 
       setLocalFromVersion(fromVersionToBeSet)
@@ -249,16 +265,10 @@ const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
     }
 
     setFromVersionList(
-      getReleasedVersions({
-        releasedVersions: allVersions,
-        maxVersion: localToVersion
-      })
+      filterReleases(allVersions, { maxVersion: localToVersion })
     )
     setToVersionList(
-      getReleasedVersions({
-        releasedVersions: allVersions,
-        minVersion: localFromVersion
-      })
+      filterReleases(allVersions, { minVersion: localFromVersion })
     )
   }, [
     isLoading,
