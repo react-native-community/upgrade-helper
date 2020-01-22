@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Button, Popover } from 'antd'
 import semver from 'semver/preload'
 import queryString from 'query-string'
-import R from 'ramda'
+import * as R from 'ramda'
 
 import { RELEASES_URL } from '../../utils'
 import { Select } from './'
@@ -120,8 +120,10 @@ export const filterReleases = (
 
   switch (showRCs) {
     case 'all':
+      // show all rcs
       break
     case 'latest': {
+      // show only latest version's rcs
       let latestRelease = filteredReleases[0]
       let earliestLatestReleaseIndex = R.findIndex(
         release =>
@@ -140,10 +142,27 @@ export const filterReleases = (
       break
     }
     case 'none':
+      // don't show any rcs
       filteredReleases = R.reject(isRC)(filteredReleases)
       break
     default:
       break
+  }
+
+  if (maxVersion !== undefined) {
+    // drop all versions later than `maxVersion`
+    filteredReleases = R.dropWhile(
+      release =>
+        semver.compare(semver.coerce(release), semver.coerce(maxVersion)) > 0
+    )(filteredReleases)
+  }
+
+  if (minVersion !== undefined) {
+    // take all versions later or equal to `minVersion`
+    filteredReleases = R.takeWhile(
+      release =>
+        semver.compare(semver.coerce(release), semver.coerce(minVersion)) >= 0
+    )(filteredReleases)
   }
 
   return filteredReleases
