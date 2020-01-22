@@ -48,10 +48,23 @@ const getVersionsInURL = () => {
 }
 
 const compareReleaseCandidateVersions = ({ version, versionToCompare }) =>
-  ['prepatch', null].includes(semver.diff(version, versionToCompare))
+  ['prerelease', 'prepatch', null].includes(
+    semver.diff(version, versionToCompare)
+  )
+
+const getLatestMajorReleaseVersion = releasedVersions =>
+  semver.valid(
+    semver.coerce(
+      releasedVersions.find(
+        releasedVersion =>
+          !semver.prerelease(releasedVersion) &&
+          semver.patch(releasedVersion) === 0
+      )
+    )
+  )
 
 // Check if `from` rc version is one of the latest major release (ie. 0.60.0)
-const checkLatestReleaseCandidate = ({ version, latestVersion }) =>
+const checkIfVersionIsALatestRC = ({ version, latestVersion }) =>
   semver.prerelease(version) &&
   compareReleaseCandidateVersions({
     version: latestVersion,
@@ -73,7 +86,7 @@ const getReleasedVersionsWithCandidates = ({
     // Show the release candidates of the latest version
     const isLatestReleaseCandidate =
       showReleaseCandidates &&
-      checkLatestReleaseCandidate({
+      checkIfVersionIsALatestRC({
         version: releasedVersion,
         latestVersion
       })
@@ -96,7 +109,22 @@ const getReleasedVersionsWithCandidates = ({
 }
 
 const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) => {
-  return releasedVersions
+  const latestMajorReleaseVersion = getLatestMajorReleaseVersion(
+    releasedVersions
+  )
+
+  const isVersionAReleaseAndOfLatest = version =>
+    version.includes('rc') &&
+    semver.valid(semver.coerce(version)) === latestMajorReleaseVersion
+
+  return releasedVersions.filter(
+    releasedVersion =>
+      releasedVersion.length > 0 &&
+      ((maxVersion && semver.lt(releasedVersion, maxVersion)) ||
+        (minVersion &&
+          semver.gt(releasedVersion, minVersion) &&
+          !isVersionAReleaseAndOfLatest(releasedVersion)))
+  )
 }
 
 // Finds the first minor release (which in react-native is the major) when compared to another version
@@ -177,7 +205,7 @@ const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
         showReleaseCandidates
       })
 
-      setAllVersions(allVersionsFromResponse)
+      setAllVersions(sanitizedVersions)
 
       const fromVersionToBeSet = hasFromVersionInURL
         ? versionsInURL.fromVersion
