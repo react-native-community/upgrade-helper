@@ -50,17 +50,6 @@ const getVersionsInURL = () => {
 const compareReleaseCandidateVersions = ({ version, versionToCompare }) =>
   ['prepatch', null].includes(semver.diff(version, versionToCompare))
 
-const getLatestMajorReleaseVersion = releasedVersions =>
-  semver.valid(
-    semver.coerce(
-      releasedVersions.find(
-        releasedVersion =>
-          !semver.prerelease(releasedVersion) &&
-          semver.patch(releasedVersion) === 0
-      )
-    )
-  )
-
 // Check if `from` rc version is one of the latest major release (ie. 0.60.0)
 const checkLatestReleaseCandidate = ({ version, latestVersion }) =>
   semver.prerelease(version) &&
