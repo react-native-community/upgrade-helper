@@ -30,34 +30,6 @@ const releasesNoRCsWithLatestReleaseRCs = [
   '0.63.2-rc.0',
   ...releasesNoRCs
 ]
-const releasesBeforeMax = [
-  '0.62.4',
-  '0.62.4-rc.1',
-  '0.62.4-rc.0',
-  '0.62.3',
-  '0.62.1',
-  '0.62.0',
-  '0.62.0-rc.1',
-  '0.61.3'
-]
-const releasesAfterMin = [
-  '0.63.2-rc.1',
-  '0.63.2-rc.0',
-  '0.63.1',
-  '0.63.0',
-  '0.62.4',
-  '0.62.4-rc.1',
-  '0.62.4-rc.0',
-  '0.62.3',
-  '0.62.1'
-]
-const releasesBetweenMinAndMax = [
-  '0.62.4',
-  '0.62.4-rc.1',
-  '0.62.4-rc.0',
-  '0.62.3',
-  '0.62.1'
-]
 
 describe('release filtering', () => {
   it('should return the correct releases', () => {
@@ -70,16 +42,60 @@ describe('release filtering', () => {
       releasesNoRCsWithLatestReleaseRCs
     )
 
-    expect(filterReleases(releases, { maxVersion: '0.62.4' })).toEqual(
-      releasesBeforeMax
-    )
+    expect(filterReleases(releases, { maxVersion: '0.62.4' })).toEqual([
+      '0.62.4',
+      '0.62.4-rc.1',
+      '0.62.4-rc.0',
+      '0.62.3',
+      '0.62.1',
+      '0.62.0',
+      '0.62.0-rc.1',
+      '0.61.3'
+    ])
+    expect(
+      filterReleases(releases, { maxVersionExcluding: '0.62.4' })
+    ).toEqual([
+      '0.62.4-rc.1',
+      '0.62.4-rc.0',
+      '0.62.3',
+      '0.62.1',
+      '0.62.0',
+      '0.62.0-rc.1',
+      '0.61.3'
+    ])
 
-    expect(filterReleases(releases, { minVersion: '0.62.1' })).toEqual(
-      releasesAfterMin
-    )
+    expect(filterReleases(releases, { minVersion: '0.62.1' })).toEqual([
+      '0.63.2-rc.1',
+      '0.63.2-rc.0',
+      '0.63.1',
+      '0.63.0',
+      '0.62.4',
+      '0.62.4-rc.1',
+      '0.62.4-rc.0',
+      '0.62.3',
+      '0.62.1'
+    ])
+    expect(
+      filterReleases(releases, { minVersionExcluding: '0.62.1' })
+    ).toEqual([
+      '0.63.2-rc.1',
+      '0.63.2-rc.0',
+      '0.63.1',
+      '0.63.0',
+      '0.62.4',
+      '0.62.4-rc.1',
+      '0.62.4-rc.0',
+      '0.62.3'
+    ])
 
     expect(
       filterReleases(releases, { minVersion: '0.62.1', maxVersion: '0.62.4' })
-    ).toEqual(releasesBetweenMinAndMax)
+    ).toEqual(['0.62.4', '0.62.4-rc.1', '0.62.4-rc.0', '0.62.3', '0.62.1'])
+    expect(
+      filterReleases(releases, {
+        minVersionExcluding: '0.62.1',
+        maxVersionExcluding: '0.62.4'
+      })
+    ).toEqual(['0.62.4-rc.1', '0.62.4-rc.0', '0.62.3'])
   })
 })

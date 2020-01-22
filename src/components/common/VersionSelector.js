@@ -114,7 +114,13 @@ export const isRC = release => release.includes('rc')
 
 export const filterReleases = (
   releases,
-  { showRCs = 'all', minVersion, maxVersion } // defaults should be whatever will return the same results as the input
+  {
+    showRCs = 'all',
+    minVersion,
+    minVersionExcluding,
+    maxVersion,
+    maxVersionExcluding
+  } // defaults should be whatever will return the same results as the input
 ) => {
   let filteredReleases = releases
 
@@ -152,16 +158,26 @@ export const filterReleases = (
   if (maxVersion !== undefined) {
     // drop all versions later than `maxVersion`
     filteredReleases = R.dropWhile(
-      release =>
-        semver.compare(semver.coerce(release), semver.coerce(maxVersion)) > 0
+      release => semver.compare(release, maxVersion) > 0
+    )(filteredReleases)
+  }
+  if (maxVersionExcluding !== undefined) {
+    // drop all versions later or equal to `maxVersionExcluding`
+    filteredReleases = R.dropWhile(
+      release => semver.compare(release, maxVersionExcluding) >= 0
     )(filteredReleases)
   }
 
   if (minVersion !== undefined) {
     // take all versions later or equal to `minVersion`
     filteredReleases = R.takeWhile(
-      release =>
-        semver.compare(semver.coerce(release), semver.coerce(minVersion)) >= 0
+      release => semver.compare(release, minVersion) >= 0
+    )(filteredReleases)
+  }
+  if (minVersionExcluding !== undefined) {
+    // take all versions later than `minVersionExcluding`
+    filteredReleases = R.takeWhile(
+      release => semver.compare(release, minVersionExcluding) > 0
     )(filteredReleases)
   }
 
