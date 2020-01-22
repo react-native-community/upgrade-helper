@@ -50,17 +50,6 @@ const getVersionsInURL = () => {
 const compareReleaseCandidateVersions = ({ version, versionToCompare }) =>
   ['prepatch', null].includes(semver.diff(version, versionToCompare))
 
-const getLatestMajorReleaseVersion = releasedVersions =>
-  semver.valid(
-    semver.coerce(
-      releasedVersions.find(
-        releasedVersion =>
-          !semver.prerelease(releasedVersion) &&
-          semver.patch(releasedVersion) === 0
-      )
-    )
-  )
-
 // Check if `from` rc version is one of the latest major release (ie. 0.60.0)
 const checkLatestReleaseCandidate = ({ version, latestVersion }) =>
   semver.prerelease(version) &&
@@ -107,22 +96,7 @@ const getReleasedVersionsWithCandidates = ({
 }
 
 const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) => {
-  const latestMajorReleaseVersion = getLatestMajorReleaseVersion(
-    releasedVersions
-  )
-
-  const isVersionAReleaseAndOfLatest = version =>
-    version.includes('rc') &&
-    semver.valid(semver.coerce(version)) === latestMajorReleaseVersion
-
-  return releasedVersions.filter(
-    releasedVersion =>
-      releasedVersion.length > 0 &&
-      ((maxVersion && semver.lt(releasedVersion, maxVersion)) ||
-        (minVersion &&
-          semver.gt(releasedVersion, minVersion) &&
-          !isVersionAReleaseAndOfLatest(releasedVersion)))
-  )
+  return releasedVersions
 }
 
 // Finds the first minor release (which in react-native is the major) when compared to another version
@@ -203,7 +177,7 @@ const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
         showReleaseCandidates
       })
 
-      setAllVersions(sanitizedVersions)
+      setAllVersions(allVersionsFromResponse)
 
       const fromVersionToBeSet = hasFromVersionInURL
         ? versionsInURL.fromVersion
