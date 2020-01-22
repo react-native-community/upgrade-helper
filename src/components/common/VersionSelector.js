@@ -107,14 +107,6 @@ const getReleasedVersionsWithCandidates = ({
 }
 
 const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) => {
-  const latestMajorReleaseVersion = getLatestMajorReleaseVersion(
-    releasedVersions
-  )
-
-  const isVersionAReleaseAndOfLatest = version =>
-    version.includes('rc') &&
-    semver.valid(semver.coerce(version)) === latestMajorReleaseVersion
-
   return releasedVersions
 }
 
