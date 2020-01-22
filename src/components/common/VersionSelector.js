@@ -115,6 +115,7 @@ const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) => {
     version.includes('rc') &&
     semver.valid(semver.coerce(version)) === latestMajorReleaseVersion
 
+  return releasedVersions
   return releasedVersions.filter(
     releasedVersion =>
       releasedVersion.length > 0 &&
@@ -203,7 +204,7 @@ const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
         showReleaseCandidates
       })
 
-      setAllVersions(sanitizedVersions)
+      setAllVersions(allVersionsFromResponse)
 
       const fromVersionToBeSet = hasFromVersionInURL
         ? versionsInURL.fromVersion
