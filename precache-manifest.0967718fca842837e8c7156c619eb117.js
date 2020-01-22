@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "028543ed7850f52e2bf526bf9b282d04",
+    "revision": "08f81270860f1d0ba969ba1123eb3f34",
     "url": "/upgrade-helper/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/upgrade-helper/static/css/2.01e93133.chunk.css"
   },
   {
-    "revision": "4f8d6e9b450fe4f1f214",
+    "revision": "5589a3a736a6223b8b4e",
     "url": "/upgrade-helper/static/css/main.bb9eb706.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/upgrade-helper/static/js/2.62f2b7db.chunk.js"
   },
   {
-    "revision": "4f8d6e9b450fe4f1f214",
-    "url": "/upgrade-helper/static/js/main.b764112a.chunk.js"
+    "revision": "5589a3a736a6223b8b4e",
+    "url": "/upgrade-helper/static/js/main.1ca65b0f.chunk.js"
   },
   {
     "revision": "dd2f053298ab4390e8d8",
