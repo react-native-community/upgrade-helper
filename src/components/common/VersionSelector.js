@@ -116,14 +116,6 @@ const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) => {
     semver.valid(semver.coerce(version)) === latestMajorReleaseVersion
 
   return releasedVersions
-  return releasedVersions.filter(
-    releasedVersion =>
-      releasedVersion.length > 0 &&
-      ((maxVersion && semver.lt(releasedVersion, maxVersion)) ||
-        (minVersion &&
-          semver.gt(releasedVersion, minVersion) &&
-          !isVersionAReleaseAndOfLatest(releasedVersion)))
-  )
 }
 
 // Finds the first minor release (which in react-native is the major) when compared to another version
