@@ -8,6 +8,7 @@
     "antd": "3.26.11",
     "markdown-to-jsx": "6.10.3",
     "query-string": "6.10.1",
+    "ramda": "^0.26.1",
     "react": "16.12.0",
     "react-content-loader": "4.3.4",
     "react-diff-view": "2.4.1",
