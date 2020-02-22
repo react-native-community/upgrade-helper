@@ -4,7 +4,7 @@
   "homepage": "https://react-native-community.github.io/upgrade-helper",
   "license": "MIT",
   "dependencies": {
-    "@testing-library/react": "9.4.0",
+    "@testing-library/react": "9.4.1",
     "antd": "3.26.11",
     "markdown-to-jsx": "6.10.3",
     "query-string": "6.11.0",
