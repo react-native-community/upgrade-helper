@@ -9,7 +9,7 @@ const TitleLoader = () => (
     foregroundColor="#e6e6e6"
     viewBox="0 0 400 100"
   >
-    <rect width="250" height="10" rx="3" />
+    <rect width="250" height="6" rx="3" />
   </ContentLoader>
 )
 
@@ -20,13 +20,13 @@ const DiffLoader = () => (
     foregroundColor="#e6e6e6"
     viewBox="0 0 400 100"
   >
-    <rect x="0" y="10" width="47%" height="10" rx="3" />
-    <rect x="200" y="10" width="41%" height="10" rx="3" />
-    <rect x="0" y="26" width="43%" height="10" rx="3" />
-    <rect x="200" y="58" width="40%" height="10" rx="3" />
-    <rect x="200" y="74" width="45%" height="10" rx="3" />
-    <rect x="0" y="74" width="40%" height="10" rx="3" />
-    <rect x="0" y="90" width="44%" height="10" rx="3" />
+    <rect x="0" y="10" width="47%" height="6" rx="3" />
+    <rect x="200" y="10" width="41%" height="6" rx="3" />
+    <rect x="0" y="18" width="43%" height="6" rx="3" />
+    <rect x="200" y="34" width="40%" height="6" rx="3" />
+    <rect x="200" y="42" width="45%" height="6" rx="3" />
+    <rect x="0" y="42" width="40%" height="6" rx="3" />
+    <rect x="0" y="50" width="44%" height="6" rx="3" />
   </ContentLoader>
 )
 
