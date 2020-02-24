@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { Tag, Icon, Button, Popover } from 'antd'
 import { removeAppPathPrefix, getBinaryFileURL } from '../../../utils'
 

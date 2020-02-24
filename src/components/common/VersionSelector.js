@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { Button, Popover } from 'antd'
 import semver from 'semver/preload'
 import queryString from 'query-string'

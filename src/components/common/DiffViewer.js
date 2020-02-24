@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { Alert } from 'antd'
 import { parseDiff, withChangeSelect } from 'react-diff-view'
 import 'react-diff-view/style/index.css'

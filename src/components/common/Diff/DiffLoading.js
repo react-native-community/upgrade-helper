@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react'
-import styled from 'styled-components'
+import React, { Component } from 'react'
+import styled from '@emotion/styled'
 import ContentLoader from 'react-content-loader'
 
 const TitleLoader = () => (
@@ -24,12 +24,12 @@ const SkeletonContainer = styled.div`
   border-radius: 3px;
 `
 
-const Header = styled.div`
-  color: #24292e;
-  background-color: #fafbfc;
-  padding: 14px 10px;
-  height: 40px;
-`
+const Header = styled.div({
+  color: '#24292e',
+  backgroundColor: '#fafbfc',
+  padding: '10px',
+  height: '40px'
+})
 
 const DiffDisplay = styled.div`
   padding: 5px 10px;
