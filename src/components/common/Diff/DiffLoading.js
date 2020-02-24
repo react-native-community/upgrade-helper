@@ -31,24 +31,21 @@ const Header = styled.div({
   height: '40px'
 })
 
-const DiffDisplay = styled.div`
-  padding: 5px 10px;
-  height: 400px;
-  column-count: 2;
-`
 export default class UsefulContentNoData extends Component {
   render() {
     return (
-      <Fragment key="noData">
-        <SkeletonContainer>
-          <Header>
-            <TitleLoader />
-          </Header>
-          <DiffDisplay>
-            <DiffLoader />
-          </DiffDisplay>
-        </SkeletonContainer>
-      </Fragment>
+      <SkeletonContainer>
+        <Header>
+          <TitleLoader />
+        </Header>
+        <div
+          css={{
+            padding: '5px 10px'
+          }}
+        >
+          <DiffLoader />
+        </div>
+      </SkeletonContainer>
     )
   }
 }
