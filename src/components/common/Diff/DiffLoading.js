@@ -3,18 +3,30 @@ import styled from '@emotion/styled'
 import ContentLoader from 'react-content-loader'
 
 const TitleLoader = () => (
-  <ContentLoader speed={1} backgroundColor="#eee" foregroundColor="#e6e6e6">
-    <rect rx="1" ry="1" width="100" height="3" />{' '}
+  <ContentLoader
+    speed={1}
+    backgroundColor="#eee"
+    foregroundColor="#e6e6e6"
+    viewBox="0 0 400 100"
+  >
+    <rect width="250" height="10" rx="3" />
   </ContentLoader>
 )
+
 const DiffLoader = () => (
-  <ContentLoader speed={1} backgroundColor="#eee" foregroundColor="#e6e6e6">
-    <rect x="0" y="7" rx="4" ry="4" width="90%" height="13" />{' '}
-    <rect x="0" y="30" rx="4" ry="4" width="80%" height="13" />{' '}
-    <rect x="0" y="53" rx="3" ry="3" width="70%" height="10" />
-    <rect x="0" y="90" rx="4" ry="4" width="90%" height="13" />{' '}
-    <rect x="0" y="113" rx="4" ry="4" width="80%" height="13" />{' '}
-    <rect x="0" y="143" rx="3" ry="3" width="70%" height="10" />
+  <ContentLoader
+    speed={1}
+    backgroundColor="#eee"
+    foregroundColor="#e6e6e6"
+    viewBox="0 0 400 100"
+  >
+    <rect x="0" y="10" width="47%" height="10" rx="3" />
+    <rect x="200" y="10" width="41%" height="10" rx="3" />
+    <rect x="0" y="26" width="43%" height="10" rx="3" />
+    <rect x="200" y="58" width="40%" height="10" rx="3" />
+    <rect x="200" y="74" width="45%" height="10" rx="3" />
+    <rect x="0" y="74" width="40%" height="10" rx="3" />
+    <rect x="0" y="90" width="44%" height="10" rx="3" />
   </ContentLoader>
 )
 
