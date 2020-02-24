@@ -9143,10 +9143,10 @@ react-app-polyfill@^1.0.1:
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
 
-react-content-loader@4.3.4:
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/react-content-loader/-/react-content-loader-4.3.4.tgz#5060df47c5ed0a16c31a35169c4e6f69e96b39a8"
-  integrity sha512-wwpF6dWaqeaiIwA/NofTuuO7PQaXRxGkukcdrNK/oIKEkfU3BPkNFrCb6sk9Q5l9n5uN80RF60ZO53wzxSy2HQ==
+react-content-loader@5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/react-content-loader/-/react-content-loader-5.0.2.tgz#f4d417ac2b3a913a4b5e406b8b36ff724bcfe15b"
+  integrity sha512-d9+/FX640VXyO+9dBgMWaHD5IL0+tGsCAFBhYPGNziPx2abTMUBXL1+oIlenOTYlxuOWDcUcpmgjj4Ws+0xdhA==
 
 react-dev-utils@^9.0.1:
   version "9.1.0"
