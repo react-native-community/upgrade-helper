@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { Button } from 'antd'
 import { getVersionsInDiff, getChangelogURL } from '../../utils'
 import { Link } from './Markdown'

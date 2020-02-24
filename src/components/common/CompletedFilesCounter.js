@@ -1,5 +1,6 @@
 import React from 'react'
-import styled, { keyframes, css } from 'styled-components'
+import styled from '@emotion/styled'
+import { keyframes, css } from '@emotion/core'
 import Confetti from 'react-dom-confetti'
 
 const shake = keyframes`
@@ -10,7 +11,7 @@ const shake = keyframes`
   10%, 90% {
     transform: translate(0, -2px);
   }
-  
+
   20%, 80% {
     transform: translate(0, 3px);
   }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Popover, Button, Checkbox, Input } from 'antd'
 import { SHOW_LATEST_RCS } from '../../utils'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 
 const InputContainer = styled.div({
   marginTop: '16px'

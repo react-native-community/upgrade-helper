@@ -3,16 +3,16 @@
 exports[`renders without crashing 1`] = `
 <div>
   <div
-    class="sc-AykKE eYKWmu"
+    class="css-uf1ume"
   >
     <div
-      class="sc-AykKC kCkcwd"
+      class="css-1ago99h"
     >
       <h4>
         What's your current React Native version?
       </h4>
       <div
-        class="ant-select-lg sc-AykKD epVcji sc-AykKF ksxpcV ant-select ant-select-enabled ant-select-loading"
+        class="ant-select-lg css-14fewfb ant-select ant-select-enabled ant-select-loading"
       >
         <div
           aria-autocomplete="list"
@@ -62,13 +62,13 @@ exports[`renders without crashing 1`] = `
       </div>
     </div>
     <div
-      class="sc-AykKC kCkcwd"
+      class="css-1ago99h"
     >
       <h4>
         To which version would you like to upgrade?
       </h4>
       <div
-        class="ant-select-lg sc-AykKD epVcji sc-AykKG bxUSbb ant-select ant-select-enabled ant-select-loading"
+        class="ant-select-lg css-19totau ant-select ant-select-enabled ant-select-loading"
       >
         <div
           aria-autocomplete="list"
@@ -119,7 +119,7 @@ exports[`renders without crashing 1`] = `
     </div>
   </div>
   <div
-    class="sc-AykKH jYujfn"
+    class="css-1xtcrrv"
   >
     <button
       class="ant-btn ant-btn-primary ant-btn-lg"
