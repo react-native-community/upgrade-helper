@@ -9,7 +9,7 @@
     "@testing-library/react": "9.4.1",
     "antd": "3.26.12",
     "customize-cra": "0.9.1",
-    "markdown-to-jsx": "6.10.3",
+    "markdown-to-jsx": "6.11.0",
     "query-string": "6.11.0",
     "react": "16.12.0",
     "react-app-rewired": "2.1.5",
