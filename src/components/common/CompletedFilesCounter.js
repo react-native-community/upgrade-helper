@@ -1,5 +1,6 @@
 import React from 'react'
-import styled, { keyframes, css } from '@emotion/styled'
+import styled from '@emotion/styled'
+import { keyframes, css } from '@emotion/core'
 import Confetti from 'react-dom-confetti'
 
 const shake = keyframes`
