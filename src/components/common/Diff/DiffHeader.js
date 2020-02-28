@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons'
 import { removeAppPathPrefix, getBinaryFileURL } from '../../../utils'
 
-const FileRenameArrow = styled(RightOutlined, {
+const FileRenameArrow = styled(RightOutlined)({
   fontSize: '10px',
   margin: '0 5px',
   color: '#f78206'

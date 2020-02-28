@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { Button } from 'antd'
+import { CloseOutlined, MessageOutlined } from '@ant-design/icons'
 import { removeAppPathPrefix, getVersionsInDiff } from '../../../utils'
 import Markdown from '../Markdown'
 
@@ -79,7 +80,7 @@ const DiffComment = ({ content }) => {
         shape="circle"
         type="primary"
         onClick={() => toggleComment(!displayComment)}
-        icon={displayComment ? 'close' : 'message'}
+        icon={displayComment ? <CloseOutlined /> : <MessageOutlined />}
       />
       {displayComment && (
         <CommentContent>
