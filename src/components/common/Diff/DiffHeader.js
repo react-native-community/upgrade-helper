@@ -9,6 +9,11 @@ import {
 } from '@ant-design/icons'
 import { removeAppPathPrefix, getBinaryFileURL } from '../../../utils'
 
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
 const FileRenameArrow = styled(RightOutlined)({
   fontSize: '10px',
   margin: '0 5px',
@@ -62,10 +67,6 @@ const BinaryBadge = ({ visible, ...props }) =>
       BINARY
     </Tag>
   ) : null
-
-const HeaderButtonsContainer = styled(props => <div {...props} />)`
-  float: right;
-`
 
 const DownloadFileButton = styled(({ visible, version, path, ...props }) =>
   visible ? (
@@ -139,6 +140,12 @@ const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
   }
 `
 
+const CollapseClickableArea = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`
+
 const CollapseDiffButton = styled(({ visible, isDiffCollapsed, ...props }) =>
   visible ? <Button {...props} type="link" icon={<DownOutlined />} /> : null
 )`
@@ -172,21 +179,24 @@ const DiffHeader = styled(
     appName,
     ...props
   }) => (
-    <div {...props}>
-      <CollapseDiffButton
-        visible={hasDiff}
-        isDiffCollapsed={isDiffCollapsed}
+    <Wrapper {...props}>
+      <CollapseClickableArea
         onClick={({ altKey }) => setIsDiffCollapsed(!isDiffCollapsed, altKey)}
-      />
-      <FileName
-        oldPath={oldPath}
-        newPath={newPath}
-        type={type}
-        appName={appName}
-      />{' '}
-      <FileStatus type={type} />
-      <BinaryBadge visible={!hasDiff} />
-      <HeaderButtonsContainer>
+      >
+        <CollapseDiffButton
+          visible={hasDiff}
+          isDiffCollapsed={isDiffCollapsed}
+        />
+        <FileName
+          oldPath={oldPath}
+          newPath={newPath}
+          type={type}
+          appName={appName}
+        />{' '}
+        <FileStatus type={type} />
+        <BinaryBadge visible={!hasDiff} />
+      </CollapseClickableArea>
+      <div>
         <Fragment>
           <ViewFileButton
             visible={hasDiff && type !== 'delete'}
@@ -203,8 +213,8 @@ const DiffHeader = styled(
             onClick={() => onCompleteDiff(diffKey)}
           />
         </Fragment>
-      </HeaderButtonsContainer>
-    </div>
+      </div>
+    </Wrapper>
   )
 )`
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
