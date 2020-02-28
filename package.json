@@ -4,10 +4,11 @@
   "homepage": "https://react-native-community.github.io/upgrade-helper",
   "license": "MIT",
   "dependencies": {
+    "@ant-design/icons": "4.0.0",
     "@emotion/core": "10.0.28",
     "@emotion/styled": "10.0.27",
     "@testing-library/react": "9.4.1",
-    "antd": "3.26.12",
+    "antd": "4.0.0",
     "customize-cra": "0.9.1",
     "markdown-to-jsx": "6.11.0",
     "query-string": "6.11.0",

@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react'
 import styled from '@emotion/styled'
-import { Tag, Icon, Button, Popover } from 'antd'
+import { Tag, Button, Popover } from 'antd'
+import { RightOutlined } from '@ant-design/icons'
 import { removeAppPathPrefix, getBinaryFileURL } from '../../../utils'
 
-const FileRenameArrow = styled(props => <Icon {...props} type="right" />)`
-  font-size: 10px;
-  margin: 0 5px;
-  color: #f78206;
-`
+const FileRenameArrow = styled(RightOutlined, {
+  fontSize: '10px',
+  margin: '0 5px',
+  color: '#f78206'
+})
 
 const FileName = ({ oldPath, newPath, type, appName }) => {
   const oldPathSanitized = removeAppPathPrefix(oldPath, appName)
