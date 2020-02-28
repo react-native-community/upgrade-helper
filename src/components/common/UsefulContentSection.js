@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import styled from '@emotion/styled'
+import { CloseOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import { getVersionsInDiff, getChangelogURL } from '../../utils'
 import { Link } from './Markdown'
@@ -29,7 +30,12 @@ const Icon = styled(props => (
 `
 
 const CloseButton = styled(({ toggleVisibility, ...props }) => (
-  <Button {...props} type="link" icon="close" onClick={toggleVisibility} />
+  <Button
+    {...props}
+    type="link"
+    icon={<CloseOutlined />}
+    onClick={toggleVisibility}
+  />
 ))`
   float: right;
   position: absolute;

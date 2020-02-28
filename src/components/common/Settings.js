@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { SettingOutlined } from '@ant-design/icons'
 import { Popover, Button, Checkbox, Input } from 'antd'
 import { SHOW_LATEST_RCS } from '../../utils'
 import styled from '@emotion/styled'
@@ -40,7 +41,7 @@ const Settings = ({ handleSettingsChange, appName, setAppName }) => {
       visible={popoverVisibility}
       onVisibleChange={handleClickChange}
     >
-      <Button icon="setting" />
+      <Button icon={<SettingOutlined />} />
     </Popover>
   )
 }

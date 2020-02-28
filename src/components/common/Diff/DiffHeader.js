@@ -1,7 +1,12 @@
 import React, { Fragment } from 'react'
 import styled from '@emotion/styled'
 import { Tag, Button, Popover } from 'antd'
-import { RightOutlined } from '@ant-design/icons'
+import {
+  CheckOutlined,
+  DownloadOutlined,
+  DownOutlined,
+  RightOutlined
+} from '@ant-design/icons'
 import { removeAppPathPrefix, getBinaryFileURL } from '../../../utils'
 
 const FileRenameArrow = styled(RightOutlined, {
@@ -68,7 +73,7 @@ const DownloadFileButton = styled(({ visible, version, path, ...props }) =>
       {...props}
       type="ghost"
       shape="circle"
-      icon="download"
+      icon={<DownloadOutlined />}
       target="_blank"
       href={getBinaryFileURL({ version, path })}
     />
@@ -106,7 +111,7 @@ const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
         {...props}
         type="ghost"
         shape="circle"
-        icon="check"
+        icon={<CheckOutlined />}
         onClick={onClick}
       />
     </Popover>
@@ -115,7 +120,7 @@ const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
       {...props}
       type="ghost"
       shape="circle"
-      icon="check"
+      icon={<CheckOutlined />}
       onClick={onClick}
     />
   )
@@ -135,7 +140,7 @@ const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
 `
 
 const CollapseDiffButton = styled(({ visible, isDiffCollapsed, ...props }) =>
-  visible ? <Button {...props} type="link" icon="down" /> : null
+  visible ? <Button {...props} type="link" icon={<DownOutlined />} /> : null
 )`
   color: #24292e;
   margin-right: 2px;
