@@ -5,5 +5,19 @@ import CompletedFilesCounter from '../../../components/common/CompletedFilesCoun
 it('renders without crashing', () => {
   const { container } = render(<CompletedFilesCounter />)
 
-  expect(container).toMatchSnapshot()
+  expect(container).toMatchInlineSnapshot(`
+    <div>
+      <div
+        class="css-1qesdmw"
+      >
+        <span
+          class="completedAmount"
+        />
+         /
+        <div
+          style="position: relative;"
+        />
+      </div>
+    </div>
+  `)
 })

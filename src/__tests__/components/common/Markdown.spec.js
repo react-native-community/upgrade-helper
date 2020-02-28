@@ -7,5 +7,13 @@ it('renders without crashing', () => {
     <Markdown forceBlock={false}># Hello world!</Markdown>
   )
 
-  expect(container).toMatchSnapshot()
+  expect(container).toMatchInlineSnapshot(`
+    <div>
+      <h1
+        id="hello-world"
+      >
+        Hello world!
+      </h1>
+    </div>
+  `)
 })
