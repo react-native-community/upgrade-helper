@@ -14,9 +14,9 @@
   resolved "https://registry.npmjs.org/@ant-design/icons-svg/-/icons-svg-4.0.0.tgz#6683db0df97c0c6900bb28a280faf391522ec734"
   integrity sha512-Nai+cd3XUrv/z50gSk1FI08j6rENZ1e93rhKeLTBGwa5WrmHvhn2vowa5+voZW2qkXJn1btS6tdvTEDB90M0Pw==
 
-"@ant-design/icons@^4.0.0", "@ant-design/icons@^4.0.0-rc.0":
+"@ant-design/icons@4.0.0", "@ant-design/icons@^4.0.0-rc.0":
   version "4.0.0"
-  resolved "https://registry.npmjs.org/@ant-design/icons/-/icons-4.0.0.tgz#cdb870777f185422cfc0e235392592d3e4795ef6"
+  resolved "https://registry.yarnpkg.com/@ant-design/icons/-/icons-4.0.0.tgz#cdb870777f185422cfc0e235392592d3e4795ef6"
   integrity sha512-oJTNTyo/6DjVmK/DSa58A+7gZRGgzBCAEJ9Pfa6U+BAZO28tvOE3YzlQd9gq9Qu6d47JL1ixyID3qsmRFqitlQ==
   dependencies:
     "@ant-design/colors" "^3.1.0"
@@ -8613,10 +8613,10 @@ qs@~6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
-query-string@6.11.0:
-  version "6.11.0"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.11.0.tgz#dc27a05733d1be66f16d0f83dfa957270f45f66d"
-  integrity sha512-jS+me8X3OEGFTsF6kF+vUUMFG/d3WUCvD7bHhfZP5784nOq1pjj8yau/u86nfOncmcN6ZkSWKWkKAvv/MGxzLA==
+query-string@6.11.1:
+  version "6.11.1"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.11.1.tgz#ab021f275d463ce1b61e88f0ce6988b3e8fe7c2c"
+  integrity sha512-1ZvJOUl8ifkkBxu2ByVM/8GijMIPx+cef7u3yroO3Ogm4DOdZcF5dcrWTIlSHe3Pg/mtlt6/eFjObDfJureZZA==
   dependencies:
     decode-uri-component "^0.2.0"
     split-on-first "^1.0.0"
