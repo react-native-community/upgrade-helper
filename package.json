@@ -4,7 +4,7 @@
   "homepage": "https://react-native-community.github.io/upgrade-helper",
   "license": "MIT",
   "dependencies": {
-    "@ant-design/icons": "^4.0.0",
+    "@ant-design/icons": "4.0.2",
     "@emotion/core": "10.0.28",
     "@emotion/styled": "10.0.27",
     "@testing-library/react": "9.4.1",
