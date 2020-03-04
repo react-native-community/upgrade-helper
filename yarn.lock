@@ -14,21 +14,10 @@
   resolved "https://registry.npmjs.org/@ant-design/icons-svg/-/icons-svg-4.0.0.tgz#6683db0df97c0c6900bb28a280faf391522ec734"
   integrity sha512-Nai+cd3XUrv/z50gSk1FI08j6rENZ1e93rhKeLTBGwa5WrmHvhn2vowa5+voZW2qkXJn1btS6tdvTEDB90M0Pw==
 
-"@ant-design/icons@4.0.2":
+"@ant-design/icons@4.0.2", "@ant-design/icons@^4.0.0":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@ant-design/icons/-/icons-4.0.2.tgz#6fce64b3e207d99d1e258ff527674e22b9b2afc0"
   integrity sha512-fs256mh5tQ0q+o2xNper5dThCZqmWRyQfstf+UrXhotAAv52K+6grh2tzdvsl60fk4GZPLReytwL5rJqATW3uA==
-  dependencies:
-    "@ant-design/colors" "^3.1.0"
-    "@ant-design/icons-svg" "^4.0.0"
-    classnames "^2.2.6"
-    insert-css "^2.0.0"
-    rc-util "^4.9.0"
-
-"@ant-design/icons@^4.0.0-rc.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@ant-design/icons/-/icons-4.0.0.tgz#cdb870777f185422cfc0e235392592d3e4795ef6"
-  integrity sha512-oJTNTyo/6DjVmK/DSa58A+7gZRGgzBCAEJ9Pfa6U+BAZO28tvOE3YzlQd9gq9Qu6d47JL1ixyID3qsmRFqitlQ==
   dependencies:
     "@ant-design/colors" "^3.1.0"
     "@ant-design/icons-svg" "^4.0.0"
@@ -1962,12 +1951,12 @@ ansi-styles@^4.1.0:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
 
-antd@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/antd/-/antd-4.0.0.tgz#1566ee4a4c9ff5deb446cc3ce7604d4495fd2d38"
-  integrity sha512-sfaxNqqtaGg+5JWucSPM0Nr3eBh5gUBlmsH5RqdtpcP5qTM2NOxcmhx3I8KlSs5O39jAZ6nRVmjubjpw3GS5oQ==
+antd@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-4.0.1.tgz#506365bb6f697237dddf675c78c0a41375bd314e"
+  integrity sha512-kor7AGB6TyKnLoQUwakrG9lq23yH0qXRBRd0Awv32aLvKS0miWH+BMhQJMsGqJvXKiyXIIWvEZxXf/CtgxBbtA==
   dependencies:
-    "@ant-design/icons" "^4.0.0-rc.0"
+    "@ant-design/icons" "^4.0.0"
     "@ant-design/react-slick" "~0.25.5"
     array-tree-filter "^2.1.0"
     classnames "~2.2.6"
@@ -1999,7 +1988,7 @@ antd@4.0.0:
     rc-slider "~9.2.1"
     rc-steps "~3.5.0"
     rc-switch "~1.9.0"
-    rc-table "~7.0.0"
+    rc-table "~7.1.0"
     rc-tabs "~10.0.0"
     rc-tooltip "~4.0.0"
     rc-tree "~3.0.0"
@@ -2010,7 +1999,6 @@ antd@4.0.0:
     rc-virtual-list "~1.0.0"
     resize-observer-polyfill "^1.5.1"
     scroll-into-view-if-needed "^2.2.20"
-    shallowequal "^1.1.0"
     warning "~4.0.3"
 
 anymatch@^2.0.0:
@@ -8942,10 +8930,10 @@ rc-switch@~1.9.0:
     prop-types "^15.5.6"
     react-lifecycles-compat "^3.0.4"
 
-rc-table@~7.0.0:
-  version "7.0.0"
-  resolved "https://registry.npmjs.org/rc-table/-/rc-table-7.0.0.tgz#53f4652f661e77cfcda98ed6ece895ea76d12308"
-  integrity sha512-XVoRsJ1r3Oh1zl8vxVNBD/+4ZFL5hpHcEwEBpJLJ+I+N2uM/fnAYASHqYEkBdvCRv7l0nG0qTeFOB4dQQAHuLA==
+rc-table@~7.1.0:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/rc-table/-/rc-table-7.1.2.tgz#ffd24afbdf0875de5a0381cf8e3d61c6ed450390"
+  integrity sha512-yVhA3HRsy4cnZhjJcFwGAVB5d7Z3HU1Zq8xuwhfknq6mKQLbRXb2lcO78Nu/5mmz7v7j676T4F6TTnxu8Po2gg==
   dependencies:
     classnames "^2.2.5"
     component-classes "^1.2.6"
