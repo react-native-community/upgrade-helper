@@ -7,7 +7,7 @@
     "@ant-design/icons": "4.0.2",
     "@emotion/core": "10.0.28",
     "@emotion/styled": "10.0.27",
-    "@testing-library/react": "9.4.1",
+    "@testing-library/react": "9.5.0",
     "antd": "4.0.1",
     "customize-cra": "0.9.1",
     "markdown-to-jsx": "6.11.0",
