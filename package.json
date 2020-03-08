@@ -8,7 +8,7 @@
     "@emotion/core": "10.0.28",
     "@emotion/styled": "10.0.27",
     "@testing-library/react": "9.5.0",
-    "antd": "4.0.1",
+    "antd": "4.0.2",
     "customize-cra": "0.9.1",
     "markdown-to-jsx": "6.11.0",
     "query-string": "6.11.1",

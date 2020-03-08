@@ -1981,10 +1981,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
 
-antd@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-4.0.1.tgz#506365bb6f697237dddf675c78c0a41375bd314e"
-  integrity sha512-kor7AGB6TyKnLoQUwakrG9lq23yH0qXRBRd0Awv32aLvKS0miWH+BMhQJMsGqJvXKiyXIIWvEZxXf/CtgxBbtA==
+antd@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-4.0.2.tgz#84e7356322ef3620a24cee56a281d910178cbd4e"
+  integrity sha512-0IBy/a4v1zCUqn8w9DRs7BHO8HsjLKt6QKt5zM/h2uUfIe3hALj5dG7M1mWrG1uu6JR2RxUfDyaCYZZGaijv/g==
   dependencies:
     "@ant-design/icons" "^4.0.0"
     "@ant-design/react-slick" "~0.25.5"
@@ -2018,7 +2018,7 @@ antd@4.0.1:
     rc-slider "~9.2.1"
     rc-steps "~3.5.0"
     rc-switch "~1.9.0"
-    rc-table "~7.1.0"
+    rc-table "~7.2.0"
     rc-tabs "~10.0.0"
     rc-tooltip "~4.0.0"
     rc-tree "~3.0.0"
@@ -8983,10 +8983,10 @@ rc-switch@~1.9.0:
     prop-types "^15.5.6"
     react-lifecycles-compat "^3.0.4"
 
-rc-table@~7.1.0:
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/rc-table/-/rc-table-7.1.2.tgz#ffd24afbdf0875de5a0381cf8e3d61c6ed450390"
-  integrity sha512-yVhA3HRsy4cnZhjJcFwGAVB5d7Z3HU1Zq8xuwhfknq6mKQLbRXb2lcO78Nu/5mmz7v7j676T4F6TTnxu8Po2gg==
+rc-table@~7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/rc-table/-/rc-table-7.2.0.tgz#11238b1717232b2f84dbaa3ea8fbdae55368b07e"
+  integrity sha512-j32QC6vyUmeVyxlBhjAbZdZJS4ZHU6UZll7g1mu4Ba8htkUUnrk5nG4D9oVJcQxO9HsmOOwv+Ta+tmBBprhmWg==
   dependencies:
     classnames "^2.2.5"
     component-classes "^1.2.6"
