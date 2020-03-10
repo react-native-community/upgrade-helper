@@ -1,18 +1,26 @@
 {
   "files": {
     "main.css": "/upgrade-helper/static/css/main.bb9eb706.chunk.css",
-    "main.js": "/upgrade-helper/static/js/main.b92dad03.chunk.js",
-    "main.js.map": "/upgrade-helper/static/js/main.b92dad03.chunk.js.map",
-    "runtime~main.js": "/upgrade-helper/static/js/runtime~main.fb077bdb.js",
-    "runtime~main.js.map": "/upgrade-helper/static/js/runtime~main.fb077bdb.js.map",
-    "static/css/2.62868508.chunk.css": "/upgrade-helper/static/css/2.62868508.chunk.css",
-    "static/js/2.70ae71b9.chunk.js": "/upgrade-helper/static/js/2.70ae71b9.chunk.js",
-    "static/js/2.70ae71b9.chunk.js.map": "/upgrade-helper/static/js/2.70ae71b9.chunk.js.map",
+    "main.js": "/upgrade-helper/static/js/main.3c38eb5d.chunk.js",
+    "main.js.map": "/upgrade-helper/static/js/main.3c38eb5d.chunk.js.map",
+    "runtime-main.js": "/upgrade-helper/static/js/runtime-main.1a503537.js",
+    "runtime-main.js.map": "/upgrade-helper/static/js/runtime-main.1a503537.js.map",
+    "static/css/2.0bd5c26f.chunk.css": "/upgrade-helper/static/css/2.0bd5c26f.chunk.css",
+    "static/js/2.a16fee6f.chunk.js": "/upgrade-helper/static/js/2.a16fee6f.chunk.js",
+    "static/js/2.a16fee6f.chunk.js.map": "/upgrade-helper/static/js/2.a16fee6f.chunk.js.map",
     "index.html": "/upgrade-helper/index.html",
-    "precache-manifest.84bc2f556224a670e05b82152a08e14d.js": "/upgrade-helper/precache-manifest.84bc2f556224a670e05b82152a08e14d.js",
+    "precache-manifest.f8f075b9bf15e2398b7c47a15b63aacb.js": "/upgrade-helper/precache-manifest.f8f075b9bf15e2398b7c47a15b63aacb.js",
     "service-worker.js": "/upgrade-helper/service-worker.js",
-    "static/css/2.62868508.chunk.css.map": "/upgrade-helper/static/css/2.62868508.chunk.css.map",
+    "static/css/2.0bd5c26f.chunk.css.map": "/upgrade-helper/static/css/2.0bd5c26f.chunk.css.map",
     "static/css/main.bb9eb706.chunk.css.map": "/upgrade-helper/static/css/main.bb9eb706.chunk.css.map",
+    "static/js/2.a16fee6f.chunk.js.LICENSE.txt": "/upgrade-helper/static/js/2.a16fee6f.chunk.js.LICENSE.txt",
     "static/media/logo.svg": "/upgrade-helper/static/media/logo.74ebf3f4.svg"
-  }
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1a503537.js",
+    "static/css/2.0bd5c26f.chunk.css",
+    "static/js/2.a16fee6f.chunk.js",
+    "static/css/main.bb9eb706.chunk.css",
+    "static/js/main.3c38eb5d.chunk.js"
+  ]
 }
