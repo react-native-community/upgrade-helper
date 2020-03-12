@@ -9,7 +9,7 @@ If you want to help us making this better, you can start by forking the project 
 1. Select starting & target versions
 1. Click the `Show me how to upgrade` button
 
-After which, you can create a branch to to make your changes and then open a PR against this repository following the provided template 🤗
+After which, you can create a branch to make your changes and then open a PR against this repository following the provided template 🤗
 
 ## Adding comments, notes, links to releases
 
