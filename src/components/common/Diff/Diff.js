@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import {
   Diff as RDiff,
@@ -95,6 +95,19 @@ const Diff = ({
   const [isDiffCollapsed, setIsDiffCollapsed] = useState(
     isDiffCollapsedByDefault({ type, hunks })
   )
+  const [isPathCopiedToClipboard, setIsPathCopiedToClipboard] = useState(false)
+
+  const handleCopyPathToClipboard = () => {
+    setIsPathCopiedToClipboard(true)
+  }
+
+  useEffect(() => {
+    if (isPathCopiedToClipboard === true) {
+      setTimeout(() => {
+        setIsPathCopiedToClipboard(false)
+      }, 5000)
+    }
+  }, [isPathCopiedToClipboard])
 
   if (areAllCollapsed !== undefined && areAllCollapsed !== isDiffCollapsed) {
     setIsDiffCollapsed(areAllCollapsed)
@@ -121,6 +134,8 @@ const Diff = ({
           setIsDiffCollapsed(collapse)
         }}
         isDiffCompleted={isDiffCompleted}
+        onCopyPathToClipboard={handleCopyPathToClipboard}
+        isPathCopiedToClipboard={isPathCopiedToClipboard}
         onCompleteDiff={onCompleteDiff}
         appName={appName}
       />

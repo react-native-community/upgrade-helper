@@ -1,13 +1,15 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import styled from '@emotion/styled'
 import { Tag, Button, Popover } from 'antd'
 import {
   CheckOutlined,
   DownloadOutlined,
   DownOutlined,
-  RightOutlined
+  RightOutlined,
+  CopyOutlined
 } from '@ant-design/icons'
 import { removeAppPathPrefix, getBinaryFileURL } from '../../../utils'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const Wrapper = styled.div`
   display: flex;
@@ -140,7 +142,33 @@ const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
   }
 `
 
+const CopyPathToClipboardButton = styled(
+  ({ path, appName, onCopy, isPathCopiedToClipboard, ...props }) => (
+    <CopyToClipboard text={removeAppPathPrefix(path, appName)} onCopy={onCopy}>
+      <Popover
+        content={isPathCopiedToClipboard ? 'Copied!' : 'Copy path to clipboard'}
+        trigger="hover"
+      >
+        <Button
+          {...props}
+          type="ghost"
+          shape="circle"
+          icon={<CopyOutlined />}
+        />
+      </Popover>
+    </CopyToClipboard>
+  )
+)`
+  font-size: 13px;
+  line-height: 0;
+  border-width: 0px;
+  width: 20px;
+  height: 20px;
+  margin: 5px 0;
+`
+
 const CollapseClickableArea = styled.div`
+  display: inline-block;
   &:hover {
     cursor: pointer;
   }
@@ -176,26 +204,36 @@ const DiffHeader = styled(
     setIsDiffCollapsed,
     isDiffCompleted,
     onCompleteDiff,
+    onCopyPathToClipboard,
+    isPathCopiedToClipboard,
     appName,
     ...props
   }) => (
     <Wrapper {...props}>
-      <CollapseClickableArea
-        onClick={({ altKey }) => setIsDiffCollapsed(!isDiffCollapsed, altKey)}
-      >
-        <CollapseDiffButton
-          visible={hasDiff}
-          isDiffCollapsed={isDiffCollapsed}
-        />
-        <FileName
-          oldPath={oldPath}
-          newPath={newPath}
-          type={type}
+      <div>
+        <CollapseClickableArea
+          onClick={({ altKey }) => setIsDiffCollapsed(!isDiffCollapsed, altKey)}
+        >
+          <CollapseDiffButton
+            visible={hasDiff}
+            isDiffCollapsed={isDiffCollapsed}
+          />
+          <FileName
+            oldPath={oldPath}
+            newPath={newPath}
+            type={type}
+            appName={appName}
+          />{' '}
+          <FileStatus type={type} />
+          <BinaryBadge visible={!hasDiff} />
+        </CollapseClickableArea>
+        <CopyPathToClipboardButton
+          path={oldPath}
           appName={appName}
-        />{' '}
-        <FileStatus type={type} />
-        <BinaryBadge visible={!hasDiff} />
-      </CollapseClickableArea>
+          onCopy={onCopyPathToClipboard}
+          isPathCopiedToClipboard={isPathCopiedToClipboard}
+        />
+      </div>
       <div>
         <Fragment>
           <ViewFileButton
