@@ -107,13 +107,22 @@ const ViewFileButton = styled(({ visible, version, path, ...props }) =>
   color: #24292e;
 `
 
+const defaultIconButtonStyle = `
+  font-size: 13px;
+  line-height: 0;
+  border-width: 0px;
+  width: 22px;
+  height: 22px;
+  margin: 5px 0;
+  border-radius: 50%;
+`
+
 const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
   visible ? (
     <Popover content="↩️">
       <Button
         {...props}
         type="ghost"
-        shape="circle"
         icon={<CheckOutlined />}
         onClick={onClick}
       />
@@ -122,18 +131,12 @@ const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
     <Button
       {...props}
       type="ghost"
-      shape="circle"
       icon={<CheckOutlined />}
       onClick={onClick}
     />
   )
 )`
-  font-size: 13px;
-  line-height: 0;
-  border-width: 0px;
-  width: 20px;
-  height: 20px;
-  margin: 5px 8px 0;
+  ${defaultIconButtonStyle}
   &,
   &:hover,
   &:focus {
@@ -149,22 +152,12 @@ const CopyPathToClipboardButton = styled(
         content={isPathCopiedToClipboard ? 'Copied!' : 'Copy path to clipboard'}
         trigger="hover"
       >
-        <Button
-          {...props}
-          type="ghost"
-          shape="circle"
-          icon={<CopyOutlined />}
-        />
+        <Button {...props} type="ghost" icon={<CopyOutlined />} />
       </Popover>
     </CopyToClipboard>
   )
 )`
-  font-size: 13px;
-  line-height: 0;
-  border-width: 0px;
-  width: 20px;
-  height: 20px;
-  margin: 5px 0;
+  ${defaultIconButtonStyle}
 `
 
 const CollapseClickableArea = styled.div`
