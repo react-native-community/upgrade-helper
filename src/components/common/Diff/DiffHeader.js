@@ -146,13 +146,22 @@ const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
 `
 
 const CopyPathToClipboardButton = styled(
-  ({ path, appName, onCopy, isPathCopiedToClipboard, ...props }) => (
+  ({
+    path,
+    appName,
+    onCopy,
+    copyPathPopoverContent,
+    resetCopyPathPopoverContent,
+    ...props
+  }) => (
     <CopyToClipboard text={removeAppPathPrefix(path, appName)} onCopy={onCopy}>
-      <Popover
-        content={isPathCopiedToClipboard ? 'Copied!' : 'Copy path to clipboard'}
-        trigger="hover"
-      >
-        <Button {...props} type="ghost" icon={<CopyOutlined />} />
+      <Popover content={copyPathPopoverContent} trigger="hover">
+        <Button
+          {...props}
+          type="ghost"
+          icon={<CopyOutlined />}
+          onMouseOver={resetCopyPathPopoverContent}
+        />
       </Popover>
     </CopyToClipboard>
   )
@@ -198,7 +207,8 @@ const DiffHeader = styled(
     isDiffCompleted,
     onCompleteDiff,
     onCopyPathToClipboard,
-    isPathCopiedToClipboard,
+    copyPathPopoverContent,
+    resetCopyPathPopoverContent,
     appName,
     ...props
   }) => (
@@ -224,7 +234,8 @@ const DiffHeader = styled(
           path={oldPath}
           appName={appName}
           onCopy={onCopyPathToClipboard}
-          isPathCopiedToClipboard={isPathCopiedToClipboard}
+          copyPathPopoverContent={copyPathPopoverContent}
+          resetCopyPathPopoverContent={resetCopyPathPopoverContent}
         />
       </div>
       <div>

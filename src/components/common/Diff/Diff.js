@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import {
   Diff as RDiff,
@@ -95,19 +95,25 @@ const Diff = ({
   const [isDiffCollapsed, setIsDiffCollapsed] = useState(
     isDiffCollapsedByDefault({ type, hunks })
   )
-  const [isPathCopiedToClipboard, setIsPathCopiedToClipboard] = useState(false)
+  const copyPathPopoverContentOpts = {
+    default: 'Copy path to clipboard',
+    copied: 'Copied!'
+  }
+  const [copyPathPopoverContent, setCopyPathPopoverContent] = useState(
+    copyPathPopoverContentOpts.default
+  )
 
   const handleCopyPathToClipboard = () => {
-    setIsPathCopiedToClipboard(true)
+    setCopyPathPopoverContent(copyPathPopoverContentOpts.copied)
   }
 
-  useEffect(() => {
-    if (isPathCopiedToClipboard === true) {
-      setTimeout(() => {
-        setIsPathCopiedToClipboard(false)
-      }, 5000)
+  const handleResetCopyPathPopoverContent = () => {
+    console.log('outside', copyPathPopoverContent)
+    if (copyPathPopoverContent === copyPathPopoverContentOpts.copied) {
+      console.log('inside', copyPathPopoverContent)
+      setCopyPathPopoverContent(copyPathPopoverContentOpts.default)
     }
-  }, [isPathCopiedToClipboard])
+  }
 
   if (areAllCollapsed !== undefined && areAllCollapsed !== isDiffCollapsed) {
     setIsDiffCollapsed(areAllCollapsed)
@@ -135,7 +141,8 @@ const Diff = ({
         }}
         isDiffCompleted={isDiffCompleted}
         onCopyPathToClipboard={handleCopyPathToClipboard}
-        isPathCopiedToClipboard={isPathCopiedToClipboard}
+        copyPathPopoverContent={copyPathPopoverContent}
+        resetCopyPathPopoverContent={handleResetCopyPathPopoverContent}
         onCompleteDiff={onCompleteDiff}
         appName={appName}
       />
