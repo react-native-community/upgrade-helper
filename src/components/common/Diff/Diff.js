@@ -95,6 +95,25 @@ const Diff = ({
   const [isDiffCollapsed, setIsDiffCollapsed] = useState(
     isDiffCollapsedByDefault({ type, hunks })
   )
+  const copyPathPopoverContentOpts = {
+    default: 'Copy path to clipboard',
+    copied: 'Copied!'
+  }
+  const [copyPathPopoverContent, setCopyPathPopoverContent] = useState(
+    copyPathPopoverContentOpts.default
+  )
+
+  const handleCopyPathToClipboard = () => {
+    setCopyPathPopoverContent(copyPathPopoverContentOpts.copied)
+  }
+
+  const handleResetCopyPathPopoverContent = () => {
+    console.log('outside', copyPathPopoverContent)
+    if (copyPathPopoverContent === copyPathPopoverContentOpts.copied) {
+      console.log('inside', copyPathPopoverContent)
+      setCopyPathPopoverContent(copyPathPopoverContentOpts.default)
+    }
+  }
 
   if (areAllCollapsed !== undefined && areAllCollapsed !== isDiffCollapsed) {
     setIsDiffCollapsed(areAllCollapsed)
@@ -121,6 +140,9 @@ const Diff = ({
           setIsDiffCollapsed(collapse)
         }}
         isDiffCompleted={isDiffCompleted}
+        onCopyPathToClipboard={handleCopyPathToClipboard}
+        copyPathPopoverContent={copyPathPopoverContent}
+        resetCopyPathPopoverContent={handleResetCopyPathPopoverContent}
         onCompleteDiff={onCompleteDiff}
         appName={appName}
       />

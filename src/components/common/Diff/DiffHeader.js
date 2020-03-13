@@ -5,9 +5,11 @@ import {
   CheckOutlined,
   DownloadOutlined,
   DownOutlined,
-  RightOutlined
+  RightOutlined,
+  CopyOutlined
 } from '@ant-design/icons'
 import { removeAppPathPrefix, getBinaryFileURL } from '../../../utils'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const Wrapper = styled.div`
   display: flex;
@@ -105,13 +107,22 @@ const ViewFileButton = styled(({ visible, version, path, ...props }) =>
   color: #24292e;
 `
 
+const defaultIconButtonStyle = `
+  font-size: 13px;
+  line-height: 0;
+  border-width: 0px;
+  width: 22px;
+  height: 22px;
+  margin: 5px 0;
+  border-radius: 50%;
+`
+
 const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
   visible ? (
     <Popover content="↩️">
       <Button
         {...props}
         type="ghost"
-        shape="circle"
         icon={<CheckOutlined />}
         onClick={onClick}
       />
@@ -120,18 +131,12 @@ const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
     <Button
       {...props}
       type="ghost"
-      shape="circle"
       icon={<CheckOutlined />}
       onClick={onClick}
     />
   )
 )`
-  font-size: 13px;
-  line-height: 0;
-  border-width: 0px;
-  width: 20px;
-  height: 20px;
-  margin: 5px 8px 0;
+  ${defaultIconButtonStyle}
   &,
   &:hover,
   &:focus {
@@ -140,7 +145,32 @@ const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
   }
 `
 
+const CopyPathToClipboardButton = styled(
+  ({
+    path,
+    appName,
+    onCopy,
+    copyPathPopoverContent,
+    resetCopyPathPopoverContent,
+    ...props
+  }) => (
+    <CopyToClipboard text={removeAppPathPrefix(path, appName)} onCopy={onCopy}>
+      <Popover content={copyPathPopoverContent} trigger="hover">
+        <Button
+          {...props}
+          type="ghost"
+          icon={<CopyOutlined />}
+          onMouseOver={resetCopyPathPopoverContent}
+        />
+      </Popover>
+    </CopyToClipboard>
+  )
+)`
+  ${defaultIconButtonStyle}
+`
+
 const CollapseClickableArea = styled.div`
+  display: inline-block;
   &:hover {
     cursor: pointer;
   }
@@ -176,26 +206,38 @@ const DiffHeader = styled(
     setIsDiffCollapsed,
     isDiffCompleted,
     onCompleteDiff,
+    onCopyPathToClipboard,
+    copyPathPopoverContent,
+    resetCopyPathPopoverContent,
     appName,
     ...props
   }) => (
     <Wrapper {...props}>
-      <CollapseClickableArea
-        onClick={({ altKey }) => setIsDiffCollapsed(!isDiffCollapsed, altKey)}
-      >
-        <CollapseDiffButton
-          visible={hasDiff}
-          isDiffCollapsed={isDiffCollapsed}
-        />
-        <FileName
-          oldPath={oldPath}
-          newPath={newPath}
-          type={type}
+      <div>
+        <CollapseClickableArea
+          onClick={({ altKey }) => setIsDiffCollapsed(!isDiffCollapsed, altKey)}
+        >
+          <CollapseDiffButton
+            visible={hasDiff}
+            isDiffCollapsed={isDiffCollapsed}
+          />
+          <FileName
+            oldPath={oldPath}
+            newPath={newPath}
+            type={type}
+            appName={appName}
+          />{' '}
+          <FileStatus type={type} />
+          <BinaryBadge visible={!hasDiff} />
+        </CollapseClickableArea>
+        <CopyPathToClipboardButton
+          path={oldPath}
           appName={appName}
-        />{' '}
-        <FileStatus type={type} />
-        <BinaryBadge visible={!hasDiff} />
-      </CollapseClickableArea>
+          onCopy={onCopyPathToClipboard}
+          copyPathPopoverContent={copyPathPopoverContent}
+          resetCopyPathPopoverContent={resetCopyPathPopoverContent}
+        />
+      </div>
       <div>
         <Fragment>
           <ViewFileButton
