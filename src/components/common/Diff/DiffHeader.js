@@ -155,7 +155,14 @@ const CopyPathToClipboardButton = styled(
     ...props
   }) => (
     <CopyToClipboard text={removeAppPathPrefix(path, appName)} onCopy={onCopy}>
-      <Popover content={copyPathPopoverContent} trigger="hover">
+      <Popover
+        content={copyPathPopoverContent}
+        trigger="hover"
+        overlayStyle={{
+          width: '175px',
+          textAlign: 'center'
+        }}
+      >
         <Button
           {...props}
           type="ghost"
