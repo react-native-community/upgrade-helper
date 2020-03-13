@@ -154,8 +154,14 @@ const CopyPathToClipboardButton = styled(
     resetCopyPathPopoverContent,
     ...props
   }) => (
-    <CopyToClipboard text={removeAppPathPrefix(path, appName)} onCopy={onCopy}>
-      <Popover content={copyPathPopoverContent} trigger="hover">
+    <CopyToClipboard
+      text={removeAppPathPrefix(path, appName)}
+      onCopy={onCopy}
+    >
+      <Popover
+        content={copyPathPopoverContent}
+        trigger="hover"
+      >
         <Button
           {...props}
           type="ghost"
