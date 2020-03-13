@@ -15,7 +15,7 @@
     "react": "16.13.0",
     "react-app-rewired": "2.1.5",
     "react-content-loader": "5.0.2",
-    "react-copy-to-clipboard": "^5.0.2",
+    "react-copy-to-clipboard": "5.0.2",
     "react-diff-view": "2.4.1",
     "react-dom": "16.13.0",
     "react-dom-confetti": "0.1.3",
