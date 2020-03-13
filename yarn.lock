@@ -2220,10 +2220,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
 
-antd@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-4.0.2.tgz#84e7356322ef3620a24cee56a281d910178cbd4e"
-  integrity sha512-0IBy/a4v1zCUqn8w9DRs7BHO8HsjLKt6QKt5zM/h2uUfIe3hALj5dG7M1mWrG1uu6JR2RxUfDyaCYZZGaijv/g==
+antd@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/antd/-/antd-4.0.1.tgz#506365bb6f697237dddf675c78c0a41375bd314e"
+  integrity sha512-kor7AGB6TyKnLoQUwakrG9lq23yH0qXRBRd0Awv32aLvKS0miWH+BMhQJMsGqJvXKiyXIIWvEZxXf/CtgxBbtA==
   dependencies:
     "@ant-design/icons" "^4.0.0"
     "@ant-design/react-slick" "~0.25.5"
@@ -2257,7 +2257,7 @@ antd@4.0.2:
     rc-slider "~9.2.1"
     rc-steps "~3.5.0"
     rc-switch "~1.9.0"
-    rc-table "~7.2.0"
+    rc-table "~7.1.0"
     rc-tabs "~10.0.0"
     rc-tooltip "~4.0.0"
     rc-tree "~3.0.0"
@@ -9558,10 +9558,10 @@ rc-switch@~1.9.0:
     prop-types "^15.5.6"
     react-lifecycles-compat "^3.0.4"
 
-rc-table@~7.2.0:
-  version "7.2.2"
-  resolved "https://registry.yarnpkg.com/rc-table/-/rc-table-7.2.2.tgz#1a18806396b81296b1f6a8481a5e81ee89635c70"
-  integrity sha512-92RGM0UWb+dqmfX42obDkNyzZvysLyWoojmI2NVSIJDmDO3jLQFfi0rt1ME9j720pU7by3wbikfNiB36I9KXdg==
+rc-table@~7.1.0:
+  version "7.1.2"
+  resolved "https://registry.npmjs.org/rc-table/-/rc-table-7.1.2.tgz#ffd24afbdf0875de5a0381cf8e3d61c6ed450390"
+  integrity sha512-yVhA3HRsy4cnZhjJcFwGAVB5d7Z3HU1Zq8xuwhfknq6mKQLbRXb2lcO78Nu/5mmz7v7j676T4F6TTnxu8Po2gg==
   dependencies:
     classnames "^2.2.5"
     component-classes "^1.2.6"
@@ -9570,7 +9570,7 @@ rc-table@~7.2.0:
     prop-types "^15.5.8"
     raf "^3.4.1"
     rc-resize-observer "^0.1.2"
-    rc-util "^4.20.1"
+    rc-util "^4.19.0"
     react-lifecycles-compat "^3.0.2"
     shallowequal "^1.1.0"
 
@@ -9661,9 +9661,9 @@ rc-util@^4.11.0, rc-util@^4.12.0, rc-util@^4.15.2, rc-util@^4.17.0, rc-util@^4.2
     react-lifecycles-compat "^3.0.4"
     shallowequal "^1.1.0"
 
-rc-util@^4.20.1:
+rc-util@^4.19.0:
   version "4.20.1"
-  resolved "https://registry.yarnpkg.com/rc-util/-/rc-util-4.20.1.tgz#a5976eabfc3198ed9b8e79ffb8c53c231db36e77"
+  resolved "https://registry.npmjs.org/rc-util/-/rc-util-4.20.1.tgz#a5976eabfc3198ed9b8e79ffb8c53c231db36e77"
   integrity sha512-EGlDg9KPN0POzmAR2hk9ZyFc3DmJIrXwlC8NoDxJguX2LTINnVqwadLIVauLfYgYISMiFYFrSHiFW+cqUhZ5dA==
   dependencies:
     add-dom-event-listener "^1.1.0"
