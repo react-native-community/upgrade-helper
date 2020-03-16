@@ -97,7 +97,7 @@ const Diff = ({
   )
   const copyPathPopoverContentOpts = {
     default: 'Copy path to clipboard',
-    copied: 'Copied!'
+    copied: 'File path copied!'
   }
   const [copyPathPopoverContent, setCopyPathPopoverContent] = useState(
     copyPathPopoverContentOpts.default
@@ -108,9 +108,7 @@ const Diff = ({
   }
 
   const handleResetCopyPathPopoverContent = () => {
-    console.log('outside', copyPathPopoverContent)
     if (copyPathPopoverContent === copyPathPopoverContentOpts.copied) {
-      console.log('inside', copyPathPopoverContent)
       setCopyPathPopoverContent(copyPathPopoverContentOpts.default)
     }
   }
