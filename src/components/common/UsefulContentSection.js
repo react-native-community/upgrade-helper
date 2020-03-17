@@ -45,7 +45,6 @@ const CloseButton = styled(({ toggleVisibility, ...props }) => (
   border-width: 0px;
   width: 20px;
   height: 20px;
-  margin-right: 8px;
   color: rgba(0, 0, 0, 0.45);
   &:hover,
   &:focus {
