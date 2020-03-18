@@ -6,7 +6,8 @@ import {
   DownloadOutlined,
   DownOutlined,
   RightOutlined,
-  CopyOutlined
+  CopyOutlined,
+  RollbackOutlined
 } from '@ant-design/icons'
 import { removeAppPathPrefix, getBinaryFileURL } from '../../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
@@ -119,14 +120,12 @@ const defaultIconButtonStyle = `
 
 const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
   visible ? (
-    <Popover content="↩️">
-      <Button
-        {...props}
-        type="ghost"
-        icon={<CheckOutlined />}
-        onClick={onClick}
-      />
-    </Popover>
+    <Button
+      {...props}
+      type="ghost"
+      icon={<RollbackOutlined />}
+      onClick={onClick}
+    />
   ) : (
     <Button
       {...props}
