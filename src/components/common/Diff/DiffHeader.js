@@ -6,9 +6,14 @@ import {
   DownloadOutlined,
   DownOutlined,
   RightOutlined,
-  CopyOutlined
+  CopyOutlined,
+  RollbackOutlined
 } from '@ant-design/icons'
-import { removeAppPathPrefix, getBinaryFileURL } from '../../../utils'
+import {
+  removeAppPathPrefix,
+  getBinaryFileURL,
+  getOriginalPath
+} from '../../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const Wrapper = styled.div`
@@ -119,14 +124,12 @@ const defaultIconButtonStyle = `
 
 const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
   visible ? (
-    <Popover content="↩️">
-      <Button
-        {...props}
-        type="ghost"
-        icon={<CheckOutlined />}
-        onClick={onClick}
-      />
-    </Popover>
+    <Button
+      {...props}
+      type="ghost"
+      icon={<RollbackOutlined />}
+      onClick={onClick}
+    />
   ) : (
     <Button
       {...props}
@@ -238,7 +241,7 @@ const DiffHeader = styled(
           <BinaryBadge visible={!hasDiff} />
         </CollapseClickableArea>
         <CopyPathToClipboardButton
-          path={oldPath}
+          path={type === 'add' ? newPath : oldPath}
           appName={appName}
           onCopy={onCopyPathToClipboard}
           copyPathPopoverContent={copyPathPopoverContent}
@@ -250,12 +253,12 @@ const DiffHeader = styled(
           <ViewFileButton
             visible={hasDiff && type !== 'delete'}
             version={toVersion}
-            path={newPath}
+            path={getOriginalPath(newPath, appName)}
           />
           <DownloadFileButton
             visible={!hasDiff && type !== 'delete'}
             version={toVersion}
-            path={newPath}
+            path={getOriginalPath(newPath, appName)}
           />
           <CompleteDiffButton
             visible={isDiffCompleted}
