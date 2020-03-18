@@ -29,6 +29,7 @@ const DiffViewer = ({
   const [isLoading, setLoading] = useState(true)
   const [diff, setDiff] = useState(null)
   const [completedDiffs, setCompletedDiffs] = useState([])
+  const [originalDiff, setOriginalDiff] = useState([])
 
   const handleCompleteDiff = diffKey => {
     if (completedDiffs.includes(diffKey)) {
@@ -90,6 +91,12 @@ const DiffViewer = ({
         )
       )
 
+      setOriginalDiff(
+        parseDiff(response).sort(({ newPath }) =>
+          newPath.includes('package.json') ? -1 : 1
+        )
+      )
+
       resetCompletedDiff()
 
       setLoading(false)
@@ -117,6 +124,7 @@ const DiffViewer = ({
 
   const diffSectionProps = {
     diff: diff,
+    originalDiff: originalDiff,
     getDiffKey: getDiffKey,
     completedDiffs: completedDiffs,
     fromVersion: fromVersion,

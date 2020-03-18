@@ -9,11 +9,7 @@ import {
   CopyOutlined,
   RollbackOutlined
 } from '@ant-design/icons'
-import {
-  removeAppPathPrefix,
-  getBinaryFileURL,
-  getOriginalPath
-} from '../../../utils'
+import { removeAppPathPrefix, getBinaryFileURL } from '../../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const Wrapper = styled.div`
@@ -220,6 +216,7 @@ const DiffHeader = styled(
     copyPathPopoverContent,
     resetCopyPathPopoverContent,
     appName,
+    originalPath,
     ...props
   }) => (
     <Wrapper {...props}>
@@ -253,12 +250,12 @@ const DiffHeader = styled(
           <ViewFileButton
             visible={hasDiff && type !== 'delete'}
             version={toVersion}
-            path={getOriginalPath(newPath, appName)}
+            path={originalPath}
           />
           <DownloadFileButton
             visible={!hasDiff && type !== 'delete'}
             version={toVersion}
-            path={getOriginalPath(newPath, appName)}
+            path={originalPath}
           />
           <CompleteDiffButton
             visible={isDiffCompleted}

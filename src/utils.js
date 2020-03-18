@@ -16,9 +16,6 @@ export const getBinaryFileURL = ({ version, path }) =>
 export const removeAppPathPrefix = (path, appName) =>
   path.replace(new RegExp(`${appName || APP_NAME}/`), '')
 
-export const getOriginalPath = (path, appName) =>
-  appName.length ? path.replace(new RegExp(appName, 'g'), APP_NAME) : path
-
 export const getVersionsInDiff = ({ fromVersion, toVersion }) => {
   const cleanedToVersion = semver.valid(semver.coerce(toVersion))
 

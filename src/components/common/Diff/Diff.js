@@ -78,6 +78,7 @@ const isDiffCollapsedByDefault = ({ type, hunks }) =>
 const Diff = ({
   oldPath,
   newPath,
+  originalPath,
   type,
   hunks,
   fromVersion,
@@ -124,6 +125,7 @@ const Diff = ({
       <DiffHeader
         oldPath={oldPath}
         newPath={newPath}
+        originalPath={originalPath}
         toVersion={toVersion}
         type={type}
         diffKey={diffKey}

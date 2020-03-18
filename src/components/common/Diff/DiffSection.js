@@ -8,6 +8,7 @@ const Title = styled.h1`
 
 const DiffSection = ({
   diff,
+  originalDiff,
   getDiffKey,
   title,
   completedDiffs,
@@ -26,7 +27,8 @@ const DiffSection = ({
     <div>
       {title && completedDiffs.length > 0 && <Title>{title}</Title>}
 
-      {diff.map(diffFile => {
+      {diff.map((diffFile, index) => {
+        diffFile.originalPath = originalDiff[index].newPath
         const diffKey = getDiffKey(diffFile)
         const isDiffCompleted = completedDiffs.includes(diffKey)
 
