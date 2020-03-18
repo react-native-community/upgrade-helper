@@ -237,7 +237,7 @@ const DiffHeader = styled(
           <BinaryBadge visible={!hasDiff} />
         </CollapseClickableArea>
         <CopyPathToClipboardButton
-          path={oldPath}
+          path={type === 'add' ? newPath : oldPath}
           appName={appName}
           onCopy={onCopyPathToClipboard}
           copyPathPopoverContent={copyPathPopoverContent}
