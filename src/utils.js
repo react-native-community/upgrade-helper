@@ -2,6 +2,7 @@ import semver from 'semver/preload'
 import versions from './releases'
 
 const RN_DIFF_REPO = 'react-native-community/rn-diff-purge'
+const APP_NAME = 'RnDiffApp'
 
 export const RELEASES_URL = `https://raw.githubusercontent.com/${RN_DIFF_REPO}/master/RELEASES`
 
@@ -13,10 +14,10 @@ export const getBinaryFileURL = ({ version, path }) =>
   `https://github.com/${RN_DIFF_REPO}/raw/release/${version}/${path}`
 
 export const removeAppPathPrefix = (path, appName) =>
-  path.replace(new RegExp(`${appName || 'RnDiffApp'}/`), '')
+  path.replace(new RegExp(`${appName || APP_NAME}/`), '')
 
 export const getOriginalPath = (path, appName) =>
-  path.replace(new RegExp(`${appName}`), 'RnDiffApp')
+  appName.length ? path.replace(new RegExp(appName, 'g'), APP_NAME) : path
 
 export const getVersionsInDiff = ({ fromVersion, toVersion }) => {
   const cleanedToVersion = semver.valid(semver.coerce(toVersion))
