@@ -6,7 +6,8 @@ import {
   DownloadOutlined,
   DownOutlined,
   RightOutlined,
-  CopyOutlined
+  CopyOutlined,
+  RollbackOutlined
 } from '@ant-design/icons'
 import {
   removeAppPathPrefix,
@@ -123,14 +124,12 @@ const defaultIconButtonStyle = `
 
 const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
   visible ? (
-    <Popover content="↩️">
-      <Button
-        {...props}
-        type="ghost"
-        icon={<CheckOutlined />}
-        onClick={onClick}
-      />
-    </Popover>
+    <Button
+      {...props}
+      type="ghost"
+      icon={<RollbackOutlined />}
+      onClick={onClick}
+    />
   ) : (
     <Button
       {...props}
@@ -242,7 +241,7 @@ const DiffHeader = styled(
           <BinaryBadge visible={!hasDiff} />
         </CollapseClickableArea>
         <CopyPathToClipboardButton
-          path={oldPath}
+          path={type === 'add' ? newPath : oldPath}
           appName={appName}
           onCopy={onCopyPathToClipboard}
           copyPathPopoverContent={copyPathPopoverContent}
