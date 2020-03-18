@@ -8,7 +8,11 @@ import {
   RightOutlined,
   CopyOutlined
 } from '@ant-design/icons'
-import { removeAppPathPrefix, getBinaryFileURL } from '../../../utils'
+import {
+  removeAppPathPrefix,
+  getBinaryFileURL,
+  getOriginalPath
+} from '../../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const Wrapper = styled.div`
@@ -250,12 +254,12 @@ const DiffHeader = styled(
           <ViewFileButton
             visible={hasDiff && type !== 'delete'}
             version={toVersion}
-            path={newPath}
+            path={getOriginalPath(newPath, appName)}
           />
           <DownloadFileButton
             visible={!hasDiff && type !== 'delete'}
             version={toVersion}
-            path={newPath}
+            path={getOriginalPath(newPath, appName)}
           />
           <CompleteDiffButton
             visible={isDiffCompleted}
