@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6aaadd3d68be85216a4095dce90851fa",
+    "revision": "a3e00b49e40d255e1679bc0f3ee2d277",
     "url": "/upgrade-helper/index.html"
   },
   {
-    "revision": "b15211672a068055f3e8",
+    "revision": "ce825fc8ce064007d3f2",
     "url": "/upgrade-helper/static/css/2.d335c73f.chunk.css"
   },
   {
-    "revision": "41d580471df8fd527180",
+    "revision": "b70cdd9f97d54e3296ab",
     "url": "/upgrade-helper/static/css/main.bb9eb706.chunk.css"
   },
   {
-    "revision": "b15211672a068055f3e8",
-    "url": "/upgrade-helper/static/js/2.2d817d8c.chunk.js"
+    "revision": "ce825fc8ce064007d3f2",
+    "url": "/upgrade-helper/static/js/2.706b5ac0.chunk.js"
   },
   {
     "revision": "9800230996b23060d478a5a9d380439c",
-    "url": "/upgrade-helper/static/js/2.2d817d8c.chunk.js.LICENSE.txt"
+    "url": "/upgrade-helper/static/js/2.706b5ac0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "41d580471df8fd527180",
-    "url": "/upgrade-helper/static/js/main.25318202.chunk.js"
+    "revision": "b70cdd9f97d54e3296ab",
+    "url": "/upgrade-helper/static/js/main.ea31314f.chunk.js"
   },
   {
     "revision": "5442362b23814ac4d288",
