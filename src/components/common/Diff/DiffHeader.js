@@ -12,13 +12,23 @@ import {
 import {
   removeAppPathPrefix,
   getBinaryFileURL,
-  getOriginalPath
+  getPathWithProvidedAppName
 } from '../../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
+    monospace;
+  font-size: 12px;
+  color: #24292e;
+  line-height: 32px;
+  background-color: #fafbfc;
+  border-bottom: 1px solid #e1e4e8;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  padding: 5px 10px;
 `
 
 const FileRenameArrow = styled(RightOutlined)({
@@ -27,23 +37,30 @@ const FileRenameArrow = styled(RightOutlined)({
   color: '#f78206'
 })
 
-const FileName = ({ oldPath, newPath, type, appName }) => {
-  const oldPathSanitized = removeAppPathPrefix(oldPath, appName)
-  const newPathSanitized = removeAppPathPrefix(newPath, appName)
+const getFilePathsToShow = ({ oldPath, newPath, appName }) => {
+  const oldPathSanitized = getPathWithProvidedAppName(oldPath, appName)
+  const newPathSanitized = getPathWithProvidedAppName(newPath, appName)
 
+  return {
+    oldPath: removeAppPathPrefix(oldPathSanitized, appName),
+    newPath: removeAppPathPrefix(newPathSanitized, appName)
+  }
+}
+
+const FileName = ({ oldPath, newPath, type, appName }) => {
   if (type === 'delete') {
-    return <span>{oldPathSanitized}</span>
+    return <span>{oldPath}</span>
   }
 
-  if (oldPathSanitized !== newPathSanitized && type !== 'add') {
+  if (oldPath !== newPath && type !== 'add') {
     return (
       <span>
-        {oldPathSanitized} <FileRenameArrow /> {newPathSanitized}
+        {oldPath} <FileRenameArrow /> {newPath}
       </span>
     )
   }
 
-  return <span>{newPathSanitized}</span>
+  return <span>{newPath}</span>
 }
 
 const FileStatus = ({ type, ...props }) => {
@@ -150,14 +167,15 @@ const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
 
 const CopyPathToClipboardButton = styled(
   ({
-    path,
-    appName,
+    oldPath,
+    newPath,
+    type,
     onCopy,
     copyPathPopoverContent,
     resetCopyPathPopoverContent,
     ...props
   }) => (
-    <CopyToClipboard text={removeAppPathPrefix(path, appName)} onCopy={onCopy}>
+    <CopyToClipboard text={type === 'add' ? newPath : oldPath} onCopy={onCopy}>
       <Popover
         content={copyPathPopoverContent}
         trigger="hover"
@@ -204,24 +222,26 @@ const CollapseDiffButton = styled(({ visible, isDiffCollapsed, ...props }) =>
   }
 `
 
-const DiffHeader = styled(
-  ({
-    oldPath,
-    newPath,
-    toVersion,
-    type,
-    diffKey,
-    hasDiff,
-    isDiffCollapsed,
-    setIsDiffCollapsed,
-    isDiffCompleted,
-    onCompleteDiff,
-    onCopyPathToClipboard,
-    copyPathPopoverContent,
-    resetCopyPathPopoverContent,
-    appName,
-    ...props
-  }) => (
+const DiffHeader = ({
+  oldPath,
+  newPath,
+  toVersion,
+  type,
+  diffKey,
+  hasDiff,
+  isDiffCollapsed,
+  setIsDiffCollapsed,
+  isDiffCompleted,
+  onCompleteDiff,
+  onCopyPathToClipboard,
+  copyPathPopoverContent,
+  resetCopyPathPopoverContent,
+  appName,
+  ...props
+}) => {
+  const sanitizedFilePaths = getFilePathsToShow({ oldPath, newPath, appName })
+
+  return (
     <Wrapper {...props}>
       <div>
         <CollapseClickableArea
@@ -232,8 +252,8 @@ const DiffHeader = styled(
             isDiffCollapsed={isDiffCollapsed}
           />
           <FileName
-            oldPath={oldPath}
-            newPath={newPath}
+            oldPath={sanitizedFilePaths.oldPath}
+            newPath={sanitizedFilePaths.newPath}
             type={type}
             appName={appName}
           />{' '}
@@ -241,8 +261,9 @@ const DiffHeader = styled(
           <BinaryBadge visible={!hasDiff} />
         </CollapseClickableArea>
         <CopyPathToClipboardButton
-          path={type === 'add' ? newPath : oldPath}
-          appName={appName}
+          oldPath={sanitizedFilePaths.oldPath}
+          newPath={sanitizedFilePaths.newPath}
+          type={type}
           onCopy={onCopyPathToClipboard}
           copyPathPopoverContent={copyPathPopoverContent}
           resetCopyPathPopoverContent={resetCopyPathPopoverContent}
@@ -253,12 +274,12 @@ const DiffHeader = styled(
           <ViewFileButton
             visible={hasDiff && type !== 'delete'}
             version={toVersion}
-            path={getOriginalPath(newPath, appName)}
+            path={newPath}
           />
           <DownloadFileButton
             visible={!hasDiff && type !== 'delete'}
             version={toVersion}
-            path={getOriginalPath(newPath, appName)}
+            path={newPath}
           />
           <CompleteDiffButton
             visible={isDiffCompleted}
@@ -268,17 +289,6 @@ const DiffHeader = styled(
       </div>
     </Wrapper>
   )
-)`
-  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
-    monospace;
-  font-size: 12px;
-  color: #24292e;
-  line-height: 32px;
-  background-color: #fafbfc;
-  border-bottom: 1px solid #e1e4e8;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  padding: 5px 10px;
-`
+}
 
 export default DiffHeader

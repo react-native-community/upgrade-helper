@@ -96,7 +96,7 @@ const Diff = ({
     isDiffCollapsedByDefault({ type, hunks })
   )
   const copyPathPopoverContentOpts = {
-    default: 'Copy path to clipboard',
+    default: 'Click to copy file path',
     copied: 'File path copied!'
   }
   const [copyPathPopoverContent, setCopyPathPopoverContent] = useState(
