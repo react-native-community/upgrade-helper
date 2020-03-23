@@ -183,7 +183,8 @@ const DiffViewer = ({
         completed={completedDiffs.length}
         total={diff.length}
         onClick={handleCompletedFilesCounterClick}
-        popoverOpts={donePopoverOpts}
+        popoverContent={donePopoverOpts.content}
+        popoverCursorType={donePopoverOpts.cursorType}
       />
     </Container>
   )

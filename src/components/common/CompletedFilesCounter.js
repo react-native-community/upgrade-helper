@@ -27,10 +27,10 @@ const shake = keyframes`
 `
 
 const CompletedFilesCounter = styled(
-  ({ completed, total, popoverOpts, ...props }) => (
+  ({ completed, total, popoverContent, popoverCursorType, ...props }) => (
     <div {...props}>
       <Popover
-        content={popoverOpts.content}
+        content={popoverContent}
         trigger="hover"
         placement="right"
         overlayStyle={{
@@ -66,7 +66,7 @@ const CompletedFilesCounter = styled(
   display: flex;
   align-self: flex-end;
   transition: transform 0.3s;
-  cursor: ${({ popoverOpts }) => popoverOpts.cursorType};
+  cursor: ${({ popoverCursorType }) => popoverCursorType};
   ${({ completed, total }) =>
     completed === total &&
     css`
