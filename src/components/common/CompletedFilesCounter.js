@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { keyframes, css } from '@emotion/core'
 import Confetti from 'react-dom-confetti'
+import { Popover } from 'antd'
 
 const shake = keyframes`
   0% {
@@ -25,20 +26,33 @@ const shake = keyframes`
   }
 `
 
-const CompletedFilesCounter = styled(({ completed, total, ...props }) => (
-  <div {...props}>
-    <span className="completedAmount">{completed === 0 ? 1 : completed}</span> /
-    {total}
-    <Confetti
-      active={completed === total}
-      config={{
-        elementCount: 200,
-        angle: 130,
-        startVelocity: 30
-      }}
-    />
-  </div>
-))`
+const CompletedFilesCounter = styled(
+  ({ completed, total, popoverOpts, ...props }) => (
+    <div {...props}>
+      <Popover
+        content={popoverOpts.content}
+        trigger="hover"
+        placement="right"
+        overlayStyle={{
+          position: 'fixed'
+        }}
+      >
+        <span className="completedAmount">
+          {completed === 0 ? 1 : completed}
+        </span>{' '}
+        /{total}
+      </Popover>
+      <Confetti
+        active={completed === total}
+        config={{
+          elementCount: 200,
+          angle: 130,
+          startVelocity: 30
+        }}
+      />
+    </div>
+  )
+)`
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -52,6 +66,7 @@ const CompletedFilesCounter = styled(({ completed, total, ...props }) => (
   display: flex;
   align-self: flex-end;
   transition: transform 0.3s;
+  cursor: ${({ popoverOpts }) => popoverOpts.cursorType};
   ${({ completed, total }) =>
     completed === total &&
     css`

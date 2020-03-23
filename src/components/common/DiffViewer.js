@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
 import { Alert } from 'antd'
 import { parseDiff, withChangeSelect } from 'react-diff-view'
@@ -18,6 +18,8 @@ const Container = styled.div`
 const getDiffKey = ({ oldRevision, newRevision }) =>
   `${oldRevision}${newRevision}`
 
+const scrollToRef = ref => ref.current.scrollIntoView({ behavior: 'smooth' })
+
 const DiffViewer = ({
   showDiff,
   fromVersion,
@@ -29,6 +31,35 @@ const DiffViewer = ({
   const [isLoading, setLoading] = useState(true)
   const [diff, setDiff] = useState(null)
   const [completedDiffs, setCompletedDiffs] = useState([])
+  const [isGoToDoneClicked, setIsGoToDoneClicked] = useState(false)
+  const donePopoverPossibleOpts = {
+    done: {
+      content: 'Scroll to Done section',
+      cursorType: 's-resize'
+    },
+    top: {
+      content: 'Scroll to Top',
+      cursorType: 'n-resize'
+    }
+  }
+  const [donePopoverOpts, setDonePopoverOpts] = useState(
+    donePopoverPossibleOpts.done
+  )
+  const doneTitleRef = useRef(null)
+
+  const scrollToDone = () => scrollToRef(doneTitleRef)
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+
+  const handleCompletedFilesCounterClick = () => {
+    setIsGoToDoneClicked(!isGoToDoneClicked)
+    if (isGoToDoneClicked) {
+      setDonePopoverOpts(donePopoverPossibleOpts.done)
+      scrollToTop()
+    } else {
+      setDonePopoverOpts(donePopoverPossibleOpts.top)
+      scrollToDone()
+    }
+  }
 
   const handleCompleteDiff = diffKey => {
     if (completedDiffs.includes(diffKey)) {
@@ -145,11 +176,14 @@ const DiffViewer = ({
         isDoneSection={true}
         title="Done"
         appName={appName}
+        doneTitleRef={doneTitleRef}
       />
 
       <CompletedFilesCounter
         completed={completedDiffs.length}
         total={diff.length}
+        onClick={handleCompletedFilesCounterClick}
+        popoverOpts={donePopoverOpts}
       />
     </Container>
   )

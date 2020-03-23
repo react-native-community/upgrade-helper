@@ -18,13 +18,16 @@ const DiffSection = ({
   selectedChanges,
   onToggleChangeSelection,
   diffViewStyle,
-  appName
+  appName,
+  doneTitleRef
 }) => {
   const [areAllCollapsed, setAllCollapsed] = useState(undefined)
 
   return (
     <div>
-      {title && completedDiffs.length > 0 && <Title>{title}</Title>}
+      {title && completedDiffs.length > 0 && (
+        <Title ref={doneTitleRef}>{title}</Title>
+      )}
 
       {diff.map(diffFile => {
         const diffKey = getDiffKey(diffFile)
