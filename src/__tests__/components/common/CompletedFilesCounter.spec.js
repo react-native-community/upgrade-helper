@@ -8,12 +8,15 @@ it('renders without crashing', () => {
   expect(container).toMatchInlineSnapshot(`
     <div>
       <div
-        class="css-1qesdmw"
+        class="css-11o7zpc"
       >
-        <span
-          class="completedAmount"
-        />
-         /
+        <span>
+          <span
+            class="completedAmount"
+          />
+           
+          /
+        </span>
         <div
           style="position: relative;"
         />
