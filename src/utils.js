@@ -43,11 +43,10 @@ export const getVersionsInDiff = ({ fromVersion, toVersion }) => {
   })
 }
 
+const baseChangelogURL =
+  'https://github.com/react-native-community/releases/blob/master/CHANGELOG.md'
 export const getChangelogURL = ({ version }) =>
-  `https://github.com/react-native-community/releases/blob/master/CHANGELOG.md#${version.replace(
-    '.',
-    ''
-  )}`
+  `${baseChangelogURL}#v${version.replace('.', '')}0`
 
 // settings constants
 export const SHOW_LATEST_RCS = 'Show latest release candidates'
