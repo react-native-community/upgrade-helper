@@ -4,24 +4,32 @@ export default {
   usefulContent: {
     description:
       'React Native 0.62 includes built-in integration with Flipper.',
-    links: []
-  },
-  comments: [
-    {
-      fileName: '.gitignore',
-      lineNumber: 23,
-      lineChangeType: 'add',
-      content: (
-        <Fragment>
-          This line should not be here. Please ignore this. It will be removed
-          on an upcoming release. Because of this line, the files
-          `ios/RnDiffApp.xcodeproj/xcshareddata/xcschemes/RnDiffApp.xcscheme`
-          and
-          `ios/RnDiffApp.xcodeproj/xcshareddata/xcschemes/RnDiffApp-tvOS.xcscheme`
-          appear as deleted. They should not be deleted from your project.
-          Ignore these two changes as well.
-        </Fragment>
-      )
-    }
-  ]
+    links: [
+      {
+        title:
+          'Official blog post about the major changes on React Native 0.62',
+        url: 'https://reactnative.dev/blog/2020/03/26/version-0.62'
+      },
+      {
+        title:
+          '[iOS] Tutorial on upgrading Xcode-related files to React Native 0.62',
+        url:
+          'https://github.com/react-native-community/upgrade-helper/issues/191'
+      }
+    ],
+    comments: [
+      {
+        fileName: 'ios/RnDiffApp.xcodeproj/project.pbxproj',
+        lineNumber: 16,
+        lineChangeType: 'neutral',
+        content: (
+          <Fragment>
+            Click
+            [here](https://github.com/react-native-community/upgrade-helper/issues/191)
+            for an explanation and some help with upgrading this file.
+          </Fragment>
+        )
+      }
+    ]
+  }
 }
