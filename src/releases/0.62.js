@@ -16,20 +16,20 @@ export default {
         url:
           'https://github.com/react-native-community/upgrade-helper/issues/191'
       }
-    ],
-    comments: [
-      {
-        fileName: 'ios/RnDiffApp.xcodeproj/project.pbxproj',
-        lineNumber: 16,
-        lineChangeType: 'neutral',
-        content: (
-          <Fragment>
-            Click
-            [here](https://github.com/react-native-community/upgrade-helper/issues/191)
-            for an explanation and some help with upgrading this file.
-          </Fragment>
-        )
-      }
     ]
-  }
+  },
+  comments: [
+    {
+      fileName: 'ios/RnDiffApp.xcodeproj/project.pbxproj',
+      lineNumber: 19,
+      lineChangeType: 'add',
+      content: (
+        <Fragment>
+          Click
+          [here](https://github.com/react-native-community/upgrade-helper/issues/191)
+          for an explanation and some help with upgrading this file.
+        </Fragment>
+      )
+    }
+  ]
 }
