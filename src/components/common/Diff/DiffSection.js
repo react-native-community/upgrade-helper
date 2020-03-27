@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import styled from '@emotion/styled'
+import semver from 'semver'
 import Diff from './Diff'
 
 const Title = styled.h1`
@@ -23,6 +24,19 @@ const DiffSection = ({
 }) => {
   const [areAllCollapsed, setAllCollapsed] = useState(undefined)
 
+  const getIsUpgradingFrom61To62 = useCallback(() => {
+    const isUpgradingFrom61 = semver.satisfies(
+      fromVersion,
+      '>= 0.61.0 <= 0.62.0'
+    )
+
+    const isUpgradingTo62 = semver.satisfies(toVersion, '>= 0.62.0 <= 0.63.0')
+
+    return isUpgradingFrom61 && isUpgradingTo62
+  }, [fromVersion, toVersion])
+
+  const isUpgradingFrom61To62 = getIsUpgradingFrom61To62()
+
   return (
     <div>
       {title && completedDiffs.length > 0 && (
@@ -35,6 +49,17 @@ const DiffSection = ({
 
         // If it's the "done" section, it shouldn't show if it's not completed
         if (isDoneSection !== isDiffCompleted) {
+          return null
+        }
+
+        // This is here because there was a change in the line-endings of the
+        // `gradlew.bat` from version 0.61 to 0.62 which showed the entire file
+        // as a big change
+        if (
+          isUpgradingFrom61To62 &&
+          diffFile.oldPath.match(/gradlew.bat/) &&
+          diffFile.newPath.match(/gradlew.bat/)
+        ) {
           return null
         }
 
