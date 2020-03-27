@@ -26,7 +26,7 @@ export default {
       content: (
         <Fragment>
           Click
-          [here](https://github.com/react-native-community/upgrade-helper/issues/191)
+          [here](https://github.com/react-native-community/upgrade-support/issues/13)
           for an explanation and some help with upgrading this file.
         </Fragment>
       )
