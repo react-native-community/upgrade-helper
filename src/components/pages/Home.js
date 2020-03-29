@@ -21,6 +21,7 @@ const Page = styled.div`
 const Container = styled(Card)`
   width: 90%;
   border-radius: 3px;
+  border-color: #e8e8e8;
 `
 
 const TitleContainer = styled.div`
