@@ -4,6 +4,7 @@ import { CloseOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import { getVersionsInDiff, getChangelogURL } from '../../utils'
 import { Link } from './Markdown'
+import UpgradeSupportAlert from './UpgradeSupportAlert'
 
 const Container = styled.div`
   position: relative;
@@ -15,6 +16,8 @@ const Container = styled.div`
 `
 
 const InnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 24px;
   color: rgba(0, 0, 0, 0.65);
   border: 1px solid #e8e8e8;
@@ -136,6 +139,8 @@ class UsefulContentSection extends Component {
               </Fragment>
             )
           })}
+
+          <UpgradeSupportAlert />
         </InnerContainer>
       </Container>
     )
