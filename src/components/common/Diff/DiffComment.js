@@ -11,7 +11,7 @@ const CommentContainer = styled.div`
 
 const CommentContent = styled.div`
   margin: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #e8e8e8;
   padding: 16px;
   border-radius: 3px;
   color: #000;

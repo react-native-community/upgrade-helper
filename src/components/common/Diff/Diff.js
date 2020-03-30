@@ -11,7 +11,7 @@ import DiffHeader from './DiffHeader'
 import { getComments } from './DiffComment'
 
 const Container = styled.div`
-  border: 1px solid #ddd;
+  border: 1px solid #e8e8e8;
   border-radius: 3px;
   margin-bottom: 16px;
   margin-top: 16px;
