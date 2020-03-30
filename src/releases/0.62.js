@@ -30,6 +30,18 @@ export default {
           for an explanation and some help with upgrading this file.
         </Fragment>
       )
+    },
+    {
+      fileName: 'android/app/build.gradle',
+      lineNumber: 81,
+      lineChangeType: 'neutral',
+      content: (
+        <Fragment>
+          If you are using Hermes Engine and ProGuard, make sure to update the
+          rules in `proguard-rules.pro` to what is specified in the
+          [documentation](https://reactnative.dev/docs/hermes) for `0.62`.
+        </Fragment>
+      )
     }
   ]
 }
