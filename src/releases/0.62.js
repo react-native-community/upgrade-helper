@@ -11,7 +11,7 @@ export default {
         url: 'https://reactnative.dev/blog/2020/03/26/version-0.62'
       },
       {
-        title: 'Tutorial on upgrading to React Native 0.62',
+        title: '[External] Tutorial on upgrading to React Native 0.62',
         url:
           'https://reactnative.thenativebits.com/courses/upgrading-react-native/upgrade-to-react-native-0.62/'
       },
