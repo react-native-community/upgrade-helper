@@ -32,10 +32,7 @@ const Title = styled.h2`
   margin: 0px;
   padding: 18px 0px 0px 14px;
   ${({ isContentVisible }) =>
-    !isContentVisible &&
-    `
-    transform: translate(-5px, -10px);
-  `}
+    !isContentVisible && 'transform: translate(-5px, -10px);'}
   transition: transform 0.250s ease-out;
 `
 
