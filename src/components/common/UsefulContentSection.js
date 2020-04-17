@@ -106,6 +106,16 @@ class UsefulContentSection extends Component {
     isContentVisible: true
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    // Only re-render component if it has reloaded the diff on the parent
+    const hasLoaded = this.props.isLoading && !nextProps.isLoading
+    // or if the content has been hidden
+    const hasContentBeenHidden =
+      this.state.isContentVisible !== nextState.isContentVisible
+
+    return hasLoaded || hasContentBeenHidden
+  }
+
   handleToggleContentVisibility = () =>
     this.setState(({ isContentVisible }) => ({
       isContentVisible: !isContentVisible
