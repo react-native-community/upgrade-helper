@@ -69,6 +69,10 @@ const DiffView = styled(RDiff)`
     width: 0;
     background-color: transparent;
   }
+
+  td.diff-widget-content {
+    padding: 0;
+  }
 `
 
 // Diff will be collapsed by default if the file has been deleted or has more than 5 hunks
