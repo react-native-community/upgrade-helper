@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import styled from '@emotion/styled'
 import {
   Diff as RDiff,
@@ -9,6 +9,7 @@ import {
 } from 'react-diff-view'
 import DiffHeader from './DiffHeader'
 import { getComments } from './DiffComment'
+import { replaceWithProvidedAppName } from '../../../utils'
 
 const Container = styled.div`
   border: 1px solid #e8e8e8;
@@ -113,6 +114,23 @@ const Diff = ({
     }
   }
 
+  const getHunksWithAppName = useCallback(
+    originalHunks => {
+      if (!appName) {
+        return originalHunks
+      }
+
+      return originalHunks.map(hunk => ({
+        ...hunk,
+        changes: hunk.changes.map(change => ({
+          ...change,
+          content: replaceWithProvidedAppName(change.content, appName)
+        }))
+      }))
+    },
+    [appName]
+  )
+
   if (areAllCollapsed !== undefined && areAllCollapsed !== isDiffCollapsed) {
     setIsDiffCollapsed(areAllCollapsed)
   } else if (isDiffCompleted && isDiffCollapsed === undefined) {
@@ -154,14 +172,16 @@ const Diff = ({
           optimizeSelection={true}
           selectedChanges={selectedChanges}
         >
-          {hunks => {
+          {originalHunks => {
+            const updatedHunks = getHunksWithAppName(originalHunks)
+
             const options = {
-              enhancers: [markEdits(hunks)]
+              enhancers: [markEdits(updatedHunks)]
             }
 
-            const tokens = tokenize(hunks, options)
+            const tokens = tokenize(updatedHunks, options)
 
-            return hunks.map(hunk => [
+            return updatedHunks.map(hunk => [
               <Decoration key={'decoration-' + hunk.content}>
                 <More>{hunk.content}</More>
               </Decoration>,

@@ -12,7 +12,7 @@ import {
 import {
   removeAppPathPrefix,
   getBinaryFileURL,
-  getPathWithProvidedAppName
+  replaceWithProvidedAppName
 } from '../../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
@@ -38,8 +38,8 @@ const FileRenameArrow = styled(RightOutlined)({
 })
 
 const getFilePathsToShow = ({ oldPath, newPath, appName }) => {
-  const oldPathSanitized = getPathWithProvidedAppName(oldPath, appName)
-  const newPathSanitized = getPathWithProvidedAppName(newPath, appName)
+  const oldPathSanitized = replaceWithProvidedAppName(oldPath, appName)
+  const newPathSanitized = replaceWithProvidedAppName(newPath, appName)
 
   return {
     oldPath: removeAppPathPrefix(oldPathSanitized, appName),
