@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import styled from '@emotion/styled'
 import { UpOutlined, DownOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
+import AnimateHeight from 'react-animate-height'
 import { getVersionsInDiff, getChangelogURL } from '../../utils'
 import { Link } from './Markdown'
 import UpgradeSupportAlert from './UpgradeSupportAlert'
@@ -12,7 +13,6 @@ const Container = styled.div`
   margin-top: 16px;
   color: rgba(0, 0, 0, 0.65);
   overflow: hidden;
-  transition: max-height 0.4s ease-out, margin-top 0.4s ease-out 0.2s;
 `
 
 const InnerContainer = styled.div`
@@ -23,7 +23,7 @@ const InnerContainer = styled.div`
   border-color: #ffe58f;
   border-style: solid;
   border-radius: 3px;
-  transition: padding 0.5s ease-out;
+  transition: padding 0.25s ease-out;
 `
 
 const Title = styled.h2`
@@ -34,26 +34,29 @@ const Title = styled.h2`
   ${({ isContentVisible }) =>
     !isContentVisible &&
     `
-    padding: 8px 24px 7px 8px;
+    transform: translate(-5px, -10px);
   `}
-  transition: margin 0.5s ease-out, padding 0.25s ease-out;
+  transition: transform 0.250s ease-out;
 `
 
-const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+const ContentContainer = styled(({ isContentVisible, className, ...props }) => (
+  <AnimateHeight
+    duration={500}
+    height={isContentVisible ? 'auto' : 0}
+    contentClassName={className}
+    {...props}
+  />
+))`
+  display: block !important; // Needed for the opacity animation
   padding: 15px 24px 19px;
-  max-height: 500px;
   opacity: 1;
   ${({ isContentVisible }) =>
     !isContentVisible &&
     `
-      padding-top: 0px;
-      padding-bottom: 0px;
-      max-height: 0px;
       opacity: 0;
+      transform: translateY(-20px);
     `}
-  transition: padding 0.25s ease-out, max-height 0.5s ease-out, opacity 0.5s ease-out;
+  transition: opacity 0.250s ease-out 0.150s, transform 0.250s ease-out;
 `
 
 const Icon = styled(props => (
