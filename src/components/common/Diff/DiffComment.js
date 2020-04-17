@@ -26,7 +26,7 @@ const Container = styled(({ isCommentVisible, className, ...props }) => (
   cursor: pointer;
 `
 
-const Content = styled.div`
+const ContentContainer = styled.div`
   flex: 1;
   position: relative;
   padding: 16px;
@@ -50,6 +50,16 @@ const ShowButton = styled.div`
   &:hover {
     transform: ${({ isCommentVisible }) => isCommentVisible && 'scaleX(2);'};
   }
+`
+
+const Content = styled(Markdown)`
+  opacity: 1;
+  ${({ isCommentVisible }) =>
+    !isCommentVisible &&
+    `
+      opacity: 0;
+    `}
+  transition: opacity 0.25s ease-out;
 `
 
 const LINE_CHANGE_TYPES = {
@@ -109,9 +119,11 @@ const DiffComment = ({ content, lineChangeType }) => {
         onClick={() => setIsCommentVisible(!isCommentVisible)}
       />
 
-      <Content isCommentVisible={isCommentVisible}>
-        <Markdown>{content.props.children}</Markdown>
-      </Content>
+      <ContentContainer>
+        <Content isCommentVisible={isCommentVisible}>
+          {content.props.children}
+        </Content>
+      </ContentContainer>
     </Container>
   )
 }
