@@ -1,31 +1,55 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import { Button } from 'antd'
-import { CloseOutlined, MessageOutlined } from '@ant-design/icons'
+import AnimateHeight from 'react-animate-height'
 import { removeAppPathPrefix, getVersionsInDiff } from '../../../utils'
 import Markdown from '../Markdown'
 
-const CommentContainer = styled.div`
+const lineColors = {
+  add: '#d6fedb',
+  delete: '#fdeff0',
+  neutral: '#ffffff'
+}
+
+const Container = styled(({ isCommentVisible, className, ...props }) => (
+  <AnimateHeight
+    duration={500}
+    delay={100}
+    height={isCommentVisible ? 'auto' : 10}
+    contentClassName={className}
+    {...props}
+  />
+))`
+  display: flex;
+  flex-direction: row;
+  background-color: ${({ lineChangeType }) => lineColors[lineChangeType]};
+  overflow: hidden;
+  cursor: pointer;
+`
+
+const Content = styled.div`
+  flex: 1;
   position: relative;
-`
-
-const CommentContent = styled.div`
-  margin: 10px;
-  border: 1px solid #e8e8e8;
   padding: 16px;
-  border-radius: 3px;
   color: #000;
+  background-color: #fffbe6;
+  user-select: none;
 `
 
-const CommentButton = styled(Button)`
-  min-width: initial;
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  top: -1px;
-  left: 5px;
-  font-size: 8px;
-  cursor: 'pointer';
+const ShowButton = styled.div`
+  background-color: #ffe58f;
+  margin-left: 20px;
+  width: 10px;
+  cursor: pointer;
+  ${({ isCommentVisible }) =>
+    !isCommentVisible &&
+    `
+      transform: scaleX(10);
+    `}
+  transition: transform 0.25s ease-out;
+
+  &:hover {
+    transform: ${({ isCommentVisible }) => isCommentVisible && 'scaleX(2);'};
+  }
 `
 
 const LINE_CHANGE_TYPES = {
@@ -57,7 +81,7 @@ const getComments = ({ newPath, fromVersion, toVersion, appName }) => {
         return {
           ...versionComments,
           [getLineNumberWithType({ lineChangeType, lineNumber })]: (
-            <DiffComment content={content} />
+            <DiffComment content={content} lineChangeType={lineChangeType} />
           )
         }
       },
@@ -71,23 +95,24 @@ const getComments = ({ newPath, fromVersion, toVersion, appName }) => {
   }, {})
 }
 
-const DiffComment = ({ content }) => {
-  const [displayComment, toggleComment] = useState(true)
+const DiffComment = ({ content, lineChangeType }) => {
+  const [isCommentVisible, setIsCommentVisible] = useState(true)
 
   return (
-    <CommentContainer>
-      <CommentButton
-        shape="circle"
-        type="primary"
-        onClick={() => toggleComment(!displayComment)}
-        icon={displayComment ? <CloseOutlined /> : <MessageOutlined />}
+    <Container
+      isCommentVisible={isCommentVisible}
+      lineChangeType={lineChangeType}
+      onClick={() => setIsCommentVisible(!isCommentVisible)}
+    >
+      <ShowButton
+        isCommentVisible={isCommentVisible}
+        onClick={() => setIsCommentVisible(!isCommentVisible)}
       />
-      {displayComment && (
-        <CommentContent>
-          <Markdown>{content.props.children}</Markdown>
-        </CommentContent>
-      )}
-    </CommentContainer>
+
+      <Content isCommentVisible={isCommentVisible}>
+        <Markdown>{content.props.children}</Markdown>
+      </Content>
+    </Container>
   )
 }
 
