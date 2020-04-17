@@ -7,7 +7,7 @@ const UpgradeSupportAlert = styled(props => (
     Check out{' '}
     <Tooltip
       placement="bottom"
-      title="Upgrade Support is a community-backed place to request and give help when upgrading your app"
+      title="Upgrade Support is a community-backed place to request and give help when upgrading your app."
     >
       <a
         href="https://github.com/react-native-community/upgrade-support"
@@ -22,7 +22,7 @@ const UpgradeSupportAlert = styled(props => (
     process.
   </span>
 ))`
-  padding-top: 10px;
+  padding-top: 15px;
   a {
     color: #045dc1;
 
