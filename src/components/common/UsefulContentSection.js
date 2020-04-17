@@ -29,13 +29,12 @@ const InnerContainer = styled.div`
 const Title = styled.h2`
   font-size: 17px;
   cursor: pointer;
-  // border: 1px solid red;
   margin: 0px;
   padding: 18px 0px 0px 14px;
   ${({ isContentVisible }) =>
     !isContentVisible &&
     `
-    padding: 8px 8px 8px 0px;
+    padding: 8px 24px 7px 8px;
   `}
   transition: margin 0.5s ease-out, padding 0.25s ease-out;
 `
