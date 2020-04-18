@@ -13,6 +13,7 @@
     "markdown-to-jsx": "6.11.0",
     "query-string": "6.11.1",
     "react": "16.13.0",
+    "react-animate-height": "^2.0.20",
     "react-app-rewired": "2.1.5",
     "react-content-loader": "5.0.2",
     "react-copy-to-clipboard": "5.0.2",
