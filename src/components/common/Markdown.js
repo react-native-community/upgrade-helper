@@ -4,7 +4,12 @@ import styled from '@emotion/styled'
 
 export const Link = styled(props => (
   // eslint-disable-next-line jsx-a11y/anchor-has-content
-  <a target="_blank" {...props} rel="noopener" />
+  <a
+    target="_blank"
+    {...props}
+    rel="noopener"
+    onClick={e => e.stopPropagation()}
+  />
 ))`
   text-decoration: none;
   color: #045dc1;
