@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import AnimateHeight from 'react-animate-height'
+import { motion } from 'framer-motion'
 import { removeAppPathPrefix, getVersionsInDiff } from '../../../utils'
 import Markdown from '../Markdown'
 
@@ -10,20 +10,33 @@ const lineColors = {
   neutral: '#ffffff'
 }
 
-const Container = styled(({ isCommentVisible, className, ...props }) => (
-  <AnimateHeight
-    duration={500}
-    delay={100}
-    height={isCommentVisible ? 'auto' : 10}
-    contentClassName={className}
+const Container = styled(({ isCommentVisible, children, ...props }) => (
+  <motion.div
     {...props}
-  />
+    variants={{
+      visible: {
+        height: 'auto'
+      },
+      hidden: { height: 10 }
+    }}
+    initial={isCommentVisible ? 'visible' : 'hidden'}
+    animate={isCommentVisible ? 'visible' : 'hidden'}
+    transition={{
+      duration: 0.5
+    }}
+    inherit={false}
+  >
+    <div children={children} />
+  </motion.div>
 ))`
-  display: flex;
-  flex-direction: row;
-  background-color: ${({ lineChangeType }) => lineColors[lineChangeType]};
   overflow: hidden;
-  cursor: pointer;
+
+  & > div {
+    display: flex;
+    flex-direction: row;
+    background-color: ${({ lineChangeType }) => lineColors[lineChangeType]};
+    cursor: pointer;
+  }
 `
 
 const ContentContainer = styled.div`
@@ -35,21 +48,29 @@ const ContentContainer = styled.div`
   user-select: none;
 `
 
-const ShowButton = styled.div`
+const ShowButton = styled(({ isCommentVisible, ...props }) => (
+  <motion.div
+    {...props}
+    variants={{
+      visible: {
+        scaleX: 1
+      },
+      hidden: { scaleX: 10 }
+    }}
+    whileHover={{
+      scale: 2
+    }}
+    initial={isCommentVisible ? 'visible' : 'hidden'}
+    animate={isCommentVisible ? 'visible' : 'hidden'}
+    transition={{
+      duration: 0.25
+    }}
+  />
+))`
   background-color: #ffe58f;
   margin-left: 20px;
   width: 10px;
   cursor: pointer;
-  ${({ isCommentVisible }) =>
-    !isCommentVisible &&
-    `
-      transform: scaleX(10);
-    `}
-  transition: transform 0.25s ease-out;
-
-  &:hover {
-    transform: ${({ isCommentVisible }) => isCommentVisible && 'scaleX(2);'};
-  }
 `
 
 const Content = styled(Markdown)`
