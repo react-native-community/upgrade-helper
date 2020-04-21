@@ -7,6 +7,7 @@ import { getVersionsInDiff, getChangelogURL } from '../../utils'
 import { Link } from './Markdown'
 import UpgradeSupportAlert from './UpgradeSupportAlert'
 import AppNameWarning from './AppNameWarning'
+import { motion } from 'framer-motion'
 
 const Container = styled.div`
   position: relative;
@@ -26,34 +27,57 @@ const InnerContainer = styled.div`
   transition: padding 0.25s ease-out;
 `
 
-const Title = styled.h2`
+const Title = styled(({ isContentVisible, ...props }) => (
+  <motion.h2
+    {...props}
+    variants={{
+      visibleContent: {
+        translateX: 0,
+        translateY: 0
+      },
+      hiddenContent: {
+        translateX: -5,
+        translateY: -10
+      }
+    }}
+    initial={isContentVisible ? 'visibleContent' : 'hiddenContent'}
+    animate={isContentVisible ? 'visibleContent' : 'hiddenContent'}
+    transition={{
+      duration: 0.25
+    }}
+    inherit={false}
+  />
+))`
   font-size: 17px;
   cursor: pointer;
   margin: 0px;
   padding: 18px 0px 0px 14px;
-  ${({ isContentVisible }) =>
-    !isContentVisible && 'transform: translate(-5px, -10px);'}
-  transition: transform 0.250s ease-out;
 `
 
-const ContentContainer = styled(({ isContentVisible, className, ...props }) => (
-  <AnimateHeight
-    duration={500}
-    height={isContentVisible ? 'auto' : 0}
-    contentClassName={className}
+const ContentContainer = styled(({ isContentVisible, children, ...props }) => (
+  <motion.div
     {...props}
-  />
+    variants={{
+      visible: {
+        opacity: 1,
+        height: 'auto',
+        translateY: 0
+      },
+      hidden: { opacity: 0, height: 0, translateY: -20 }
+    }}
+    initial={isContentVisible ? 'visible' : 'hidden'}
+    animate={isContentVisible ? 'visible' : 'hidden'}
+    transition={{
+      duration: 0.25
+    }}
+    inherit={false}
+  >
+    <div children={children} />
+  </motion.div>
 ))`
-  display: block !important; // Needed for the opacity animation
-  padding: 15px 24px 19px;
-  opacity: 1;
-  ${({ isContentVisible }) =>
-    !isContentVisible &&
-    `
-      opacity: 0;
-      transform: translateY(-20px);
-    `}
-  transition: opacity 0.250s ease-out 0.150s, transform 0.250s ease-out;
+  & > div {
+    padding: 15px 24px 19px;
+  }
 `
 
 const Icon = styled(props => (
