@@ -52,7 +52,7 @@ const StarButton = styled(({ className, ...props }) => (
 const Home = () => {
   const [fromVersion, setFromVersion] = useState('')
   const [toVersion, setToVersion] = useState('')
-  const [showDiff, setShowDiff] = useState(false)
+  const [shouldShowDiff, setShouldShowDiff] = useState(false)
   const [settings, setSettings] = useState({
     [`${SHOW_LATEST_RCS}`]: false
   })
@@ -72,7 +72,7 @@ const Home = () => {
 
     setFromVersion(fromVersion)
     setToVersion(toVersion)
-    setShowDiff(true)
+    setShouldShowDiff(true)
   }
 
   const handleSettingsChange = settingsValues => {
@@ -121,7 +121,7 @@ const Home = () => {
       </Container>
 
       <DiffViewer
-        showDiff={showDiff}
+        shouldShowDiff={shouldShowDiff}
         fromVersion={fromVersion}
         toVersion={toVersion}
         appName={appName}
