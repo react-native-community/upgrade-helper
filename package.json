@@ -7,14 +7,11 @@
     "@ant-design/icons": "4.0.3",
     "@emotion/core": "10.0.28",
     "@emotion/styled": "10.0.27",
-    "@testing-library/react": "10.0.1",
     "antd": "4.0.3",
-    "customize-cra": "0.9.1",
     "markdown-to-jsx": "6.11.0",
     "query-string": "6.11.1",
     "react": "16.13.0",
     "react-animate-height": "^2.0.20",
-    "react-app-rewired": "2.1.5",
     "react-content-loader": "5.0.2",
     "react-copy-to-clipboard": "5.0.2",
     "react-diff-view": "2.4.2",
@@ -27,12 +24,16 @@
   },
   "devDependencies": {
     "@emotion/babel-preset-css-prop": "10.0.27",
+    "@testing-library/react": "^10.0.3",
+    "customize-cra": "^0.9.1",
+    "customize-cra-react-refresh": "^1.0.1",
     "eslint": "6.8.0",
     "eslint-plugin-prettier": "3.1.2",
     "gh-pages": "2.2.0",
     "husky": "4.2.3",
     "prettier": "1.19.1",
-    "pretty-quick": "2.0.1"
+    "pretty-quick": "2.0.1",
+    "react-app-rewired": "^2.1.5"
   },
   "scripts": {
     "start": "react-app-rewired start",
