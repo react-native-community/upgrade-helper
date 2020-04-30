@@ -15,6 +15,7 @@ import {
   getPathWithProvidedAppName
 } from '../../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import DiffCommentReminder from './DiffCommentReminder'
 
 const Wrapper = styled.div`
   display: flex;
@@ -237,6 +238,7 @@ const DiffHeader = ({
   copyPathPopoverContent,
   resetCopyPathPopoverContent,
   appName,
+  diffComments,
   ...props
 }) => {
   const sanitizedFilePaths = getFilePathsToShow({ oldPath, newPath, appName })
@@ -267,6 +269,12 @@ const DiffHeader = ({
           onCopy={onCopyPathToClipboard}
           copyPathPopoverContent={copyPathPopoverContent}
           resetCopyPathPopoverContent={resetCopyPathPopoverContent}
+        />
+
+        <DiffCommentReminder
+          comments={diffComments}
+          isDiffCollapsed={isDiffCollapsed}
+          uncollapseDiff={() => setIsDiffCollapsed(false)}
         />
       </div>
       <div>
