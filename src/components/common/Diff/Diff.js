@@ -11,6 +11,11 @@ import DiffHeader from './DiffHeader'
 import { getComments } from './DiffComment'
 import { replaceWithProvidedAppName } from '../../../utils'
 
+const copyPathPopoverContentOpts = {
+  default: 'Click to copy file path',
+  copied: 'File path copied!'
+}
+
 const Container = styled.div`
   border: 1px solid #e8e8e8;
   border-radius: 3px;
@@ -100,10 +105,7 @@ const Diff = ({
   const [isDiffCollapsed, setIsDiffCollapsed] = useState(
     isDiffCollapsedByDefault({ type, hunks })
   )
-  const copyPathPopoverContentOpts = {
-    default: 'Click to copy file path',
-    copied: 'File path copied!'
-  }
+
   const [copyPathPopoverContent, setCopyPathPopoverContent] = useState(
     copyPathPopoverContentOpts.default
   )
@@ -141,6 +143,8 @@ const Diff = ({
     setIsDiffCollapsed(true)
   }
 
+  const diffComments = getComments({ newPath, fromVersion, toVersion, appName })
+
   return (
     <Container>
       <DiffHeader
@@ -165,6 +169,7 @@ const Diff = ({
         resetCopyPathPopoverContent={handleResetCopyPathPopoverContent}
         onCompleteDiff={onCompleteDiff}
         appName={appName}
+        diffComments={diffComments}
       />
 
       {!isDiffCollapsed && (
@@ -172,7 +177,7 @@ const Diff = ({
           viewType={diffViewStyle}
           diffType={type}
           hunks={hunks}
-          widgets={getComments({ newPath, fromVersion, toVersion, appName })}
+          widgets={diffComments}
           optimizeSelection={true}
           selectedChanges={selectedChanges}
         >
