@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
+import { motion } from 'framer-motion'
 import ContentLoader from 'react-content-loader'
 
 const TitleLoader = () => (
@@ -30,7 +31,7 @@ const DiffLoader = () => (
   </ContentLoader>
 )
 
-const SkeletonContainer = styled.div`
+const Container = styled(motion.div)`
   margin-top: 16px;
   border: 1px solid #e8e8e8;
   border-radius: 3px;
@@ -43,21 +44,23 @@ const Header = styled.div({
   height: '40px'
 })
 
-export default class UsefulContentNoData extends Component {
-  render() {
-    return (
-      <SkeletonContainer>
-        <Header>
-          <TitleLoader />
-        </Header>
-        <div
-          css={{
-            padding: '5px 10px'
-          }}
-        >
-          <DiffLoader />
-        </div>
-      </SkeletonContainer>
-    )
-  }
-}
+const DiffLoading = () => (
+  <Container
+    initial={{ opacity: 0, translateY: 100 }}
+    animate={{ opacity: 1, translateY: 0 }}
+    transition={{ duration: 0.5 }}
+  >
+    <Header>
+      <TitleLoader />
+    </Header>
+    <div
+      css={{
+        padding: '5px 10px'
+      }}
+    >
+      <DiffLoader />
+    </div>
+  </Container>
+)
+
+export default DiffLoading

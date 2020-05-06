@@ -1,10 +1,11 @@
 import React, { Fragment, useState, useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
-import { Button, Popover } from 'antd'
+import { Popover } from 'antd'
 import semver from 'semver/preload'
 import queryString from 'query-string'
 import { RELEASES_URL } from '../../utils'
 import { Select } from './'
+import UpgradeButton from './UpgradeButton'
 
 const Selectors = styled.div`
   display: flex;
@@ -25,14 +26,6 @@ const ToVersionSelector = styled(({ popover, ...props }) =>
   )
 )`
   padding-left: 5px;
-`
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  height: auto;
-  overflow: hidden;
-  margin-top: 25px;
 `
 
 const getVersionsInURL = () => {
@@ -312,21 +305,12 @@ const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
         />
       </Selectors>
 
-      <ButtonContainer>
-        <Button
-          ref={upgradeButtonEl}
-          type="primary"
-          size="large"
-          onClick={() =>
-            onShowDiff({
-              fromVersion: localFromVersion,
-              toVersion: localToVersion
-            })
-          }
-        >
-          Show me how to upgrade!
-        </Button>
-      </ButtonContainer>
+      <UpgradeButton
+        ref={upgradeButtonEl}
+        localFromVersion={localFromVersion}
+        localToVersion={localToVersion}
+        onShowDiff={onShowDiff}
+      />
     </Fragment>
   )
 }
