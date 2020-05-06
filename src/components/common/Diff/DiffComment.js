@@ -1,31 +1,86 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import { Button } from 'antd'
-import { CloseOutlined, MessageOutlined } from '@ant-design/icons'
+import { motion } from 'framer-motion'
 import { removeAppPathPrefix, getVersionsInDiff } from '../../../utils'
 import Markdown from '../Markdown'
 
-const CommentContainer = styled.div`
+const lineColors = {
+  add: '#d6fedb',
+  delete: '#fdeff0',
+  neutral: '#ffffff'
+}
+
+const Container = styled(({ isCommentVisible, children, ...props }) => (
+  <motion.div
+    {...props}
+    variants={{
+      visible: {
+        height: 'auto'
+      },
+      hidden: { height: 10 }
+    }}
+    initial={isCommentVisible ? 'visible' : 'hidden'}
+    animate={isCommentVisible ? 'visible' : 'hidden'}
+    transition={{
+      duration: 0.5
+    }}
+    inherit={false}
+  >
+    <div children={children} />
+  </motion.div>
+))`
+  overflow: hidden;
+
+  & > div {
+    display: flex;
+    flex-direction: row;
+    background-color: ${({ lineChangeType }) => lineColors[lineChangeType]};
+    cursor: pointer;
+  }
+`
+
+const ContentContainer = styled.div`
+  flex: 1;
   position: relative;
-`
-
-const CommentContent = styled.div`
-  margin: 10px;
-  border: 1px solid #e8e8e8;
   padding: 16px;
-  border-radius: 3px;
   color: #000;
+  background-color: #fffbe6;
+  user-select: none;
 `
 
-const CommentButton = styled(Button)`
-  min-width: initial;
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  top: -1px;
-  left: 5px;
-  font-size: 8px;
-  cursor: 'pointer';
+const ShowButton = styled(({ isCommentVisible, ...props }) => (
+  <motion.div
+    {...props}
+    variants={{
+      visible: {
+        scaleX: 1
+      },
+      hidden: { scaleX: 10 }
+    }}
+    whileHover={{
+      scale: 2
+    }}
+    initial={isCommentVisible ? 'visible' : 'hidden'}
+    animate={isCommentVisible ? 'visible' : 'hidden'}
+    transition={{
+      duration: 0.25
+    }}
+  />
+))`
+  background-color: #ffe58f;
+  margin-left: 20px;
+  width: 10px;
+  cursor: pointer;
+`
+
+const Content = styled(Markdown)`
+  opacity: 1;
+  ${({ isCommentVisible }) =>
+    !isCommentVisible &&
+    `
+      opacity: 0;
+    `}
+  transition: opacity 0.25s ease-out;
 `
 
 const LINE_CHANGE_TYPES = {
@@ -57,7 +112,7 @@ const getComments = ({ newPath, fromVersion, toVersion, appName }) => {
         return {
           ...versionComments,
           [getLineNumberWithType({ lineChangeType, lineNumber })]: (
-            <DiffComment content={content} />
+            <DiffComment content={content} lineChangeType={lineChangeType} />
           )
         }
       },
@@ -71,23 +126,26 @@ const getComments = ({ newPath, fromVersion, toVersion, appName }) => {
   }, {})
 }
 
-const DiffComment = ({ content }) => {
-  const [displayComment, toggleComment] = useState(true)
+const DiffComment = ({ content, lineChangeType }) => {
+  const [isCommentVisible, setIsCommentVisible] = useState(true)
 
   return (
-    <CommentContainer>
-      <CommentButton
-        shape="circle"
-        type="primary"
-        onClick={() => toggleComment(!displayComment)}
-        icon={displayComment ? <CloseOutlined /> : <MessageOutlined />}
+    <Container
+      isCommentVisible={isCommentVisible}
+      lineChangeType={lineChangeType}
+      onClick={() => setIsCommentVisible(!isCommentVisible)}
+    >
+      <ShowButton
+        isCommentVisible={isCommentVisible}
+        onClick={() => setIsCommentVisible(!isCommentVisible)}
       />
-      {displayComment && (
-        <CommentContent>
-          <Markdown>{content.props.children}</Markdown>
-        </CommentContent>
-      )}
-    </CommentContainer>
+
+      <ContentContainer>
+        <Content isCommentVisible={isCommentVisible}>
+          {content.props.children}
+        </Content>
+      </ContentContainer>
+    </Container>
   )
 }
 

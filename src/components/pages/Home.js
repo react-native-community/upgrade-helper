@@ -52,7 +52,7 @@ const StarButton = styled(({ className, ...props }) => (
 const Home = () => {
   const [fromVersion, setFromVersion] = useState('')
   const [toVersion, setToVersion] = useState('')
-  const [showDiff, setShowDiff] = useState(false)
+  const [shouldShowDiff, setShouldShowDiff] = useState(false)
   const [settings, setSettings] = useState({
     [`${SHOW_LATEST_RCS}`]: false
   })
@@ -72,7 +72,7 @@ const Home = () => {
 
     setFromVersion(fromVersion)
     setToVersion(toVersion)
-    setShowDiff(true)
+    setShouldShowDiff(true)
   }
 
   const handleSettingsChange = settingsValues => {
@@ -89,13 +89,13 @@ const Home = () => {
       <Container>
         <TitleContainer>
           <LogoImg
-            alt="React Native upgrade helper logo"
-            title="React Native upgrade helper logo"
+            alt="React Native Upgrade Helper logo"
+            title="React Native Upgrade Helper logo"
             src={logo}
           />
 
           <a href={homepage}>
-            <TitleHeader>React Native upgrade helper</TitleHeader>
+            <TitleHeader>React Native Upgrade Helper</TitleHeader>
           </a>
 
           <StarButton
@@ -121,7 +121,7 @@ const Home = () => {
       </Container>
 
       <DiffViewer
-        showDiff={showDiff}
+        shouldShowDiff={shouldShowDiff}
         fromVersion={fromVersion}
         toVersion={toVersion}
         appName={appName}

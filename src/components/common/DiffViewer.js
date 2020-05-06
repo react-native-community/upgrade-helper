@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import styled from '@emotion/styled'
 import { Alert } from 'antd'
+import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
 import { parseDiff, withChangeSelect } from 'react-diff-view'
 import 'react-diff-view/style/index.css'
 import { getDiffPatchURL } from '../../utils'
@@ -9,6 +10,8 @@ import DiffLoading from './Diff/DiffLoading'
 import UsefulContentSection from './UsefulContentSection'
 import ViewStyleOptions from './Diff/DiffViewStyleOptions'
 import CompletedFilesCounter from './CompletedFilesCounter'
+
+const delay = ms => new Promise(res => setTimeout(res, ms))
 
 const Container = styled.div`
   width: 90%;
@@ -20,7 +23,7 @@ const getDiffKey = ({ oldRevision, newRevision }) =>
 const scrollToRef = ref => ref.current.scrollIntoView({ behavior: 'smooth' })
 
 const DiffViewer = ({
-  showDiff,
+  shouldShowDiff,
   fromVersion,
   toVersion,
   selectedChanges,
@@ -92,45 +95,44 @@ const DiffViewer = ({
     localStorage.setItem('viewStyle', newViewStyle)
   }
 
+  const handleFetchDiff = useCallback(async () => {
+    setLoading(true)
+    resetCompletedDiff()
+
+    const [response] = await Promise.all([
+      fetch(getDiffPatchURL({ fromVersion, toVersion })),
+      delay(300)
+    ])
+
+    const diff = await response.text()
+
+    setDiff(
+      parseDiff(diff).sort(({ newPath }) =>
+        newPath.includes('package.json') ? -1 : 1
+      )
+    )
+
+    setLoading(false)
+  }, [fromVersion, toVersion])
+
   useEffect(() => {
-    if (!showDiff) {
+    if (!shouldShowDiff) {
       return
     }
 
-    const fetchDiff = async () => {
-      setLoading(true)
+    handleFetchDiff()
+  }, [handleFetchDiff, shouldShowDiff])
 
-      const response = await (
-        await fetch(getDiffPatchURL({ fromVersion, toVersion }))
-      ).text()
-
-      setDiff(
-        parseDiff(response).sort(({ newPath }) =>
-          newPath.includes('package.json') ? -1 : 1
-        )
-      )
-
-      resetCompletedDiff()
-
-      setLoading(false)
-    }
-
-    const debounce = setTimeout(() => {
-      fetchDiff()
-    }, 750)
-    return () => {
-      clearTimeout(debounce)
-    }
-  }, [appName, fromVersion, showDiff, toVersion])
-
-  if (!showDiff) {
+  if (!shouldShowDiff) {
     return null
   }
 
   if (isLoading) {
     return (
       <Container>
-        <DiffLoading />
+        <AnimatePresence>
+          <DiffLoading />
+        </AnimatePresence>
       </Container>
     )
   }
@@ -148,41 +150,49 @@ const DiffViewer = ({
 
   return (
     <Container>
-      <UsefulContentSection
-        isLoading={isLoading}
-        fromVersion={fromVersion}
-        toVersion={toVersion}
-      />
+      <AnimateSharedLayout>
+        <motion.div
+          initial={{ opacity: 0, translateY: 75 }}
+          animate={{ opacity: 1, translateY: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <UsefulContentSection
+            isLoading={isLoading}
+            fromVersion={fromVersion}
+            toVersion={toVersion}
+          />
 
-      <ViewStyleOptions
-        handleViewStyleChange={handleViewStyleChange}
-        diffViewStyle={diffViewStyle}
-      />
+          <ViewStyleOptions
+            handleViewStyleChange={handleViewStyleChange}
+            diffViewStyle={diffViewStyle}
+          />
 
-      <DiffSection
-        {...diffSectionProps}
-        isDoneSection={false}
-        diffViewStyle={diffViewStyle}
-        appName={appName}
-      />
+          <DiffSection
+            {...diffSectionProps}
+            isDoneSection={false}
+            diffViewStyle={diffViewStyle}
+            appName={appName}
+          />
 
-      {renderUpgradeDoneMessage({ diff, completedDiffs })}
+          {renderUpgradeDoneMessage({ diff, completedDiffs })}
 
-      <DiffSection
-        {...diffSectionProps}
-        isDoneSection={true}
-        title="Done"
-        appName={appName}
-        doneTitleRef={doneTitleRef}
-      />
+          <DiffSection
+            {...diffSectionProps}
+            isDoneSection={true}
+            title="Done"
+            appName={appName}
+            doneTitleRef={doneTitleRef}
+          />
 
-      <CompletedFilesCounter
-        completed={completedDiffs.length}
-        total={diff.length}
-        onClick={handleCompletedFilesCounterClick}
-        popoverContent={donePopoverOpts.content}
-        popoverCursorType={donePopoverOpts.cursorType}
-      />
+          <CompletedFilesCounter
+            completed={completedDiffs.length}
+            total={diff.length}
+            onClick={handleCompletedFilesCounterClick}
+            popoverContent={donePopoverOpts.content}
+            popoverCursorType={donePopoverOpts.cursorType}
+          />
+        </motion.div>
+      </AnimateSharedLayout>
     </Container>
   )
 }
