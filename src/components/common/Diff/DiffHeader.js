@@ -30,6 +30,8 @@ const Wrapper = styled.div`
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   padding: 5px 10px;
+  position: sticky;
+  top: 0;
 `
 
 const FileRenameArrow = styled(RightOutlined)({
