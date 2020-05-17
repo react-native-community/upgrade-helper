@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
-import { Card } from 'antd'
+import { Button, Card } from 'antd'
 import GitHubButton from 'react-github-btn'
 import ReactGA from 'react-ga'
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
 import Settings from '../common/Settings'
+import HowToUseModal from '../common/HowToUseModal'
 import { homepage } from '../../../package.json'
 import logo from '../../assets/logo.svg'
 import { SHOW_LATEST_RCS } from '../../utils'
@@ -22,6 +23,11 @@ const Container = styled(Card)`
   width: 90%;
   border-radius: 3px;
   border-color: #e8e8e8;
+`
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
 `
 
 const TitleContainer = styled.div`
@@ -49,10 +55,19 @@ const StarButton = styled(({ className, ...props }) => (
   margin-right: auto;
 `
 
+const HowToUseButton = styled(({ className, ...props }) => (
+  <div className={className}>
+    <Button {...props}>How to Use</Button>
+  </div>
+))`
+  margin-right: 15px;
+`
+
 const Home = () => {
   const [fromVersion, setFromVersion] = useState('')
   const [toVersion, setToVersion] = useState('')
   const [shouldShowDiff, setShouldShowDiff] = useState(false)
+  const [shouldShowTutorial, setShouldShowTutorial] = useState(false)
   const [settings, setSettings] = useState({
     [`${SHOW_LATEST_RCS}`]: false
   })
@@ -107,11 +122,18 @@ const Home = () => {
             Star
           </StarButton>
 
-          <Settings
-            handleSettingsChange={handleSettingsChange}
-            appName={appName}
-            setAppName={setAppName}
-          />
+          <Row>
+            <HowToUseButton
+              type="link"
+              onClick={() => setShouldShowTutorial(true)}
+            />
+            <HowToUseModal visible={shouldShowTutorial} />
+            <Settings
+              handleSettingsChange={handleSettingsChange}
+              appName={appName}
+              setAppName={setAppName}
+            />
+          </Row>
         </TitleContainer>
 
         <VersionSelector
