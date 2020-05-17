@@ -127,7 +127,10 @@ const Home = () => {
               type="link"
               onClick={() => setShouldShowTutorial(true)}
             />
-            <HowToUseModal visible={shouldShowTutorial} />
+            <HowToUseModal
+              visible={shouldShowTutorial}
+              onClose={() => setShouldShowTutorial(false)}
+            />
             <Settings
               handleSettingsChange={handleSettingsChange}
               appName={appName}
