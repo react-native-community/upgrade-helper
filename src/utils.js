@@ -16,7 +16,7 @@ export const getBinaryFileURL = ({ version, path }) =>
 export const removeAppPathPrefix = (path, appName) =>
   path.replace(new RegExp(`${appName || DEFAULT_APP_NAME}/`), '')
 
-export const getPathWithProvidedAppName = (path, appName) => {
+export const replaceWithProvidedAppName = (path, appName) => {
   if (!appName) {
     return path
   }
