@@ -110,7 +110,7 @@ const Home = () => {
           <Settings
             handleSettingsChange={handleSettingsChange}
             appName={appName}
-            setAppName={setAppName}
+            onChangeAppName={setAppName}
           />
         </TitleContainer>
 
