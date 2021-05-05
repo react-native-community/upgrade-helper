@@ -7,10 +7,18 @@ import styled from '@emotion/styled'
 const InputContainer = styled.div({
   marginTop: '16px'
 })
-const Settings = ({ handleSettingsChange, appName, setAppName }) => {
-  const [popoverVisibility, setVisibility] = useState(false)
 
-  const handleClickChange = visibility => setVisibility(visibility)
+const Settings = ({ handleSettingsChange, appName, onChangeAppName }) => {
+  const [popoverVisibility, setVisibility] = useState(false)
+  const [newAppName, setNewAppName] = useState(appName)
+
+  const handleClickChange = visibility => {
+    setVisibility(visibility)
+
+    if (newAppName !== appName) {
+      onChangeAppName(newAppName)
+    }
+  }
 
   const updateCheckboxValues = checkboxValues =>
     handleSettingsChange(checkboxValues)
@@ -28,10 +36,8 @@ const Settings = ({ handleSettingsChange, appName, setAppName }) => {
           <InputContainer>
             <h4>What's your app name?</h4>
             <Input
-              value={appName}
-              onChange={e => {
-                setAppName(e.target.value)
-              }}
+              value={newAppName}
+              onChange={({ target }) => setNewAppName(target.value)}
               placeholder="MyAwesomeApp"
             />
           </InputContainer>

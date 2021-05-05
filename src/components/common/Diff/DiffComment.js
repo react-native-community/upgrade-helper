@@ -93,7 +93,7 @@ const getLineNumberWithType = ({ lineChangeType, lineNumber }) =>
   `${LINE_CHANGE_TYPES[lineChangeType.toUpperCase()]}${lineNumber}`
 
 const getComments = ({ newPath, fromVersion, toVersion, appName }) => {
-  const newPathSanitized = removeAppPathPrefix(newPath, appName)
+  const newPathSanitized = removeAppPathPrefix(newPath)
 
   const versionsInDiff = getVersionsInDiff({ fromVersion, toVersion }).filter(
     ({ comments }) =>
