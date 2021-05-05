@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
-import { Card } from 'antd'
+import { Alert, Card } from 'antd'
 import GitHubButton from 'react-github-btn'
 import ReactGA from 'react-ga'
 import VersionSelector from '../common/VersionSelector'
@@ -9,6 +9,7 @@ import Settings from '../common/Settings'
 import { homepage } from '../../../package.json'
 import logo from '../../assets/logo.svg'
 import { SHOW_LATEST_RCS } from '../../utils'
+import { Link } from '../common/Markdown'
 
 const Page = styled.div`
   display: flex;
@@ -86,6 +87,25 @@ const Home = () => {
 
   return (
     <Page>
+	  <Alert
+		type="warning"
+		showIcon
+		message={
+			<>
+			<span>
+				Having problems with Xcode 12.5 with React Native 0.62, 0.63 or 0.64?
+			 	<br />
+				Make sure to check the troubleshooting guide
+			</span>
+			{" "}
+			<Link href="https://github.com/facebook/react-native/issues/31480">
+			here
+			</Link>
+			<span>!</span>
+			</>
+			}
+        style={{ marginBottom: 16 }}
+	  />
       <Container>
         <TitleContainer>
           <LogoImg
