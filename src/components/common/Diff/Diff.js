@@ -215,6 +215,7 @@ const Diff = ({
 const arePropsEqual = (prevProps, nextProps) =>
   prevProps.isDiffCompleted === nextProps.isDiffCompleted &&
   prevProps.areAllCollapsed === nextProps.areAllCollapsed &&
-  prevProps.diffViewStyle === nextProps.diffViewStyle
+  prevProps.diffViewStyle === nextProps.diffViewStyle &&
+  prevProps.appName === nextProps.appName
 
 export default React.memo(Diff, arePropsEqual)
