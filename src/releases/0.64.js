@@ -3,7 +3,7 @@ import React, { Fragment } from 'react'
 export default {
   usefulContent: {
     description:
-      'React Native 0.64 includes hermes optin-in on iOS and React 17.',
+      'React Native 0.64 includes Hermes opt-in on iOS and React 17.',
     links: [
       {
         title:
