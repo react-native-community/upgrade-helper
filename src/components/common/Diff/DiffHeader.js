@@ -50,7 +50,7 @@ const getFilePathsToShow = ({ oldPath, newPath, appName }) => {
   }
 }
 
-const FileName = ({ oldPath, newPath, type, appName }) => {
+const FileName = ({ oldPath, newPath, type }) => {
   if (type === 'delete') {
     return <span>{oldPath}</span>
   }
