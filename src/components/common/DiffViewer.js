@@ -8,6 +8,7 @@ import { getDiffPatchURL } from '../../utils'
 import DiffSection from './Diff/DiffSection'
 import DiffLoading from './Diff/DiffLoading'
 import UsefulContentSection from './UsefulContentSection'
+import TroubleshootingSection from './TroubleshootingSection'
 import ViewStyleOptions from './Diff/DiffViewStyleOptions'
 import CompletedFilesCounter from './CompletedFilesCounter'
 
@@ -161,6 +162,8 @@ const DiffViewer = ({
             fromVersion={fromVersion}
             toVersion={toVersion}
           />
+
+          <TroubleshootingSection isLoading={isLoading} />
 
           <ViewStyleOptions
             handleViewStyleChange={handleViewStyleChange}
