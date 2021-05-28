@@ -50,3 +50,13 @@ export const getChangelogURL = ({ version }) =>
 
 // settings constants
 export const SHOW_LATEST_RCS = 'Show latest release candidates'
+
+export const getFilePathsToShow = ({ oldPath, newPath, appName }) => {
+  const oldPathSanitized = replaceWithProvidedAppName(oldPath, appName)
+  const newPathSanitized = replaceWithProvidedAppName(newPath, appName)
+
+  return {
+    oldPath: removeAppPathPrefix(oldPathSanitized, appName),
+    newPath: removeAppPathPrefix(newPathSanitized, appName)
+  }
+}

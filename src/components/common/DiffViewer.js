@@ -8,6 +8,7 @@ import { getDiffPatchURL } from '../../utils'
 import DiffSection from './Diff/DiffSection'
 import DiffLoading from './Diff/DiffLoading'
 import UsefulContentSection from './UsefulContentSection'
+import BinaryDownload from './BinaryDownload'
 import ViewStyleOptions from './Diff/DiffViewStyleOptions'
 import CompletedFilesCounter from './CompletedFilesCounter'
 
@@ -15,6 +16,15 @@ const delay = ms => new Promise(res => setTimeout(res, ms))
 
 const Container = styled.div`
   width: 90%;
+`
+
+const TopContainer = styled.div`
+  display: flex;
+  position: relative;
+  border-width: 1px;
+  margin-top: 16px;
+  flex-direction: row;
+  justify-content: flex-end;
 `
 
 const getDiffKey = ({ oldRevision, newRevision }) =>
@@ -162,10 +172,19 @@ const DiffViewer = ({
             toVersion={toVersion}
           />
 
-          <ViewStyleOptions
-            handleViewStyleChange={handleViewStyleChange}
-            diffViewStyle={diffViewStyle}
-          />
+          <TopContainer>
+            <BinaryDownload
+              diff={diff}
+              fromVersion={fromVersion}
+              toVersion={toVersion}
+              appName={appName}
+            />
+
+            <ViewStyleOptions
+              handleViewStyleChange={handleViewStyleChange}
+              diffViewStyle={diffViewStyle}
+            />
+          </TopContainer>
 
           <DiffSection
             {...diffSectionProps}
@@ -183,16 +202,16 @@ const DiffViewer = ({
             appName={appName}
             doneTitleRef={doneTitleRef}
           />
-
-          <CompletedFilesCounter
-            completed={completedDiffs.length}
-            total={diff.length}
-            onClick={handleCompletedFilesCounterClick}
-            popoverContent={donePopoverOpts.content}
-            popoverCursorType={donePopoverOpts.cursorType}
-          />
         </motion.div>
       </AnimateSharedLayout>
+
+      <CompletedFilesCounter
+        completed={completedDiffs.length}
+        total={diff.length}
+        onClick={handleCompletedFilesCounterClick}
+        popoverContent={donePopoverOpts.content}
+        popoverCursorType={donePopoverOpts.cursorType}
+      />
     </Container>
   )
 }
