@@ -153,11 +153,16 @@ const updateURLVersions = ({
   toVersion
 }) => {
   const pageURL = window.location.href.replace(window.location.search, '')
-  const newURL =
-    `?from=${fromVersion}&to=${toVersion}` +
-    (isPackageNameDefinedInURL ? `&package=${packageName}` : '')
+  const newURL = `?from=${fromVersion}&to=${toVersion}`
+  const packageNameInURL = isPackageNameDefinedInURL
+    ? `&package=${packageName}`
+    : ''
 
-  window.history.replaceState(null, null, `${pageURL}${newURL}`)
+  window.history.replaceState(
+    null,
+    null,
+    `${pageURL}${newURL}${packageNameInURL}`
+  )
 }
 
 const VersionSelector = ({
@@ -188,6 +193,7 @@ const VersionSelector = ({
         version: versionsInURL.fromVersion,
         allVersions: releaseVersions
       })
+
       const hasToVersionInURL = doesVersionExist({
         version: versionsInURL.toVersion,
         allVersions: releaseVersions,
@@ -237,10 +243,6 @@ const VersionSelector = ({
       const doesHaveVersionsInURL = hasFromVersionInURL && hasToVersionInURL
 
       setHasVersionsFromURL(doesHaveVersionsInURL)
-
-      if (doesHaveVersionsInURL) {
-        upgradeButtonEl.current.props.onClick()
-      }
     }
 
     if (isDone) {
@@ -271,6 +273,10 @@ const VersionSelector = ({
         minVersion: localFromVersion
       })
     )
+
+    if (hasVersionsFromURL) {
+      upgradeButtonEl.current.props.onClick()
+    }
   }, [
     isLoading,
     allVersions,
@@ -280,10 +286,10 @@ const VersionSelector = ({
     showReleaseCandidates
   ])
 
-  const onShowDiff = ({ fromVersion, toVersion }) => {
+  const onShowDiff = () => {
     showDiff({
-      fromVersion,
-      toVersion
+      fromVersion: localFromVersion,
+      toVersion: localToVersion
     })
 
     updateURLVersions({
@@ -323,12 +329,7 @@ const VersionSelector = ({
         />
       </Selectors>
 
-      <UpgradeButton
-        ref={upgradeButtonEl}
-        localFromVersion={localFromVersion}
-        localToVersion={localToVersion}
-        onShowDiff={onShowDiff}
-      />
+      <UpgradeButton ref={upgradeButtonEl} onShowDiff={onShowDiff} />
     </Fragment>
   )
 }
