@@ -40,7 +40,7 @@ export const useFetchDiff = ({
     if (shouldShowDiff) {
       fetchDiff()
     }
-  }, [packageName, fromVersion, toVersion])
+  }, [shouldShowDiff, packageName, fromVersion, toVersion])
 
   return {
     isLoading,
