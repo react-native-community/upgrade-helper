@@ -1,17 +1,25 @@
 import semver from 'semver/preload'
+import { RN_DIFF_REPOSITORIES, DEFAULT_APP_NAME } from './constants'
 import versions from './releases'
 
-const RN_DIFF_REPO = 'react-native-community/rn-diff-purge'
-const DEFAULT_APP_NAME = 'RnDiffApp'
+const getRNDiffRepository = ({ packageName }) =>
+  RN_DIFF_REPOSITORIES[packageName]
 
-export const RELEASES_URL = `https://raw.githubusercontent.com/${RN_DIFF_REPO}/master/RELEASES`
+export const getReleasesFileURL = ({ packageName }) =>
+  `https://raw.githubusercontent.com/${getRNDiffRepository({
+    packageName
+  })}/master/RELEASES`
 
-export const getDiffPatchURL = ({ fromVersion, toVersion }) =>
-  `https://raw.githubusercontent.com/${RN_DIFF_REPO}/diffs/diffs/${fromVersion}..${toVersion}.diff`
+export const getDiffURL = ({ packageName, fromVersion, toVersion }) =>
+  `https://raw.githubusercontent.com/${getRNDiffRepository({
+    packageName
+  })}/diffs/diffs/${fromVersion}..${toVersion}.diff`
 
 // `path` must contain `RnDiffApp` prefix
-export const getBinaryFileURL = ({ version, path }) =>
-  `https://github.com/${RN_DIFF_REPO}/raw/release/${version}/${path}`
+export const getBinaryFileURL = ({ packageName, version, path }) =>
+  `https://github.com/${getRNDiffRepository({
+    packageName
+  })}/raw/release/${version}/${path}`
 
 export const removeAppPathPrefix = (path, appName) =>
   path.replace(new RegExp(`${appName || DEFAULT_APP_NAME}/`), '')
@@ -29,10 +37,14 @@ export const replaceWithProvidedAppName = (path, appName) => {
     )
 }
 
-export const getVersionsInDiff = ({ fromVersion, toVersion }) => {
+export const getVersionsContentInDiff = ({
+  packageName,
+  fromVersion,
+  toVersion
+}) => {
   const cleanedToVersion = semver.valid(semver.coerce(toVersion))
 
-  return versions.filter(({ version }) => {
+  return versions[packageName].filter(({ version }) => {
     const cleanedVersion = semver.coerce(version)
 
     // `cleanedVersion` can't be newer than `cleanedToVersion` nor older (or equal) than `fromVersion`

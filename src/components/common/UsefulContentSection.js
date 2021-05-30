@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import styled from '@emotion/styled'
 import { UpOutlined, DownOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
-import { getVersionsInDiff, getChangelogURL } from '../../utils'
+import { getVersionsContentInDiff, getChangelogURL } from '../../utils'
 import { Link } from './Markdown'
 import UpgradeSupportAlert from './UpgradeSupportAlert'
 import AppNameWarning from './AppNameWarning'
@@ -145,10 +145,14 @@ class UsefulContentSection extends Component {
     }))
 
   render() {
-    const { fromVersion, toVersion } = this.props
+    const { packageName, fromVersion, toVersion } = this.props
     const { isContentVisible } = this.state
 
-    const versions = getVersionsInDiff({ fromVersion, toVersion })
+    const versions = getVersionsContentInDiff({
+      packageName,
+      fromVersion,
+      toVersion
+    })
     const doesAnyVersionHaveUsefulContent = versions.some(
       ({ usefulContent }) => !!usefulContent
     )

@@ -10,6 +10,7 @@ import { homepage } from '../../../package.json'
 import logo from '../../assets/logo.svg'
 import { SHOW_LATEST_RCS } from '../../utils'
 import { Link } from '../common/Markdown'
+import { useGetPackageNameFromURL } from '../../hooks/get-package-name-from-url'
 
 const Page = styled.div`
   display: flex;
@@ -51,6 +52,7 @@ const StarButton = styled(({ className, ...props }) => (
 `
 
 const Home = () => {
+  const { packageName, isPackageNameDefinedInURL } = useGetPackageNameFromURL()
   const [fromVersion, setFromVersion] = useState('')
   const [toVersion, setToVersion] = useState('')
   const [shouldShowDiff, setShouldShowDiff] = useState(false)
@@ -132,6 +134,8 @@ const Home = () => {
         <VersionSelector
           showDiff={handleShowDiff}
           showReleaseCandidates={settings[SHOW_LATEST_RCS]}
+          packageName={packageName}
+          isPackageNameDefinedInURL={isPackageNameDefinedInURL}
         />
       </Container>
 
@@ -140,6 +144,7 @@ const Home = () => {
         fromVersion={fromVersion}
         toVersion={toVersion}
         appName={appName}
+        packageName={packageName}
       />
     </Page>
   )
