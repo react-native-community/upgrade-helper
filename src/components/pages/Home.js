@@ -11,6 +11,7 @@ import logo from '../../assets/logo.svg'
 import { SHOW_LATEST_RCS } from '../../utils'
 import { Link } from '../common/Markdown'
 import { useGetPackageNameFromURL } from '../../hooks/get-package-name-from-url'
+import { PACKAGE_NAMES } from '../../constants'
 
 const Page = styled.div`
   display: flex;
@@ -110,20 +111,23 @@ const Home = () => {
             Star
           </StarButton>
 
-          <Alert
-            type="warning"
-            showIcon
-            message={
-              <>
-                <span>Having problems with Xcode 12.5?</span>{' '}
-                <Link href="https://github.com/facebook/react-native/issues/31480">
-                  Check here first
-                </Link>
-                <span>!</span>
-              </>
-            }
-            style={{ marginRight: 8 }}
-          />
+          {packageName === PACKAGE_NAMES.RN && (
+            <Alert
+              type="warning"
+              showIcon
+              message={
+                <>
+                  <span>Having problems with Xcode 12.5?</span>{' '}
+                  <Link href="https://github.com/facebook/react-native/issues/31480">
+                    Check here first
+                  </Link>
+                  <span>!</span>
+                </>
+              }
+              style={{ marginRight: 8 }}
+            />
+          )}
+
           <Settings
             handleSettingsChange={handleSettingsChange}
             appName={appName}
