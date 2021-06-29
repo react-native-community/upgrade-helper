@@ -66,6 +66,7 @@ export const waitToRender = ({ waitingTime = 500 } = {}) =>
   page.waitForTimeout(waitingTime)
 
 export const toMatchImageSnapshot = configureToMatchImageSnapshot({
+  comparisonMethod: 'ssim',
   failureThreshold: 0.0005,
   failureThresholdType: 'percent',
   allowSizeMismatch: true
