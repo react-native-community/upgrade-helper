@@ -67,6 +67,8 @@ jobs:
       - start_and_wait_for_app
       - run: yarn run lint
       - run: yarn run test --runInBand
+      - store_artifacts:
+          path: ~/upgrade-helper/src/__tests__/__image_snapshots__/__diff_output__
 
   # Deploy website to GitHub Pages
   deploy:
