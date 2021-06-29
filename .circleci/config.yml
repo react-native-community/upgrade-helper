@@ -1,8 +1,8 @@
 version: 2.1
 executors:
-  node10:
+  node14:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:14
 
 commands:
   restore_cache_checkout:
@@ -32,7 +32,7 @@ commands:
 jobs:
   # Checkout code and caches it
   setup:
-    executor: node10
+    executor: node14
     working_directory: ~/upgrade-helper
     steps:
       - checkout
@@ -41,9 +41,16 @@ jobs:
           paths:
             - ~/upgrade-helper
 
+  # Start app to run tests
+  start:
+    executor: node14
+    working_directory: ~/upgrade-helper
+    steps:
+      - run: yarn start
+
   # Run lint and tests
   test:
-    executor: node10
+    executor: node14
     working_directory: ~/upgrade-helper
 
     steps:
@@ -54,7 +61,7 @@ jobs:
 
   # Deploy website to GitHub Pages
   deploy:
-    executor: node10
+    executor: node14
     working_directory: ~/upgrade-helper
     steps:
       - restore_cache_checkout
@@ -80,9 +87,13 @@ workflows:
     jobs:
       - setup
 
-      - test:
+      - start:
           requires:
             - setup
+
+      - test:
+          requires:
+            - start
   deploy-to-gh-pages:
     jobs:
       - setup:
