@@ -67,5 +67,6 @@ export const waitToRender = ({ waitingTime = 500 } = {}) =>
 
 export const toMatchImageSnapshot = configureToMatchImageSnapshot({
   failureThreshold: 0.0005,
-  failureThresholdType: 'percent'
+  failureThresholdType: 'percent',
+  allowSizeMismatch: true
 })
