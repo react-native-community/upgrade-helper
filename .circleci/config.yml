@@ -36,9 +36,11 @@ commands:
   start_and_wait_for_app:
     steps:
       - run:
+          name: Starting the app
           command: yarn start
           background: true
       - run:
+          name: Waiting for app to be ready
           shell: /bin/sh
           command: wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 10 http://localhost:3000/
 
