@@ -8,6 +8,7 @@ commands:
   restore_cache_checkout:
     steps:
       - restore_cache:
+          name: Restoring cache [checkout]
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
 
   run_checkout:
@@ -19,6 +20,7 @@ commands:
   restore_cache_yarn:
     steps:
       - restore_cache:
+          name: Restoring cache [yarn]
           key: v1-yarn-{{ .Branch }}
 
   run_yarn:
