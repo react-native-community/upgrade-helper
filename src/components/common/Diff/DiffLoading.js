@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import ContentLoader from 'react-content-loader'
+import { getTransitionDuration } from '../../../utils'
 
 const TitleLoader = () => (
   <ContentLoader
@@ -48,7 +49,7 @@ const DiffLoading = () => (
   <Container
     initial={{ opacity: 0, translateY: 100 }}
     animate={{ opacity: 1, translateY: 0 }}
-    transition={{ duration: 0.5 }}
+    transition={{ duration: getTransitionDuration(0.5) }}
   >
     <Header>
       <TitleLoader />

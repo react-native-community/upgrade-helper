@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { InfoCircleOutlined } from '@ant-design/icons'
+import { getTransitionDuration } from '../../../utils'
 
 const DiffCommentReminder = styled(
   ({ comments, isDiffCollapsed, uncollapseDiff, ...props }) => {
@@ -17,7 +18,7 @@ const DiffCommentReminder = styled(
         }}
         animate={isVisible > 0 ? 'visible' : 'invisible'}
         transition={{
-          duration: 0.5
+          duration: getTransitionDuration(0.5)
         }}
         onClick={uncollapseDiff}
       >

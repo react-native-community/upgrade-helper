@@ -48,5 +48,9 @@ const baseChangelogURL =
 export const getChangelogURL = ({ version }) =>
   `${baseChangelogURL}#v${version.replace('.', '')}0`
 
+// If the browser is headless (running puppeteer) then it doesn't have any duration
+export const getTransitionDuration = duration =>
+  navigator.webdriver ? 0 : duration
+
 // settings constants
 export const SHOW_LATEST_RCS = 'Show latest release candidates'
