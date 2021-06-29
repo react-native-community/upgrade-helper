@@ -46,6 +46,8 @@ jobs:
     executor: node14
     working_directory: ~/upgrade-helper
     steps:
+      - restore_cache_checkout
+      - run_yarn
       - run: yarn start
 
   # Run lint and tests
@@ -54,8 +56,6 @@ jobs:
     working_directory: ~/upgrade-helper
 
     steps:
-      - restore_cache_checkout
-      - run_yarn
       - run: yarn run lint
       - run: yarn run test --runInBand
 
