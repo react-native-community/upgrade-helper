@@ -16,11 +16,14 @@ commands:
       - save_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
 
-  run_yarn:
+  restore_cache_yarn:
     steps:
       - restore_cache:
-          keys:
-            - v1-yarn-{{ .Branch }}
+          key: v1-yarn-{{ .Branch }}
+
+  run_yarn:
+    steps:
+      - restore_cache_yarn
       - run:
           name: yarn install
           command: yarn install --no-progress --non-interactive --cache-folder ~/.cache/yarn
@@ -66,6 +69,8 @@ jobs:
     working_directory: ~/upgrade-helper
 
     steps:
+      - restore_cache_checkout
+      - restore_cache_yarn
       - run: yarn run lint
       - run: yarn run test --runInBand
 
