@@ -15,6 +15,7 @@ commands:
       - checkout
       - save_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+
   run_yarn:
     steps:
       - restore_cache:
@@ -28,6 +29,12 @@ commands:
             - node_modules
             - ~/.cache/yarn
           key: v1-yarn-{{ .Branch }}
+
+  wait_for_app:
+    steps:
+      - run:
+          shell: /bin/sh
+          command: wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 10 http://localhost:3000/
 
 jobs:
   # Checkout code and caches it
@@ -48,7 +55,10 @@ jobs:
     steps:
       - restore_cache_checkout
       - run_yarn
-      - run: yarn start
+      - run:
+          command: yarn start
+          background: true
+      - wait_for_app
 
   # Run lint and tests
   test:
