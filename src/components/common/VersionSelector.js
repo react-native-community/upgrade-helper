@@ -7,6 +7,11 @@ import { RELEASES_URL } from '../../utils'
 import { Select } from './'
 import UpgradeButton from './UpgradeButton'
 
+export const testIDs = {
+  fromVersionSelector: 'fromVersionSelector',
+  toVersionSelector: 'toVersionSelector'
+}
+
 const Selectors = styled.div`
   display: flex;
   justify-content: space-between;
@@ -280,6 +285,7 @@ const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
     <Fragment>
       <Selectors>
         <FromVersionSelector
+          data-testid={testIDs.fromVersionSelector}
           title="What's your current React Native version?"
           loading={isLoading}
           value={localFromVersion}
@@ -288,6 +294,7 @@ const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
         />
 
         <ToVersionSelector
+          data-testid={testIDs.toVersionSelector}
           title="To which version would you like to upgrade?"
           loading={isLoading}
           value={localToVersion}

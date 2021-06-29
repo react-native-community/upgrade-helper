@@ -1,13 +1,14 @@
 version: 2.1
 executors:
-  node10:
+  node14:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:14-browsers
 
 commands:
   restore_cache_checkout:
     steps:
       - restore_cache:
+          name: Restoring cache [checkout]
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
 
   run_checkout:
@@ -15,11 +16,16 @@ commands:
       - checkout
       - save_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-  run_yarn:
+
+  restore_cache_yarn:
     steps:
       - restore_cache:
-          keys:
-            - v1-yarn-{{ .Branch }}
+          name: Restoring cache [yarn]
+          key: v1-yarn-{{ .Branch }}
+
+  run_yarn:
+    steps:
+      - restore_cache_yarn
       - run:
           name: yarn install
           command: yarn install --no-progress --non-interactive --cache-folder ~/.cache/yarn
@@ -29,10 +35,21 @@ commands:
             - ~/.cache/yarn
           key: v1-yarn-{{ .Branch }}
 
+  start_and_wait_for_app:
+    steps:
+      - run:
+          name: Starting the app
+          command: yarn start
+          background: true
+      - run:
+          name: Waiting for app to be ready
+          shell: /bin/sh
+          command: wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 10 http://localhost:3000/
+
 jobs:
   # Checkout code and caches it
   setup:
-    executor: node10
+    executor: node14
     working_directory: ~/upgrade-helper
     steps:
       - checkout
@@ -43,18 +60,21 @@ jobs:
 
   # Run lint and tests
   test:
-    executor: node10
+    executor: node14
     working_directory: ~/upgrade-helper
 
     steps:
       - restore_cache_checkout
       - run_yarn
+      - start_and_wait_for_app
       - run: yarn run lint
       - run: yarn run test --runInBand
+      - store_artifacts:
+          path: ~/upgrade-helper/src/__tests__/__image_snapshots__/__diff_output__
 
   # Deploy website to GitHub Pages
   deploy:
-    executor: node10
+    executor: node14
     working_directory: ~/upgrade-helper
     steps:
       - restore_cache_checkout
