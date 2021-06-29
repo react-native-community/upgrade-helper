@@ -1,18 +1,16 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
 import { Alert } from 'antd'
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
-import { parseDiff, withChangeSelect } from 'react-diff-view'
+import { withChangeSelect } from 'react-diff-view'
 import 'react-diff-view/style/index.css'
-import { getDiffPatchURL } from '../../utils'
 import DiffSection from './Diff/DiffSection'
 import DiffLoading from './Diff/DiffLoading'
 import UsefulContentSection from './UsefulContentSection'
 import BinaryDownload from './BinaryDownload'
 import ViewStyleOptions from './Diff/DiffViewStyleOptions'
 import CompletedFilesCounter from './CompletedFilesCounter'
-
-const delay = ms => new Promise(res => setTimeout(res, ms))
+import { useFetchDiff } from '../../hooks/fetch-diff'
 
 const Container = styled.div`
   width: 90%;
@@ -33,15 +31,20 @@ const getDiffKey = ({ oldRevision, newRevision }) =>
 const scrollToRef = ref => ref.current.scrollIntoView({ behavior: 'smooth' })
 
 const DiffViewer = ({
-  shouldShowDiff,
+  packageName,
   fromVersion,
   toVersion,
+  shouldShowDiff,
   selectedChanges,
   onToggleChangeSelection,
   appName
 }) => {
-  const [isLoading, setLoading] = useState(true)
-  const [diff, setDiff] = useState(null)
+  const { isLoading, isDone, diff } = useFetchDiff({
+    shouldShowDiff,
+    packageName,
+    fromVersion,
+    toVersion
+  })
   const [completedDiffs, setCompletedDiffs] = useState([])
   const [isGoToDoneClicked, setIsGoToDoneClicked] = useState(false)
   const donePopoverPossibleOpts = {
@@ -94,7 +97,7 @@ const DiffViewer = ({
       />
     )
 
-  const resetCompletedDiff = () => setCompletedDiffs([])
+  const resetCompletedDiffs = () => setCompletedDiffs([])
 
   const [diffViewStyle, setViewStyle] = useState(
     localStorage.getItem('viewStyle') || 'split'
@@ -105,33 +108,11 @@ const DiffViewer = ({
     localStorage.setItem('viewStyle', newViewStyle)
   }
 
-  const handleFetchDiff = useCallback(async () => {
-    setLoading(true)
-    resetCompletedDiff()
-
-    const [response] = await Promise.all([
-      fetch(getDiffPatchURL({ fromVersion, toVersion })),
-      delay(300)
-    ])
-
-    const diff = await response.text()
-
-    setDiff(
-      parseDiff(diff).sort(({ newPath }) =>
-        newPath.includes('package.json') ? -1 : 1
-      )
-    )
-
-    setLoading(false)
-  }, [fromVersion, toVersion])
-
   useEffect(() => {
-    if (!shouldShowDiff) {
-      return
+    if (!isDone) {
+      resetCompletedDiffs()
     }
-
-    handleFetchDiff()
-  }, [handleFetchDiff, shouldShowDiff])
+  }, [isDone])
 
   if (!shouldShowDiff) {
     return null
@@ -168,6 +149,7 @@ const DiffViewer = ({
         >
           <UsefulContentSection
             isLoading={isLoading}
+            packageName={packageName}
             fromVersion={fromVersion}
             toVersion={toVersion}
           />
@@ -188,6 +170,7 @@ const DiffViewer = ({
 
           <DiffSection
             {...diffSectionProps}
+            packageName={packageName}
             isDoneSection={false}
             diffViewStyle={diffViewStyle}
             appName={appName}
