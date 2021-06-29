@@ -69,17 +69,4 @@ export const toMatchImageSnapshot = configureToMatchImageSnapshot({
   comparisonMethod: 'ssim',
   failureThreshold: 0.0005,
   failureThresholdType: 'percent'
-  // customDiffConfig: {
-  //   ssim: 'fast'
-  // },
-  // failureThreshold: 0.01,
-  // failureThresholdType: 'percent'
-  // failureThreshold: 0.05,
-  // failureThresholdType: 'percent',
-  // customDiffConfig: {
-  //   includeAA: true,
-  //   diffMask: true
-  // }
 })
-
-// TODO: use diff that doesn't have any comments :(
