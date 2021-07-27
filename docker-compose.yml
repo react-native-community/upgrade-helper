@@ -1,0 +1,10 @@
+version: '3'
+services:
+  tests:
+    build:
+      context: .
+    volumes:
+      - "./src:/app/src"
+      - "./test:/app/test"
+      - "./package.json:/app/package.json"
+    command: sh -c "yarn docker-test-e2e"
