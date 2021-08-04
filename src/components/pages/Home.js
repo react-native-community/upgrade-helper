@@ -122,6 +122,20 @@ const Home = () => {
             }
             style={{ marginRight: 8 }}
           />
+          <Alert
+            type="warning"
+            showIcon
+            message={
+              <>
+                <span>You have an M1 (Apple Silicon) machine?</span>{' '}
+                <Link href="https://github.com/facebook/react-native/issues/31941">
+                  Check here for help
+                </Link>
+                <span>!</span>
+              </>
+            }
+            style={{ marginRight: 8 }}
+          />
           <Settings
             handleSettingsChange={handleSettingsChange}
             appName={appName}
