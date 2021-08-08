@@ -47,6 +47,10 @@ export const getVersionsContentInDiff = ({
   fromVersion,
   toVersion
 }) => {
+  if (!versions[packageName]) {
+    return []
+  }
+
   const cleanedToVersion = semver.valid(semver.coerce(toVersion))
 
   return versions[packageName].filter(({ version }) => {
