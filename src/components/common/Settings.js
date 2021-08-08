@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { SettingOutlined } from '@ant-design/icons'
 import { Popover, Button, Checkbox, Input } from 'antd'
 import { SHOW_LATEST_RCS } from '../../utils'
 import styled from '@emotion/styled'
@@ -7,6 +6,14 @@ import styled from '@emotion/styled'
 const InputContainer = styled.div({
   marginTop: '16px'
 })
+
+const SettingsButton = styled(Button)`
+  color: initial;
+`
+
+const SettingsIcon = styled(props => <span {...props}>⚙️</span>)`
+  font-family: initial;
+`
 
 const Settings = ({ handleSettingsChange, appName, onChangeAppName }) => {
   const [popoverVisibility, setVisibility] = useState(false)
@@ -47,7 +54,7 @@ const Settings = ({ handleSettingsChange, appName, onChangeAppName }) => {
       visible={popoverVisibility}
       onVisibleChange={handleClickChange}
     >
-      <Button icon={<SettingOutlined />} />
+      <SettingsButton icon={<SettingsIcon />} />
     </Popover>
   )
 }
