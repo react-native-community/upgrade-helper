@@ -38,8 +38,8 @@
     "react-app-rewired": "^2.1.5"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "DISABLE_ESLINT_PLUGIN=true react-app-rewired build",
+    "start": "EXTEND_ESLINT=true react-app-rewired start",
+    "build": "EXTEND_ESLINT=true react-app-rewired build",
     "test": "react-app-rewired test",
     "lint": "eslint . --cache --report-unused-disable-directives",
     "eject": "react-app-rewired eject"
