@@ -39,7 +39,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-app-rewired build",
     "test": "react-app-rewired test",
     "lint": "eslint . --cache --report-unused-disable-directives",
     "eject": "react-app-rewired eject"
@@ -61,5 +61,18 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": "error",
+      "jsx-a11y/accessible-emoji": "off",
+      "react-hooks/exhaustive-deps": "off"
+    }
   }
 }
