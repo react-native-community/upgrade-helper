@@ -18,12 +18,7 @@ export const useFetchReleaseVersions = ({ packageName }) => {
         .split('\n')
         .filter(Boolean)
 
-      if (packageName === PACKAGE_NAMES.RNW) {
-        // TODO: can be removed once RNW's `RELEASES` file looks like RN's
-        setReleaseVersions(releaseVersions.reverse())
-      } else {
-        setReleaseVersions(releaseVersions)
-      }
+      setReleaseVersions(releaseVersions)
 
       setIsLoading(false)
       setIsDone(true)
