@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { getReleasesFileURL } from '../utils'
-import { PACKAGE_NAMES } from '../constants'
 
 export const useFetchReleaseVersions = ({ packageName }) => {
   const [isLoading, setIsLoading] = useState(true)
