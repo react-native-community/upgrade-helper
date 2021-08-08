@@ -1,5 +1,10 @@
 import semver from 'semver/preload'
-import { RN_DIFF_REPOSITORIES, DEFAULT_APP_NAME } from './constants'
+import {
+  RN_DIFF_REPOSITORIES,
+  DEFAULT_APP_NAME,
+  PACKAGE_NAMES,
+  RN_CHANGELOG_URLS
+} from './constants'
 import versions from './releases'
 
 const getRNDiffRepository = ({ packageName }) =>
@@ -55,10 +60,13 @@ export const getVersionsContentInDiff = ({
   })
 }
 
-const baseChangelogURL =
-  'https://github.com/react-native-community/releases/blob/master/CHANGELOG.md'
-export const getChangelogURL = ({ version }) =>
-  `${baseChangelogURL}#v${version.replace('.', '')}0`
+export const getChangelogURL = ({ version, packageName }) => {
+  if (packageName === PACKAGE_NAMES.RNW) {
+    return `${RN_CHANGELOG_URLS[packageName]}v${version}`
+  }
+
+  return `${RN_CHANGELOG_URLS[packageName]}#v${version.replace('.', '')}0`
+}
 
 // settings constants
 export const SHOW_LATEST_RCS = 'Show latest release candidates'
