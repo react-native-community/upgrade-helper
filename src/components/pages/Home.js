@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
-import { Alert, Card } from 'antd'
+import { Card } from 'antd'
 import GitHubButton from 'react-github-btn'
 import ReactGA from 'react-ga'
 import VersionSelector from '../common/VersionSelector'
@@ -9,9 +9,9 @@ import Settings from '../common/Settings'
 import { homepage } from '../../../package.json'
 import logo from '../../assets/logo.svg'
 import { SHOW_LATEST_RCS } from '../../utils'
-import { Link } from '../common/Markdown'
 import { useGetPackageNameFromURL } from '../../hooks/get-package-name-from-url'
 import { PACKAGE_NAMES } from '../../constants'
+import { TroubleshootingGuidesButton } from '../common/TroubleshootingGuidesButton'
 
 const Page = styled.div`
   display: flex;
@@ -111,22 +111,7 @@ const Home = () => {
             Star
           </StarButton>
 
-          {packageName === PACKAGE_NAMES.RN && (
-            <Alert
-              type="warning"
-              showIcon
-              message={
-                <>
-                  <span>Having problems with Xcode 12.5?</span>{' '}
-                  <Link href="https://github.com/facebook/react-native/issues/31480">
-                    Check here first
-                  </Link>
-                  <span>!</span>
-                </>
-              }
-              style={{ marginRight: 8 }}
-            />
-          )}
+          {packageName === PACKAGE_NAMES.RN && <TroubleshootingGuidesButton />}
 
           <Settings
             handleSettingsChange={handleSettingsChange}
