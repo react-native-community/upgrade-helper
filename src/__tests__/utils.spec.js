@@ -1,9 +1,11 @@
+import { PACKAGE_NAMES } from '../constants'
 import '../releases/__mocks__/index'
-import { getVersionsInDiff } from '../utils'
+import { getVersionsContentInDiff } from '../utils'
 
-describe('getVersionsInDiff', () => {
+describe('getVersionsContentInDiff', () => {
   it('returns the versions in the provided range', () => {
-    const versions = getVersionsInDiff({
+    const versions = getVersionsContentInDiff({
+      packageName: PACKAGE_NAMES.RN,
       fromVersion: '0.57.0',
       toVersion: '0.59.0'
     })
@@ -12,7 +14,8 @@ describe('getVersionsInDiff', () => {
   })
 
   it('returns the versions in the provided range with release candidates', () => {
-    const versions = getVersionsInDiff({
+    const versions = getVersionsContentInDiff({
+      packageName: PACKAGE_NAMES.RN,
       fromVersion: '0.56.0',
       toVersion: '0.59.0-rc.1'
     })
@@ -25,7 +28,8 @@ describe('getVersionsInDiff', () => {
   })
 
   it('returns the versions in the provided range with patches specified', () => {
-    const versions = getVersionsInDiff({
+    const versions = getVersionsContentInDiff({
+      packageName: PACKAGE_NAMES.RN,
       fromVersion: '0.57.2',
       toVersion: '0.59.9'
     })

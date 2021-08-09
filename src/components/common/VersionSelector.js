@@ -3,9 +3,9 @@ import styled from '@emotion/styled'
 import { Popover } from 'antd'
 import semver from 'semver/preload'
 import queryString from 'query-string'
-import { RELEASES_URL } from '../../utils'
 import { Select } from './'
 import UpgradeButton from './UpgradeButton'
+import { useFetchReleaseVersions } from '../../hooks/fetch-release-versions'
 
 const Selectors = styled.div`
   display: flex;
@@ -146,15 +146,34 @@ const doesVersionExist = ({ version, allVersions, minVersion }) => {
   }
 }
 
-const updateURLVersions = ({ fromVersion, toVersion }) => {
+const updateURLVersions = ({
+  packageName,
+  isPackageNameDefinedInURL,
+  fromVersion,
+  toVersion
+}) => {
   const pageURL = window.location.href.replace(window.location.search, '')
   const newURL = `?from=${fromVersion}&to=${toVersion}`
+  const packageNameInURL = isPackageNameDefinedInURL
+    ? `&package=${packageName}`
+    : ''
 
-  window.history.replaceState(null, null, `${pageURL}${newURL}`)
+  window.history.replaceState(
+    null,
+    null,
+    `${pageURL}${newURL}${packageNameInURL}`
+  )
 }
 
-const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
-  const [isLoading, setLoading] = useState(true)
+const VersionSelector = ({
+  packageName,
+  isPackageNameDefinedInURL,
+  showDiff,
+  showReleaseCandidates
+}) => {
+  const { isLoading, isDone, releaseVersions } = useFetchReleaseVersions({
+    packageName
+  })
   const [allVersions, setAllVersions] = useState([])
   const [fromVersionList, setFromVersionList] = useState([])
   const [toVersionList, setToVersionList] = useState([])
@@ -169,22 +188,19 @@ const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
     const versionsInURL = getVersionsInURL()
 
     const fetchVersions = async () => {
-      const response = await fetch(RELEASES_URL)
-
-      const allVersionsFromResponse = (await response.text()).split('\n')
-
       // Check if the versions provided in the URL are valid
       const hasFromVersionInURL = doesVersionExist({
         version: versionsInURL.fromVersion,
-        allVersions: allVersionsFromResponse
+        allVersions: releaseVersions
       })
+
       const hasToVersionInURL = doesVersionExist({
         version: versionsInURL.toVersion,
-        allVersions: allVersionsFromResponse,
+        allVersions: releaseVersions,
         minVersion: versionsInURL.fromVersion
       })
 
-      const latestVersion = allVersionsFromResponse[0]
+      const latestVersion = releaseVersions[0]
       // If the version from URL is not valid then fallback to the latest
       const toVersionToBeSet = hasToVersionInURL
         ? versionsInURL.toVersion
@@ -192,7 +208,7 @@ const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
 
       // Remove `rc` versions from the array of versions
       const sanitizedVersions = getReleasedVersionsWithCandidates({
-        releasedVersions: allVersionsFromResponse,
+        releasedVersions: releaseVersions,
         toVersion: toVersionToBeSet,
         latestVersion,
         showReleaseCandidates
@@ -224,19 +240,21 @@ const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
       setLocalFromVersion(fromVersionToBeSet)
       setLocalToVersion(toVersionToBeSet)
 
-      setLoading(false)
-
       const doesHaveVersionsInURL = hasFromVersionInURL && hasToVersionInURL
 
       setHasVersionsFromURL(doesHaveVersionsInURL)
-
-      if (doesHaveVersionsInURL) {
-        upgradeButtonEl.current.props.onClick()
-      }
     }
 
-    fetchVersions()
-  }, [setLocalFromVersion, setLocalToVersion, showReleaseCandidates])
+    if (isDone) {
+      fetchVersions()
+    }
+  }, [
+    isDone,
+    releaseVersions,
+    setLocalFromVersion,
+    setLocalToVersion,
+    showReleaseCandidates
+  ])
 
   useEffect(() => {
     if (isLoading) {
@@ -255,6 +273,10 @@ const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
         minVersion: localFromVersion
       })
     )
+
+    if (hasVersionsFromURL) {
+      upgradeButtonEl.current.props.onClick()
+    }
   }, [
     isLoading,
     allVersions,
@@ -264,13 +286,15 @@ const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
     showReleaseCandidates
   ])
 
-  const onShowDiff = ({ fromVersion, toVersion }) => {
+  const onShowDiff = () => {
     showDiff({
-      fromVersion,
-      toVersion
+      fromVersion: localFromVersion,
+      toVersion: localToVersion
     })
 
     updateURLVersions({
+      packageName,
+      isPackageNameDefinedInURL,
       fromVersion: localFromVersion,
       toVersion: localToVersion
     })
@@ -305,12 +329,7 @@ const VersionSelector = ({ showDiff, showReleaseCandidates }) => {
         />
       </Selectors>
 
-      <UpgradeButton
-        ref={upgradeButtonEl}
-        localFromVersion={localFromVersion}
-        localToVersion={localToVersion}
-        onShowDiff={onShowDiff}
-      />
+      <UpgradeButton ref={upgradeButtonEl} onShowDiff={onShowDiff} />
     </Fragment>
   )
 }

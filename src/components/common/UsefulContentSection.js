@@ -2,11 +2,12 @@ import React, { Component, Fragment } from 'react'
 import styled from '@emotion/styled'
 import { UpOutlined, DownOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
-import { getVersionsInDiff, getChangelogURL } from '../../utils'
+import { getVersionsContentInDiff, getChangelogURL } from '../../utils'
 import { Link } from './Markdown'
 import UpgradeSupportAlert from './UpgradeSupportAlert'
 import AppNameWarning from './AppNameWarning'
 import { motion } from 'framer-motion'
+import { PACKAGE_NAMES } from '../../constants'
 
 const Container = styled.div`
   position: relative;
@@ -144,11 +145,42 @@ class UsefulContentSection extends Component {
       isContentVisible: !isContentVisible
     }))
 
+  getChangelog = ({ version }) => {
+    const { packageName, toVersion } = this.props
+
+    if (packageName === PACKAGE_NAMES.RNW) {
+      return {
+        title: `React Native Windows ${toVersion} changelog`,
+        url: getChangelogURL({
+          packageName,
+          version: toVersion
+        }),
+        version: toVersion
+      }
+    }
+
+    const versionWithoutEndingZero = version.slice(0, 4)
+
+    return {
+      title: `React Native ${versionWithoutEndingZero} changelog`,
+      url: getChangelogURL({
+        packageName,
+        version: versionWithoutEndingZero
+      }),
+      version: versionWithoutEndingZero
+    }
+  }
+
   render() {
-    const { fromVersion, toVersion } = this.props
+    const { packageName, fromVersion, toVersion } = this.props
     const { isContentVisible } = this.state
 
-    const versions = getVersionsInDiff({ fromVersion, toVersion })
+    const versions = getVersionsContentInDiff({
+      packageName,
+      fromVersion,
+      toVersion
+    })
+
     const doesAnyVersionHaveUsefulContent = versions.some(
       ({ usefulContent }) => !!usefulContent
     )
@@ -176,22 +208,16 @@ class UsefulContentSection extends Component {
 
           <ContentContainer isContentVisible={isContentVisible}>
             {versions.map(({ usefulContent, version }, key) => {
-              const versionWithoutEndingZero = version.slice(0, 4)
+              const changelog = this.getChangelog({ version })
 
-              const links = [
-                ...usefulContent.links,
-                {
-                  title: `React Native ${versionWithoutEndingZero} changelog`,
-                  url: getChangelogURL({ version: versionWithoutEndingZero })
-                }
-              ]
+              const links = [...usefulContent.links, changelog]
 
               return (
                 <Fragment key={key}>
                   {key > 0 && <Separator />}
 
                   {hasMoreThanOneRelease && (
-                    <h3>Release {versionWithoutEndingZero}</h3>
+                    <h3>Release {changelog.version}</h3>
                   )}
 
                   <span>{usefulContent.description}</span>

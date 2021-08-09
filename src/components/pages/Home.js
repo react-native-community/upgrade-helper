@@ -9,6 +9,8 @@ import Settings from '../common/Settings'
 import { homepage } from '../../../package.json'
 import logo from '../../assets/logo.svg'
 import { SHOW_LATEST_RCS } from '../../utils'
+import { useGetPackageNameFromURL } from '../../hooks/get-package-name-from-url'
+import { PACKAGE_NAMES } from '../../constants'
 import { TroubleshootingGuidesButton } from '../common/TroubleshootingGuidesButton'
 
 const Page = styled.div`
@@ -51,6 +53,7 @@ const StarButton = styled(({ className, ...props }) => (
 `
 
 const Home = () => {
+  const { packageName, isPackageNameDefinedInURL } = useGetPackageNameFromURL()
   const [fromVersion, setFromVersion] = useState('')
   const [toVersion, setToVersion] = useState('')
   const [shouldShowDiff, setShouldShowDiff] = useState(false)
@@ -108,7 +111,7 @@ const Home = () => {
             Star
           </StarButton>
 
-          <TroubleshootingGuidesButton />
+          {packageName === PACKAGE_NAMES.RN && <TroubleshootingGuidesButton />}
 
           <Settings
             handleSettingsChange={handleSettingsChange}
@@ -120,6 +123,8 @@ const Home = () => {
         <VersionSelector
           showDiff={handleShowDiff}
           showReleaseCandidates={settings[SHOW_LATEST_RCS]}
+          packageName={packageName}
+          isPackageNameDefinedInURL={isPackageNameDefinedInURL}
         />
       </Container>
 
@@ -128,6 +133,7 @@ const Home = () => {
         fromVersion={fromVersion}
         toVersion={toVersion}
         appName={appName}
+        packageName={packageName}
       />
     </Page>
   )
