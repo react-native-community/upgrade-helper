@@ -191,6 +191,7 @@ const DiffHeader = ({
   resetCopyPathPopoverContent,
   appName,
   diffComments,
+  packageName,
   ...props
 }) => {
   const sanitizedFilePaths = getFilePathsToShow({ oldPath, newPath, appName })
@@ -235,6 +236,7 @@ const DiffHeader = ({
             visible={hasDiff && type !== 'delete'}
             version={toVersion}
             path={newPath}
+            packageName={packageName}
           />
           <DownloadFileButton
             visible={!hasDiff && type !== 'delete'}
