@@ -177,6 +177,7 @@ const Diff = ({
         onCompleteDiff={onCompleteDiff}
         appName={appName}
         diffComments={diffComments}
+        packageName={packageName}
       />
 
       {!isDiffCollapsed && (
