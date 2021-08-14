@@ -12,6 +12,7 @@ const Title = styled.h1`
 `
 
 const DiffSection = ({
+  packageName,
   diff,
   getDiffKey,
   title,
@@ -71,6 +72,7 @@ const DiffSection = ({
           <Diff
             key={`${diffFile.oldRevision}${diffFile.newRevision}`}
             {...diffFile}
+            packageName={packageName}
             // otakustay/react-diff-view#49
             type={diffFile.type === 'new' ? 'add' : diffFile.type}
             diffKey={diffKey}

@@ -1,7 +1,17 @@
-// this line HAAAAAAAAS to go
-const versions = ['0.64', '0.62', '0.61', '0.60', '0.59', '0.58', '0.57']
+import { PACKAGE_NAMES } from '../constants'
 
-export default versions.map(version => ({
-  ...require(`./${version}`).default,
-  version
-}))
+const versionsWithContent = {
+  [PACKAGE_NAMES.RN]: ['0.64', '0.62', '0.61', '0.60', '0.59', '0.58', '0.57'],
+  [PACKAGE_NAMES.RNW]: []
+}
+
+const getReleaseVersionFiles = packageName =>
+  versionsWithContent[packageName].map(version => ({
+    ...require(`./${packageName}/${version}`).default,
+    version
+  }))
+
+export default {
+  [PACKAGE_NAMES.RN]: getReleaseVersionFiles(PACKAGE_NAMES.RN),
+  [PACKAGE_NAMES.RNW]: getReleaseVersionFiles(PACKAGE_NAMES.RNW)
+}

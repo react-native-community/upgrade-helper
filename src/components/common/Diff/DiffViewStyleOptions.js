@@ -2,35 +2,23 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { Radio } from 'antd'
 
-const Container = styled.div`
-  position: relative;
-  border-width: 1px;
-  margin-top: 16px;
-  flex-direction: row-reverse;
-  display: flex;
-`
-
 const DiffViewStyleOptions = styled(
-  ({ handleViewStyleChange, diffViewStyle }) => {
-    return (
-      <Container>
-        <Radio.Group value={diffViewStyle}>
-          <Radio.Button
-            value="split"
-            onChange={() => handleViewStyleChange('split')}
-          >
-            Split
-          </Radio.Button>
-          <Radio.Button
-            value="unified"
-            onChange={() => handleViewStyleChange('unified')}
-          >
-            Unified
-          </Radio.Button>
-        </Radio.Group>
-      </Container>
-    )
-  }
+  ({ handleViewStyleChange, diffViewStyle }) => (
+    <Radio.Group value={diffViewStyle}>
+      <Radio.Button
+        value="split"
+        onChange={() => handleViewStyleChange('split')}
+      >
+        Split
+      </Radio.Button>
+      <Radio.Button
+        value="unified"
+        onChange={() => handleViewStyleChange('unified')}
+      >
+        Unified
+      </Radio.Button>
+    </Radio.Group>
+  )
 )`
   float: right;
   position: absolute;

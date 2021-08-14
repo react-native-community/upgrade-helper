@@ -3,19 +3,16 @@ import styled from '@emotion/styled'
 import { Tag, Button, Popover } from 'antd'
 import {
   CheckOutlined,
-  DownloadOutlined,
   DownOutlined,
   RightOutlined,
   CopyOutlined,
   RollbackOutlined
 } from '@ant-design/icons'
-import {
-  removeAppPathPrefix,
-  getBinaryFileURL,
-  replaceWithProvidedAppName
-} from '../../../utils'
+import { getFilePathsToShow } from '../../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import DiffCommentReminder from './DiffCommentReminder'
+import DownloadFileButton from '../DownloadFileButton'
+import ViewFileButton from '../ViewFileButton'
 
 export const testIDs = {
   collapseClickableArea: 'collapseClickableArea'
@@ -43,16 +40,6 @@ const FileRenameArrow = styled(RightOutlined)({
   margin: '0 5px',
   color: '#f78206'
 })
-
-const getFilePathsToShow = ({ oldPath, newPath, appName }) => {
-  const oldPathSanitized = replaceWithProvidedAppName(oldPath, appName)
-  const newPathSanitized = replaceWithProvidedAppName(newPath, appName)
-
-  return {
-    oldPath: removeAppPathPrefix(oldPathSanitized, appName),
-    newPath: removeAppPathPrefix(newPathSanitized, appName)
-  }
-}
 
 const FileName = ({ oldPath, newPath, type, appName }) => {
   if (type === 'delete') {
@@ -98,43 +85,6 @@ const BinaryBadge = ({ visible, ...props }) =>
       BINARY
     </Tag>
   ) : null
-
-const DownloadFileButton = styled(({ visible, version, path, ...props }) =>
-  visible ? (
-    <Button
-      {...props}
-      type="ghost"
-      shape="circle"
-      icon={<DownloadOutlined />}
-      target="_blank"
-      href={getBinaryFileURL({ version, path })}
-    />
-  ) : null
-)`
-  color: #24292e;
-  font-size: 12px;
-  border-width: 0;
-  &:hover,
-  &:focus {
-    color: #24292e;
-  }
-`
-
-const ViewFileButton = styled(({ visible, version, path, ...props }) =>
-  visible ? (
-    <Button
-      {...props}
-      type="link"
-      target="_blank"
-      href={getBinaryFileURL({ version, path })}
-    >
-      View file
-    </Button>
-  ) : null
-)`
-  font-size: 12px;
-  color: #24292e;
-`
 
 const defaultIconButtonStyle = `
   font-size: 13px;
@@ -245,6 +195,7 @@ const DiffHeader = ({
   resetCopyPathPopoverContent,
   appName,
   diffComments,
+  packageName,
   ...props
 }) => {
   const sanitizedFilePaths = getFilePathsToShow({ oldPath, newPath, appName })
@@ -290,6 +241,7 @@ const DiffHeader = ({
             visible={hasDiff && type !== 'delete'}
             version={toVersion}
             path={newPath}
+            packageName={packageName}
           />
           <DownloadFileButton
             visible={!hasDiff && type !== 'delete'}
