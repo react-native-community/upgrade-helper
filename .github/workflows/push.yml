@@ -33,21 +33,21 @@ jobs:
         run: yarn install
 
   lint:
-    needs: install
+    needs: [setup, install]
     runs-on: ubuntu-latest
     steps:
       - name: Run lint
         run: yarn lint
 
   test:
-    needs: install
+    needs: [setup, install]
     runs-on: ubuntu-latest
     steps:
       - name: Run tests
         run: yarn test --runInBand
 
   test-e2e:
-    needs: install
+    needs: [setup, install]
     runs-on: ubuntu-latest
     steps:
       - name: Run e2e tests
