@@ -6,14 +6,14 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
+      - name: ⬇️ Checkout repository code
         uses: actions/checkout@v2
 
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
 
-      - name: Upload output
+      - name: ⬆️ Upload output
         uses: actions/upload-artifact@v2
         with:
           name: ${{ github.sha }}
@@ -23,27 +23,24 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: Restore output
+      - name: ⬇️ Restore output
         uses: actions/download-artifact@v2
         with:
           name: ${{ github.sha }}
 
-      - name: Install dependencies
+      - name: 🛠 Install dependencies
         uses: bahmutov/npm-install@v1
-
-      - name: Install dependencies
-        run: yarn install
 
   lint:
     needs: [setup, install]
     runs-on: ubuntu-latest
     steps:
-      - name: Restore output
+      - name: ⬇️ Restore output
         uses: actions/download-artifact@v2
         with:
           name: ${{ github.sha }}
 
-      - name: Install dependencies
+      - name: 🛠 Install dependencies
         uses: bahmutov/npm-install@v1
 
       - name: Run lint
@@ -53,12 +50,12 @@ jobs:
     needs: [setup, install]
     runs-on: ubuntu-latest
     steps:
-      - name: Restore output
+      - name: ⬇️ Restore output
         uses: actions/download-artifact@v2
         with:
           name: ${{ github.sha }}
 
-      - name: Install dependencies
+      - name: 🛠 Install dependencies
         uses: bahmutov/npm-install@v1
 
       - name: Run tests
@@ -68,7 +65,7 @@ jobs:
     needs: [setup, install]
     runs-on: ubuntu-latest
     steps:
-      - name: Restore output
+      - name: ⬇️ Restore output
         uses: actions/download-artifact@v2
         with:
           name: ${{ github.sha }}
