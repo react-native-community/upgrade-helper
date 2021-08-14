@@ -28,17 +28,8 @@ jobs:
         with:
           name: ${{ github.sha }}
 
-      - name: Get yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - name: Restore yarn dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
 
       - name: Install dependencies
         run: yarn install
@@ -52,21 +43,8 @@ jobs:
         with:
           name: ${{ github.sha }}
 
-      - name: Get yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - name: Restore yarn dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install
+        uses: bahmutov/npm-install@v1
 
       - name: Run lint
         run: yarn lint
@@ -80,21 +58,8 @@ jobs:
         with:
           name: ${{ github.sha }}
 
-      - name: Get yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - name: Restore yarn dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install
+        uses: bahmutov/npm-install@v1
 
       - name: Run tests
         run: yarn test --runInBand
@@ -108,21 +73,8 @@ jobs:
         with:
           name: ${{ github.sha }}
 
-      - name: Get yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - name: Restore yarn dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install
+        uses: bahmutov/npm-install@v1
 
       - name: Run e2e tests
         run: yarn test-e2e
