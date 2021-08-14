@@ -73,8 +73,5 @@ jobs:
         with:
           name: ${{ github.sha }}
 
-      - name: Install dependencies
-        uses: bahmutov/npm-install@v1
-
       - name: Run e2e tests
         run: yarn test-e2e
