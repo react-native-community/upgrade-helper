@@ -72,3 +72,10 @@ jobs:
 
       - name: Run e2e tests
         run: yarn test-e2e
+
+      - name: ⬆️ Upload output
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: image-comparisons
+          path: ./src/__tests__/__image_snapshots__/__diff_output__/
