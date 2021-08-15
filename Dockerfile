@@ -9,6 +9,6 @@ WORKDIR /app
 
 COPY package.json yarn.lock ./
 
-RUN yarn && yarn cache clean
+RUN yarn --no-cache --frozen-lockfile
 
 COPY . .
