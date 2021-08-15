@@ -5,6 +5,10 @@ import createPersistedState from 'use-persisted-state'
 import { differenceInDays } from 'date-fns'
 import { TroubleshootingGuides } from './TroubleshootingGuides'
 
+export const testIDs = {
+  troubleshootingGuidesButton: 'troubleshootingGuidesButton'
+}
+
 const useTooltip = createPersistedState('troubleshootingTooltip')
 
 const Icon = styled.span`
@@ -85,7 +89,10 @@ const TroubleshootingGuidesButton = () => {
       visible={showContent}
       onVisibleChange={handlePopoverVisibilityChange}
     >
-      <Button onClick={handleToggleShowContent}>
+      <Button
+        data-testid={testIDs.troubleshootingGuidesButton}
+        onClick={handleToggleShowContent}
+      >
         <Icon role="img">⚠️</Icon>
       </Button>
     </Popover>
