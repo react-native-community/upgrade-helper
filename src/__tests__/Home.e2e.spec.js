@@ -3,6 +3,7 @@ import { testIDs as versionSelectorTestIDs } from '../components/common/VersionS
 import { testIDs as upgradeButtonTestIDs } from '../components/common/UpgradeButton'
 import { testIDs as diffSectionTestIDs } from '../components/common/Diff/DiffSection'
 import { testIDs as diffHeaderTestIDs } from '../components/common/Diff/DiffHeader'
+import { testIDs as troubleshootingGuidesButtonTestIDs } from '../components/common/TroubleshootingGuidesButton'
 
 describe('Home', () => {
   let page
@@ -27,7 +28,7 @@ describe('Home', () => {
     }, targetVersion)
   }
 
-  it('1. should load the top component with logo and versions', async () => {
+  it('1. should load the top component with logo, versions and troubleshooting guides alert', async () => {
     await waitToRender()
 
     const image = await page.screenshot()
@@ -35,7 +36,31 @@ describe('Home', () => {
     expect(image).toMatchImageSnapshot()
   })
 
-  it('2. should load the current versions', async () => {
+  it('2. should hide the troubleshooting guides alert and show the troubleshooting guides', async () => {
+    await page.click(
+      `button[data-testid="${troubleshootingGuidesButtonTestIDs.troubleshootingGuidesButton}"]`
+    )
+
+    await waitToRender()
+
+    const image = await page.screenshot()
+
+    expect(image).toMatchImageSnapshot()
+  })
+
+  it('3. should hide the troubleshooting guides and show the normal header', async () => {
+    await page.click(
+      `button[data-testid="${troubleshootingGuidesButtonTestIDs.troubleshootingGuidesButton}"]`
+    )
+
+    await waitToRender()
+
+    const image = await page.screenshot()
+
+    expect(image).toMatchImageSnapshot()
+  })
+
+  it('4. should load the current versions', async () => {
     await page.click(
       `div[data-testid="${versionSelectorTestIDs.fromVersionSelector}"] input`
     )
@@ -47,7 +72,7 @@ describe('Home', () => {
     expect(image).toMatchImageSnapshot()
   })
 
-  it('3. should select a current version', async () => {
+  it('5. should select a current version', async () => {
     await selectVersion('0.63.2')
 
     await waitToRender()
@@ -57,7 +82,7 @@ describe('Home', () => {
     expect(image).toMatchImageSnapshot()
   })
 
-  it('4. should load the upgrading versions', async () => {
+  it('6. should load the upgrading versions', async () => {
     await page.click(
       `div[data-testid="${versionSelectorTestIDs.toVersionSelector}"] input`
     )
@@ -69,7 +94,7 @@ describe('Home', () => {
     expect(image).toMatchImageSnapshot()
   })
 
-  it('5. should select an upgrading version', async () => {
+  it('7. should select an upgrading version', async () => {
     await selectVersion('0.64.2')
     await waitToRender()
 
@@ -78,7 +103,7 @@ describe('Home', () => {
     expect(image).toMatchImageSnapshot()
   })
 
-  it('6. should load the upgrading content', async () => {
+  it('8. should load the upgrading content', async () => {
     await page.click(`[data-testid="${upgradeButtonTestIDs.upgradeButton}"]`)
     await waitToRender()
 
@@ -87,7 +112,7 @@ describe('Home', () => {
     expect(image).toMatchImageSnapshot()
   })
 
-  it('7. should scroll to the first file in diff', async () => {
+  it('9. should scroll to the first file in diff', async () => {
     await page.evaluate(testID => {
       document
         .querySelector(`[data-testid="${testID}"]`)
@@ -100,7 +125,7 @@ describe('Home', () => {
     expect(image).toMatchImageSnapshot()
   })
 
-  it('8. should collapse first file in diff', async () => {
+  it('10. should collapse first file in diff', async () => {
     await page.click(
       `[data-testid="${diffHeaderTestIDs.collapseClickableArea}"]`
     )
