@@ -2,6 +2,10 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { Button as AntdButton } from 'antd'
 
+export const testIDs = {
+  upgradeButton: 'upgradeButton'
+}
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -21,6 +25,7 @@ const UpgradeButton = React.forwardRef(({ onShowDiff, ...props }, ref) => (
       ref={ref}
       type="primary"
       size="large"
+      data-testid={testIDs.upgradeButton}
       onClick={onShowDiff}
     >
       Show me how to upgrade!

@@ -14,6 +14,10 @@ import DiffCommentReminder from './DiffCommentReminder'
 import DownloadFileButton from '../DownloadFileButton'
 import ViewFileButton from '../ViewFileButton'
 
+export const testIDs = {
+  collapseClickableArea: 'collapseClickableArea'
+}
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -200,6 +204,7 @@ const DiffHeader = ({
     <Wrapper {...props}>
       <div>
         <CollapseClickableArea
+          data-testid={testIDs.collapseClickableArea}
           onClick={({ altKey }) => setIsDiffCollapsed(!isDiffCollapsed, altKey)}
         >
           <CollapseDiffButton

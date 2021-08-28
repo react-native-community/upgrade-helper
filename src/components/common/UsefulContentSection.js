@@ -2,7 +2,11 @@ import React, { Component, Fragment } from 'react'
 import styled from '@emotion/styled'
 import { UpOutlined, DownOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
-import { getVersionsContentInDiff, getChangelogURL } from '../../utils'
+import {
+  getVersionsContentInDiff,
+  getChangelogURL,
+  getTransitionDuration
+} from '../../utils'
 import { Link } from './Markdown'
 import UpgradeSupportAlert from './UpgradeSupportAlert'
 import AppNameWarning from './AppNameWarning'
@@ -43,7 +47,7 @@ const Title = styled(({ isContentVisible, ...props }) => (
     initial={isContentVisible ? 'visibleContent' : 'hiddenContent'}
     animate={isContentVisible ? 'visibleContent' : 'hiddenContent'}
     transition={{
-      duration: 0.25
+      duration: getTransitionDuration(0.25)
     }}
     inherit={false}
   />
@@ -68,7 +72,7 @@ const ContentContainer = styled(({ isContentVisible, children, ...props }) => (
     initial={isContentVisible ? 'visible' : 'hidden'}
     animate={isContentVisible ? 'visible' : 'hidden'}
     transition={{
-      duration: 0.25
+      duration: getTransitionDuration(0.25)
     }}
     inherit={false}
   >

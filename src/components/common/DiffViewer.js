@@ -4,6 +4,7 @@ import { Alert } from 'antd'
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
 import { withChangeSelect } from 'react-diff-view'
 import 'react-diff-view/style/index.css'
+import { getTransitionDuration } from '../../utils'
 import DiffSection from './Diff/DiffSection'
 import DiffLoading from './Diff/DiffLoading'
 import UsefulContentSection from './UsefulContentSection'
@@ -145,7 +146,7 @@ const DiffViewer = ({
         <motion.div
           initial={{ opacity: 0, translateY: 75 }}
           animate={{ opacity: 1, translateY: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: getTransitionDuration(0.5) }}
         >
           <UsefulContentSection
             isLoading={isLoading}

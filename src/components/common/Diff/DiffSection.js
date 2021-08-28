@@ -3,6 +3,10 @@ import styled from '@emotion/styled'
 import semver from 'semver'
 import Diff from './Diff'
 
+export const testIDs = {
+  diffSection: 'diffSection'
+}
+
 const Title = styled.h1`
   margin-top: 0.5em;
 `
@@ -39,7 +43,7 @@ const DiffSection = ({
   const isUpgradingFrom61To62 = getIsUpgradingFrom61To62()
 
   return (
-    <div>
+    <div data-testid={testIDs.diffSection}>
       {title && completedDiffs.length > 0 && (
         <Title ref={doneTitleRef}>{title}</Title>
       )}

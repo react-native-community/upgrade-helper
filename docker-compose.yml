@@ -1,0 +1,17 @@
+version: '3'
+
+volumes:
+  yarn:
+
+services:
+  tests:
+    image: tests
+    build:
+      context: ./
+    volumes:
+      - yarn:/home/node/.cache/yarn
+      - ./src:/app/src
+      - ./test:/app/test
+      - ./package.json:/usr/src/app/package.json
+      - ./yarn.lock:/usr/src/app/yarn.lock
+    command: sh -c "yarn docker-test-e2e"
