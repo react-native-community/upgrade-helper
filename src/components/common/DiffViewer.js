@@ -181,6 +181,7 @@ const DiffViewer = ({
 
           <DiffSection
             {...diffSectionProps}
+            packageName={packageName}
             isDoneSection={true}
             title="Done"
             appName={appName}

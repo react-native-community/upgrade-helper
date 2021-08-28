@@ -21,10 +21,13 @@ export const getDiffURL = ({ packageName, fromVersion, toVersion }) =>
   })}/diffs/diffs/${fromVersion}..${toVersion}.diff`
 
 // `path` must contain `RnDiffApp` prefix
-export const getBinaryFileURL = ({ packageName, version, path }) =>
-  `https://github.com/${getRNDiffRepository({
+export const getBinaryFileURL = ({ packageName, version, path }) => {
+  const branch = packageName === PACKAGE_NAMES.RNW ? `cpp/${version}` : version
+
+  return `https://github.com/${getRNDiffRepository({
     packageName
-  })}/raw/release/${version}/${path}`
+  })}/raw/release/${branch}/${path}`
+}
 
 export const removeAppPathPrefix = (path, appName) =>
   path.replace(new RegExp(`${appName || DEFAULT_APP_NAME}/`), '')
