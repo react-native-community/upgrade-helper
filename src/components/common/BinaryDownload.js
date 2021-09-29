@@ -32,18 +32,29 @@ const Popover = styled(({ className, ...props }) => (
   }
 `
 
-const BinaryList = ({ binaryFiles, toVersion, appName }) =>
+const BinaryList = ({ binaryFiles, toVersion, appName, packageName }) =>
   binaryFiles.map(({ newPath }, index) => {
     return (
       <BinaryRow key={index} index={index}>
         {removeAppPathPrefix(newPath, appName)}
 
-        <DownloadFileButton visible={true} version={toVersion} path={newPath} />
+        <DownloadFileButton
+          visible={true}
+          version={toVersion}
+          path={newPath}
+          packageName={packageName}
+        />
       </BinaryRow>
     )
   })
 
-const BinaryDownload = ({ diff, fromVersion, toVersion, appName }) => {
+const BinaryDownload = ({
+  diff,
+  fromVersion,
+  toVersion,
+  appName,
+  packageName
+}) => {
   const binaryFiles = diff.filter(
     ({ hunks, type }) => hunks.length === 0 && type !== 'delete'
   )
@@ -61,6 +72,7 @@ const BinaryDownload = ({ diff, fromVersion, toVersion, appName }) => {
             binaryFiles={binaryFiles}
             toVersion={toVersion}
             appName={appName}
+            packageName={packageName}
           />
         }
         trigger="click"
