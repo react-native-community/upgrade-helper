@@ -161,6 +161,7 @@ const DiffViewer = ({
               fromVersion={fromVersion}
               toVersion={toVersion}
               appName={appName}
+              packageName={packageName}
             />
 
             <ViewStyleOptions

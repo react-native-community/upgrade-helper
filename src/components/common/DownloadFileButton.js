@@ -4,17 +4,20 @@ import { Button } from 'antd'
 import { DownloadOutlined } from '@ant-design/icons'
 import { getBinaryFileURL } from '../../utils'
 
-const DownloadFileButton = styled(({ visible, version, path, ...props }) =>
-  visible ? (
-    <Button
-      {...props}
-      type="ghost"
-      shape="circle"
-      icon={<DownloadOutlined />}
-      target="_blank"
-      href={getBinaryFileURL({ version, path })}
-    />
-  ) : null
+const DownloadFileButton = styled(
+  ({ visible, version, path, packageName, ...props }) => {
+    console.info(visible, version, path, packageName)
+    return visible ? (
+      <Button
+        {...props}
+        type="ghost"
+        shape="circle"
+        icon={<DownloadOutlined />}
+        target="_blank"
+        href={getBinaryFileURL({ packageName, version, path })}
+      />
+    ) : null
+  }
 )`
   color: #24292e;
   font-size: 12px;
