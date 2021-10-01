@@ -247,6 +247,7 @@ const DiffHeader = ({
             visible={!hasDiff && type !== 'delete'}
             version={toVersion}
             path={newPath}
+            packageName={packageName}
           />
           <CompleteDiffButton
             visible={isDiffCompleted}
