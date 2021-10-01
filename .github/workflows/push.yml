@@ -1,0 +1,81 @@
+name: Push
+
+on: [push]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repository code
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: ⬆️ Upload output
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ github.sha }}
+          path: ./**
+
+  install:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Restore output
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ github.sha }}
+
+      - name: 🛠 Install dependencies
+        uses: bahmutov/npm-install@v1
+
+  lint:
+    needs: [setup, install]
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Restore output
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ github.sha }}
+
+      - name: 🛠 Install dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Run lint
+        run: yarn lint
+
+  test:
+    needs: [setup, install]
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Restore output
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ github.sha }}
+
+      - name: 🛠 Install dependencies
+        uses: bahmutov/npm-install@v1
+
+      - name: Run tests
+        run: yarn test --runInBand
+
+  test-e2e:
+    needs: [setup, install]
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Restore output
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ github.sha }}
+
+      - name: Run e2e tests
+        run: yarn test-e2e
+
+      - name: ⬆️ Upload output
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: image-comparisons
+          path: ./src/__tests__/__image_snapshots__/__diff_output__/

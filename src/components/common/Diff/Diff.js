@@ -86,6 +86,7 @@ const isDiffCollapsedByDefault = ({ type, hunks }) =>
   type === 'delete' || hunks.length > 5 ? true : undefined
 
 const Diff = ({
+  packageName,
   oldPath,
   newPath,
   type,
@@ -143,7 +144,13 @@ const Diff = ({
     setIsDiffCollapsed(true)
   }
 
-  const diffComments = getComments({ newPath, fromVersion, toVersion, appName })
+  const diffComments = getComments({
+    packageName,
+    newPath,
+    fromVersion,
+    toVersion,
+    appName
+  })
 
   return (
     <Container>
@@ -170,6 +177,7 @@ const Diff = ({
         onCompleteDiff={onCompleteDiff}
         appName={appName}
         diffComments={diffComments}
+        packageName={packageName}
       />
 
       {!isDiffCollapsed && (

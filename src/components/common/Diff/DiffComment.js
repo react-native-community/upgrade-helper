@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
-import { removeAppPathPrefix, getVersionsInDiff } from '../../../utils'
+import { removeAppPathPrefix, getVersionsContentInDiff } from '../../../utils'
 import Markdown from '../Markdown'
 
 const lineColors = {
@@ -92,10 +92,14 @@ const LINE_CHANGE_TYPES = {
 const getLineNumberWithType = ({ lineChangeType, lineNumber }) =>
   `${LINE_CHANGE_TYPES[lineChangeType.toUpperCase()]}${lineNumber}`
 
-const getComments = ({ newPath, fromVersion, toVersion, appName }) => {
+const getComments = ({ packageName, newPath, fromVersion, toVersion }) => {
   const newPathSanitized = removeAppPathPrefix(newPath)
 
-  const versionsInDiff = getVersionsInDiff({ fromVersion, toVersion }).filter(
+  const versionsInDiff = getVersionsContentInDiff({
+    packageName,
+    fromVersion,
+    toVersion
+  }).filter(
     ({ comments }) =>
       comments &&
       comments.length > 0 &&
