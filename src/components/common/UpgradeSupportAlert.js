@@ -8,19 +8,19 @@ const UpgradeSupportAlert = styled(props => (
       Check out{' '}
       <Tooltip
         placement="bottom"
-        title="Upgrade Support is a community-backed place to request and give help when upgrading your app."
+        title="Backstage's Support is a community-backed place to request and give help."
       >
         <a
-          href="https://github.com/react-native-community/upgrade-support"
+          href="https://backstage.io/docs/overview/support"
           target="_blank"
           rel="noopener noreferrer"
           {...props}
         >
-          Upgrade Support
+          Support and community
         </a>
       </Tooltip>{' '}
-      if you are experiencing issues related to React Native during the
-      upgrading process.
+      if you are experiencing issues related to Backstage during the upgrading
+      process.
     </span>
   </div>
 ))`
