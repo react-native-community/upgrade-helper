@@ -13,6 +13,7 @@ import { useGetLanguageFromURL } from '../../hooks/get-language-from-url'
 import { useGetPackageNameFromURL } from '../../hooks/get-package-name-from-url'
 import { PACKAGE_NAMES } from '../../constants'
 import { TroubleshootingGuidesButton } from '../common/TroubleshootingGuidesButton'
+import { ReleasesProvider } from '../../ReleaseProvider'
 
 const Page = styled.div`
   display: flex;
@@ -94,56 +95,59 @@ const Home = () => {
   */
 
   return (
-    <Page>
-      <Container>
-        <TitleContainer>
-          <LogoImg alt="Backstage logo" title="React logo" src={logo} />
+    <ReleasesProvider packageName={packageName}>
+      <Page>
+        <Container>
+          <TitleContainer>
+            <LogoImg alt="Backstage logo" title="React logo" src={logo} />
 
-          <a href={homepage}>
-            <TitleHeader>Backstage Upgrade Helper</TitleHeader>
-          </a>
-          {/* TODO temporary disabled */ false ? (
-            <StarButton
-              href="https://github.com/react-native-community/upgrade-helper"
-              data-icon="octicon-star"
-              data-show-count="true"
-              aria-label="Star react-native-community/upgrade-helper on GitHub"
-            >
-              Star
-            </StarButton>
-          ) : (
-            <span style={{ marginRight: 'auto' }} />
-          )}
+            <a href={homepage}>
+              <TitleHeader>Backstage Upgrade Helper</TitleHeader>
+            </a>
+            {/* TODO temporary disabled */ false ? (
+              <StarButton
+                href="https://github.com/react-native-community/upgrade-helper"
+                data-icon="octicon-star"
+                data-show-count="true"
+                aria-label="Star react-native-community/upgrade-helper on GitHub"
+              >
+                Star
+              </StarButton>
+            ) : (
+              <span style={{ marginRight: 'auto' }} />
+            )}
 
-          {packageName === PACKAGE_NAMES.RN && <TroubleshootingGuidesButton />}
+            {packageName === PACKAGE_NAMES.RN && (
+              <TroubleshootingGuidesButton />
+            )}
 
-          {/*
+            {/*
           <Settings
             handleSettingsChange={handleSettingsChange}
             appName={appName}
             onChangeAppName={setAppName}
 /> */}
-        </TitleContainer>
+          </TitleContainer>
 
-        <VersionSelector
-          showDiff={handleShowDiff}
-          showReleaseCandidates={settings[SHOW_LATEST_RCS]}
+          <VersionSelector
+            showDiff={handleShowDiff}
+            showReleaseCandidates={settings[SHOW_LATEST_RCS]}
+            packageName={packageName}
+            isPackageNameDefinedInURL={isPackageNameDefinedInURL}
+            isLanguageDefinedInURL={isLanguageDefinedInURL}
+          />
+        </Container>
+
+        <DiffViewer
+          shouldShowDiff={shouldShowDiff}
+          fromVersion={fromVersion}
+          toVersion={toVersion}
+          appName={appName}
           packageName={packageName}
           language={language}
-          isPackageNameDefinedInURL={isPackageNameDefinedInURL}
-          isLanguageDefinedInURL={isLanguageDefinedInURL}
         />
-      </Container>
-
-      <DiffViewer
-        shouldShowDiff={shouldShowDiff}
-        fromVersion={fromVersion}
-        toVersion={toVersion}
-        appName={appName}
-        packageName={packageName}
-        language={language}
-      />
-    </Page>
+      </Page>
+    </ReleasesProvider>
   )
 }
 

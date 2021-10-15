@@ -1,11 +1,11 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react'
+import React, { Fragment, useState, useMemo, useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
 import { Popover } from 'antd'
 import semver from 'semver/preload'
 import queryString from 'query-string'
 import { Select } from './'
 import UpgradeButton from './UpgradeButton'
-import { useFetchReleaseVersions } from '../../hooks/fetch-release-versions'
+import { useReleases } from '../../ReleaseProvider'
 
 export const testIDs = {
   fromVersionSelector: 'fromVersionSelector',
@@ -184,9 +184,6 @@ const VersionSelector = ({
   showDiff,
   showReleaseCandidates
 }) => {
-  const { isLoading, isDone, releaseVersions } = useFetchReleaseVersions({
-    packageName
-  })
   const [allVersions, setAllVersions] = useState([])
   const [fromVersionList, setFromVersionList] = useState([])
   const [toVersionList, setToVersionList] = useState([])
@@ -196,6 +193,11 @@ const VersionSelector = ({
   const [localToVersion, setLocalToVersion] = useState('')
 
   const upgradeButtonEl = useRef(null)
+  const { isDone, isLoading, releases } = useReleases()
+  const releaseVersions = useMemo(
+    () => releases?.map(({ version }) => version),
+    [releases]
+  )
 
   useEffect(() => {
     const versionsInURL = getVersionsInURL()
