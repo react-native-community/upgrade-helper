@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
 import styled from '@emotion/styled'
 import { motion } from 'framer-motion'
 import { removeAppPathPrefix, getVersionsContentInDiff } from '../../../utils'
@@ -116,7 +116,10 @@ const getComments = ({ packageName, newPath, fromVersion, toVersion }) => {
         return {
           ...versionComments,
           [getLineNumberWithType({ lineChangeType, lineNumber })]: (
-            <DiffComment content={content} lineChangeType={lineChangeType} />
+            <DiffComment
+              content={<Fragment>{content}</Fragment>}
+              lineChangeType={lineChangeType}
+            />
           )
         }
       },
