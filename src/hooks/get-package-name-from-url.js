@@ -8,7 +8,7 @@ export const useGetPackageNameFromURL = () => {
 
   if (!packageNameFromURL || !packageNames.includes(packageNameFromURL)) {
     return {
-      packageName: PACKAGE_NAMES.RN,
+      packageName: PACKAGE_NAMES.BACKSTAGE,
       isPackageNameDefinedInURL: false
     }
   }
