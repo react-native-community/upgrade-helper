@@ -5,7 +5,6 @@ import {
   PACKAGE_NAMES,
   RN_CHANGELOG_URLS
 } from './constants'
-import versions from './releases'
 
 const getRNDiffRepository = ({ packageName }) =>
   RN_DIFF_REPOSITORIES[packageName]
@@ -60,17 +59,13 @@ export const replaceWithProvidedAppName = (path, appName) => {
 }
 
 export const getVersionsContentInDiff = ({
-  packageName,
   fromVersion,
-  toVersion
+  toVersion,
+  versions
 }) => {
-  if (!versions[packageName]) {
-    return []
-  }
-
   const cleanedToVersion = semver.valid(semver.coerce(toVersion))
 
-  return versions[packageName].filter(({ version }) => {
+  return versions.filter(({ version }) => {
     const cleanedVersion = semver.coerce(version)
 
     // `cleanedVersion` can't be newer than `cleanedToVersion` nor older (or equal) than `fromVersion`

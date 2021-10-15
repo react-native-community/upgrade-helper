@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import styled from '@emotion/styled'
 import {
   Diff as RDiff,
@@ -10,6 +10,7 @@ import {
 import DiffHeader from './DiffHeader'
 import { getComments } from './DiffComment'
 import { replaceWithProvidedAppName } from '../../../utils'
+import { useReleases } from '../../../ReleaseProvider'
 
 const copyPathPopoverContentOpts = {
   default: 'Click to copy file path',
@@ -138,14 +139,17 @@ const Diff = ({
     [appName]
   )
 
-  if (areAllCollapsed !== undefined && areAllCollapsed !== isDiffCollapsed) {
-    setIsDiffCollapsed(areAllCollapsed)
-  } else if (isDiffCompleted && isDiffCollapsed === undefined) {
-    setIsDiffCollapsed(true)
-  }
+  useEffect(() => {
+    if (areAllCollapsed !== undefined && areAllCollapsed !== isDiffCollapsed) {
+      setIsDiffCollapsed(areAllCollapsed)
+    } else if (isDiffCompleted && isDiffCollapsed === undefined) {
+      setIsDiffCollapsed(true)
+    }
+  }, [areAllCollapsed, isDiffCollapsed, isDiffCompleted])
 
+  const { releases } = useReleases()
   const diffComments = getComments({
-    packageName,
+    versions: releases,
     newPath,
     fromVersion,
     toVersion,

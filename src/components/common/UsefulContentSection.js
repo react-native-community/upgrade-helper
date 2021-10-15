@@ -12,6 +12,7 @@ import UpgradeSupportAlert from './UpgradeSupportAlert'
 // import AppNameWarning from './AppNameWarning'
 import { motion } from 'framer-motion'
 import { PACKAGE_NAMES } from '../../constants'
+import { ReleasesContext } from '../../ReleaseProvider'
 
 const Container = styled.div`
   position: relative;
@@ -167,9 +168,9 @@ class UsefulContentSection extends Component {
         title: `Backstage ${toVersion} changelog`,
         url: getChangelogURL({
           packageName,
-          version: toVersion
+          version
         }),
-        version: toVersion
+        version
       }
     }
 
@@ -186,13 +187,13 @@ class UsefulContentSection extends Component {
   }
 
   render() {
-    const { packageName, fromVersion, toVersion } = this.props
+    const { fromVersion, toVersion } = this.props
     const { isContentVisible } = this.state
 
     const versions = getVersionsContentInDiff({
-      packageName,
       fromVersion,
-      toVersion
+      toVersion,
+      versions: this.context.releases
     })
 
     const doesAnyVersionHaveUsefulContent = versions.some(
@@ -224,7 +225,7 @@ class UsefulContentSection extends Component {
             {versions.map(({ usefulContent, version }, key) => {
               const changelog = this.getChangelog({ version })
 
-              const links = [...usefulContent.links, changelog]
+              const links = [...(usefulContent?.links || []), changelog]
 
               return (
                 <Fragment key={key}>
@@ -234,7 +235,7 @@ class UsefulContentSection extends Component {
                     <h3>Release {changelog.version}</h3>
                   )}
 
-                  <span>{usefulContent.description}</span>
+                  <span>{usefulContent?.description}</span>
 
                   <List>
                     {links.map(({ url, title }, key) => (
@@ -258,5 +259,7 @@ class UsefulContentSection extends Component {
     )
   }
 }
+
+UsefulContentSection.contextType = ReleasesContext
 
 export default UsefulContentSection

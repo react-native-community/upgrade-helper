@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { useFetchReleases } from './hooks/fetch-release-versions'
 
-const ReleasesContext = React.createContext({
+export const ReleasesContext = React.createContext({
   isDone: false,
   isLoading: false,
   releases: undefined
