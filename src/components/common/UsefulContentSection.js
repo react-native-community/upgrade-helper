@@ -9,7 +9,7 @@ import {
 } from '../../utils'
 import { Link } from './Markdown'
 import UpgradeSupportAlert from './UpgradeSupportAlert'
-import AppNameWarning from './AppNameWarning'
+// import AppNameWarning from './AppNameWarning'
 import { motion } from 'framer-motion'
 import { PACKAGE_NAMES } from '../../constants'
 
@@ -162,6 +162,16 @@ class UsefulContentSection extends Component {
         version: toVersion
       }
     }
+    if (packageName === PACKAGE_NAMES.BACKSTAGE) {
+      return {
+        title: `Backstage ${toVersion} changelog`,
+        url: getChangelogURL({
+          packageName,
+          version: toVersion
+        }),
+        version: toVersion
+      }
+    }
 
     const versionWithoutEndingZero = version.slice(0, 4)
 
@@ -238,10 +248,10 @@ class UsefulContentSection extends Component {
             })}
 
             <UpgradeSupportAlert />
-
+            {/*
             <Separator />
 
-            <AppNameWarning />
+             <AppNameWarning /> */}
           </ContentContainer>
         </InnerContainer>
       </Container>
