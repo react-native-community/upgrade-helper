@@ -1,4 +1,4 @@
-export const DEFAULT_APP_NAME = 'RnDiffApp'
+export const DEFAULT_APP_NAMES = ['RnDiffApp', 'DiffApp']
 
 export const PACKAGE_NAMES = {
   RN: 'react-native',

@@ -1,7 +1,7 @@
 import semver from 'semver/preload'
 import {
   RN_DIFF_REPOSITORIES,
-  DEFAULT_APP_NAME,
+  DEFAULT_APP_NAMES,
   PACKAGE_NAMES,
   RN_CHANGELOG_URLS
 } from './constants'
@@ -30,7 +30,9 @@ export const getBinaryFileURL = ({ packageName, version, path }) => {
 }
 
 export const removeAppPathPrefix = (path, appName) =>
-  path.replace(new RegExp(`${appName || DEFAULT_APP_NAME}/`), '')
+  path
+    .replace(new RegExp(`${appName || DEFAULT_APP_NAMES.join('|')}/`), '')
+    .replace(/^\//, '')
 
 export const replaceWithProvidedAppName = (path, appName) => {
   if (!appName) {
@@ -38,9 +40,14 @@ export const replaceWithProvidedAppName = (path, appName) => {
   }
 
   return path
-    .replace(new RegExp(DEFAULT_APP_NAME, 'g'), appName)
+    .replace(new RegExp(DEFAULT_APP_NAMES.join('|'), 'g'), appName)
     .replace(
-      new RegExp(DEFAULT_APP_NAME.toLowerCase(), 'g'),
+      new RegExp(
+        DEFAULT_APP_NAMES.map(defaultAppName =>
+          defaultAppName.toLowerCase()
+        ).join('|'),
+        'g'
+      ),
       appName.toLowerCase()
     )
 }
