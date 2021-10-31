@@ -5,9 +5,8 @@ import { DownloadOutlined } from '@ant-design/icons'
 import { getBinaryFileURL } from '../../utils'
 
 const DownloadFileButton = styled(
-  ({ visible, version, path, packageName, ...props }) => {
-    console.info(visible, version, path, packageName)
-    return visible ? (
+  ({ visible, version, path, packageName, ...props }) =>
+    visible ? (
       <Button
         {...props}
         type="ghost"
@@ -17,7 +16,6 @@ const DownloadFileButton = styled(
         href={getBinaryFileURL({ packageName, version, path })}
       />
     ) : null
-  }
 )`
   color: #24292e;
   font-size: 12px;
