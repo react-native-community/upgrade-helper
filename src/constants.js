@@ -5,6 +5,11 @@ export const PACKAGE_NAMES = {
   RNW: 'react-native-windows'
 }
 
+export const LANGUAGE_NAMES = {
+  CPP: 'cpp',
+  CS: 'cs'
+}
+
 export const RN_DIFF_REPOSITORIES = {
   [PACKAGE_NAMES.RN]: 'react-native-community/rn-diff-purge',
   [PACKAGE_NAMES.RNW]: 'acoates-ms/rnw-diff'

@@ -9,6 +9,7 @@ import Settings from '../common/Settings'
 import { homepage } from '../../../package.json'
 import logo from '../../assets/logo.svg'
 import { SHOW_LATEST_RCS } from '../../utils'
+import { useGetLanguageFromURL } from '../../hooks/get-language-from-url'
 import { useGetPackageNameFromURL } from '../../hooks/get-package-name-from-url'
 import { PACKAGE_NAMES } from '../../constants'
 import { TroubleshootingGuidesButton } from '../common/TroubleshootingGuidesButton'
@@ -54,6 +55,7 @@ const StarButton = styled(({ className, ...props }) => (
 
 const Home = () => {
   const { packageName, isPackageNameDefinedInURL } = useGetPackageNameFromURL()
+  const { language, isLanguageDefinedInURL } = useGetLanguageFromURL()
   const [fromVersion, setFromVersion] = useState('')
   const [toVersion, setToVersion] = useState('')
   const [shouldShowDiff, setShouldShowDiff] = useState(false)
@@ -124,7 +126,9 @@ const Home = () => {
           showDiff={handleShowDiff}
           showReleaseCandidates={settings[SHOW_LATEST_RCS]}
           packageName={packageName}
+          language={language}
           isPackageNameDefinedInURL={isPackageNameDefinedInURL}
+          isLanguageDefinedInURL={isLanguageDefinedInURL}
         />
       </Container>
 
@@ -134,6 +138,7 @@ const Home = () => {
         toVersion={toVersion}
         appName={appName}
         packageName={packageName}
+        language={language}
       />
     </Page>
   )

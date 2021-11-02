@@ -15,14 +15,15 @@ export const getReleasesFileURL = ({ packageName }) =>
     packageName
   })}/master/RELEASES`
 
-export const getDiffURL = ({ packageName, fromVersion, toVersion }) =>
+export const getDiffURL = ({ packageName, language, fromVersion, toVersion }) =>
   `https://raw.githubusercontent.com/${getRNDiffRepository({
     packageName
-  })}/diffs/diffs/${fromVersion}..${toVersion}.diff`
+  })}/diffs/diffs/${language}/${fromVersion}..${toVersion}.diff`
 
 // `path` must contain `RnDiffApp` prefix
-export const getBinaryFileURL = ({ packageName, version, path }) => {
-  const branch = packageName === PACKAGE_NAMES.RNW ? `cpp/${version}` : version
+export const getBinaryFileURL = ({ packageName, language, version, path }) => {
+  const branch =
+    packageName === PACKAGE_NAMES.RNW ? `${language}/${version}` : version
 
   return `https://github.com/${getRNDiffRepository({
     packageName
