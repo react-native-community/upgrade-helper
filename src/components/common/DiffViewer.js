@@ -33,6 +33,7 @@ const scrollToRef = ref => ref.current.scrollIntoView({ behavior: 'smooth' })
 
 const DiffViewer = ({
   packageName,
+  language,
   fromVersion,
   toVersion,
   shouldShowDiff,
@@ -43,6 +44,7 @@ const DiffViewer = ({
   const { isLoading, isDone, diff } = useFetchDiff({
     shouldShowDiff,
     packageName,
+    language,
     fromVersion,
     toVersion
   })

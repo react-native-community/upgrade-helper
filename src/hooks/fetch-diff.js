@@ -10,6 +10,7 @@ const movePackageJsonToTop = parsedDiff =>
 export const useFetchDiff = ({
   shouldShowDiff,
   packageName,
+  language,
   fromVersion,
   toVersion
 }) => {
@@ -23,7 +24,7 @@ export const useFetchDiff = ({
       setIsDone(false)
 
       const [response] = await Promise.all([
-        fetch(getDiffURL({ packageName, fromVersion, toVersion })),
+        fetch(getDiffURL({ packageName, language, fromVersion, toVersion })),
         delay(300)
       ])
 
@@ -40,7 +41,7 @@ export const useFetchDiff = ({
     if (shouldShowDiff) {
       fetchDiff()
     }
-  }, [shouldShowDiff, packageName, fromVersion, toVersion])
+  }, [shouldShowDiff, packageName, language, fromVersion, toVersion])
 
   return {
     isLoading,

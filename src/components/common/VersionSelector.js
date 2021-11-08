@@ -153,7 +153,9 @@ const doesVersionExist = ({ version, allVersions, minVersion }) => {
 
 const updateURLVersions = ({
   packageName,
+  language,
   isPackageNameDefinedInURL,
+  isLanguageDefinedInURL,
   fromVersion,
   toVersion
 }) => {
@@ -162,17 +164,20 @@ const updateURLVersions = ({
   const packageNameInURL = isPackageNameDefinedInURL
     ? `&package=${packageName}`
     : ''
+  const languageInURL = isLanguageDefinedInURL ? `&language=${language}` : ''
 
   window.history.replaceState(
     null,
     null,
-    `${pageURL}${newURL}${packageNameInURL}`
+    `${pageURL}${newURL}${packageNameInURL}${languageInURL}`
   )
 }
 
 const VersionSelector = ({
   packageName,
+  language,
   isPackageNameDefinedInURL,
+  isLanguageDefinedInURL,
   showDiff,
   showReleaseCandidates
 }) => {
@@ -299,7 +304,9 @@ const VersionSelector = ({
 
     updateURLVersions({
       packageName,
+      language,
       isPackageNameDefinedInURL,
+      isLanguageDefinedInURL,
       fromVersion: localFromVersion,
       toVersion: localToVersion
     })
