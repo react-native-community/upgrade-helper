@@ -13,6 +13,7 @@ import { useGetLanguageFromURL } from '../../hooks/get-language-from-url'
 import { useGetPackageNameFromURL } from '../../hooks/get-package-name-from-url'
 import { PACKAGE_NAMES } from '../../constants'
 import { TroubleshootingGuidesButton } from '../common/TroubleshootingGuidesButton'
+import { updateURL } from '../../utils/update-url'
 
 const Page = styled.div`
   display: flex;
@@ -54,8 +55,16 @@ const StarButton = styled(({ className, ...props }) => (
 `
 
 const Home = () => {
-  const { packageName, isPackageNameDefinedInURL } = useGetPackageNameFromURL()
-  const { language, isLanguageDefinedInURL } = useGetLanguageFromURL()
+  const {
+    packageName: defaultPackageName,
+    isPackageNameDefinedInURL
+  } = useGetPackageNameFromURL()
+  const {
+    language: defaultLanguage,
+    isLanguageDefinedInURL
+  } = useGetLanguageFromURL()
+  const [packageName, setPackageName] = useState(defaultPackageName)
+  const [language, setLanguage] = useState(defaultLanguage)
   const [fromVersion, setFromVersion] = useState('')
   const [toVersion, setToVersion] = useState('')
   const [shouldShowDiff, setShouldShowDiff] = useState(false)
@@ -79,6 +88,27 @@ const Home = () => {
     setFromVersion(fromVersion)
     setToVersion(toVersion)
     setShouldShowDiff(true)
+  }
+
+  const handlePackageNameAndLanguageChange = ({
+    newPackageName,
+    newLanguage
+  }) => {
+    let localPackageName =
+      newPackageName === undefined ? packageName : newPackageName
+    let localLanguage = newLanguage === undefined ? newLanguage : newLanguage
+    updateURL({
+      packageName: localPackageName,
+      language: localLanguage,
+      isPackageNameDefinedInURL:
+        isPackageNameDefinedInURL || newPackageName !== undefined,
+      isLanguageDefinedInURL:
+        isLanguageDefinedInURL || newLanguage !== undefined,
+      fromVersion,
+      toVersion
+    })
+    setPackageName(localPackageName)
+    setLanguage(localLanguage)
   }
 
   const handleSettingsChange = settingsValues => {
@@ -118,6 +148,9 @@ const Home = () => {
           <Settings
             handleSettingsChange={handleSettingsChange}
             appName={appName}
+            packageName={packageName}
+            onChangePackageNameAndLanguage={handlePackageNameAndLanguageChange}
+            language={language}
             onChangeAppName={setAppName}
           />
         </TitleContainer>

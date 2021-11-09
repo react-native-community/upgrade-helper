@@ -6,6 +6,7 @@ import queryString from 'query-string'
 import { Select } from './'
 import UpgradeButton from './UpgradeButton'
 import { useFetchReleaseVersions } from '../../hooks/fetch-release-versions'
+import { updateURL } from '../../utils/update-url'
 
 export const testIDs = {
   fromVersionSelector: 'fromVersionSelector',
@@ -151,28 +152,6 @@ const doesVersionExist = ({ version, allVersions, minVersion }) => {
   }
 }
 
-const updateURLVersions = ({
-  packageName,
-  language,
-  isPackageNameDefinedInURL,
-  isLanguageDefinedInURL,
-  fromVersion,
-  toVersion
-}) => {
-  const pageURL = window.location.href.replace(window.location.search, '')
-  const newURL = `?from=${fromVersion}&to=${toVersion}`
-  const packageNameInURL = isPackageNameDefinedInURL
-    ? `&package=${packageName}`
-    : ''
-  const languageInURL = isLanguageDefinedInURL ? `&language=${language}` : ''
-
-  window.history.replaceState(
-    null,
-    null,
-    `${pageURL}${newURL}${packageNameInURL}${languageInURL}`
-  )
-}
-
 const VersionSelector = ({
   packageName,
   language,
@@ -302,7 +281,7 @@ const VersionSelector = ({
       toVersion: localToVersion
     })
 
-    updateURLVersions({
+    updateURL({
       packageName,
       language,
       isPackageNameDefinedInURL,
@@ -317,7 +296,7 @@ const VersionSelector = ({
       <Selectors>
         <FromVersionSelector
           data-testid={testIDs.fromVersionSelector}
-          title="What's your current React Native version?"
+          title={`What's your current ${packageName} version?`}
           loading={isLoading}
           value={localFromVersion}
           options={fromVersionList}
