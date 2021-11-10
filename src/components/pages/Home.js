@@ -104,11 +104,14 @@ const Home = () => {
         isPackageNameDefinedInURL || newPackageName !== undefined,
       isLanguageDefinedInURL:
         isLanguageDefinedInURL || newLanguage !== undefined,
-      fromVersion,
-      toVersion
+      toVersion: '',
+      fromVersion: ''
     })
     setPackageName(localPackageName)
     setLanguage(localLanguage)
+    setFromVersion('')
+    setToVersion('')
+    setShouldShowDiff(false)
   }
 
   const handleSettingsChange = settingsValues => {
@@ -164,7 +167,6 @@ const Home = () => {
           isLanguageDefinedInURL={isLanguageDefinedInURL}
         />
       </Container>
-
       <DiffViewer
         shouldShowDiff={shouldShowDiff}
         fromVersion={fromVersion}

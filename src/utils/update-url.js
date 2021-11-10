@@ -7,7 +7,11 @@ export function updateURL({
   toVersion
 }) {
   const pageURL = window.location.href.replace(window.location.search, '')
-  const newURL = `?from=${fromVersion}&to=${toVersion}`
+
+  const newURL =
+    fromVersion !== '' || toVersion !== ''
+      ? `?from=${fromVersion}&to=${toVersion}`
+      : '?'
   const packageNameInURL = isPackageNameDefinedInURL
     ? `&package=${packageName}`
     : ''

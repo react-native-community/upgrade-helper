@@ -3,7 +3,7 @@ import { Popover, Button, Checkbox, Input, Radio } from 'antd'
 import { SHOW_LATEST_RCS } from '../../utils'
 import styled from '@emotion/styled'
 import { WindowsFilled } from '@ant-design/icons'
-import { PACKAGE_NAMES } from '../../constants'
+import { PACKAGE_NAMES, LANGUAGE_NAMES } from '../../constants'
 
 const InputContainer = styled.div({
   marginTop: '16px'
@@ -50,13 +50,18 @@ const Settings = ({
       onChangeAppName(newAppName)
     }
 
-    if (newPackageName !== packageName || newLanguage !== language) {
+    if (
+      !visibility &&
+      (newPackageName !== packageName || newLanguage !== language)
+    ) {
       onChangePackageNameAndLanguage({
         newPackageName:
           newPackageName !== packageName ? newPackageName : undefined,
         newLanguage:
           newLanguage !== language && newPackageName === PACKAGE_NAMES.RNW
             ? newLanguage
+              ? newLanguage
+              : LANGUAGE_NAMES.CPP
             : undefined
       })
     }
