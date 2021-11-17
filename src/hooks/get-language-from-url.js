@@ -7,14 +7,8 @@ export const useGetLanguageFromURL = () => {
   const languageNames = Object.values(LANGUAGE_NAMES)
 
   if (!languageFromURL || !languageNames.includes(languageFromURL)) {
-    return {
-      language: LANGUAGE_NAMES.CPP,
-      isLanguageDefinedInURL: false
-    }
+    return LANGUAGE_NAMES.CPP
   }
 
-  return {
-    language: languageFromURL,
-    isLanguageDefinedInURL: true
-  }
+  return languageFromURL
 }

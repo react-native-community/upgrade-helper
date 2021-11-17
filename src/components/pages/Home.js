@@ -59,10 +59,7 @@ const Home = () => {
     packageName: defaultPackageName,
     isPackageNameDefinedInURL
   } = useGetPackageNameFromURL()
-  const {
-    language: defaultLanguage,
-    isLanguageDefinedInURL
-  } = useGetLanguageFromURL()
+  const defaultLanguage = useGetLanguageFromURL()
   const [packageName, setPackageName] = useState(defaultPackageName)
   const [language, setLanguage] = useState(defaultLanguage)
   const [fromVersion, setFromVersion] = useState('')
@@ -96,14 +93,13 @@ const Home = () => {
   }) => {
     let localPackageName =
       newPackageName === undefined ? packageName : newPackageName
-    let localLanguage = newLanguage === undefined ? newLanguage : newLanguage
+    let localLanguage = newLanguage === undefined ? language : newLanguage
+
     updateURL({
       packageName: localPackageName,
       language: localLanguage,
       isPackageNameDefinedInURL:
         isPackageNameDefinedInURL || newPackageName !== undefined,
-      isLanguageDefinedInURL:
-        isLanguageDefinedInURL || newLanguage !== undefined,
       toVersion: '',
       fromVersion: ''
     })
@@ -159,12 +155,12 @@ const Home = () => {
         </TitleContainer>
 
         <VersionSelector
+          key={packageName}
           showDiff={handleShowDiff}
           showReleaseCandidates={settings[SHOW_LATEST_RCS]}
           packageName={packageName}
           language={language}
           isPackageNameDefinedInURL={isPackageNameDefinedInURL}
-          isLanguageDefinedInURL={isLanguageDefinedInURL}
         />
       </Container>
       <DiffViewer

@@ -50,19 +50,19 @@ const Settings = ({
       onChangeAppName(newAppName)
     }
 
+    const processedNewLanguage =
+      newLanguage !== language && newPackageName === PACKAGE_NAMES.RNW
+        ? newLanguage
+        : LANGUAGE_NAMES.CPP
+
     if (
       !visibility &&
-      (newPackageName !== packageName || newLanguage !== language)
+      (newPackageName !== packageName || processedNewLanguage !== language)
     ) {
       onChangePackageNameAndLanguage({
         newPackageName:
           newPackageName !== packageName ? newPackageName : undefined,
-        newLanguage:
-          newLanguage !== language && newPackageName === PACKAGE_NAMES.RNW
-            ? newLanguage
-              ? newLanguage
-              : LANGUAGE_NAMES.CPP
-            : undefined
+        newLanguage: processedNewLanguage
       })
     }
   }
@@ -117,9 +117,7 @@ const Settings = ({
                     <Radio.Button value="cs">C#</Radio.Button>
                   </Radio.Group>
                 </Radio>
-                {/* In the future... other platforms:
                 <Radio value={PACKAGE_NAMES.RNM}>react-native-macos</Radio>
-                 */}
               </PackagesGroupContainer>
             </Radio.Group>
           </PlatformsContainer>

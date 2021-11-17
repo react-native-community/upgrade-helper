@@ -156,7 +156,6 @@ const VersionSelector = ({
   packageName,
   language,
   isPackageNameDefinedInURL,
-  isLanguageDefinedInURL,
   showDiff,
   showReleaseCandidates
 }) => {
@@ -285,7 +284,6 @@ const VersionSelector = ({
       packageName,
       language,
       isPackageNameDefinedInURL,
-      isLanguageDefinedInURL,
       fromVersion: localFromVersion,
       toVersion: localToVersion
     })

@@ -1,8 +1,9 @@
+import { PACKAGE_NAMES } from '../constants'
+
 export function updateURL({
   packageName,
   language,
   isPackageNameDefinedInURL,
-  isLanguageDefinedInURL,
   fromVersion,
   toVersion
 }) {
@@ -16,9 +17,7 @@ export function updateURL({
     ? `&package=${packageName}`
     : ''
   const languageInURL =
-    isLanguageDefinedInURL && language !== undefined
-      ? `&language=${language}`
-      : ''
+    packageName === PACKAGE_NAMES.RNW ? `&language=${language}` : ''
 
   window.history.replaceState(
     null,
