@@ -13,7 +13,7 @@ const getRNDiffRepository = ({ packageName }) =>
 export const getReleasesFileURL = ({ packageName }) =>
   `https://raw.githubusercontent.com/${getRNDiffRepository({
     packageName
-  })}/master/RELEASES`
+  })}/master/${packageName === PACKAGE_NAMES.RNM ? 'RELEASES_MAC' : 'RELEASES'}`
 
 export const getDiffURL = ({
   packageName,
@@ -21,7 +21,12 @@ export const getDiffURL = ({
   fromVersion,
   toVersion
 }) => {
-  const languageDir = packageName === PACKAGE_NAMES.RNW ? `${language}/` : ''
+  const languageDir =
+    packageName === PACKAGE_NAMES.RNM
+      ? 'mac/'
+      : packageName === PACKAGE_NAMES.RNW
+      ? `${language}/`
+      : ''
 
   return `https://raw.githubusercontent.com/${getRNDiffRepository({
     packageName
@@ -31,7 +36,11 @@ export const getDiffURL = ({
 // `path` must contain `RnDiffApp` prefix
 export const getBinaryFileURL = ({ packageName, language, version, path }) => {
   const branch =
-    packageName === PACKAGE_NAMES.RNW ? `${language}/${version}` : version
+    packageName === PACKAGE_NAMES.RNM
+      ? `mac/${version}`
+      : packageName === PACKAGE_NAMES.RNW
+      ? `${language}/${version}`
+      : version
 
   return `https://github.com/${getRNDiffRepository({
     packageName
@@ -77,7 +86,7 @@ export const getVersionsContentInDiff = ({
 }
 
 export const getChangelogURL = ({ version, packageName }) => {
-  if (packageName === PACKAGE_NAMES.RNW) {
+  if (packageName === PACKAGE_NAMES.RNW || packageName === PACKAGE_NAMES.RNM) {
     return `${RN_CHANGELOG_URLS[packageName]}v${version}`
   }
 

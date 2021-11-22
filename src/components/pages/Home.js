@@ -13,6 +13,7 @@ import { useGetLanguageFromURL } from '../../hooks/get-language-from-url'
 import { useGetPackageNameFromURL } from '../../hooks/get-package-name-from-url'
 import { PACKAGE_NAMES } from '../../constants'
 import { TroubleshootingGuidesButton } from '../common/TroubleshootingGuidesButton'
+import { updateURL } from '../../utils/update-url'
 
 const Page = styled.div`
   display: flex;
@@ -54,8 +55,13 @@ const StarButton = styled(({ className, ...props }) => (
 `
 
 const Home = () => {
-  const { packageName, isPackageNameDefinedInURL } = useGetPackageNameFromURL()
-  const { language, isLanguageDefinedInURL } = useGetLanguageFromURL()
+  const {
+    packageName: defaultPackageName,
+    isPackageNameDefinedInURL
+  } = useGetPackageNameFromURL()
+  const defaultLanguage = useGetLanguageFromURL()
+  const [packageName, setPackageName] = useState(defaultPackageName)
+  const [language, setLanguage] = useState(defaultLanguage)
   const [fromVersion, setFromVersion] = useState('')
   const [toVersion, setToVersion] = useState('')
   const [shouldShowDiff, setShouldShowDiff] = useState(false)
@@ -79,6 +85,29 @@ const Home = () => {
     setFromVersion(fromVersion)
     setToVersion(toVersion)
     setShouldShowDiff(true)
+  }
+
+  const handlePackageNameAndLanguageChange = ({
+    newPackageName,
+    newLanguage
+  }) => {
+    let localPackageName =
+      newPackageName === undefined ? packageName : newPackageName
+    let localLanguage = newLanguage === undefined ? language : newLanguage
+
+    updateURL({
+      packageName: localPackageName,
+      language: localLanguage,
+      isPackageNameDefinedInURL:
+        isPackageNameDefinedInURL || newPackageName !== undefined,
+      toVersion: '',
+      fromVersion: ''
+    })
+    setPackageName(localPackageName)
+    setLanguage(localLanguage)
+    setFromVersion('')
+    setToVersion('')
+    setShouldShowDiff(false)
   }
 
   const handleSettingsChange = settingsValues => {
@@ -118,20 +147,22 @@ const Home = () => {
           <Settings
             handleSettingsChange={handleSettingsChange}
             appName={appName}
+            packageName={packageName}
+            onChangePackageNameAndLanguage={handlePackageNameAndLanguageChange}
+            language={language}
             onChangeAppName={setAppName}
           />
         </TitleContainer>
 
         <VersionSelector
+          key={packageName}
           showDiff={handleShowDiff}
           showReleaseCandidates={settings[SHOW_LATEST_RCS]}
           packageName={packageName}
           language={language}
           isPackageNameDefinedInURL={isPackageNameDefinedInURL}
-          isLanguageDefinedInURL={isLanguageDefinedInURL}
         />
       </Container>
-
       <DiffViewer
         shouldShowDiff={shouldShowDiff}
         fromVersion={fromVersion}

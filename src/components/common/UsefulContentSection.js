@@ -152,9 +152,14 @@ class UsefulContentSection extends Component {
   getChangelog = ({ version }) => {
     const { packageName, toVersion } = this.props
 
-    if (packageName === PACKAGE_NAMES.RNW) {
+    if (
+      packageName === PACKAGE_NAMES.RNW ||
+      packageName === PACKAGE_NAMES.RNM
+    ) {
       return {
-        title: `React Native Windows ${toVersion} changelog`,
+        title: `React Native ${
+          packageName === PACKAGE_NAMES.RNW ? 'Windows' : 'macOS'
+        } ${toVersion} changelog`,
         url: getChangelogURL({
           packageName,
           version: toVersion
