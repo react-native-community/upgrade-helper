@@ -7,6 +7,7 @@ import { Select } from './'
 import UpgradeButton from './UpgradeButton'
 import { useFetchReleaseVersions } from '../../hooks/fetch-release-versions'
 import { updateURL } from '../../utils/update-url'
+import { deviceSizes } from '../../utils/device-sizes'
 
 export const testIDs = {
   fromVersionSelector: 'fromVersionSelector',
@@ -15,11 +16,20 @@ export const testIDs = {
 
 const Selectors = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  gap: 15px;
+
+  @media ${deviceSizes.tablet} {
+    flex-direction: row;
+    gap: 0;
+  }
 `
 
 const FromVersionSelector = styled(Select)`
-  padding-right: 5px;
+  @media ${deviceSizes.tablet} {
+    padding-right: 5px;
+  }
 `
 
 const ToVersionSelector = styled(({ popover, ...props }) =>
@@ -31,7 +41,9 @@ const ToVersionSelector = styled(({ popover, ...props }) =>
     <Select {...props} />
   )
 )`
-  padding-left: 5px;
+  @media ${deviceSizes.tablet} {
+    padding-left: 5px;
+  }
 `
 
 const getVersionsInURL = () => {

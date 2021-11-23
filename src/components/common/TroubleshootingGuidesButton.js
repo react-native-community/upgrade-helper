@@ -18,7 +18,6 @@ const Icon = styled.span`
 const Button = styled(AntdButton)`
   width: 32px;
   padding: 0;
-  margin-right: 8px;
   color: initial;
 `
 
