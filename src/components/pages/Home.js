@@ -14,6 +14,7 @@ import { useGetPackageNameFromURL } from '../../hooks/get-package-name-from-url'
 import { PACKAGE_NAMES } from '../../constants'
 import { TroubleshootingGuidesButton } from '../common/TroubleshootingGuidesButton'
 import { updateURL } from '../../utils/update-url'
+import { deviceSizes } from '../../utils/device-sizes'
 
 const Page = styled.div`
   display: flex;
@@ -29,19 +30,43 @@ const Container = styled(Card)`
   border-color: #e8e8e8;
 `
 
-const TitleContainer = styled.div`
+const HeaderContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
+
+  @media ${deviceSizes.tablet} {
+    flex-direction: row;
+  }
 `
 
 const LogoImg = styled.img`
-  width: 100px;
+  width: 50px;
   margin-bottom: 15px;
+
+  @media ${deviceSizes.tablet} {
+    width: 100px;
+  }
 `
 
 const TitleHeader = styled.h1`
   margin: 0;
   margin-left: 15px;
+`
+
+const TitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+`
+
+const SettingsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 8px;
+  flex: 1;
 `
 
 const StarButton = styled(({ className, ...props }) => (
@@ -122,37 +147,42 @@ const Home = () => {
   return (
     <Page>
       <Container>
-        <TitleContainer>
-          <LogoImg
-            alt="React Native Upgrade Helper logo"
-            title="React Native Upgrade Helper logo"
-            src={logo}
-          />
+        <HeaderContainer>
+          <TitleContainer>
+            <LogoImg
+              alt="React Native Upgrade Helper logo"
+              title="React Native Upgrade Helper logo"
+              src={logo}
+            />
+            <a href={homepage}>
+              <TitleHeader>React Native Upgrade Helper</TitleHeader>
+            </a>
+          </TitleContainer>
 
-          <a href={homepage}>
-            <TitleHeader>React Native Upgrade Helper</TitleHeader>
-          </a>
-
-          <StarButton
-            href="https://github.com/react-native-community/upgrade-helper"
-            data-icon="octicon-star"
-            data-show-count="true"
-            aria-label="Star react-native-community/upgrade-helper on GitHub"
-          >
-            Star
-          </StarButton>
-
-          {packageName === PACKAGE_NAMES.RN && <TroubleshootingGuidesButton />}
-
-          <Settings
-            handleSettingsChange={handleSettingsChange}
-            appName={appName}
-            packageName={packageName}
-            onChangePackageNameAndLanguage={handlePackageNameAndLanguageChange}
-            language={language}
-            onChangeAppName={setAppName}
-          />
-        </TitleContainer>
+          <SettingsContainer>
+            <StarButton
+              href="https://github.com/react-native-community/upgrade-helper"
+              data-icon="octicon-star"
+              data-show-count="true"
+              aria-label="Star react-native-community/upgrade-helper on GitHub"
+            >
+              Star
+            </StarButton>
+            {packageName === PACKAGE_NAMES.RN && (
+              <TroubleshootingGuidesButton />
+            )}
+            <Settings
+              handleSettingsChange={handleSettingsChange}
+              appName={appName}
+              packageName={packageName}
+              onChangePackageNameAndLanguage={
+                handlePackageNameAndLanguageChange
+              }
+              language={language}
+              onChangeAppName={setAppName}
+            />
+          </SettingsContainer>
+        </HeaderContainer>
 
         <VersionSelector
           key={packageName}
