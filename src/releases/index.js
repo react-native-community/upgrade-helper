@@ -1,7 +1,16 @@
 import { PACKAGE_NAMES } from '../constants'
 
 const versionsWithContent = {
-  [PACKAGE_NAMES.RN]: ['0.64', '0.62', '0.61', '0.60', '0.59', '0.58', '0.57'],
+  [PACKAGE_NAMES.RN]: [
+    '0.68',
+    '0.64',
+    '0.62',
+    '0.61',
+    '0.60',
+    '0.59',
+    '0.58',
+    '0.57'
+  ],
   [PACKAGE_NAMES.RNM]: [],
   [PACKAGE_NAMES.RNW]: []
 }
