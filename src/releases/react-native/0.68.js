@@ -100,7 +100,7 @@ export default {
       lineChangeType: 'add',
       content: (
         <Fragment>
-          This file is only required for the new architecture build.
+          This file is only required for the New Architecture setup.
         </Fragment>
       )
     }))
