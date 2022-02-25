@@ -22,33 +22,11 @@ export default {
       {
         title:
           'See here to learn more about new architecture and how to enable it in your project',
-        url: 'TODO: link'
+        url: 'https://reactnative.dev/docs/next/new-architecture-intro'
       }
     ]
   },
   comments: [
-    {
-      fileName: 'package.json',
-      lineNumber: 24,
-      lineChangeType: 'add',
-      content: (
-        <Fragment>
-          `react-native-gradle-plugin` is only required for Android new
-          architecture builds.
-        </Fragment>
-      )
-    },
-    {
-      fileName: 'package.json',
-      lineNumber: 30,
-      lineChangeType: 'add',
-      content: (
-        <Fragment>
-          `codegenConfig` field is only required for new architecture builds to
-          configure exposed libraries.
-        </Fragment>
-      )
-    },
     {
       fileName: 'android/app/build.gradle',
       lineNumber: 142,
