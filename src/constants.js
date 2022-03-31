@@ -19,7 +19,7 @@ export const RN_DIFF_REPOSITORIES = {
 
 export const RN_CHANGELOG_URLS = {
   [PACKAGE_NAMES.RN]:
-    'https://github.com/react-native-community/releases/blob/master/CHANGELOG.md',
+    'https://github.com/facebook/react-native/blob/main/CHANGELOG.md',
   [PACKAGE_NAMES.RNM]:
     'https://github.com/microsoft/react-native-macos/releases/tag/',
   [PACKAGE_NAMES.RNW]:
