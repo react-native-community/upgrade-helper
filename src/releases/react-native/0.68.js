@@ -71,6 +71,16 @@ export default {
         </Fragment>
       )
     },
+    {
+      fileName: 'ios/RnDiffApp/AppDelegate.mm',
+      lineNumber: 1,
+      lineChangeType: 'add',
+      content: (
+        <Fragment>
+          See: https://reactnative.dev/docs/next/new-architecture-app-intro#ios-use-objective-c-mm-extension
+        </Fragment>
+      )
+    },
     ...newArchitectureFiles.map(file => ({
       fileName: file,
 
