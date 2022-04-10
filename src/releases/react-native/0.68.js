@@ -77,7 +77,8 @@ export default {
       lineChangeType: 'add',
       content: (
         <Fragment>
-          See: https://reactnative.dev/docs/next/new-architecture-app-intro#ios-use-objective-c-mm-extension
+          See:
+          https://reactnative.dev/docs/next/new-architecture-app-intro#ios-use-objective-c-mm-extension
         </Fragment>
       )
     },
