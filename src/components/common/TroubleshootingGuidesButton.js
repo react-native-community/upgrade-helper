@@ -1,15 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Button as AntdButton, Popover } from 'antd'
 import styled from '@emotion/styled'
-import createPersistedState from 'use-persisted-state'
-import { differenceInDays } from 'date-fns'
 import { TroubleshootingGuides } from './TroubleshootingGuides'
 
 export const testIDs = {
   troubleshootingGuidesButton: 'troubleshootingGuidesButton'
 }
-
-const useTooltip = createPersistedState('troubleshootingTooltip')
 
 const Icon = styled.span`
   font-family: initial;
@@ -23,31 +19,7 @@ const Button = styled(AntdButton)`
 
 const TroubleshootingGuidesButton = () => {
   const [showContent, setShowContent] = useState(false)
-  const [
-    shouldShowTroubleshootingGuide,
-    setShouldShowTroubleshootingGuide
-  ] = useState(false)
-  const [tooltip, setTooltip] = useTooltip({
-    hasSeen: false,
-    hasSeenAt: undefined
-  })
-  const [isTooltipVisible, setIsTooltipVisible] = useState(false)
   const hasHandledClick = useRef(false)
-
-  useEffect(() => {
-    if (!tooltip.hasSeen) {
-      setIsTooltipVisible(true)
-      setShowContent(true)
-
-      return
-    }
-
-    const diffInDays = differenceInDays(new Date(), new Date(tooltip.hasSeenAt))
-
-    if (diffInDays >= 2) {
-      setTooltip({ hasSeen: false, hasSeenAt: undefined })
-    }
-  }, [tooltip])
 
   const handlePopoverVisibilityChange = visibility => {
     if (hasHandledClick.current) {
@@ -60,15 +32,7 @@ const TroubleshootingGuidesButton = () => {
   const handleToggleShowContent = () => {
     hasHandledClick.current = true
 
-    if (!showContent) {
-      setShowContent(true)
-    } else if (isTooltipVisible) {
-      setIsTooltipVisible(false)
-      setShouldShowTroubleshootingGuide(!shouldShowTroubleshootingGuide)
-      setTooltip({ hasSeen: true, hasSeenAt: new Date().toISOString() })
-    } else {
-      setShowContent(!showContent)
-    }
+    setShowContent(prevState => !prevState)
 
     setTimeout(() => {
       hasHandledClick.current = false
@@ -78,12 +42,7 @@ const TroubleshootingGuidesButton = () => {
   return (
     <Popover
       placement="bottomRight"
-      content={
-        <TroubleshootingGuides
-          isTooltipVisible={isTooltipVisible}
-          hasSeenTooltip={tooltip.hasSeen}
-        />
-      }
+      content={<TroubleshootingGuides isTooltipVisible={showContent} />}
       trigger="click"
       visible={showContent}
       onVisibleChange={handlePopoverVisibilityChange}
