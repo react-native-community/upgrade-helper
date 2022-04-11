@@ -77,8 +77,11 @@ export default {
       lineChangeType: 'add',
       content: (
         <Fragment>
-          See:
-          https://reactnative.dev/docs/next/new-architecture-app-intro#ios-use-objective-c-mm-extension
+          Remember to rename your iOS (or tvOS) UIKit app delegate file with
+          Xcode, in order to support our TurboModules in either flavour of
+          Objective-C (C or C++). Refer to the [iOS app
+          prerequisites](https://reactnative.dev/docs/next/new-architecture-app-intro#ios-use-objective-c-mm-extension)
+          for more.
         </Fragment>
       )
     },
