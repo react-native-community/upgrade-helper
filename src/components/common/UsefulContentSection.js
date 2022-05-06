@@ -187,13 +187,9 @@ class UsefulContentSection extends Component {
       toVersion
     })
 
-    const doesAnyVersionHaveUsefulContent = versions.some(
+    const doesAnyVersionHaveUsefulLinks = versions.some(
       ({ usefulContent }) => !!usefulContent
     )
-
-    if (!doesAnyVersionHaveUsefulContent) {
-      return null
-    }
 
     return (
       <Container isContentVisible={isContentVisible}>
@@ -211,7 +207,9 @@ class UsefulContentSection extends Component {
           />
 
           <ContentContainer isContentVisible={isContentVisible}>
-            <UsefulLinks versions={versions} />
+            {doesAnyVersionHaveUsefulLinks ? (
+              <UsefulLinks versions={versions} />
+            ) : null}
 
             <UpgradeSupportAlert />
 
