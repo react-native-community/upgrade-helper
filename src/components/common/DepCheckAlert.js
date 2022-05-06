@@ -5,7 +5,7 @@ const DepCheckAlert = () => (
   <>
     <Markdown>
       You can use the following command to kick off the upgrade: `npx
-      rnx-dep-check --set-version [major.minor]`.
+      @rnx-kit/dep-check --set-version [major.minor]`.
     </Markdown>
     <br />
     <Markdown>
