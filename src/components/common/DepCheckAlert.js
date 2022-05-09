@@ -9,10 +9,10 @@ const DepCheckAlert = () => (
     </Markdown>
     <br />
     <Markdown>
-      `dep-check` is a tool by Microsoft that helps your dependencies
-      management, aligning the main RN libraries on the version of RN used (find
-      out more in the [dedicated
-      documentation](https://microsoft.github.io/rnx-kit/docs/guides/dependency-management)).
+      `dep-check` is a **community** tool from Microsoft that automates dependency
+      management. It knows which RN package versions work well together and are 
+      compatible with your specific version of RN. It uses that knowledge to align dependencies,
+      keeping your app healthy and up-to-date. Find out more [here](https://microsoft.github.io/rnx-kit/docs/guides/dependency-management)).
     </Markdown>
     <br />
     <Markdown>
