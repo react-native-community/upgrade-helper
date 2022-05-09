@@ -9,15 +9,18 @@ const DepCheckAlert = () => (
     </Markdown>
     <br />
     <Markdown>
-      `dep-check` is a **community** tool from Microsoft that automates dependency
-      management. It knows which RN package versions work well together and are 
-      compatible with your specific version of RN. It uses that knowledge to align dependencies,
-      keeping your app healthy and up-to-date. Find out more [here](https://microsoft.github.io/rnx-kit/docs/guides/dependency-management)).
+      `dep-check` is an OSS tool from Microsoft that automates dependency
+      management. It knows which packages\* versions are compatible with your
+      specific version of RN, and it uses that knowledge to align dependencies,
+      keeping your app healthy and up-to-date\*\*. [Find out more
+      here](https://microsoft.github.io/rnx-kit/docs/guides/dependency-management).
     </Markdown>
     <br />
+    <Markdown>\* Not all packages are supported out-of-the-box.</Markdown>
+    <br />
     <Markdown>
-      You still need to do the other changes below and verify the changelogs of
-      the libraries that got upgraded.
+      \*\* You still need to do the other changes below and verify the
+      changelogs of the libraries that got upgraded.
     </Markdown>
   </>
 )
