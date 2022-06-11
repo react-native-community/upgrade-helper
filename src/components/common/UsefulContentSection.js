@@ -1,16 +1,19 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import styled from '@emotion/styled'
 import { UpOutlined, DownOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
+import { motion } from 'framer-motion'
+
 import {
   getVersionsContentInDiff,
   getChangelogURL,
   getTransitionDuration
 } from '../../utils'
-import { Link } from './Markdown'
 import UpgradeSupportAlert from './UpgradeSupportAlert'
 import AppNameWarning from './AppNameWarning'
-import { motion } from 'framer-motion'
+import UsefulLinks from './UsefulLinks'
+import DepCheckAlert from './DepCheckAlert'
+
 import { PACKAGE_NAMES } from '../../constants'
 
 const Container = styled.div`
@@ -124,11 +127,6 @@ const Separator = styled.hr`
   border: 0;
 `
 
-const List = styled.ol`
-  padding-inline-start: 18px;
-  margin: 10px 0 0;
-`
-
 class UsefulContentSection extends Component {
   state = {
     isContentVisible: true
@@ -190,15 +188,9 @@ class UsefulContentSection extends Component {
       toVersion
     })
 
-    const doesAnyVersionHaveUsefulContent = versions.some(
+    const doesAnyVersionHaveUsefulLinks = versions.some(
       ({ usefulContent }) => !!usefulContent
     )
-
-    if (!doesAnyVersionHaveUsefulContent) {
-      return null
-    }
-
-    const hasMoreThanOneRelease = versions.length > 1
 
     return (
       <Container isContentVisible={isContentVisible}>
@@ -216,31 +208,13 @@ class UsefulContentSection extends Component {
           />
 
           <ContentContainer isContentVisible={isContentVisible}>
-            {versions.map(({ usefulContent, version }, key) => {
-              const changelog = this.getChangelog({ version })
+            {doesAnyVersionHaveUsefulLinks ? (
+              <UsefulLinks versions={versions} />
+            ) : null}
 
-              const links = [...usefulContent.links, changelog]
+            <DepCheckAlert />
 
-              return (
-                <Fragment key={key}>
-                  {key > 0 && <Separator />}
-
-                  {hasMoreThanOneRelease && (
-                    <h3>Release {changelog.version}</h3>
-                  )}
-
-                  <span>{usefulContent.description}</span>
-
-                  <List>
-                    {links.map(({ url, title }, key) => (
-                      <li key={`${url}${key}`}>
-                        <Link href={url}>{title}</Link>
-                      </li>
-                    ))}
-                  </List>
-                </Fragment>
-              )
-            })}
+            <Separator />
 
             <UpgradeSupportAlert />
 

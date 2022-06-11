@@ -24,7 +24,6 @@ const UpgradeSupportAlert = styled(props => (
     </span>
   </div>
 ))`
-  padding-top: 15px;
   span > a {
     color: #045dc1;
 
