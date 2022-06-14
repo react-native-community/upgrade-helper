@@ -14,13 +14,13 @@ export default {
   comments: [
     {
       fileName: 'android/app/build.gradle',
-      lineNumber: '280',
+      lineNumber: 280,
       lineChangeType: 'add',
       content: (
         <Fragment>
           These lines instruct Gradle to build hermes from source. For further
           information on bundled Hermes, look
-          <a href="https://reactnative.dev/architecture/bundled-hermes">here</a>
+          [here]("https://reactnative.dev/architecture/bundled-hermes").
         </Fragment>
       )
     }
