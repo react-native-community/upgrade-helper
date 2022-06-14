@@ -19,8 +19,9 @@ export default {
       content: (
         <Fragment>
           These lines instruct Gradle to consume the bundled version of Hermes.
-          For further information on Bundled Hermes and how this mechanism works,
-          look [here]("https://reactnative.dev/architecture/bundled-hermes").
+          For further information on Bundled Hermes and how this mechanism
+          works, look
+          [here]("https://reactnative.dev/architecture/bundled-hermes").
         </Fragment>
       )
     }
