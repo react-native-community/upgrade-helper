@@ -20,7 +20,7 @@ export default {
         <Fragment>
           These lines instruct Gradle to build hermes from source. For further
           information on bundled Hermes, look
-          [here]("https://reactnative.dev/architecture/bundled-hermes").
+          [here](https://reactnative.dev/architecture/bundled-hermes).
         </Fragment>
       )
     }
