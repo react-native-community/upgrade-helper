@@ -209,7 +209,7 @@ class UsefulContentSection extends Component {
 
           <ContentContainer isContentVisible={isContentVisible}>
             {doesAnyVersionHaveUsefulLinks ? (
-              <UsefulLinks versions={versions} />
+              <UsefulLinks packageName={packageName} versions={versions} />
             ) : null}
 
             <DepCheckAlert />
