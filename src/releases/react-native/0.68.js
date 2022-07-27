@@ -71,6 +71,20 @@ export default {
         </Fragment>
       )
     },
+    {
+      fileName: 'ios/RnDiffApp/AppDelegate.mm',
+      lineNumber: 1,
+      lineChangeType: 'add',
+      content: (
+        <Fragment>
+          Remember to rename your iOS (or tvOS) UIKit app delegate file from .m
+          to .mm with Xcode, in order to support our TurboModules in either
+          flavour of Objective-C (C or C++). Refer to the [iOS app
+          prerequisites](https://reactnative.dev/docs/next/new-architecture-app-intro#ios-use-objective-c-mm-extension)
+          for more.
+        </Fragment>
+      )
+    },
     ...newArchitectureFiles.map(file => ({
       fileName: file,
 
