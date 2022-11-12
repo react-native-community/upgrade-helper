@@ -23,7 +23,7 @@
 
 ## ⚙️ How to use
 
-https://www.youtube.com/watch?v=fmh_ZGHh_eg
+[![How to upgrade using upgrade-helper](https://img.youtube.com/vi/fmh_ZGHh_eg/0.jpg)](https://www.youtube.com/watch?v=fmh_ZGHh_eg)
 
 ## 🎩 How it works
 
