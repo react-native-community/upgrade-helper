@@ -21,6 +21,10 @@
 
 ![Image showing a screenshot of Upgrade Helper with the phrase "You are gonna love this!"](https://user-images.githubusercontent.com/6207220/61382138-7a3a6780-a8ac-11e9-8c74-b4cb4830e131.png)
 
+## ⚙️ How to use
+
+https://www.youtube.com/watch?v=fmh_ZGHh_eg
+
 ## 🎩 How it works
 
 The **Upgrade Helper** tool aims to provide the full set of changes happening between any two versions, based on the previous work done in the [rn-diff-purge](https://github.com/react-native-community/rn-diff-purge) project:
