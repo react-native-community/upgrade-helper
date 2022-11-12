@@ -40,20 +40,6 @@ const HeaderContainer = styled.div`
   }
 `
 
-const LogoImg = styled.img`
-  width: 50px;
-  margin-bottom: 15px;
-
-  @media ${deviceSizes.tablet} {
-    width: 100px;
-  }
-`
-
-const TitleHeader = styled.h1`
-  margin: 0;
-  margin-left: 15px;
-`
-
 const TitleContainer = styled.div`
   display: flex;
   align-items: center;
@@ -69,15 +55,7 @@ const SettingsContainer = styled.div`
   flex: 1;
 `
 
-const StarButton = styled(({ className, ...props }) => (
-  <div className={className}>
-    <GitHubButton {...props} />
-  </div>
-))`
-  margin-top: 10px;
-  margin-left: 15px;
-  margin-right: auto;
-`
+
 
 const Home = () => {
   const {
@@ -148,26 +126,7 @@ const Home = () => {
     <Page>
       <Container>
         <HeaderContainer>
-          <TitleContainer>
-            <LogoImg
-              alt="React Native Upgrade Helper logo"
-              title="React Native Upgrade Helper logo"
-              src={logo}
-            />
-            <a href={homepage}>
-              <TitleHeader>React Native Upgrade Helper</TitleHeader>
-            </a>
-          </TitleContainer>
-
           <SettingsContainer>
-            <StarButton
-              href="https://github.com/react-native-community/upgrade-helper"
-              data-icon="octicon-star"
-              data-show-count="true"
-              aria-label="Star react-native-community/upgrade-helper on GitHub"
-            >
-              Star
-            </StarButton>
             {packageName === PACKAGE_NAMES.RN && (
               <TroubleshootingGuidesButton />
             )}
