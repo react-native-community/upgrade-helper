@@ -5,7 +5,7 @@ const AlignDepsAlert = () => (
   <>
     <Markdown>
       You can use the following command to kick off the upgrade: `npx
-      @rnx-kit/align-deps --requirements react-native@version`.
+      @rnx-kit/align-deps --requirements react-native@[major.minor]`.
     </Markdown>
     <br />
     <Markdown>
