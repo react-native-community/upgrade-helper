@@ -12,7 +12,7 @@ import {
 import UpgradeSupportAlert from './UpgradeSupportAlert'
 import AppNameWarning from './AppNameWarning'
 import UsefulLinks from './UsefulLinks'
-import DepCheckAlert from './DepCheckAlert'
+import AlignDepsAlert from './AlignDepsAlert'
 
 import { PACKAGE_NAMES } from '../../constants'
 
@@ -212,7 +212,7 @@ class UsefulContentSection extends Component {
               <UsefulLinks packageName={packageName} versions={versions} />
             ) : null}
 
-            <DepCheckAlert />
+            <AlignDepsAlert />
 
             <Separator />
 
