@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: ⬇️ Checkout repository code
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v3
 
       - name: 🛠 Install dependencies
         uses: bahmutov/npm-install@v1
@@ -20,7 +20,7 @@ jobs:
         run: yarn build
 
       - name: 🚀 Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+        uses: JamesIves/github-pages-deploy-action@4
         with:
           branch: gh-pages
           folder: build
