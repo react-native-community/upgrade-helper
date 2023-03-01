@@ -6,7 +6,6 @@ import ReactGA from 'react-ga'
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
 import Settings from '../common/Settings'
-import { homepage } from '../../../package.json'
 import logo from '../../assets/logo.svg'
 import { SHOW_LATEST_RCS } from '../../utils'
 import { useGetLanguageFromURL } from '../../hooks/get-language-from-url'
@@ -93,6 +92,8 @@ const Home = () => {
   })
   const [appName, setAppName] = useState('')
 
+  const homepageUrl = process.env.PUBLIC_URL
+
   useEffect(() => {
     if (process.env.NODE_ENV === 'production') {
       ReactGA.initialize('UA-136307971-1')
@@ -152,7 +153,7 @@ const Home = () => {
               title="React Native Upgrade Helper logo"
               src={logo}
             />
-            <a href={homepage}>
+            <a href={homepageUrl}>
               <TitleHeader>React Native Upgrade Helper</TitleHeader>
             </a>
           </TitleContainer>
