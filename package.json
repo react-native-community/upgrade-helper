@@ -27,7 +27,7 @@
   "devDependencies": {
     "@emotion/babel-preset-css-prop": "10.0.27",
     "@testing-library/react": "^14.0.0",
-    "customize-cra": "^0.9.1",
+    "customize-cra": "^1.0.0",
     "customize-cra-react-refresh": "^1.1.0",
     "eslint": "^8.35.0",
     "eslint-plugin-prettier": "^4.2.1",

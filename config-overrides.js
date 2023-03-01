@@ -3,5 +3,5 @@ const { addReactRefresh } = require('customize-cra-react-refresh')
 
 module.exports = override(
   addBabelPreset('@emotion/babel-preset-css-prop'),
-  addReactRefresh({ disableRefreshCheck: true })
+  addReactRefresh()
 )
