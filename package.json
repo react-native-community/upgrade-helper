@@ -20,7 +20,7 @@
     "react-dom-confetti": "0.1.3",
     "react-ga": "2.7.0",
     "react-github-btn": "1.1.1",
-    "react-scripts": "3.4.0",
+    "react-scripts": "5.0.1",
     "semver": "7.1.3",
     "use-persisted-state": "^0.3.3"
   },
@@ -29,13 +29,13 @@
     "@testing-library/react": "^14.0.0",
     "customize-cra": "^0.9.1",
     "customize-cra-react-refresh": "^1.0.1",
-    "eslint": "6.8.0",
-    "eslint-plugin-prettier": "3.1.2",
+    "eslint": "^8.35.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "gh-pages": "2.2.0",
-    "husky": "4.2.3",
+    "husky": "8.0.3",
     "jest-image-snapshot": "4.5.0",
-    "prettier": "1.19.1",
-    "pretty-quick": "2.0.1",
+    "prettier": "2.8.4",
+    "pretty-quick": "3.1.3",
     "puppeteer": "10.0.0",
     "react-app-rewired": "^2.1.5"
   },
@@ -84,6 +84,7 @@
     "rules": {
       "prettier/prettier": "error",
       "jsx-a11y/accessible-emoji": "off",
+      "import/no-anonymous-default-export": "off",
       "react-hooks/exhaustive-deps": "off"
     }
   }
