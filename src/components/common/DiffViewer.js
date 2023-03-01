@@ -132,7 +132,7 @@ const DiffViewer = ({
   }
 
   const diffSectionProps = {
-    diff: diff,
+    diff,
     getDiffKey: getDiffKey,
     completedDiffs: completedDiffs,
     fromVersion: fromVersion,
