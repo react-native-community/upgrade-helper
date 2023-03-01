@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import { TroubleshootingGuides } from './TroubleshootingGuides'
 
 export const testIDs = {
-  troubleshootingGuidesButton: 'troubleshootingGuidesButton'
+  troubleshootingGuidesButton: 'troubleshootingGuidesButton',
 }
 
 const Icon = styled.span`
@@ -21,7 +21,7 @@ const TroubleshootingGuidesButton = () => {
   const [showContent, setShowContent] = useState(false)
   const hasHandledClick = useRef(false)
 
-  const handlePopoverVisibilityChange = visibility => {
+  const handlePopoverVisibilityChange = (visibility) => {
     if (hasHandledClick.current) {
       return
     }
@@ -32,7 +32,7 @@ const TroubleshootingGuidesButton = () => {
   const handleToggleShowContent = () => {
     hasHandledClick.current = true
 
-    setShowContent(prevState => !prevState)
+    setShowContent((prevState) => !prevState)
 
     setTimeout(() => {
       hasHandledClick.current = false

@@ -80,10 +80,8 @@ const StarButton = styled(({ className, ...props }) => (
 `
 
 const Home = () => {
-  const {
-    packageName: defaultPackageName,
-    isPackageNameDefinedInURL
-  } = useGetPackageNameFromURL()
+  const { packageName: defaultPackageName, isPackageNameDefinedInURL } =
+    useGetPackageNameFromURL()
   const defaultLanguage = useGetLanguageFromURL()
   const [packageName, setPackageName] = useState(defaultPackageName)
   const [language, setLanguage] = useState(defaultLanguage)
@@ -91,7 +89,7 @@ const Home = () => {
   const [toVersion, setToVersion] = useState('')
   const [shouldShowDiff, setShouldShowDiff] = useState(false)
   const [settings, setSettings] = useState({
-    [`${SHOW_LATEST_RCS}`]: false
+    [`${SHOW_LATEST_RCS}`]: false,
   })
   const [appName, setAppName] = useState('')
 
@@ -114,7 +112,7 @@ const Home = () => {
 
   const handlePackageNameAndLanguageChange = ({
     newPackageName,
-    newLanguage
+    newLanguage,
   }) => {
     let localPackageName =
       newPackageName === undefined ? packageName : newPackageName
@@ -126,7 +124,7 @@ const Home = () => {
       isPackageNameDefinedInURL:
         isPackageNameDefinedInURL || newPackageName !== undefined,
       toVersion: '',
-      fromVersion: ''
+      fromVersion: '',
     })
     setPackageName(localPackageName)
     setLanguage(localLanguage)
@@ -135,7 +133,7 @@ const Home = () => {
     setShouldShowDiff(false)
   }
 
-  const handleSettingsChange = settingsValues => {
+  const handleSettingsChange = (settingsValues) => {
     const normalizedIncomingSettings = settingsValues.reduce((acc, val) => {
       acc[val] = true
       return acc

@@ -30,9 +30,9 @@ class UsefulLinks extends Component {
         } ${toVersion} changelog`,
         url: getChangelogURL({
           packageName,
-          version: toVersion
+          version: toVersion,
         }),
-        version: toVersion
+        version: toVersion,
       }
     }
 
@@ -42,9 +42,9 @@ class UsefulLinks extends Component {
       title: `React Native ${versionWithoutEndingZero} changelog`,
       url: getChangelogURL({
         packageName,
-        version: versionWithoutEndingZero
+        version: versionWithoutEndingZero,
       }),
-      version: versionWithoutEndingZero
+      version: versionWithoutEndingZero,
     }
   }
 

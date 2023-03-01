@@ -3,7 +3,7 @@ import {
   RN_DIFF_REPOSITORIES,
   DEFAULT_APP_NAME,
   PACKAGE_NAMES,
-  RN_CHANGELOG_URLS
+  RN_CHANGELOG_URLS,
 } from './constants'
 import versions from './releases'
 
@@ -12,14 +12,14 @@ const getRNDiffRepository = ({ packageName }) =>
 
 export const getReleasesFileURL = ({ packageName }) =>
   `https://raw.githubusercontent.com/${getRNDiffRepository({
-    packageName
+    packageName,
   })}/master/${packageName === PACKAGE_NAMES.RNM ? 'RELEASES_MAC' : 'RELEASES'}`
 
 export const getDiffURL = ({
   packageName,
   language,
   fromVersion,
-  toVersion
+  toVersion,
 }) => {
   const languageDir =
     packageName === PACKAGE_NAMES.RNM
@@ -29,7 +29,7 @@ export const getDiffURL = ({
       : ''
 
   return `https://raw.githubusercontent.com/${getRNDiffRepository({
-    packageName
+    packageName,
   })}/diffs/diffs/${languageDir}${fromVersion}..${toVersion}.diff`
 }
 
@@ -43,7 +43,7 @@ export const getBinaryFileURL = ({ packageName, language, version, path }) => {
       : version
 
   return `https://github.com/${getRNDiffRepository({
-    packageName
+    packageName,
   })}/raw/release/${branch}/${path}`
 }
 
@@ -66,7 +66,7 @@ export const replaceWithProvidedAppName = (path, appName) => {
 export const getVersionsContentInDiff = ({
   packageName,
   fromVersion,
-  toVersion
+  toVersion,
 }) => {
   if (!versions[packageName]) {
     return []
@@ -94,7 +94,7 @@ export const getChangelogURL = ({ version, packageName }) => {
 }
 
 // If the browser is headless (running puppeteer) then it doesn't have any duration
-export const getTransitionDuration = duration =>
+export const getTransitionDuration = (duration) =>
   navigator.webdriver ? 0 : duration
 
 // settings constants
@@ -106,6 +106,6 @@ export const getFilePathsToShow = ({ oldPath, newPath, appName }) => {
 
   return {
     oldPath: removeAppPathPrefix(oldPathSanitized, appName),
-    newPath: removeAppPathPrefix(newPathSanitized, appName)
+    newPath: removeAppPathPrefix(newPathSanitized, appName),
   }
 }

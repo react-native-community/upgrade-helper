@@ -5,7 +5,7 @@ import {
   Hunk,
   markEdits,
   tokenize,
-  Decoration as DiffDecoration
+  Decoration as DiffDecoration,
 } from 'react-diff-view'
 import DiffHeader from './DiffHeader'
 import { getComments } from './DiffComment'
@@ -13,7 +13,7 @@ import { replaceWithProvidedAppName } from '../../../utils'
 
 const copyPathPopoverContentOpts = {
   default: 'Click to copy file path',
-  copied: 'File path copied!'
+  copied: 'File path copied!',
 }
 
 const Container = styled.div`
@@ -101,7 +101,7 @@ const Diff = ({
   areAllCollapsed,
   setAllCollapsed,
   diffViewStyle,
-  appName
+  appName,
 }) => {
   const [isDiffCollapsed, setIsDiffCollapsed] = useState(
     isDiffCollapsedByDefault({ type, hunks })
@@ -122,17 +122,17 @@ const Diff = ({
   }
 
   const getHunksWithAppName = useCallback(
-    originalHunks => {
+    (originalHunks) => {
       if (!appName) {
         return originalHunks
       }
 
-      return originalHunks.map(hunk => ({
+      return originalHunks.map((hunk) => ({
         ...hunk,
-        changes: hunk.changes.map(change => ({
+        changes: hunk.changes.map((change) => ({
           ...change,
-          content: replaceWithProvidedAppName(change.content, appName)
-        }))
+          content: replaceWithProvidedAppName(change.content, appName),
+        })),
       }))
     },
     [appName]
@@ -149,7 +149,7 @@ const Diff = ({
     newPath,
     fromVersion,
     toVersion,
-    appName
+    appName,
   })
 
   return (
@@ -189,16 +189,16 @@ const Diff = ({
           optimizeSelection={true}
           selectedChanges={selectedChanges}
         >
-          {originalHunks => {
+          {(originalHunks) => {
             const updatedHunks = getHunksWithAppName(originalHunks)
 
             const options = {
-              enhancers: [markEdits(updatedHunks)]
+              enhancers: [markEdits(updatedHunks)],
             }
 
             const tokens = tokenize(updatedHunks, options)
 
-            return updatedHunks.map(hunk => [
+            return updatedHunks.map((hunk) => [
               <Decoration key={'decoration-' + hunk.content}>
                 <More>{hunk.content}</More>
               </Decoration>,
@@ -207,7 +207,7 @@ const Diff = ({
                 hunk={hunk}
                 tokens={tokens}
                 gutterEvents={{ onClick: onToggleChangeSelection }}
-              />
+              />,
             ])
           }}
         </DiffView>

@@ -4,7 +4,7 @@ import semver from 'semver'
 import Diff from './Diff'
 
 export const testIDs = {
-  diffSection: 'diffSection'
+  diffSection: 'diffSection',
 }
 
 const Title = styled.h1`
@@ -25,7 +25,7 @@ const DiffSection = ({
   onToggleChangeSelection,
   diffViewStyle,
   appName,
-  doneTitleRef
+  doneTitleRef,
 }) => {
   const [areAllCollapsed, setAllCollapsed] = useState(undefined)
 
@@ -48,7 +48,7 @@ const DiffSection = ({
         <Title ref={doneTitleRef}>{title}</Title>
       )}
 
-      {diff.map(diffFile => {
+      {diff.map((diffFile) => {
         const diffKey = getDiffKey(diffFile)
         const isDiffCompleted = completedDiffs.includes(diffKey)
 

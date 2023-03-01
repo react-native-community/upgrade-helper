@@ -9,12 +9,12 @@ export const useGetPackageNameFromURL = () => {
   if (!packageNameFromURL || !packageNames.includes(packageNameFromURL)) {
     return {
       packageName: PACKAGE_NAMES.RN,
-      isPackageNameDefinedInURL: false
+      isPackageNameDefinedInURL: false,
     }
   }
 
   return {
     packageName: packageNameFromURL,
-    isPackageNameDefinedInURL: true
+    isPackageNameDefinedInURL: true,
   }
 }

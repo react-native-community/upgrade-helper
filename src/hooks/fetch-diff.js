@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { parseDiff } from 'react-diff-view'
 import { getDiffURL } from '../utils'
 
-const delay = ms => new Promise(res => setTimeout(res, ms))
+const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 
-const movePackageJsonToTop = parsedDiff =>
+const movePackageJsonToTop = (parsedDiff) =>
   parsedDiff.sort(({ newPath }) => (newPath.includes('package.json') ? -1 : 1))
 
 export const useFetchDiff = ({
@@ -12,7 +12,7 @@ export const useFetchDiff = ({
   packageName,
   language,
   fromVersion,
-  toVersion
+  toVersion,
 }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [isDone, setIsDone] = useState(false)
@@ -25,7 +25,7 @@ export const useFetchDiff = ({
 
       const [response] = await Promise.all([
         fetch(getDiffURL({ packageName, language, fromVersion, toVersion })),
-        delay(300)
+        delay(300),
       ])
 
       const diff = await response.text()
@@ -46,6 +46,6 @@ export const useFetchDiff = ({
   return {
     isLoading,
     isDone,
-    diff
+    diff,
   }
 }

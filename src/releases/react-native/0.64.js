@@ -8,9 +8,9 @@ export default {
       {
         title:
           'Official blog post about the major changes on React Native 0.64',
-        url: 'https://reactnative.dev/blog/2021/03/12/version-0.64'
-      }
-    ]
+        url: 'https://reactnative.dev/blog/2021/03/12/version-0.64',
+      },
+    ],
   },
   comments: [
     {
@@ -24,7 +24,7 @@ export default {
           here](https://github.com/facebook/hermes/releases/tag/v0.7.2) if you
           are on a previous version you might get crashes at boot on Android.
         </Fragment>
-      )
-    }
-  ]
+      ),
+    },
+  ],
 }

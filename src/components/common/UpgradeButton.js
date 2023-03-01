@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { Button as AntdButton } from 'antd'
 
 export const testIDs = {
-  upgradeButton: 'upgradeButton'
+  upgradeButton: 'upgradeButton',
 }
 
 const Container = styled.div`

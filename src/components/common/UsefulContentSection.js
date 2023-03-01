@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import {
   getVersionsContentInDiff,
   getChangelogURL,
-  getTransitionDuration
+  getTransitionDuration,
 } from '../../utils'
 import UpgradeSupportAlert from './UpgradeSupportAlert'
 import AppNameWarning from './AppNameWarning'
@@ -40,17 +40,17 @@ const Title = styled(({ isContentVisible, ...props }) => (
     variants={{
       visibleContent: {
         translateX: 0,
-        translateY: 0
+        translateY: 0,
       },
       hiddenContent: {
         translateX: -5,
-        translateY: -10
-      }
+        translateY: -10,
+      },
     }}
     initial={isContentVisible ? 'visibleContent' : 'hiddenContent'}
     animate={isContentVisible ? 'visibleContent' : 'hiddenContent'}
     transition={{
-      duration: getTransitionDuration(0.25)
+      duration: getTransitionDuration(0.25),
     }}
     inherit={false}
   />
@@ -68,14 +68,14 @@ const ContentContainer = styled(({ isContentVisible, children, ...props }) => (
       visible: {
         opacity: 1,
         height: 'auto',
-        translateY: 0
+        translateY: 0,
       },
-      hidden: { opacity: 0, height: 0, translateY: -20 }
+      hidden: { opacity: 0, height: 0, translateY: -20 },
     }}
     initial={isContentVisible ? 'visible' : 'hidden'}
     animate={isContentVisible ? 'visible' : 'hidden'}
     transition={{
-      duration: getTransitionDuration(0.25)
+      duration: getTransitionDuration(0.25),
     }}
     inherit={false}
   >
@@ -87,7 +87,7 @@ const ContentContainer = styled(({ isContentVisible, children, ...props }) => (
   }
 `
 
-const Icon = styled(props => (
+const Icon = styled((props) => (
   <span {...props} role="img" aria-label="Megaphone emoji">
     📣
   </span>
@@ -129,7 +129,7 @@ const Separator = styled.hr`
 
 class UsefulContentSection extends Component {
   state = {
-    isContentVisible: true
+    isContentVisible: true,
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -144,7 +144,7 @@ class UsefulContentSection extends Component {
 
   handleToggleContentVisibility = () =>
     this.setState(({ isContentVisible }) => ({
-      isContentVisible: !isContentVisible
+      isContentVisible: !isContentVisible,
     }))
 
   getChangelog = ({ version }) => {
@@ -160,9 +160,9 @@ class UsefulContentSection extends Component {
         } ${toVersion} changelog`,
         url: getChangelogURL({
           packageName,
-          version: toVersion
+          version: toVersion,
         }),
-        version: toVersion
+        version: toVersion,
       }
     }
 
@@ -172,9 +172,9 @@ class UsefulContentSection extends Component {
       title: `React Native ${versionWithoutEndingZero} changelog`,
       url: getChangelogURL({
         packageName,
-        version: versionWithoutEndingZero
+        version: versionWithoutEndingZero,
       }),
-      version: versionWithoutEndingZero
+      version: versionWithoutEndingZero,
     }
   }
 
@@ -185,7 +185,7 @@ class UsefulContentSection extends Component {
     const versions = getVersionsContentInDiff({
       packageName,
       fromVersion,
-      toVersion
+      toVersion,
     })
 
     const doesAnyVersionHaveUsefulLinks = versions.some(

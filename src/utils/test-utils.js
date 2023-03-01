@@ -8,10 +8,9 @@ let page
 const URLs = {
   RELEASES:
     'https://raw.githubusercontent.com/react-native-community/rn-diff-purge/master/RELEASES',
-  DIFF:
-    'https://raw.githubusercontent.com/react-native-community/rn-diff-purge/diffs/diffs/0.62.2..0.63.3.diff',
+  DIFF: 'https://raw.githubusercontent.com/react-native-community/rn-diff-purge/diffs/diffs/0.62.2..0.63.3.diff',
   REPOSITORY_INFO:
-    'https://api.github.com/repos/react-native-community/upgrade-helper'
+    'https://api.github.com/repos/react-native-community/upgrade-helper',
 }
 
 const MOCK_RESPONSES = {
@@ -20,19 +19,19 @@ const MOCK_RESPONSES = {
   [URLs.DIFF]: () =>
     fs.readFileSync('./src/mocks/0.63.2..0.64.2.diff', 'utf-8'),
   [URLs.REPOSITORY_INFO]: () =>
-    fs.readFileSync('./src/mocks/repositoryInfo.json', 'utf-8')
+    fs.readFileSync('./src/mocks/repositoryInfo.json', 'utf-8'),
 }
 
-const mockResponses = request => {
+const mockResponses = (request) => {
   const requestedURL = request.url()
   const mockedURLs = Object.keys(MOCK_RESPONSES)
 
   if (mockedURLs.includes(requestedURL)) {
     request.respond({
       headers: {
-        'access-control-allow-origin': '*'
+        'access-control-allow-origin': '*',
       },
-      body: MOCK_RESPONSES[requestedURL]()
+      body: MOCK_RESPONSES[requestedURL](),
     })
   } else {
     request.continue()
@@ -47,8 +46,8 @@ export const launchBrowser = async () => {
       '--disable-setuid-sandbox',
       // This will write shared memory files into /tmp instead of /dev/shm,
       // because Docker’s default for /dev/shm is 64MB
-      '--disable-dev-shm-usage'
-    ]
+      '--disable-dev-shm-usage',
+    ],
   })
 
   page = await browser.newPage()
@@ -59,12 +58,12 @@ export const launchBrowser = async () => {
   await page.goto('http://localhost:3000/')
   await page.setViewport({
     width: 1280,
-    height: 720
+    height: 720,
   })
 
   return {
     browser,
-    page
+    page,
   }
 }
 
@@ -79,5 +78,5 @@ export const toMatchImageSnapshot = configureToMatchImageSnapshot({
   comparisonMethod: 'ssim',
   failureThreshold: 0.0005,
   failureThresholdType: 'percent',
-  allowSizeMismatch: true
+  allowSizeMismatch: true,
 })

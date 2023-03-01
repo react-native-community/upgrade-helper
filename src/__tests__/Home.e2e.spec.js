@@ -16,12 +16,12 @@ describe('Home', () => {
 
   afterAll(closeBrowser)
 
-  const selectVersion = async targetVersion => {
-    await page.evaluate(pageTargetVersion => {
+  const selectVersion = async (targetVersion) => {
+    await page.evaluate((pageTargetVersion) => {
       const element = [
         ...document.querySelectorAll(
           '.ant-select-dropdown.ant-select-dropdown-placement-bottomLeft:not(.ant-select-dropdown-hidden) .ant-select-item-option-content'
-        )
+        ),
       ].find(({ innerText: version }) => version === pageTargetVersion)
 
       element.click()
@@ -113,7 +113,7 @@ describe('Home', () => {
   })
 
   it('9. should scroll to the first file in diff', async () => {
-    await page.evaluate(testID => {
+    await page.evaluate((testID) => {
       document
         .querySelector(`[data-testid="${testID}"]`)
         .querySelector('div')

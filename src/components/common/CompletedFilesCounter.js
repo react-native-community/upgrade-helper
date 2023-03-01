@@ -34,7 +34,7 @@ const CompletedFilesCounter = styled(
         trigger="hover"
         placement="right"
         overlayStyle={{
-          position: 'fixed'
+          position: 'fixed',
         }}
       >
         <span className="completedAmount">
@@ -47,7 +47,7 @@ const CompletedFilesCounter = styled(
         config={{
           elementCount: 200,
           angle: 130,
-          startVelocity: 30
+          startVelocity: 30,
         }}
       />
     </div>

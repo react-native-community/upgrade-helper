@@ -14,11 +14,11 @@ const DiffCommentReminder = styled(
         {...props}
         variants={{
           visible: { opacity: 1, cursor: 'pointer' },
-          invisible: { opacity: 0, cursor: 'initial' }
+          invisible: { opacity: 0, cursor: 'initial' },
         }}
         animate={isVisible > 0 ? 'visible' : 'invisible'}
         transition={{
-          duration: getTransitionDuration(0.5)
+          duration: getTransitionDuration(0.5),
         }}
         onClick={uncollapseDiff}
       >

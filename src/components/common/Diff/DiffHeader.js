@@ -6,7 +6,7 @@ import {
   DownOutlined,
   RightOutlined,
   CopyOutlined,
-  RollbackOutlined
+  RollbackOutlined,
 } from '@ant-design/icons'
 import { getFilePathsToShow } from '../../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
@@ -15,7 +15,7 @@ import DownloadFileButton from '../DownloadFileButton'
 import ViewFileButton from '../ViewFileButton'
 
 export const testIDs = {
-  collapseClickableArea: 'collapseClickableArea'
+  collapseClickableArea: 'collapseClickableArea',
 }
 
 const Wrapper = styled.div`
@@ -38,7 +38,7 @@ const Wrapper = styled.div`
 const FileRenameArrow = styled(RightOutlined)({
   fontSize: '10px',
   margin: '0 5px',
-  color: '#f78206'
+  color: '#f78206',
 })
 
 const FileName = ({ oldPath, newPath, type, appName }) => {
@@ -62,14 +62,14 @@ const FileStatus = ({ type, ...props }) => {
     add: 'blue',
     modify: 'green',
     delete: 'red',
-    rename: 'orange'
+    rename: 'orange',
   }
 
   const labels = {
     add: 'ADDED',
     modify: 'MODIFIED',
     delete: 'DELETED',
-    rename: 'RENAMED'
+    rename: 'RENAMED',
   }
 
   return (
@@ -138,7 +138,7 @@ const CopyPathToClipboardButton = styled(
         trigger="hover"
         overlayStyle={{
           width: '175px',
-          textAlign: 'center'
+          textAlign: 'center',
         }}
       >
         <Button

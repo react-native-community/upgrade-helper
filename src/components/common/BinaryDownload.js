@@ -53,7 +53,7 @@ const BinaryDownload = ({
   fromVersion,
   toVersion,
   appName,
-  packageName
+  packageName,
 }) => {
   const binaryFiles = diff.filter(
     ({ hunks, type }) => hunks.length === 0 && type !== 'delete'

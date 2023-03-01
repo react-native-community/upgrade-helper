@@ -11,7 +11,7 @@ const newArchitectureFiles = [
   'android/app/src/main/jni/MainApplicationTurboModuleManagerDelegate.cpp',
   'android/app/src/main/jni/MainApplicationTurboModuleManagerDelegate.h',
   'android/app/src/main/jni/MainComponentsRegistry.h',
-  'android/app/src/main/jni/OnLoad.cpp'
+  'android/app/src/main/jni/OnLoad.cpp',
 ]
 
 export default {
@@ -22,9 +22,9 @@ export default {
       {
         title:
           'See here to learn more about new architecture and how to enable it in your project',
-        url: 'https://reactnative.dev/docs/next/new-architecture-intro'
-      }
-    ]
+        url: 'https://reactnative.dev/docs/next/new-architecture-intro',
+      },
+    ],
   },
   comments: [
     {
@@ -36,7 +36,7 @@ export default {
           `isNewArchitectureEnabled()` and related logic is optional if you are
           not planning to upgrade to the new architecture.
         </Fragment>
-      )
+      ),
     },
     {
       fileName: 'android/app/build.gradle',
@@ -47,7 +47,7 @@ export default {
           `isNewArchitectureEnabled()` and related logic is optional if you are
           not planning to upgrade to the new architecture.
         </Fragment>
-      )
+      ),
     },
     {
       fileName: 'android/app/src/main/java/com/rndiffapp/MainActivity.java',
@@ -58,7 +58,7 @@ export default {
           New delegate and enabling Fabric in `ReactRootView` is only required
           for the new architecture builds.
         </Fragment>
-      )
+      ),
     },
     {
       fileName: 'ios/RnDiffApp/AppDelegate.mm',
@@ -69,9 +69,9 @@ export default {
           Parts under `RCT_NEW_ARCH_ENABLED` are only required for the new
           architecture builds.
         </Fragment>
-      )
+      ),
     },
-    ...newArchitectureFiles.map(file => ({
+    ...newArchitectureFiles.map((file) => ({
       fileName: file,
 
       lineNumber: 1,
@@ -80,7 +80,7 @@ export default {
         <Fragment>
           This file is only required for the New Architecture setup.
         </Fragment>
-      )
-    }))
-  ]
+      ),
+    })),
+  ],
 }

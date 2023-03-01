@@ -7,7 +7,7 @@ import Markdown from '../Markdown'
 const lineColors = {
   add: '#d6fedb',
   delete: '#fdeff0',
-  neutral: '#ffffff'
+  neutral: '#ffffff',
 }
 
 const Container = styled(({ isCommentVisible, children, ...props }) => (
@@ -15,14 +15,14 @@ const Container = styled(({ isCommentVisible, children, ...props }) => (
     {...props}
     variants={{
       visible: {
-        height: 'auto'
+        height: 'auto',
       },
-      hidden: { height: 10 }
+      hidden: { height: 10 },
     }}
     initial={isCommentVisible ? 'visible' : 'hidden'}
     animate={isCommentVisible ? 'visible' : 'hidden'}
     transition={{
-      duration: 0.5
+      duration: 0.5,
     }}
     inherit={false}
   >
@@ -53,17 +53,17 @@ const ShowButton = styled(({ isCommentVisible, ...props }) => (
     {...props}
     variants={{
       visible: {
-        scaleX: 1
+        scaleX: 1,
       },
-      hidden: { scaleX: 10 }
+      hidden: { scaleX: 10 },
     }}
     whileHover={{
-      scale: 2
+      scale: 2,
     }}
     initial={isCommentVisible ? 'visible' : 'hidden'}
     animate={isCommentVisible ? 'visible' : 'hidden'}
     transition={{
-      duration: 0.25
+      duration: 0.25,
     }}
   />
 ))`
@@ -86,7 +86,7 @@ const Content = styled(Markdown)`
 const LINE_CHANGE_TYPES = {
   ADD: 'I',
   DELETE: 'D',
-  NEUTRAL: 'N'
+  NEUTRAL: 'N',
 }
 
 const getLineNumberWithType = ({ lineChangeType, lineNumber }) =>
@@ -98,7 +98,7 @@ const getComments = ({ packageName, newPath, fromVersion, toVersion }) => {
   const versionsInDiff = getVersionsContentInDiff({
     packageName,
     fromVersion,
-    toVersion
+    toVersion,
   }).filter(
     ({ comments }) =>
       comments &&
@@ -117,7 +117,7 @@ const getComments = ({ packageName, newPath, fromVersion, toVersion }) => {
           ...versionComments,
           [getLineNumberWithType({ lineChangeType, lineNumber })]: (
             <DiffComment content={content} lineChangeType={lineChangeType} />
-          )
+          ),
         }
       },
       {}
@@ -125,7 +125,7 @@ const getComments = ({ packageName, newPath, fromVersion, toVersion }) => {
 
     return {
       ...allComments,
-      ...comments
+      ...comments,
     }
   }, {})
 }

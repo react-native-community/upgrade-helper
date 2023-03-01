@@ -31,6 +31,6 @@ export const useFetchReleaseVersions = ({ packageName }) => {
   return {
     isLoading,
     isDone,
-    releaseVersions
+    releaseVersions,
   }
 }
