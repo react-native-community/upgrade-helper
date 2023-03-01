@@ -40,6 +40,7 @@
     "react-app-rewired": "^2.1.5"
   },
   "scripts": {
+    "prepare": "husky install",
     "start": "EXTEND_ESLINT=true react-app-rewired start",
     "start-and-wait": "yarn start & wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 30 http://localhost:3000/",
     "build": "EXTEND_ESLINT=true react-app-rewired build",
