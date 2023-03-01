@@ -31,8 +31,8 @@ const ListContainer = styled.ul`
   list-style: disc;
 `
 
-const TroubleshootingGuides = ({ isTooltipVisible }) => {
-  const willHaveAnimation = useRef(isTooltipVisible)
+const TroubleshootingGuides = ({ isTooltipOpen }) => {
+  const willHaveAnimation = useRef(isTooltipOpen)
 
   const containerAnimation = useAnimation()
 

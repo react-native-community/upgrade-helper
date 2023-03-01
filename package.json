@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "@ant-design/icons": "4.0.3",
-    "@emotion/core": "10.0.28",
-    "@emotion/styled": "10.0.27",
-    "antd": "4.0.3",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "antd": "5.2.3",
     "date-fns": "^2.29.3",
     "framer-motion": "^2.9.5",
     "markdown-to-jsx": "7.1.9",
@@ -35,7 +35,8 @@
     "use-persisted-state": "^0.3.3"
   },
   "devDependencies": {
-    "@emotion/babel-preset-css-prop": "10.0.27",
+    "@emotion/babel-preset-css-prop": "^11.10.0",
+    "@emotion/eslint-plugin": "^11.10.0",
     "@testing-library/react": "^14.0.0",
     "customize-cra": "^1.0.0",
     "eslint": "^8.35.0",
@@ -65,7 +66,8 @@
       "react-app"
     ],
     "plugins": [
-      "prettier"
+      "prettier",
+      "@emotion"
     ],
     "rules": {
       "prettier/prettier": "error",

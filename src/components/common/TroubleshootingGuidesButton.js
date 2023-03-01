@@ -42,10 +42,10 @@ const TroubleshootingGuidesButton = () => {
   return (
     <Popover
       placement="bottomRight"
-      content={<TroubleshootingGuides isTooltipVisible={showContent} />}
+      content={<TroubleshootingGuides isTooltipOpen={showContent} />}
       trigger="click"
-      visible={showContent}
-      onVisibleChange={handlePopoverVisibilityChange}
+      open={showContent}
+      onOpenChange={handlePopoverVisibilityChange}
     >
       <Button
         data-testid={testIDs.troubleshootingGuidesButton}

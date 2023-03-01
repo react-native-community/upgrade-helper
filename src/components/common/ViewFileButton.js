@@ -4,8 +4,8 @@ import { Button } from 'antd'
 import { getBinaryFileURL } from '../../utils'
 
 const ViewFileButton = styled(
-  ({ visible, version, path, packageName, ...props }) => {
-    if (!visible) {
+  ({ open, version, path, packageName, ...props }) => {
+    if (!open) {
       return null
     }
 

@@ -7,16 +7,16 @@ import { getTransitionDuration } from '../../../utils'
 const DiffCommentReminder = styled(
   ({ comments, isDiffCollapsed, uncollapseDiff, ...props }) => {
     const numberOfComments = Object.keys(comments).length
-    const isVisible = isDiffCollapsed && numberOfComments > 0
+    const isOpen = isDiffCollapsed && numberOfComments > 0
 
     return (
       <motion.div
         {...props}
         variants={{
-          visible: { opacity: 1, cursor: 'pointer' },
-          invisible: { opacity: 0, cursor: 'initial' },
+          open: { opacity: 1, cursor: 'pointer' },
+          closed: { opacity: 0, cursor: 'initial' },
         }}
-        animate={isVisible > 0 ? 'visible' : 'invisible'}
+        animate={isOpen > 0 ? 'open' : 'closed'}
         transition={{
           duration: getTransitionDuration(0.5),
         }}

@@ -10,17 +10,17 @@ const lineColors = {
   neutral: '#ffffff',
 }
 
-const Container = styled(({ isCommentVisible, children, ...props }) => (
+const Container = styled(({ isCommentOpen, children, ...props }) => (
   <motion.div
     {...props}
     variants={{
-      visible: {
+      open: {
         height: 'auto',
       },
       hidden: { height: 10 },
     }}
-    initial={isCommentVisible ? 'visible' : 'hidden'}
-    animate={isCommentVisible ? 'visible' : 'hidden'}
+    initial={isCommentOpen ? 'open' : 'hidden'}
+    animate={isCommentOpen ? 'open' : 'hidden'}
     transition={{
       duration: 0.5,
     }}
@@ -48,11 +48,11 @@ const ContentContainer = styled.div`
   user-select: none;
 `
 
-const ShowButton = styled(({ isCommentVisible, ...props }) => (
+const ShowButton = styled(({ isCommentOpen, ...props }) => (
   <motion.div
     {...props}
     variants={{
-      visible: {
+      open: {
         scaleX: 1,
       },
       hidden: { scaleX: 10 },
@@ -60,8 +60,8 @@ const ShowButton = styled(({ isCommentVisible, ...props }) => (
     whileHover={{
       scale: 2,
     }}
-    initial={isCommentVisible ? 'visible' : 'hidden'}
-    animate={isCommentVisible ? 'visible' : 'hidden'}
+    initial={isCommentOpen ? 'open' : 'hidden'}
+    animate={isCommentOpen ? 'open' : 'hidden'}
     transition={{
       duration: 0.25,
     }}
@@ -75,8 +75,8 @@ const ShowButton = styled(({ isCommentVisible, ...props }) => (
 
 const Content = styled(Markdown)`
   opacity: 1;
-  ${({ isCommentVisible }) =>
-    !isCommentVisible &&
+  ${({ isCommentOpen }) =>
+    !isCommentOpen &&
     `
       opacity: 0;
     `}
@@ -131,21 +131,21 @@ const getComments = ({ packageName, newPath, fromVersion, toVersion }) => {
 }
 
 const DiffComment = ({ content, lineChangeType }) => {
-  const [isCommentVisible, setIsCommentVisible] = useState(true)
+  const [isCommentOpen, setIsCommentOpen] = useState(true)
 
   return (
     <Container
-      isCommentVisible={isCommentVisible}
+      isCommentOpen={isCommentOpen}
       lineChangeType={lineChangeType}
-      onClick={() => setIsCommentVisible(!isCommentVisible)}
+      onClick={() => setIsCommentOpen(!isCommentOpen)}
     >
       <ShowButton
-        isCommentVisible={isCommentVisible}
-        onClick={() => setIsCommentVisible(!isCommentVisible)}
+        isCommentOpen={isCommentOpen}
+        onClick={() => setIsCommentOpen(!isCommentOpen)}
       />
 
       <ContentContainer>
-        <Content isCommentVisible={isCommentVisible}>
+        <Content isCommentOpen={isCommentOpen}>
           {content.props.children}
         </Content>
       </ContentContainer>

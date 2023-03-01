@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { keyframes, css } from '@emotion/core'
+import { keyframes, css } from '@emotion/react'
 import Confetti from 'react-dom-confetti'
 import { Popover } from 'antd'
 

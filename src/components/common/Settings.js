@@ -124,8 +124,8 @@ const Settings = ({
         </>
       }
       trigger="click"
-      visible={popoverVisibility}
-      onVisibleChange={handleClickChange}
+      open={popoverVisibility}
+      onOpenChange={handleClickChange}
     >
       <SettingsButton icon={<SettingsIcon />} />
     </Popover>
