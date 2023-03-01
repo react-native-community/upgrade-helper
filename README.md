@@ -59,6 +59,8 @@ After which, you can create a branch to to make your changes and then open a PR 
 
 This project proudly uses [`rn-diff-purge`](https://github.com/react-native-community/rn-diff-purge), [`react-diff-view`](https://github.com/otakustay/react-diff-view) and [`create-react-app`](https://github.com/facebook/create-react-app).
 
-## 📝 License
+## 📝 License & CoC
 
-This project is released under the MIT license (check the LICENSE file for details).
+This project is released under the [MIT license](./LICENSE).
+
+Morerover, this projects adopts the [Contributor Covenant Code of Conduct](./CODE_OF_CONDUCT.md) and all contributors are expected to follow it.
