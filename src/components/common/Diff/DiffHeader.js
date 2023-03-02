@@ -6,7 +6,7 @@ import {
   DownOutlined,
   RightOutlined,
   CopyOutlined,
-  RollbackOutlined
+  RollbackOutlined,
 } from '@ant-design/icons'
 import { getFilePathsToShow } from '../../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
@@ -15,7 +15,7 @@ import DownloadFileButton from '../DownloadFileButton'
 import ViewFileButton from '../ViewFileButton'
 
 export const testIDs = {
-  collapseClickableArea: 'collapseClickableArea'
+  collapseClickableArea: 'collapseClickableArea',
 }
 
 const Wrapper = styled.div`
@@ -38,7 +38,7 @@ const Wrapper = styled.div`
 const FileRenameArrow = styled(RightOutlined)({
   fontSize: '10px',
   margin: '0 5px',
-  color: '#f78206'
+  color: '#f78206',
 })
 
 const FileName = ({ oldPath, newPath, type, appName }) => {
@@ -62,14 +62,14 @@ const FileStatus = ({ type, ...props }) => {
     add: 'blue',
     modify: 'green',
     delete: 'red',
-    rename: 'orange'
+    rename: 'orange',
   }
 
   const labels = {
     add: 'ADDED',
     modify: 'MODIFIED',
     delete: 'DELETED',
-    rename: 'RENAMED'
+    rename: 'RENAMED',
   }
 
   return (
@@ -79,8 +79,8 @@ const FileStatus = ({ type, ...props }) => {
   )
 }
 
-const BinaryBadge = ({ visible, ...props }) =>
-  visible ? (
+const BinaryBadge = ({ open, ...props }) =>
+  open ? (
     <Tag {...props} color="cyan">
       BINARY
     </Tag>
@@ -96,8 +96,8 @@ const defaultIconButtonStyle = `
   border-radius: 50%;
 `
 
-const CompleteDiffButton = styled(({ visible, onClick, ...props }) =>
-  visible ? (
+const CompleteDiffButton = styled(({ open, onClick, ...props }) =>
+  open ? (
     <Button
       {...props}
       type="ghost"
@@ -138,7 +138,7 @@ const CopyPathToClipboardButton = styled(
         trigger="hover"
         overlayStyle={{
           width: '175px',
-          textAlign: 'center'
+          textAlign: 'center',
         }}
       >
         <Button
@@ -161,8 +161,8 @@ const CollapseClickableArea = styled.div`
   }
 `
 
-const CollapseDiffButton = styled(({ visible, isDiffCollapsed, ...props }) =>
-  visible ? <Button {...props} type="link" icon={<DownOutlined />} /> : null
+const CollapseDiffButton = styled(({ open, isDiffCollapsed, ...props }) =>
+  open ? <Button {...props} type="link" icon={<DownOutlined />} /> : null
 )`
   color: #24292e;
   margin-right: 2px;
@@ -208,7 +208,7 @@ const DiffHeader = ({
           onClick={({ altKey }) => setIsDiffCollapsed(!isDiffCollapsed, altKey)}
         >
           <CollapseDiffButton
-            visible={hasDiff}
+            open={hasDiff}
             isDiffCollapsed={isDiffCollapsed}
           />
           <FileName
@@ -218,7 +218,7 @@ const DiffHeader = ({
             appName={appName}
           />{' '}
           <FileStatus type={type} />
-          <BinaryBadge visible={!hasDiff} />
+          <BinaryBadge open={!hasDiff} />
         </CollapseClickableArea>
         <CopyPathToClipboardButton
           oldPath={sanitizedFilePaths.oldPath}
@@ -238,19 +238,19 @@ const DiffHeader = ({
       <div>
         <Fragment>
           <ViewFileButton
-            visible={hasDiff && type !== 'delete'}
+            open={hasDiff && type !== 'delete'}
             version={toVersion}
             path={newPath}
             packageName={packageName}
           />
           <DownloadFileButton
-            visible={!hasDiff && type !== 'delete'}
+            open={!hasDiff && type !== 'delete'}
             version={toVersion}
             path={newPath}
             packageName={packageName}
           />
           <CompleteDiffButton
-            visible={isDiffCompleted}
+            open={isDiffCompleted}
             onClick={() => onCompleteDiff(diffKey)}
           />
         </Fragment>

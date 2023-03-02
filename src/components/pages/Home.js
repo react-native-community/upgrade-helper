@@ -6,7 +6,6 @@ import ReactGA from 'react-ga'
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
 import Settings from '../common/Settings'
-import { homepage } from '../../../package.json'
 import logo from '../../assets/logo.svg'
 import { SHOW_LATEST_RCS } from '../../utils'
 import { useGetLanguageFromURL } from '../../hooks/get-language-from-url'
@@ -80,10 +79,8 @@ const StarButton = styled(({ className, ...props }) => (
 `
 
 const Home = () => {
-  const {
-    packageName: defaultPackageName,
-    isPackageNameDefinedInURL
-  } = useGetPackageNameFromURL()
+  const { packageName: defaultPackageName, isPackageNameDefinedInURL } =
+    useGetPackageNameFromURL()
   const defaultLanguage = useGetLanguageFromURL()
   const [packageName, setPackageName] = useState(defaultPackageName)
   const [language, setLanguage] = useState(defaultLanguage)
@@ -91,9 +88,11 @@ const Home = () => {
   const [toVersion, setToVersion] = useState('')
   const [shouldShowDiff, setShouldShowDiff] = useState(false)
   const [settings, setSettings] = useState({
-    [`${SHOW_LATEST_RCS}`]: false
+    [`${SHOW_LATEST_RCS}`]: false,
   })
   const [appName, setAppName] = useState('')
+
+  const homepageUrl = process.env.PUBLIC_URL
 
   useEffect(() => {
     if (process.env.NODE_ENV === 'production') {
@@ -114,7 +113,7 @@ const Home = () => {
 
   const handlePackageNameAndLanguageChange = ({
     newPackageName,
-    newLanguage
+    newLanguage,
   }) => {
     let localPackageName =
       newPackageName === undefined ? packageName : newPackageName
@@ -126,7 +125,7 @@ const Home = () => {
       isPackageNameDefinedInURL:
         isPackageNameDefinedInURL || newPackageName !== undefined,
       toVersion: '',
-      fromVersion: ''
+      fromVersion: '',
     })
     setPackageName(localPackageName)
     setLanguage(localLanguage)
@@ -135,7 +134,7 @@ const Home = () => {
     setShouldShowDiff(false)
   }
 
-  const handleSettingsChange = settingsValues => {
+  const handleSettingsChange = (settingsValues) => {
     const normalizedIncomingSettings = settingsValues.reduce((acc, val) => {
       acc[val] = true
       return acc
@@ -154,7 +153,7 @@ const Home = () => {
               title="React Native Upgrade Helper logo"
               src={logo}
             />
-            <a href={homepage}>
+            <a href={homepageUrl}>
               <TitleHeader>React Native Upgrade Helper</TitleHeader>
             </a>
           </TitleContainer>

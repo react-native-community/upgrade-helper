@@ -4,9 +4,8 @@ export default {
     links: [
       {
         title: 'This is a very cool link to a blog post about 0.59',
-        url:
-          'https://facebook.github.io/react-native/blog/2019/03/12/releasing-react-native-059'
-      }
-    ]
-  }
+        url: 'https://facebook.github.io/react-native/blog/2019/03/12/releasing-react-native-059',
+      },
+    ],
+  },
 }

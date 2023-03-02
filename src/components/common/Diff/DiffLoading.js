@@ -42,7 +42,7 @@ const Header = styled.div({
   color: '#24292e',
   backgroundColor: '#fafbfc',
   padding: '10px',
-  height: '40px'
+  height: '40px',
 })
 
 const DiffLoading = () => (
@@ -56,7 +56,7 @@ const DiffLoading = () => (
     </Header>
     <div
       css={{
-        padding: '5px 10px'
+        padding: '5px 10px',
       }}
     >
       <DiffLoader />

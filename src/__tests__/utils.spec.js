@@ -7,7 +7,7 @@ describe('getVersionsContentInDiff', () => {
     const versions = getVersionsContentInDiff({
       packageName: PACKAGE_NAMES.RN,
       fromVersion: '0.57.0',
-      toVersion: '0.59.0'
+      toVersion: '0.59.0',
     })
 
     expect(versions).toEqual([{ version: '0.59' }, { version: '0.58' }])
@@ -17,13 +17,13 @@ describe('getVersionsContentInDiff', () => {
     const versions = getVersionsContentInDiff({
       packageName: PACKAGE_NAMES.RN,
       fromVersion: '0.56.0',
-      toVersion: '0.59.0-rc.1'
+      toVersion: '0.59.0-rc.1',
     })
 
     expect(versions).toEqual([
       { version: '0.59' },
       { version: '0.58' },
-      { version: '0.57' }
+      { version: '0.57' },
     ])
   })
 
@@ -31,7 +31,7 @@ describe('getVersionsContentInDiff', () => {
     const versions = getVersionsContentInDiff({
       packageName: PACKAGE_NAMES.RN,
       fromVersion: '0.57.2',
-      toVersion: '0.59.9'
+      toVersion: '0.59.9',
     })
 
     expect(versions).toEqual([{ version: '0.59' }, { version: '0.58' }])

@@ -6,14 +6,14 @@ import { WindowsFilled } from '@ant-design/icons'
 import { PACKAGE_NAMES, LANGUAGE_NAMES } from '../../constants'
 
 const InputContainer = styled.div({
-  marginTop: '16px'
+  marginTop: '16px',
 })
 
 const SettingsButton = styled(Button)`
   color: initial;
 `
 
-const SettingsIcon = styled(props => <span {...props}>⚙️</span>)`
+const SettingsIcon = styled((props) => <span {...props}>⚙️</span>)`
   font-family: initial;
 `
 
@@ -36,14 +36,14 @@ const Settings = ({
   language,
   onChangePackageNameAndLanguage,
   appName,
-  onChangeAppName
+  onChangeAppName,
 }) => {
   const [popoverVisibility, setVisibility] = useState(false)
   const [newAppName, setNewAppName] = useState(appName)
   const [newPackageName, setNewPackageName] = useState(packageName)
   const [newLanguage, setNewLanguage] = useState(language)
 
-  const handleClickChange = visibility => {
+  const handleClickChange = (visibility) => {
     setVisibility(visibility)
 
     if (newAppName !== appName) {
@@ -62,12 +62,12 @@ const Settings = ({
       onChangePackageNameAndLanguage({
         newPackageName:
           newPackageName !== packageName ? newPackageName : undefined,
-        newLanguage: processedNewLanguage
+        newLanguage: processedNewLanguage,
       })
     }
   }
 
-  const updateCheckboxValues = checkboxValues =>
+  const updateCheckboxValues = (checkboxValues) =>
     handleSettingsChange(checkboxValues)
 
   return (
@@ -92,7 +92,7 @@ const Settings = ({
             <h5>Upgrading another platform?</h5>
             <Radio.Group
               value={newPackageName}
-              onChange={e => setNewPackageName(e.target.value)}
+              onChange={(e) => setNewPackageName(e.target.value)}
             >
               <PackagesGroupContainer>
                 <Radio value={PACKAGE_NAMES.RN}>react-native</Radio>
@@ -104,7 +104,7 @@ const Settings = ({
                         ? newLanguage
                         : undefined
                     }
-                    onChange={e => {
+                    onChange={(e) => {
                       setNewPackageName(PACKAGE_NAMES.RNW)
                       setNewLanguage(e.target.value)
                     }}
@@ -124,8 +124,8 @@ const Settings = ({
         </>
       }
       trigger="click"
-      visible={popoverVisibility}
-      onVisibleChange={handleClickChange}
+      open={popoverVisibility}
+      onOpenChange={handleClickChange}
     >
       <SettingsButton icon={<SettingsIcon />} />
     </Popover>

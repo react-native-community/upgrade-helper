@@ -10,20 +10,20 @@ const versionsWithContent = {
     '0.60',
     '0.59',
     '0.58',
-    '0.57'
+    '0.57',
   ],
   [PACKAGE_NAMES.RNM]: [],
-  [PACKAGE_NAMES.RNW]: []
+  [PACKAGE_NAMES.RNW]: [],
 }
 
-const getReleaseVersionFiles = packageName =>
-  versionsWithContent[packageName].map(version => ({
+const getReleaseVersionFiles = (packageName) =>
+  versionsWithContent[packageName].map((version) => ({
     ...require(`./${packageName}/${version}`).default,
-    version
+    version,
   }))
 
 export default {
   [PACKAGE_NAMES.RN]: getReleaseVersionFiles(PACKAGE_NAMES.RN),
   [PACKAGE_NAMES.RNM]: getReleaseVersionFiles(PACKAGE_NAMES.RNM),
-  [PACKAGE_NAMES.RNW]: getReleaseVersionFiles(PACKAGE_NAMES.RNW)
+  [PACKAGE_NAMES.RNW]: getReleaseVersionFiles(PACKAGE_NAMES.RNW),
 }

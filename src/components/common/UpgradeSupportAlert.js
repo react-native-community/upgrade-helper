@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { Tooltip } from 'antd'
 
-const UpgradeSupportAlert = styled(props => (
+const UpgradeSupportAlert = styled((props) => (
   <div {...props}>
     <span>
       Check out{' '}

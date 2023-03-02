@@ -2,13 +2,13 @@ import React from 'react'
 import Markdown from 'markdown-to-jsx'
 import styled from '@emotion/styled'
 
-export const Link = styled(props => (
+export const Link = styled((props) => (
   // eslint-disable-next-line jsx-a11y/anchor-has-content
   <a
     target="_blank"
     {...props}
     rel="noopener"
-    onClick={e => e.stopPropagation()}
+    onClick={(e) => e.stopPropagation()}
   />
 ))`
   text-decoration: none;
@@ -37,8 +37,8 @@ export default ({ forceBlock = false, options = {}, ...props }) => (
         code: InlineCode,
         p: styled.p`
           margin-bottom: 0;
-        `
-      }
+        `,
+      },
     }}
   />
 )

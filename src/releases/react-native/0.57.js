@@ -5,9 +5,8 @@ export default {
     links: [
       {
         title: '[External] Tutorial on upgrading to React Native 0.57',
-        url:
-          'https://reactnative.thenativebits.com/courses/upgrading-react-native/upgrade-to-react-native-0.57/'
-      }
-    ]
-  }
+        url: 'https://reactnative.thenativebits.com/courses/upgrading-react-native/upgrade-to-react-native-0.57/',
+      },
+    ],
+  },
 }

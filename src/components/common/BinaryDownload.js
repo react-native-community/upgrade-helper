@@ -39,7 +39,7 @@ const BinaryList = ({ binaryFiles, toVersion, appName, packageName }) =>
         {removeAppPathPrefix(newPath, appName)}
 
         <DownloadFileButton
-          visible={true}
+          open={true}
           version={toVersion}
           path={newPath}
           packageName={packageName}
@@ -53,7 +53,7 @@ const BinaryDownload = ({
   fromVersion,
   toVersion,
   appName,
-  packageName
+  packageName,
 }) => {
   const binaryFiles = diff.filter(
     ({ hunks, type }) => hunks.length === 0 && type !== 'delete'

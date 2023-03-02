@@ -7,22 +7,22 @@ import Markdown from '../Markdown'
 const lineColors = {
   add: '#d6fedb',
   delete: '#fdeff0',
-  neutral: '#ffffff'
+  neutral: '#ffffff',
 }
 
-const Container = styled(({ isCommentVisible, children, ...props }) => (
+const Container = styled(({ isCommentOpen, children, ...props }) => (
   <motion.div
     {...props}
     variants={{
-      visible: {
-        height: 'auto'
+      open: {
+        height: 'auto',
       },
-      hidden: { height: 10 }
+      hidden: { height: 10 },
     }}
-    initial={isCommentVisible ? 'visible' : 'hidden'}
-    animate={isCommentVisible ? 'visible' : 'hidden'}
+    initial={isCommentOpen ? 'open' : 'hidden'}
+    animate={isCommentOpen ? 'open' : 'hidden'}
     transition={{
-      duration: 0.5
+      duration: 0.5,
     }}
     inherit={false}
   >
@@ -48,22 +48,22 @@ const ContentContainer = styled.div`
   user-select: none;
 `
 
-const ShowButton = styled(({ isCommentVisible, ...props }) => (
+const ShowButton = styled(({ isCommentOpen, ...props }) => (
   <motion.div
     {...props}
     variants={{
-      visible: {
-        scaleX: 1
+      open: {
+        scaleX: 1,
       },
-      hidden: { scaleX: 10 }
+      hidden: { scaleX: 10 },
     }}
     whileHover={{
-      scale: 2
+      scale: 2,
     }}
-    initial={isCommentVisible ? 'visible' : 'hidden'}
-    animate={isCommentVisible ? 'visible' : 'hidden'}
+    initial={isCommentOpen ? 'open' : 'hidden'}
+    animate={isCommentOpen ? 'open' : 'hidden'}
     transition={{
-      duration: 0.25
+      duration: 0.25,
     }}
   />
 ))`
@@ -75,8 +75,8 @@ const ShowButton = styled(({ isCommentVisible, ...props }) => (
 
 const Content = styled(Markdown)`
   opacity: 1;
-  ${({ isCommentVisible }) =>
-    !isCommentVisible &&
+  ${({ isCommentOpen }) =>
+    !isCommentOpen &&
     `
       opacity: 0;
     `}
@@ -86,7 +86,7 @@ const Content = styled(Markdown)`
 const LINE_CHANGE_TYPES = {
   ADD: 'I',
   DELETE: 'D',
-  NEUTRAL: 'N'
+  NEUTRAL: 'N',
 }
 
 const getLineNumberWithType = ({ lineChangeType, lineNumber }) =>
@@ -98,7 +98,7 @@ const getComments = ({ packageName, newPath, fromVersion, toVersion }) => {
   const versionsInDiff = getVersionsContentInDiff({
     packageName,
     fromVersion,
-    toVersion
+    toVersion,
   }).filter(
     ({ comments }) =>
       comments &&
@@ -117,7 +117,7 @@ const getComments = ({ packageName, newPath, fromVersion, toVersion }) => {
           ...versionComments,
           [getLineNumberWithType({ lineChangeType, lineNumber })]: (
             <DiffComment content={content} lineChangeType={lineChangeType} />
-          )
+          ),
         }
       },
       {}
@@ -125,27 +125,27 @@ const getComments = ({ packageName, newPath, fromVersion, toVersion }) => {
 
     return {
       ...allComments,
-      ...comments
+      ...comments,
     }
   }, {})
 }
 
 const DiffComment = ({ content, lineChangeType }) => {
-  const [isCommentVisible, setIsCommentVisible] = useState(true)
+  const [isCommentOpen, setIsCommentOpen] = useState(true)
 
   return (
     <Container
-      isCommentVisible={isCommentVisible}
+      isCommentOpen={isCommentOpen}
       lineChangeType={lineChangeType}
-      onClick={() => setIsCommentVisible(!isCommentVisible)}
+      onClick={() => setIsCommentOpen(!isCommentOpen)}
     >
       <ShowButton
-        isCommentVisible={isCommentVisible}
-        onClick={() => setIsCommentVisible(!isCommentVisible)}
+        isCommentOpen={isCommentOpen}
+        onClick={() => setIsCommentOpen(!isCommentOpen)}
       />
 
       <ContentContainer>
-        <Content isCommentVisible={isCommentVisible}>
+        <Content isCommentOpen={isCommentOpen}>
           {content.props.children}
         </Content>
       </ContentContainer>

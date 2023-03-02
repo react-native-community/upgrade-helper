@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import {
   getVersionsContentInDiff,
   getChangelogURL,
-  getTransitionDuration
+  getTransitionDuration,
 } from '../../utils'
 import UpgradeSupportAlert from './UpgradeSupportAlert'
 import AppNameWarning from './AppNameWarning'
@@ -34,23 +34,23 @@ const InnerContainer = styled.div`
   transition: padding 0.25s ease-out;
 `
 
-const Title = styled(({ isContentVisible, ...props }) => (
+const Title = styled(({ isContentOpen, ...props }) => (
   <motion.h2
     {...props}
     variants={{
-      visibleContent: {
+      openContent: {
         translateX: 0,
-        translateY: 0
+        translateY: 0,
       },
       hiddenContent: {
         translateX: -5,
-        translateY: -10
-      }
+        translateY: -10,
+      },
     }}
-    initial={isContentVisible ? 'visibleContent' : 'hiddenContent'}
-    animate={isContentVisible ? 'visibleContent' : 'hiddenContent'}
+    initial={isContentOpen ? 'openContent' : 'hiddenContent'}
+    animate={isContentOpen ? 'openContent' : 'hiddenContent'}
     transition={{
-      duration: getTransitionDuration(0.25)
+      duration: getTransitionDuration(0.25),
     }}
     inherit={false}
   />
@@ -61,21 +61,21 @@ const Title = styled(({ isContentVisible, ...props }) => (
   padding: 18px 0px 0px 14px;
 `
 
-const ContentContainer = styled(({ isContentVisible, children, ...props }) => (
+const ContentContainer = styled(({ isContentOpen, children, ...props }) => (
   <motion.div
     {...props}
     variants={{
-      visible: {
+      open: {
         opacity: 1,
         height: 'auto',
-        translateY: 0
+        translateY: 0,
       },
-      hidden: { opacity: 0, height: 0, translateY: -20 }
+      hidden: { opacity: 0, height: 0, translateY: -20 },
     }}
-    initial={isContentVisible ? 'visible' : 'hidden'}
-    animate={isContentVisible ? 'visible' : 'hidden'}
+    initial={isContentOpen ? 'open' : 'hidden'}
+    animate={isContentOpen ? 'open' : 'hidden'}
     transition={{
-      duration: getTransitionDuration(0.25)
+      duration: getTransitionDuration(0.25),
     }}
     inherit={false}
   >
@@ -87,7 +87,7 @@ const ContentContainer = styled(({ isContentVisible, children, ...props }) => (
   }
 `
 
-const Icon = styled(props => (
+const Icon = styled((props) => (
   <span {...props} role="img" aria-label="Megaphone emoji">
     📣
   </span>
@@ -96,11 +96,11 @@ const Icon = styled(props => (
 `
 
 const HideContentButton = styled(
-  ({ toggleContentVisibility, isContentVisible, ...props }) => (
+  ({ toggleContentVisibility, isContentOpen, ...props }) => (
     <Button
       {...props}
       type="link"
-      icon={isContentVisible ? <UpOutlined /> : <DownOutlined />}
+      icon={isContentOpen ? <UpOutlined /> : <DownOutlined />}
       onClick={toggleContentVisibility}
     />
   )
@@ -129,7 +129,7 @@ const Separator = styled.hr`
 
 class UsefulContentSection extends Component {
   state = {
-    isContentVisible: true
+    isContentOpen: true,
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -137,14 +137,14 @@ class UsefulContentSection extends Component {
     const hasLoaded = this.props.isLoading && !nextProps.isLoading
     // or if the content has been hidden
     const hasContentBeenHidden =
-      this.state.isContentVisible !== nextState.isContentVisible
+      this.state.isContentOpen !== nextState.isContentOpen
 
     return hasLoaded || hasContentBeenHidden
   }
 
   handleToggleContentVisibility = () =>
-    this.setState(({ isContentVisible }) => ({
-      isContentVisible: !isContentVisible
+    this.setState(({ isContentOpen }) => ({
+      isContentOpen: !isContentOpen,
     }))
 
   getChangelog = ({ version }) => {
@@ -160,9 +160,9 @@ class UsefulContentSection extends Component {
         } ${toVersion} changelog`,
         url: getChangelogURL({
           packageName,
-          version: toVersion
+          version: toVersion,
         }),
-        version: toVersion
+        version: toVersion,
       }
     }
 
@@ -172,20 +172,20 @@ class UsefulContentSection extends Component {
       title: `React Native ${versionWithoutEndingZero} changelog`,
       url: getChangelogURL({
         packageName,
-        version: versionWithoutEndingZero
+        version: versionWithoutEndingZero,
       }),
-      version: versionWithoutEndingZero
+      version: versionWithoutEndingZero,
     }
   }
 
   render() {
     const { packageName, fromVersion, toVersion } = this.props
-    const { isContentVisible } = this.state
+    const { isContentOpen } = this.state
 
     const versions = getVersionsContentInDiff({
       packageName,
       fromVersion,
-      toVersion
+      toVersion,
     })
 
     const doesAnyVersionHaveUsefulLinks = versions.some(
@@ -193,21 +193,21 @@ class UsefulContentSection extends Component {
     )
 
     return (
-      <Container isContentVisible={isContentVisible}>
-        <InnerContainer isContentVisible={isContentVisible}>
+      <Container isContentOpen={isContentOpen}>
+        <InnerContainer isContentOpen={isContentOpen}>
           <Title
-            isContentVisible={isContentVisible}
+            isContentOpen={isContentOpen}
             onClick={this.handleToggleContentVisibility}
           >
             <Icon /> Useful content for upgrading
           </Title>
 
           <HideContentButton
-            isContentVisible={isContentVisible}
+            isContentOpen={isContentOpen}
             toggleContentVisibility={this.handleToggleContentVisibility}
           />
 
-          <ContentContainer isContentVisible={isContentVisible}>
+          <ContentContainer isContentOpen={isContentOpen}>
             {doesAnyVersionHaveUsefulLinks ? (
               <UsefulLinks packageName={packageName} versions={versions} />
             ) : null}

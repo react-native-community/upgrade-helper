@@ -5,7 +5,7 @@ export function updateURL({
   language,
   isPackageNameDefinedInURL,
   fromVersion,
-  toVersion
+  toVersion,
 }) {
   const pageURL = window.location.href.replace(window.location.search, '')
 
