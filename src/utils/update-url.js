@@ -7,21 +7,22 @@ export function updateURL({
   fromVersion,
   toVersion,
 }) {
-  const pageURL = window.location.href.replace(window.location.search, '')
+  const url = new URL(window.location.origin)
+  url.pathname = window.location.pathname
+  url.hash = window.location.hash
 
-  const newURL =
-    fromVersion !== '' || toVersion !== ''
-      ? `?from=${fromVersion}&to=${toVersion}`
-      : '?'
-  const packageNameInURL = isPackageNameDefinedInURL
-    ? `&package=${packageName}`
-    : ''
-  const languageInURL =
-    packageName === PACKAGE_NAMES.RNW ? `&language=${language}` : ''
+  if (fromVersion) {
+    url.searchParams.set('from', fromVersion)
+  }
+  if (toVersion) {
+    url.searchParams.set('to', toVersion)
+  }
+  if (isPackageNameDefinedInURL) {
+    url.searchParams.set('package', packageName)
+  }
+  if (packageName === PACKAGE_NAMES.RNW) {
+    url.searchParams.set('language', language)
+  }
 
-  window.history.replaceState(
-    null,
-    null,
-    `${pageURL}${newURL}${packageNameInURL}${languageInURL}`
-  )
+  window.history.replaceState(null, null, url.toString())
 }

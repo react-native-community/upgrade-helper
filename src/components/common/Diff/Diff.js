@@ -157,6 +157,7 @@ const Diff = ({
       <DiffHeader
         oldPath={oldPath}
         newPath={newPath}
+        fromVersion={fromVersion}
         toVersion={toVersion}
         type={type}
         diffKey={diffKey}

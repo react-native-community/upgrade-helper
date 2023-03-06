@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
 import { Tag, Button, Popover } from 'antd'
 import {
@@ -7,6 +7,7 @@ import {
   RightOutlined,
   CopyOutlined,
   RollbackOutlined,
+  LinkOutlined,
 } from '@ant-design/icons'
 import { getFilePathsToShow } from '../../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
@@ -55,6 +56,15 @@ const FileName = ({ oldPath, newPath, type, appName }) => {
   }
 
   return <span>{newPath}</span>
+}
+
+function generatePathId(oldPath, newPath) {
+  const isMoved = oldPath !== newPath
+  if (newPath === '/dev/null') {
+    newPath = 'deleted'
+  }
+  const path = isMoved ? oldPath + '-' + newPath : oldPath
+  return encodeURIComponent(path.replace(/[/\\]/g, '-'))
 }
 
 const FileStatus = ({ type, ...props }) => {
@@ -154,6 +164,49 @@ const CopyPathToClipboardButton = styled(
   ${defaultIconButtonStyle}
 `
 
+const copyAnchorLinks = {
+  default: 'Click to copy anchor link',
+  copied: 'Anchor link copied!',
+}
+
+const CopyAnchorLinksToClipboardButton = styled(
+  ({ id, type, onCopy, fromVersion, toVersion, ...props }) => {
+    const [content, setContent] = React.useState(copyAnchorLinks.default)
+    const resetContent = () => setContent(copyAnchorLinks.default)
+    const onCopyContent = () => setContent(copyAnchorLinks.copied)
+
+    const url = React.useMemo(() => {
+      const url = new URL(window.location)
+      url.hash = id
+      url.searchParams.set('from', fromVersion)
+      url.searchParams.set('to', toVersion)
+      return url.toString()
+    }, [id])
+
+    return (
+      <CopyToClipboard text={url} onCopy={onCopyContent}>
+        <Popover
+          content={content}
+          trigger="hover"
+          overlayStyle={{
+            width: '175px',
+            textAlign: 'center',
+          }}
+        >
+          <Button
+            {...props}
+            type="ghost"
+            icon={<LinkOutlined />}
+            onMouseOver={resetContent}
+          />
+        </Popover>
+      </CopyToClipboard>
+    )
+  }
+)`
+  ${defaultIconButtonStyle}
+`
+
 const CollapseClickableArea = styled.div`
   display: inline-block;
   &:hover {
@@ -182,6 +235,7 @@ const CollapseDiffButton = styled(({ open, isDiffCollapsed, ...props }) =>
 const DiffHeader = ({
   oldPath,
   newPath,
+  fromVersion,
   toVersion,
   type,
   diffKey,
@@ -200,8 +254,13 @@ const DiffHeader = ({
 }) => {
   const sanitizedFilePaths = getFilePathsToShow({ oldPath, newPath, appName })
 
+  const id = React.useMemo(
+    () => generatePathId(oldPath, newPath),
+    [oldPath, newPath]
+  )
+
   return (
-    <Wrapper {...props}>
+    <Wrapper id={id} {...props}>
       <div>
         <CollapseClickableArea
           data-testid={testIDs.collapseClickableArea}
@@ -228,6 +287,12 @@ const DiffHeader = ({
           copyPathPopoverContent={copyPathPopoverContent}
           resetCopyPathPopoverContent={resetCopyPathPopoverContent}
         />
+        <CopyAnchorLinksToClipboardButton
+          id={id}
+          type={type}
+          fromVersion={fromVersion}
+          toVersion={toVersion}
+        />
 
         <DiffCommentReminder
           comments={diffComments}
@@ -236,24 +301,22 @@ const DiffHeader = ({
         />
       </div>
       <div>
-        <Fragment>
-          <ViewFileButton
-            open={hasDiff && type !== 'delete'}
-            version={toVersion}
-            path={newPath}
-            packageName={packageName}
-          />
-          <DownloadFileButton
-            open={!hasDiff && type !== 'delete'}
-            version={toVersion}
-            path={newPath}
-            packageName={packageName}
-          />
-          <CompleteDiffButton
-            open={isDiffCompleted}
-            onClick={() => onCompleteDiff(diffKey)}
-          />
-        </Fragment>
+        <ViewFileButton
+          open={hasDiff && type !== 'delete'}
+          version={toVersion}
+          path={newPath}
+          packageName={packageName}
+        />
+        <DownloadFileButton
+          open={!hasDiff && type !== 'delete'}
+          version={toVersion}
+          path={newPath}
+          packageName={packageName}
+        />
+        <CompleteDiffButton
+          open={isDiffCompleted}
+          onClick={() => onCompleteDiff(diffKey)}
+        />
       </div>
     </Wrapper>
   )

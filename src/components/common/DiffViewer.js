@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useReducer } from 'react'
 import styled from '@emotion/styled'
 import { Alert } from 'antd'
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
@@ -30,6 +30,20 @@ const getDiffKey = ({ oldRevision, newRevision }) =>
   `${oldRevision}${newRevision}`
 
 const scrollToRef = (ref) => ref.current.scrollIntoView({ behavior: 'smooth' })
+
+// Lazy loaded content won't respect anchor links in the URL, so we have to help
+// the viewport once we know our diff has loaded.
+const jumpToAnchor = (stopScrolling) => {
+  if (!window.location.hash || stopScrolling) {
+    return true
+  }
+  const ref = document.getElementById(window.location.hash.slice(1))
+  if (!ref) {
+    return true
+  }
+  ref.scrollIntoView()
+  return true
+}
 
 const DiffViewer = ({
   packageName,
@@ -111,6 +125,8 @@ const DiffViewer = ({
     localStorage.setItem('viewStyle', newViewStyle)
   }
 
+  const [, jumpToAnchorOnce] = useReducer(jumpToAnchor, false)
+
   useEffect(() => {
     if (!isDone) {
       resetCompletedDiffs()
@@ -149,6 +165,7 @@ const DiffViewer = ({
           initial={{ opacity: 0, translateY: 75 }}
           animate={{ opacity: 1, translateY: 0 }}
           transition={{ duration: getTransitionDuration(0.5) }}
+          onAnimationComplete={jumpToAnchorOnce}
         >
           <UsefulContentSection
             isLoading={isLoading}
