@@ -58,6 +58,17 @@ const getVersionsInURL = () => {
   }
 }
 
+// Users making changes to version should not retain anchor links
+// to files that may or may not change.
+const stripAnchorInUrl = () => {
+  if (window.location.hash) {
+    const url = new URL(window.location)
+    url.hash = ''
+    window.history.pushState({}, '', url)
+  }
+  return true
+}
+
 const compareReleaseCandidateVersions = ({ version, versionToCompare }) =>
   ['prerelease', 'prepatch', null].includes(
     semver.diff(version, versionToCompare)
@@ -309,7 +320,9 @@ const VersionSelector = ({
           loading={isLoading}
           value={localFromVersion}
           options={fromVersionList}
-          onChange={(chosenVersion) => setLocalFromVersion(chosenVersion)}
+          onChange={(chosenVersion) =>
+            stripAnchorInUrl() && setLocalFromVersion(chosenVersion)
+          }
         />
 
         <ToVersionSelector
@@ -327,7 +340,9 @@ const VersionSelector = ({
               />
             )
           }
-          onChange={(chosenVersion) => setLocalToVersion(chosenVersion)}
+          onChange={(chosenVersion) =>
+            stripAnchorInUrl() && setLocalToVersion(chosenVersion)
+          }
         />
       </Selectors>
 
