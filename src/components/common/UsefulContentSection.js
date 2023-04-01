@@ -10,7 +10,6 @@ import {
   getTransitionDuration,
 } from '../../utils'
 import UpgradeSupportAlert from './UpgradeSupportAlert'
-import AppNameWarning from './AppNameWarning'
 import UsefulLinks from './UsefulLinks'
 import AlignDepsAlert from './AlignDepsAlert'
 
@@ -217,10 +216,6 @@ class UsefulContentSection extends Component {
             <Separator />
 
             <UpgradeSupportAlert />
-
-            <Separator />
-
-            <AppNameWarning />
           </ContentContainer>
         </InnerContainer>
       </Container>
