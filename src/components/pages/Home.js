@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
 import { Card, Input, Typography } from 'antd'
 import GitHubButton from 'react-github-btn'
@@ -90,8 +90,11 @@ const Home = () => {
   const [settings, setSettings] = useState({
     [`${SHOW_LATEST_RCS}`]: false,
   })
-  const [appName, setAppName] = useState('')
-  const fixedAppName = appName || DEFAULT_APP_NAME
+
+  const [appName, setAppName] = useState({
+    input: '',
+    diff: DEFAULT_APP_NAME,
+  })
 
   const homepageUrl = process.env.PUBLIC_URL
 
@@ -106,6 +109,11 @@ const Home = () => {
     if (fromVersion === toVersion) {
       return
     }
+
+    setAppName(({ input }) => ({
+      input: '',
+      diff: input || DEFAULT_APP_NAME,
+    }))
 
     setFromVersion(fromVersion)
     setToVersion(toVersion)
@@ -187,8 +195,10 @@ const Home = () => {
         <Input
           size="large"
           placeholder={DEFAULT_APP_NAME}
-          value={appName}
-          onChange={({ target }) => setAppName(target.value)}
+          value={appName.input}
+          onChange={({ target }) =>
+            setAppName(({ diff }) => ({ input: target.value, diff }))
+          }
         />
 
         <VersionSelector
@@ -204,7 +214,7 @@ const Home = () => {
         shouldShowDiff={shouldShowDiff}
         fromVersion={fromVersion}
         toVersion={toVersion}
-        appName={fixedAppName}
+        appName={appName.diff}
         packageName={packageName}
         language={language}
       />
