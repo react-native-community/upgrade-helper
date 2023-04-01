@@ -11,7 +11,7 @@ const Container = styled.div`
   justify-content: center;
   height: auto;
   overflow: hidden;
-  margin-top: 25px;
+  margin-top: 28px;
 `
 
 const Button = styled(AntdButton)`
