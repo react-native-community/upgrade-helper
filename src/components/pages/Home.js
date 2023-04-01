@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
 import { Card, Input, Typography } from 'antd'
 import GitHubButton from 'react-github-btn'
