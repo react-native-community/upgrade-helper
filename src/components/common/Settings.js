@@ -92,6 +92,7 @@ const Settings = ({
                   >
                     <Typography.Text style={{ marginRight: 10 }}>
                       react-native-windows
+                      <WindowsFilled style={{ margin: 5 }} />
                     </Typography.Text>
                     <Radio.Button value="cpp">C++</Radio.Button>
                     <Radio.Button value="cs">C#</Radio.Button>
