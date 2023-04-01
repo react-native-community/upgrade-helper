@@ -3,7 +3,11 @@ import { Popover, Button, Checkbox, Input, Radio } from 'antd'
 import { SHOW_LATEST_RCS } from '../../utils'
 import styled from '@emotion/styled'
 import { WindowsFilled } from '@ant-design/icons'
-import { PACKAGE_NAMES, LANGUAGE_NAMES } from '../../constants'
+import {
+  DEFAULT_APP_NAME,
+  PACKAGE_NAMES,
+  LANGUAGE_NAMES,
+} from '../../constants'
 
 const InputContainer = styled.div({
   marginTop: '16px',
@@ -85,7 +89,7 @@ const Settings = ({
             <Input
               value={newAppName}
               onChange={({ target }) => setNewAppName(target.value)}
-              placeholder="MyAwesomeApp"
+              placeholder={DEFAULT_APP_NAME}
             />
           </InputContainer>
           <PlatformsContainer>

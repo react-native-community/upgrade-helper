@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { Tag, Button, Popover } from 'antd'
+import { Tag, Button, Popover, Space } from 'antd'
 import {
   CheckOutlined,
   DownOutlined,
@@ -14,6 +14,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import DiffCommentReminder from './DiffCommentReminder'
 import DownloadFileButton from '../DownloadFileButton'
 import ViewFileButton from '../ViewFileButton'
+import CopyFileButton from '../CopyFileButton'
 
 export const testIDs = {
   collapseClickableArea: 'collapseClickableArea',
@@ -98,12 +99,6 @@ const BinaryBadge = ({ open, ...props }) =>
 
 const defaultIconButtonStyle = `
   font-size: 13px;
-  line-height: 0;
-  border-width: 0px;
-  width: 22px;
-  height: 22px;
-  margin: 5px 0;
-  border-radius: 50%;
 `
 
 const CompleteDiffButton = styled(({ open, onClick, ...props }) =>
@@ -306,6 +301,13 @@ const DiffHeader = ({
           version={toVersion}
           path={newPath}
           packageName={packageName}
+        />
+        <CopyFileButton
+          open={hasDiff && type !== 'delete'}
+          version={toVersion}
+          path={newPath}
+          packageName={packageName}
+          appName={appName}
         />
         <DownloadFileButton
           open={!hasDiff && type !== 'delete'}
