@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { Tag, Button, Popover, Space } from 'antd'
+import { Tag, Button, Popover } from 'antd'
 import {
   CheckOutlined,
   DownOutlined,
