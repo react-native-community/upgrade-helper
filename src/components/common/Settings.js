@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Popover, Button, Checkbox, Radio } from 'antd'
+import { Popover, Button, Checkbox, Radio, Typography } from 'antd'
 import { SHOW_LATEST_RCS } from '../../utils'
 import styled from '@emotion/styled'
 import { WindowsFilled } from '@ant-design/icons'
@@ -90,10 +90,9 @@ const Settings = ({
                       setNewLanguage(e.target.value)
                     }}
                   >
-                    <span style={{ marginRight: 10 }}>
+                    <Typography.Text style={{ marginRight: 10 }}>
                       react-native-windows
-                      <WindowsFilled style={{ margin: 5 }} />
-                    </span>
+                    </Typography.Text>
                     <Radio.Button value="cpp">C++</Radio.Button>
                     <Radio.Button value="cs">C#</Radio.Button>
                   </Radio.Group>
