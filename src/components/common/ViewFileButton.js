@@ -12,11 +12,11 @@ const ViewFileButton = styled(
     return (
       <Button
         {...props}
-        type="link"
         target="_blank"
+        size="small"
         href={getBinaryFileURL({ packageName, version, path })}
       >
-        View file
+        Raw
       </Button>
     )
   }

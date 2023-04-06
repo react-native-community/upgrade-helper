@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
-import { Card } from 'antd'
+import { Card, Input, Typography } from 'antd'
 import GitHubButton from 'react-github-btn'
 import ReactGA from 'react-ga'
 import VersionSelector from '../common/VersionSelector'
@@ -10,7 +10,7 @@ import logo from '../../assets/logo.svg'
 import { SHOW_LATEST_RCS } from '../../utils'
 import { useGetLanguageFromURL } from '../../hooks/get-language-from-url'
 import { useGetPackageNameFromURL } from '../../hooks/get-package-name-from-url'
-import { PACKAGE_NAMES } from '../../constants'
+import { DEFAULT_APP_NAME, PACKAGE_NAMES } from '../../constants'
 import { TroubleshootingGuidesButton } from '../common/TroubleshootingGuidesButton'
 import { updateURL } from '../../utils/update-url'
 import { deviceSizes } from '../../utils/device-sizes'
@@ -90,7 +90,11 @@ const Home = () => {
   const [settings, setSettings] = useState({
     [`${SHOW_LATEST_RCS}`]: false,
   })
-  const [appName, setAppName] = useState('')
+
+  const [appName, setAppName] = useState({
+    input: '',
+    diff: DEFAULT_APP_NAME,
+  })
 
   const homepageUrl = process.env.PUBLIC_URL
 
@@ -105,6 +109,11 @@ const Home = () => {
     if (fromVersion === toVersion) {
       return
     }
+
+    setAppName(({ input }) => ({
+      input: '',
+      diff: input || DEFAULT_APP_NAME,
+    }))
 
     setFromVersion(fromVersion)
     setToVersion(toVersion)
@@ -172,16 +181,25 @@ const Home = () => {
             )}
             <Settings
               handleSettingsChange={handleSettingsChange}
-              appName={appName}
               packageName={packageName}
               onChangePackageNameAndLanguage={
                 handlePackageNameAndLanguageChange
               }
               language={language}
-              onChangeAppName={setAppName}
             />
           </SettingsContainer>
         </HeaderContainer>
+
+        <Typography.Title level={5}>What's your app name?</Typography.Title>
+
+        <Input
+          size="large"
+          placeholder={DEFAULT_APP_NAME}
+          value={appName.input}
+          onChange={({ target }) =>
+            setAppName(({ diff }) => ({ input: target.value, diff }))
+          }
+        />
 
         <VersionSelector
           key={packageName}
@@ -196,7 +214,7 @@ const Home = () => {
         shouldShowDiff={shouldShowDiff}
         fromVersion={fromVersion}
         toVersion={toVersion}
-        appName={appName}
+        appName={appName.diff}
         packageName={packageName}
         language={language}
       />

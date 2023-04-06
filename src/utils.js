@@ -33,18 +33,28 @@ export const getDiffURL = ({
   })}/diffs/diffs/${languageDir}${fromVersion}..${toVersion}.diff`
 }
 
+const getBranch = ({ packageName, language, version }) =>
+  packageName === PACKAGE_NAMES.RNM
+    ? `mac/${version}`
+    : packageName === PACKAGE_NAMES.RNW
+    ? `${language}/${version}`
+    : version
+
 // `path` must contain `RnDiffApp` prefix
 export const getBinaryFileURL = ({ packageName, language, version, path }) => {
-  const branch =
-    packageName === PACKAGE_NAMES.RNM
-      ? `mac/${version}`
-      : packageName === PACKAGE_NAMES.RNW
-      ? `${language}/${version}`
-      : version
+  const branch = getBranch({ packageName, language, version })
 
   return `https://github.com/${getRNDiffRepository({
     packageName,
   })}/raw/release/${branch}/${path}`
+}
+
+export const getFileApiURL = ({ packageName, language, version, path }) => {
+  const branch = getBranch({ packageName, language, version })
+
+  return `https://api.github.com/repos/${getRNDiffRepository({
+    packageName,
+  })}/contents/${path}?ref=${encodeURIComponent(`release/${branch}`)}`
 }
 
 export const removeAppPathPrefix = (path, appName) =>

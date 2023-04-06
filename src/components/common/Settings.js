@@ -1,13 +1,9 @@
 import React, { useState } from 'react'
-import { Popover, Button, Checkbox, Input, Radio } from 'antd'
+import { Popover, Button, Checkbox, Radio, Typography } from 'antd'
 import { SHOW_LATEST_RCS } from '../../utils'
 import styled from '@emotion/styled'
 import { WindowsFilled } from '@ant-design/icons'
 import { PACKAGE_NAMES, LANGUAGE_NAMES } from '../../constants'
-
-const InputContainer = styled.div({
-  marginTop: '16px',
-})
 
 const SettingsButton = styled(Button)`
   color: initial;
@@ -35,20 +31,13 @@ const Settings = ({
   packageName,
   language,
   onChangePackageNameAndLanguage,
-  appName,
-  onChangeAppName,
 }) => {
   const [popoverVisibility, setVisibility] = useState(false)
-  const [newAppName, setNewAppName] = useState(appName)
   const [newPackageName, setNewPackageName] = useState(packageName)
   const [newLanguage, setNewLanguage] = useState(language)
 
   const handleClickChange = (visibility) => {
     setVisibility(visibility)
-
-    if (newAppName !== appName) {
-      onChangeAppName(newAppName)
-    }
 
     const processedNewLanguage =
       newLanguage !== language && newPackageName === PACKAGE_NAMES.RNW
@@ -80,14 +69,6 @@ const Settings = ({
               <Checkbox value={SHOW_LATEST_RCS}>{SHOW_LATEST_RCS}</Checkbox>
             </div>
           </Checkbox.Group>
-          <InputContainer>
-            <h4>What's your app name?</h4>
-            <Input
-              value={newAppName}
-              onChange={({ target }) => setNewAppName(target.value)}
-              placeholder="MyAwesomeApp"
-            />
-          </InputContainer>
           <PlatformsContainer>
             <h5>Upgrading another platform?</h5>
             <Radio.Group
@@ -109,10 +90,10 @@ const Settings = ({
                       setNewLanguage(e.target.value)
                     }}
                   >
-                    <span style={{ marginRight: 10 }}>
+                    <Typography.Text style={{ marginRight: 10 }}>
                       react-native-windows
                       <WindowsFilled style={{ margin: 5 }} />
-                    </span>
+                    </Typography.Text>
                     <Radio.Button value="cpp">C++</Radio.Button>
                     <Radio.Button value="cs">C#</Radio.Button>
                   </Radio.Group>
