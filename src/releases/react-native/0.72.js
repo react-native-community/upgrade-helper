@@ -1,6 +1,15 @@
 import React, { Fragment } from 'react'
 
 export default {
+  usefulContent: {
+    description: 'React Native 0.72 includes a new metro config setup',
+    links: [
+      {
+        title: 'Show about the major changes on React Native 0.72.0-rc.1',
+        url: 'https://github.com/facebook/react-native/releases/tag/v0.72.0-rc.1',
+      },
+    ],
+  },
   comments: [
     {
       fileName: 'metro.config.js',
