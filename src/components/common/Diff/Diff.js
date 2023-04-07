@@ -133,6 +133,7 @@ const Diff = ({
           ...change,
           content: replaceWithProvidedAppName(change.content, appName),
         })),
+        content: replaceWithProvidedAppName(hunk.content, appName),
       }))
     },
     [appName]
