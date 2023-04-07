@@ -64,6 +64,10 @@ class UsefulLinks extends Component {
     return (
       <>
         {versions.map(({ usefulContent, version }, key) => {
+          if (!usefulContent) {
+            return null
+          }
+      
           const changelog = this.getChangelog({ version })
 
           const links = [...usefulContent.links, changelog]
