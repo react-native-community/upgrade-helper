@@ -67,7 +67,7 @@ class UsefulLinks extends Component {
           if (!usefulContent) {
             return null
           }
-      
+
           const changelog = this.getChangelog({ version })
 
           const links = [...usefulContent.links, changelog]
