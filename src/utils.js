@@ -100,7 +100,7 @@ export const getChangelogURL = ({ version, packageName }) => {
     return `${RN_CHANGELOG_URLS[packageName]}v${version}`
   }
 
-  return `${RN_CHANGELOG_URLS[packageName]}#v${version.replace('.', '')}0`
+  return `${RN_CHANGELOG_URLS[packageName]}#v${version.replaceAll('.', '')}`
 }
 
 // If the browser is headless (running puppeteer) then it doesn't have any duration
