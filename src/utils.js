@@ -44,17 +44,9 @@ const getBranch = ({ packageName, language, version }) =>
 export const getBinaryFileURL = ({ packageName, language, version, path }) => {
   const branch = getBranch({ packageName, language, version })
 
-  return `https://github.com/${getRNDiffRepository({
+  return `https://raw.githubusercontent.com/${getRNDiffRepository({
     packageName,
-  })}/raw/release/${branch}/${path}`
-}
-
-export const getFileApiURL = ({ packageName, language, version, path }) => {
-  const branch = getBranch({ packageName, language, version })
-
-  return `https://api.github.com/repos/${getRNDiffRepository({
-    packageName,
-  })}/contents/${path}?ref=${encodeURIComponent(`release/${branch}`)}`
+  })}/release/${branch}/${path}`
 }
 
 export const removeAppPathPrefix = (path, appName) =>

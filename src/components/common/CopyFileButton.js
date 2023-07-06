@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { Button, Popover } from 'antd'
-import { getFileApiURL, replaceWithProvidedAppName } from '../../utils'
+import { getBinaryFileURL, replaceWithProvidedAppName } from '../../utils'
 import { CopyOutlined } from '@ant-design/icons'
 
 const popoverContentOpts = {
@@ -16,9 +16,8 @@ const CopyFileButton = styled(
     )
 
     const fetchContent = () =>
-      fetch(getFileApiURL({ packageName, version, path }))
-        .then((response) => response.json())
-        .then((json) => window.atob(json.content))
+      fetch(getBinaryFileURL({ packageName, version, path }))
+        .then((response) => response.text())
         .then((content) => replaceWithProvidedAppName(content, appName))
 
     const copyContent = () => {
