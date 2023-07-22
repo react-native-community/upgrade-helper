@@ -243,11 +243,17 @@ const DiffHeader = ({
   copyPathPopoverContent,
   resetCopyPathPopoverContent,
   appName,
+  appPackage,
   diffComments,
   packageName,
   ...props
 }) => {
-  const sanitizedFilePaths = getFilePathsToShow({ oldPath, newPath, appName })
+  const sanitizedFilePaths = getFilePathsToShow({
+    oldPath,
+    newPath,
+    appName,
+    appPackage,
+  })
 
   const id = React.useMemo(
     () => generatePathId(oldPath, newPath),
@@ -308,6 +314,7 @@ const DiffHeader = ({
           path={newPath}
           packageName={packageName}
           appName={appName}
+          appPackage={appPackage}
         />
         <DownloadFileButton
           open={!hasDiff && type !== 'delete'}

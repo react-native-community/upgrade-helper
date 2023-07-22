@@ -2,6 +2,7 @@ import semver from 'semver/preload'
 import {
   RN_DIFF_REPOSITORIES,
   DEFAULT_APP_NAME,
+  DEFAULT_APP_PACKAGE,
   PACKAGE_NAMES,
   RN_CHANGELOG_URLS,
 } from './constants'
@@ -52,17 +53,39 @@ export const getBinaryFileURL = ({ packageName, language, version, path }) => {
 export const removeAppPathPrefix = (path, appName) =>
   path.replace(new RegExp(`${appName || DEFAULT_APP_NAME}/`), '')
 
-export const replaceWithProvidedAppName = (path, appName) => {
-  if (!appName) {
-    return path
+/**
+ * Replaces DEFAULT_APP_NAME and DEFAULT_APP_PACKAGE in str with custom
+ * values if provided.
+ * str could be a path, or content from a text file.
+ */
+export const replaceAppDetails = (str, appName, appPackage) => {
+  let newStr = str
+  if (appName) {
+    newStr = newStr
+      .replaceAll(DEFAULT_APP_NAME, appName)
+      .replaceAll(DEFAULT_APP_NAME.toLowerCase(), appName.toLowerCase())
   }
 
-  return path
-    .replace(new RegExp(DEFAULT_APP_NAME, 'g'), appName)
-    .replace(
-      new RegExp(DEFAULT_APP_NAME.toLowerCase(), 'g'),
-      appName.toLowerCase()
-    )
+  if (appPackage) {
+    // TODO should we use node path.sep instead of hardcoding /?
+    // com.foo.bar -> com/foo/bar
+    const appPackageAsPath = appPackage.replaceAll('.', '/')
+
+    // Only replace if DEFAULT_APP_PACKAGE a.k.a. "com" is followed by lower
+    // case appName. Otherwise we unwittingly pick up "com.android..." or
+    // "https://github.com/facebook..."
+    newStr = newStr
+      .replaceAll(
+        `${DEFAULT_APP_PACKAGE}/${appName.toLowerCase()}`,
+        `${appPackageAsPath}/${appName.toLowerCase()}`
+      )
+      .replaceAll(
+        `${DEFAULT_APP_PACKAGE}.${appName.toLowerCase()}`,
+        `${appPackage}.${appName.toLowerCase()}`
+      )
+  }
+
+  return newStr
 }
 
 export const getVersionsContentInDiff = ({
@@ -102,9 +125,19 @@ export const getTransitionDuration = (duration) =>
 // settings constants
 export const SHOW_LATEST_RCS = 'Show latest release candidates'
 
-export const getFilePathsToShow = ({ oldPath, newPath, appName }) => {
-  const oldPathSanitized = replaceWithProvidedAppName(oldPath, appName)
-  const newPathSanitized = replaceWithProvidedAppName(newPath, appName)
+/**
+ * Returns the file paths to display for each side of the diff. Takes into account
+ * custom app name and package, and truncates the leading app name to provide
+ * paths relative to the project directory.
+ */
+export const getFilePathsToShow = ({
+  oldPath,
+  newPath,
+  appName,
+  appPackage,
+}) => {
+  const oldPathSanitized = replaceAppDetails(oldPath, appName, appPackage)
+  const newPathSanitized = replaceAppDetails(newPath, appName, appPackage)
 
   return {
     oldPath: removeAppPathPrefix(oldPathSanitized, appName),

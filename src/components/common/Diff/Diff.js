@@ -9,7 +9,7 @@ import {
 } from 'react-diff-view'
 import DiffHeader from './DiffHeader'
 import { getComments } from './DiffComment'
-import { replaceWithProvidedAppName } from '../../../utils'
+import { replaceAppDetails } from '../../../utils'
 
 const copyPathPopoverContentOpts = {
   default: 'Click to copy file path',
@@ -102,6 +102,7 @@ const Diff = ({
   setAllCollapsed,
   diffViewStyle,
   appName,
+  appPackage,
 }) => {
   const [isDiffCollapsed, setIsDiffCollapsed] = useState(
     isDiffCollapsedByDefault({ type, hunks })
@@ -123,7 +124,8 @@ const Diff = ({
 
   const getHunksWithAppName = useCallback(
     (originalHunks) => {
-      if (!appName) {
+      if (!appName && !appPackage) {
+        // No patching of rn-diff-purge output required.
         return originalHunks
       }
 
@@ -131,12 +133,12 @@ const Diff = ({
         ...hunk,
         changes: hunk.changes.map((change) => ({
           ...change,
-          content: replaceWithProvidedAppName(change.content, appName),
+          content: replaceAppDetails(change.content, appName, appPackage),
         })),
-        content: replaceWithProvidedAppName(hunk.content, appName),
+        content: replaceAppDetails(hunk.content, appName, appPackage),
       }))
     },
-    [appName]
+    [appName, appPackage]
   )
 
   if (areAllCollapsed !== undefined && areAllCollapsed !== isDiffCollapsed) {
@@ -178,6 +180,7 @@ const Diff = ({
         resetCopyPathPopoverContent={handleResetCopyPathPopoverContent}
         onCompleteDiff={onCompleteDiff}
         appName={appName}
+        appPackage={appPackage}
         diffComments={diffComments}
         packageName={packageName}
       />
@@ -226,6 +229,7 @@ const arePropsEqual = (prevProps, nextProps) =>
   prevProps.isDiffCompleted === nextProps.isDiffCompleted &&
   prevProps.areAllCollapsed === nextProps.areAllCollapsed &&
   prevProps.diffViewStyle === nextProps.diffViewStyle &&
-  prevProps.appName === nextProps.appName
+  prevProps.appName === nextProps.appName &&
+  prevProps.appPackage === nextProps.appPackage
 
 export default React.memo(Diff, arePropsEqual)

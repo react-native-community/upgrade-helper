@@ -25,6 +25,7 @@ const DiffSection = ({
   onToggleChangeSelection,
   diffViewStyle,
   appName,
+  appPackage,
   doneTitleRef,
 }) => {
   const [areAllCollapsed, setAllCollapsed] = useState(undefined)
@@ -86,6 +87,7 @@ const DiffSection = ({
             areAllCollapsed={areAllCollapsed}
             setAllCollapsed={setAllCollapsed}
             appName={appName}
+            appPackage={appPackage}
           />
         )
       })}
