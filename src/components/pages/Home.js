@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useDeferredValue } from 'react'
 import styled from '@emotion/styled'
 import { Card, Input, Typography } from 'antd'
 import GitHubButton from 'react-github-btn'
@@ -10,7 +10,11 @@ import logo from '../../assets/logo.svg'
 import { SHOW_LATEST_RCS } from '../../utils'
 import { useGetLanguageFromURL } from '../../hooks/get-language-from-url'
 import { useGetPackageNameFromURL } from '../../hooks/get-package-name-from-url'
-import { DEFAULT_APP_NAME, PACKAGE_NAMES } from '../../constants'
+import {
+  DEFAULT_APP_NAME,
+  DEFAULT_APP_PACKAGE,
+  PACKAGE_NAMES,
+} from '../../constants'
 import { TroubleshootingGuidesButton } from '../common/TroubleshootingGuidesButton'
 import { updateURL } from '../../utils/update-url'
 import { deviceSizes } from '../../utils/device-sizes'
@@ -59,6 +63,34 @@ const TitleContainer = styled.div`
   margin-bottom: 8px;
 `
 
+const AppNameField = styled.div`
+  width: 100%;
+
+  @media ${deviceSizes.tablet} {
+    padding-right: 5px;
+  }
+`
+
+const AppPackageField = styled.div`
+  width: 100%;
+
+  @media ${deviceSizes.tablet} {
+    padding-left: 5px;
+  }
+`
+
+const AppDetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 15px;
+
+  @media ${deviceSizes.tablet} {
+    flex-direction: row;
+    gap: 0;
+  }
+`
+
 const SettingsContainer = styled.div`
   display: flex;
   align-items: center;
@@ -91,10 +123,12 @@ const Home = () => {
     [`${SHOW_LATEST_RCS}`]: false,
   })
 
-  const [appName, setAppName] = useState({
-    input: '',
-    diff: DEFAULT_APP_NAME,
-  })
+  const [appName, setAppName] = useState('')
+  const [appPackage, setAppPackage] = useState('')
+
+  // Avoid UI lag when typing.
+  const deferredAppName = useDeferredValue(appName)
+  const deferredAppPackage = useDeferredValue(appPackage)
 
   const homepageUrl = process.env.PUBLIC_URL
 
@@ -109,11 +143,6 @@ const Home = () => {
     if (fromVersion === toVersion) {
       return
     }
-
-    setAppName(({ input }) => ({
-      input: '',
-      diff: input || DEFAULT_APP_NAME,
-    }))
 
     setFromVersion(fromVersion)
     setToVersion(toVersion)
@@ -190,17 +219,31 @@ const Home = () => {
           </SettingsContainer>
         </HeaderContainer>
 
-        <Typography.Title level={5}>What's your app name?</Typography.Title>
+        <AppDetailsContainer>
+          <AppNameField>
+            <Typography.Title level={5}>What's your app name?</Typography.Title>
 
-        <Input
-          size="large"
-          placeholder={DEFAULT_APP_NAME}
-          value={appName.input}
-          onChange={({ target }) =>
-            setAppName(({ diff }) => ({ input: target.value, diff }))
-          }
-        />
+            <Input
+              size="large"
+              placeholder={DEFAULT_APP_NAME}
+              value={appName}
+              onChange={({ target }) => setAppName((value) => target.value)}
+            />
+          </AppNameField>
 
+          <AppPackageField>
+            <Typography.Title level={5}>
+              What's your app package?
+            </Typography.Title>
+
+            <Input
+              size="large"
+              placeholder={DEFAULT_APP_PACKAGE}
+              value={appPackage}
+              onChange={({ target }) => setAppPackage((value) => target.value)}
+            />
+          </AppPackageField>
+        </AppDetailsContainer>
         <VersionSelector
           key={packageName}
           showDiff={handleShowDiff}
@@ -210,11 +253,19 @@ const Home = () => {
           isPackageNameDefinedInURL={isPackageNameDefinedInURL}
         />
       </Container>
+      {/*
+        Pass empty values for app name and package if they're the defaults to 
+        hint to diffing components they don't need to further patch the 
+        rn-diff-purge output.
+      */}
       <DiffViewer
         shouldShowDiff={shouldShowDiff}
         fromVersion={fromVersion}
         toVersion={toVersion}
-        appName={appName.diff}
+        appName={deferredAppName !== DEFAULT_APP_NAME ? deferredAppName : ''}
+        appPackage={
+          deferredAppPackage !== DEFAULT_APP_PACKAGE ? deferredAppPackage : ''
+        }
         packageName={packageName}
         language={language}
       />

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { Button, Popover } from 'antd'
-import { getBinaryFileURL, replaceWithProvidedAppName } from '../../utils'
+import { getBinaryFileURL, replaceAppDetails } from '../../utils'
 import { CopyOutlined } from '@ant-design/icons'
 
 const popoverContentOpts = {
@@ -10,7 +10,7 @@ const popoverContentOpts = {
 }
 
 const CopyFileButton = styled(
-  ({ open, version, path, packageName, appName, ...props }) => {
+  ({ open, version, path, packageName, appName, appPackage, ...props }) => {
     const [popoverContent, setPopoverContent] = useState(
       popoverContentOpts.default
     )
@@ -18,7 +18,7 @@ const CopyFileButton = styled(
     const fetchContent = () =>
       fetch(getBinaryFileURL({ packageName, version, path }))
         .then((response) => response.text())
-        .then((content) => replaceWithProvidedAppName(content, appName))
+        .then((content) => replaceAppDetails(content, appName, appPackage))
 
     const copyContent = () => {
       // From https://wolfgangrittner.dev/how-to-use-clipboard-api-in-firefox/
