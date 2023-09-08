@@ -54,38 +54,23 @@ export const removeAppPathPrefix = (path, appName) =>
   path.replace(new RegExp(`${appName || DEFAULT_APP_NAME}/`), '')
 
 /**
- * Replaces DEFAULT_APP_NAME and DEFAULT_APP_PACKAGE in str with custom
+ * Replaces DEFAULT_APP_PACKAGE and DEFAULT_APP_NAME in str with custom
  * values if provided.
  * str could be a path, or content from a text file.
  */
 export const replaceAppDetails = (str, appName, appPackage) => {
-  let newStr = str
-  if (appName) {
-    newStr = newStr
-      .replaceAll(DEFAULT_APP_NAME, appName)
-      .replaceAll(DEFAULT_APP_NAME.toLowerCase(), appName.toLowerCase())
-  }
+  const appNameOrFallback = appName || DEFAULT_APP_NAME
+  const appPackageOrFallback =
+    appPackage || `com.${appNameOrFallback.toLowerCase()}`
 
-  if (appPackage) {
-    // TODO should we use node path.sep instead of hardcoding /?
-    // com.foo.bar -> com/foo/bar
-    const appPackageAsPath = appPackage.replaceAll('.', '/')
-
-    // Only replace if DEFAULT_APP_PACKAGE a.k.a. "com" is followed by lower
-    // case appName. Otherwise we unwittingly pick up "com.android..." or
-    // "https://github.com/facebook..."
-    newStr = newStr
-      .replaceAll(
-        `${DEFAULT_APP_PACKAGE}/${appName.toLowerCase()}`,
-        `${appPackageAsPath}/${appName.toLowerCase()}`
-      )
-      .replaceAll(
-        `${DEFAULT_APP_PACKAGE}.${appName.toLowerCase()}`,
-        `${appPackage}.${appName.toLowerCase()}`
-      )
-  }
-
-  return newStr
+  return str
+    .replaceAll(DEFAULT_APP_PACKAGE, appPackageOrFallback)
+    .replaceAll(
+      DEFAULT_APP_PACKAGE.replaceAll('.', '/'),
+      appPackageOrFallback.replaceAll('.', '/')
+    )
+    .replaceAll(DEFAULT_APP_NAME, appNameOrFallback)
+    .replaceAll(DEFAULT_APP_NAME.toLowerCase(), appNameOrFallback.toLowerCase())
 }
 
 export const getVersionsContentInDiff = ({

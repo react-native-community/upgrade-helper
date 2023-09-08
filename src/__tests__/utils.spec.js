@@ -96,7 +96,7 @@ describe('replaceAppDetails ', () => {
       'android/app/src/debug/java/com/rndiffapp/ReactNativeFlipper.java',
       'SuperApp',
       'au.org.mycorp',
-      'android/app/src/debug/java/au/org/mycorp/superapp/ReactNativeFlipper.java',
+      'android/app/src/debug/java/au/org/mycorp/ReactNativeFlipper.java',
     ],
     // Update the app details in file contents.
     [
@@ -109,7 +109,7 @@ describe('replaceAppDetails ', () => {
       'applicationId "com.rndiffapp"',
       'ACoolApp',
       'net.foobar',
-      'applicationId "net.foobar.acoolapp"',
+      'applicationId "net.foobar"',
     ],
     // Don't accidentally pick up other instances of "com" such as in domain
     // names, or android or facebook packages.
