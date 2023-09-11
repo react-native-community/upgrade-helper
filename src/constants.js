@@ -1,5 +1,5 @@
 export const DEFAULT_APP_NAME = 'RnDiffApp'
-export const DEFAULT_APP_PACKAGE = 'com'
+export const DEFAULT_APP_PACKAGE = 'com.rndiffapp'
 
 export const PACKAGE_NAMES = {
   RN: 'react-native',
