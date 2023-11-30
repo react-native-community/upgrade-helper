@@ -17,7 +17,7 @@ const copyPathPopoverContentOpts = {
 }
 
 const Container = styled.div`
-  border: 1px solid #e8e8e8;
+  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 3px;
   margin-bottom: 16px;
   margin-top: 16px;
@@ -53,8 +53,8 @@ const DiffView = styled(RDiff)`
   }
 
   td.diff-gutter .diff-line-normal {
-    background-color: #cdffd8;
-    border-color: #bef5cb;
+    background-color: ${({ theme }) => theme.lightGreenBackground};
+    border-color: ${({ theme }) => theme.greenBorder};
   }
 
   td.diff-gutter:hover {
@@ -68,7 +68,7 @@ const DiffView = styled(RDiff)`
   }
 
   td.diff-code-insert .diff-code-edit {
-    background-color: #acf2bd;
+    background-color: ${({ theme }) => theme.darkGreenBackground};
   }
 
   td.diff-gutter-omit:before {

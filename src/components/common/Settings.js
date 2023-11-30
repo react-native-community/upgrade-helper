@@ -31,6 +31,8 @@ const Settings = ({
   packageName,
   language,
   onChangePackageNameAndLanguage,
+  themeName,
+  handleThemeToggle,
 }) => {
   const [popoverVisibility, setVisibility] = useState(false)
   const [newPackageName, setNewPackageName] = useState(packageName)
@@ -58,6 +60,8 @@ const Settings = ({
 
   const updateCheckboxValues = (checkboxValues) =>
     handleSettingsChange(checkboxValues)
+
+  const humanThemeName = themeName[0].toUpperCase() + themeName.substring(1)
 
   return (
     <Popover
@@ -102,6 +106,10 @@ const Settings = ({
               </PackagesGroupContainer>
             </Radio.Group>
           </PlatformsContainer>
+          <h5>Theme:</h5>
+          <Button title={humanThemeName} onClick={handleThemeToggle}>
+            {humanThemeName}
+          </Button>
         </>
       }
       trigger="click"

@@ -27,7 +27,7 @@ const InnerContainer = styled.div`
   background-color: #fffbe6;
   border-width: 1px;
   border-left-width: 7px;
-  border-color: #ffe58f;
+  border-color: ${({ theme }) => theme.yellowBorder};
   border-style: solid;
   border-radius: 3px;
   transition: padding 0.25s ease-out;
