@@ -12,15 +12,15 @@ const BinaryRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: ${({ index }) => (index % 2 === 0 ? '#fafbfc' : '#ffffff')};
-  color: #24292e;
+  background-color: ${({ index, theme }) =>
+    index % 2 === 0 ? theme.rowEven : theme.rowOdd};
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
     monospace;
   font-size: 12px;
   width: 500px;
   max-width: 500px;
   padding: 10px 15px;
-  border-bottom: 1px solid #e1e4e8;
+  border-bottom: 1px solid ${({ theme }) => theme.border};
 `
 
 const Popover = styled(({ className, ...props }) => (
@@ -28,7 +28,6 @@ const Popover = styled(({ className, ...props }) => (
 ))`
   .ant-popover-inner-content {
     padding: 0;
-    background: red;
   }
 `
 

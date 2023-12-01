@@ -1,6 +1,8 @@
 export const lightTheme = {
   body: '#FFF',
-  //   text: '#363537',
+  background: '#ffffff',
+
+  text: '#363537',
   //   toggleBorder: '#FFF',
   //   background: '#363537',
   border: '#e8e8e8',
@@ -8,15 +10,22 @@ export const lightTheme = {
   yellowBorder: '#ffe58f',
   lightGreenBackground: '#cdffd8',
   darkGreenBackground: '#acf2bd',
+  // Alternating Rows
+  rowEven: '#fafbfc',
+  rowOdd: '#ffffff',
 }
 export const darkTheme = {
   body: '#363537',
-  //   text: '#FAFAFA',
+  background: '#363537',
+  text: '#FAFAFA',
   //   toggleBorder: '#6B8096',
   //   background: '#999',
-  border: '#e8e8e8',
+  border: '#888',
   greenBorder: '#bef5cb',
   yellowBorder: '#ffe58f',
   lightGreenBackground: '#cdffd8',
   darkGreenBackground: '#acf2bd',
+  // Alternating Rows
+  rowEven: '#363537',
+  rowOdd: '#363537',
 }

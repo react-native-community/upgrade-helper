@@ -26,10 +26,10 @@ const Wrapper = styled.div`
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
     monospace;
   font-size: 12px;
-  color: #24292e;
+  color: ${({ theme }) => theme.text};
   line-height: 32px;
-  background-color: #fafbfc;
-  border-bottom: 1px solid #e1e4e8;
+  background-color: ${({ theme }) => theme.background};
+  border-bottom: 1px solid ${({ theme }) => theme.border};
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   padding: 5px 10px;
@@ -212,7 +212,7 @@ const CollapseClickableArea = styled.div`
 const CollapseDiffButton = styled(({ open, isDiffCollapsed, ...props }) =>
   open ? <Button {...props} type="link" icon={<DownOutlined />} /> : null
 )`
-  color: #24292e;
+  color: ${({ theme }) => theme.text};
   margin-right: 2px;
   font-size: 10px;
   transform: ${({ isDiffCollapsed }) =>
@@ -223,7 +223,7 @@ const CollapseDiffButton = styled(({ open, isDiffCollapsed, ...props }) =>
   height: auto;
   &:hover,
   &:focus {
-    color: #24292e;
+    color: ${({ theme }) => theme.text};
   }
 `
 
