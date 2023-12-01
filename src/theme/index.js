@@ -33,6 +33,13 @@ export const lightTheme = {
   // Alternating Row Colors for Binary Download component
   rowEven: '#fafbfc',
   rowOdd: '#ffffff',
+
+  // The completed files counter
+  popover: {
+    background: '#d5eafd',
+    text: '#7dadda',
+    border: '#1890ff',
+  },
 }
 export const darkTheme = {
   body: '#363537',
@@ -68,4 +75,10 @@ export const darkTheme = {
   // Alternating Row Colors for Binary Download component
   rowEven: '#363537',
   rowOdd: '#222223',
+
+  popover: {
+    text: '#7dadda',
+    background: '#0E5699',
+    border: '#aabbca',
+  },
 }
