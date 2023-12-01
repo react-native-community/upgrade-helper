@@ -4,6 +4,7 @@ import { ThemeProvider } from '@emotion/react'
 import { Card, Input, Typography, ConfigProvider, theme } from 'antd'
 import GitHubButton from 'react-github-btn'
 import ReactGA from 'react-ga'
+import createPersistedState from 'use-persisted-state'
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
 import Settings from '../common/Settings'
@@ -114,6 +115,10 @@ const StarButton = styled(({ className, ...props }) => (
   margin-right: auto;
 `
 
+// Set up a persisted state hook for for dark mode so users coming back
+// will have dark mode automatically if they've selected it previously.
+const useDarkModeState = createPersistedState('darkMode')
+
 const Home = () => {
   const { packageName: defaultPackageName, isPackageNameDefinedInURL } =
     useGetPackageNameFromURL()
@@ -185,10 +190,17 @@ const Home = () => {
     setSettings(normalizedIncomingSettings)
   }
 
-  const { defaultAlgorithm, darkAlgorithm } = theme
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  // Dark Mode Setup:
+  const { defaultAlgorithm, darkAlgorithm } = theme // Get default and dark mode states from antd.
+  const [isDarkMode, setIsDarkMode] = useDarkModeState(false) // Remembers dark mode state between sessions.
   const toggleDarkMode = () => setIsDarkMode((previousValue) => !previousValue)
   const themeString = isDarkMode ? 'dark' : 'light'
+  useEffect(() => {
+    // Set the document's background color to the theme's body color.
+    document.body.style.backgroundColor = isDarkMode
+      ? darkTheme.background
+      : lightTheme.background
+  }, [isDarkMode])
 
   return (
     <ConfigProvider

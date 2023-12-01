@@ -1,9 +1,10 @@
 export const lightTheme = {
-  body: '#FFF',
   background: '#ffffff',
 
   text: '#363537',
   textHover: 'rgba(27, 31, 35, 0.6)',
+  link: '#045dc1',
+  linkHover: '#40a9ff',
   border: '#e8e8e8',
   greenBorder: '#bef5cb',
   yellowBorder: '#ffe58f',
@@ -42,10 +43,13 @@ export const lightTheme = {
   },
 }
 export const darkTheme = {
-  body: '#363537',
   background: '#363537',
+
   text: '#FAFAFA',
   textHover: '#999',
+  link: '#045dc1',
+  linkHover: '#40a9ff',
+
   border: '#888',
   greenBorder: '#bef5cb',
   yellowBorder: '#c69026',

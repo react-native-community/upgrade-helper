@@ -25,10 +25,10 @@ const UpgradeSupportAlert = styled((props) => (
   </div>
 ))`
   span > a {
-    color: #045dc1;
+    color: ${({ theme }) => theme.link}};
 
     &:hover {
-      color: #40a9ff;
+      color: ${({ theme }) => theme.linkHover}};
     }
   }
 `
