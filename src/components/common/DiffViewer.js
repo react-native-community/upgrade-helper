@@ -28,7 +28,7 @@ const TopContainer = styled.div`
 
 const Link = styled.a`
   padding: 4px 15px;
-  color: #1677ff;
+  color: ${({ theme }) => theme.link};
 `
 
 const getDiffKey = ({ oldRevision, newRevision }) =>

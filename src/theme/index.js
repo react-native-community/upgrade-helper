@@ -1,5 +1,5 @@
 export const lightTheme = {
-  background: '#ffffff',
+  background: '#FFFFFF',
 
   text: '#363537',
   textHover: 'rgba(27, 31, 35, 0.6)',
@@ -11,9 +11,6 @@ export const lightTheme = {
   yellowBackground: '#fffbe6',
 
   diff: {
-    decoration: '#dbedff',
-
-    // Color object from https://github.com/otakustay/react-diff-view/blob/master/site/components/DiffView/diff.global.less
     textColor: '#000',
     selectionBackground: '#b3d7ff',
     gutterInsertBackground: '#cdffd8',
@@ -31,9 +28,9 @@ export const lightTheme = {
     decorationContent: '#999',
   },
 
-  // Alternating Row Colors for Binary Download component
-  rowEven: '#fafbfc',
-  rowOdd: '#ffffff',
+  // Alternating Row Colors for Binary Download component and Content Loader animation
+  rowEven: '#EEEEEE',
+  rowOdd: '#FFFFFF',
 
   // The completed files counter
   popover: {
@@ -46,18 +43,16 @@ export const darkTheme = {
   background: '#363537',
 
   text: '#FAFAFA',
-  textHover: '#999',
+  textHover: '#999999',
   link: '#045dc1',
   linkHover: '#40a9ff',
 
-  border: '#888',
+  border: '#555555',
   greenBorder: '#bef5cb',
   yellowBorder: '#c69026',
   yellowBackground: '#37332A',
 
   diff: {
-    decoration: '#dbedff',
-
     // Color object from https://github.com/otakustay/react-diff-view/blob/master/site/components/DiffView/diff.global.less
     textColor: '#fafafa',
     selectionBackground: '#5a5f80',
@@ -76,10 +71,11 @@ export const darkTheme = {
     decorationContent: '#ababab',
   },
 
-  // Alternating Row Colors for Binary Download component
+  // Alternating Row Colors for Binary Download component and Content Loader animation
   rowEven: '#363537',
   rowOdd: '#222223',
 
+  // The completed files counter
   popover: {
     text: '#7dadda',
     background: '#0E5699',
