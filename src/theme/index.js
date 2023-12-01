@@ -7,6 +7,7 @@ export const lightTheme = {
   border: '#e8e8e8',
   greenBorder: '#bef5cb',
   yellowBorder: '#ffe58f',
+  yellowBackground: '#fffbe6',
 
   diff: {
     decoration: '#dbedff',
@@ -40,7 +41,8 @@ export const darkTheme = {
   textHover: '#999',
   border: '#888',
   greenBorder: '#bef5cb',
-  yellowBorder: '#ffe58f',
+  yellowBorder: '#c69026',
+  yellowBackground: '#37332A',
 
   diff: {
     decoration: '#dbedff',

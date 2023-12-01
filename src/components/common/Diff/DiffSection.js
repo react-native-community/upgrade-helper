@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react'
+import { Typography } from 'antd'
 import styled from '@emotion/styled'
 import semver from 'semver'
 import Diff from './Diff'
@@ -7,7 +8,7 @@ export const testIDs = {
   diffSection: 'diffSection',
 }
 
-const Title = styled.h1`
+const Title = styled(Typography.Title)`
   margin-top: 0.5em;
 `
 
@@ -46,7 +47,9 @@ const DiffSection = ({
   return (
     <div data-testid={testIDs.diffSection}>
       {title && completedDiffs.length > 0 && (
-        <Title ref={doneTitleRef}>{title}</Title>
+        <Title ref={doneTitleRef} level={2}>
+          {title}
+        </Title>
       )}
 
       {diff.map((diffFile) => {
