@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useDeferredValue } from 'react'
 import styled from '@emotion/styled'
-import { ThemeProvider, Global, css } from '@emotion/react'
+import { ThemeProvider } from '@emotion/react'
 import { Card, Input, Typography, ConfigProvider, theme } from 'antd'
 import GitHubButton from 'react-github-btn'
 import ReactGA from 'react-ga'
@@ -194,16 +194,6 @@ const Home = () => {
     <ConfigProvider
       theme={{
         algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm,
-        // components: {
-        //   Button: {
-        //     // colorPrimary: '#00b96b',
-        //     algorithm: true, // Enable algorithm
-        //   },
-        //   Input: {
-        //     colorPrimary: '#eb2f96',
-        //     algorithm: true, // Enable algorithm
-        //   },
-        // },
       }}
     >
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>

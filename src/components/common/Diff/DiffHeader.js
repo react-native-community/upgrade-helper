@@ -122,8 +122,8 @@ const CompleteDiffButton = styled(({ open, onClick, ...props }) =>
   &,
   &:hover,
   &:focus {
-    color: ${({ isDiffCompleted }) =>
-      isDiffCompleted ? '#52c41a' : '#24292e'};
+    color: ${({ isDiffCompleted, theme }) =>
+      isDiffCompleted ? '#52c41a' : theme.text};
   }
 `
 

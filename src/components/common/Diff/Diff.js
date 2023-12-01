@@ -21,17 +21,17 @@ const Container = styled.div`
   border-radius: 3px;
   margin-bottom: 16px;
   margin-top: 16px;
+  color: ${({ theme }) => theme.text};
 `
 
 const More = styled.div`
-  background-color: #f1f8ff;
   margin-left: 30px;
   padding-left: 4px;
-  color: '#1b1f23b3';
 `
 
 const Decoration = styled(DiffDecoration)`
-  background-color: #dbedff;
+  background-color: ${({ theme }) => theme.diff.decorationContentBackground};
+  color: ${({ theme }) => theme.diff.decorationContent};
 `
 
 const DiffView = styled(RDiff)`
@@ -44,31 +44,19 @@ const DiffView = styled(RDiff)`
       monospace;
   }
 
-  td.diff-gutter {
-    color: rgba(27, 31, 35, 0.3);
-    padding: 0;
-    text-align: center;
-    font-size: 12px;
-    cursor: auto;
-  }
-
   td.diff-gutter .diff-line-normal {
-    background-color: ${({ theme }) => theme.lightGreenBackground};
+    background-color: ${({ theme }) => theme.gutterInsertBackground};
     border-color: ${({ theme }) => theme.greenBorder};
   }
 
   td.diff-gutter:hover {
     cursor: pointer;
-    color: rgba(27, 31, 35, 0.6);
+    color: ${({ theme }) => theme.textHover};
   }
 
   td.diff-code {
     font-size: 12px;
-    color: #24292e;
-  }
-
-  td.diff-code-insert .diff-code-edit {
-    background-color: ${({ theme }) => theme.darkGreenBackground};
+    color: ${({ theme }) => theme.text};
   }
 
   td.diff-gutter-omit:before {
@@ -78,6 +66,79 @@ const DiffView = styled(RDiff)`
 
   td.diff-widget-content {
     padding: 0;
+  }
+
+  // From diff global
+  .diff {
+    background-color: ${({ theme }) => theme.diff.backgroundColor};
+    color: ${({ theme }) => theme.diff.text};
+    tab-size: 4;
+    hyphens: none;
+  }
+
+  .diff::selection {
+    background-color: ${({ theme }) => theme.diff.selectionMackground};
+  }
+
+  .diff-decoration {
+    line-height: 2;
+    font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier,
+      monospace;
+    background-color: ${({ theme }) => theme.diff.decorationBackground};
+  }
+
+  .diff-decoration-content {
+    padding-left: 0.5em;
+    background-color: ${({ theme }) => theme.diff.contentBackground};
+    color: ${({ theme }) => theme.diff.decorationContent};
+  }
+
+  .diff-gutter {
+    padding: 0;
+    text-align: center;
+    font-size: 12px;
+    cursor: auto;
+  }
+
+  .diff-gutter-insert {
+    background-color: ${({ theme }) => theme.diff.gutterInsertBackground};
+  }
+
+  .diff-gutter-delete {
+    background-color: ${({ theme }) => theme.diff.gutterDeleteBackground};
+  }
+
+  .diff-gutter-selected {
+    background-color: ${({ theme }) => theme.diff.gutterSelectedBackground};
+  }
+
+  .diff-code-insert {
+    background-color: ${({ theme }) => theme.diff.codeInsertBackground};
+  }
+
+  .diff-code-edit {
+    color: inherit;
+  }
+
+  .diff-code-insert .diff-code-edit {
+    background-color: ${({ theme }) => theme.diff.codeInsertEditBackground};
+  }
+
+  .diff-code-delete {
+    background-color: ${({ theme }) => theme.diff.codeDeleteBackground};
+  }
+
+  .diff-code-delete .diff-code-edit {
+    background-color: ${({ theme }) => theme.diff.codeDeleteEditBackground};
+  }
+
+  .diff-code-selected {
+    background-color: ${({ theme }) => theme.diff.codeSelectedBackground};
+  }
+
+  .diff-decoration-gutter {
+    background-color: ${({ theme }) => theme.diff.decorationGutterBackground};
+    color: ${({ theme }) => theme.diff.decorationGutter};
   }
 `
 
