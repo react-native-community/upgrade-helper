@@ -31,8 +31,6 @@ const Settings = ({
   packageName,
   language,
   onChangePackageNameAndLanguage,
-  isDarkMode,
-  toggleDarkMode,
 }) => {
   const [popoverVisibility, setVisibility] = useState(false)
   const [newPackageName, setNewPackageName] = useState(packageName)
@@ -104,10 +102,6 @@ const Settings = ({
               </PackagesGroupContainer>
             </Radio.Group>
           </PlatformsContainer>
-          <h5>Theme:</h5>
-          <Button onClick={toggleDarkMode}>
-            {isDarkMode ? 'Dark' : 'Light'}
-          </Button>
         </>
       }
       trigger="click"

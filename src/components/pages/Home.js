@@ -18,6 +18,7 @@ import {
   PACKAGE_NAMES,
 } from '../../constants'
 import { TroubleshootingGuidesButton } from '../common/TroubleshootingGuidesButton'
+import { DarkModeButton } from '../common/DarkModeButton'
 import { updateURL } from '../../utils/update-url'
 import { deviceSizes } from '../../utils/device-sizes'
 import { lightTheme, darkTheme } from '../../theme'
@@ -243,8 +244,10 @@ const Home = () => {
                     handlePackageNameAndLanguageChange
                   }
                   language={language}
+                />
+                <DarkModeButton
                   isDarkMode={isDarkMode}
-                  toggleDarkMode={toggleDarkMode}
+                  onClick={toggleDarkMode}
                 />
               </SettingsContainer>
             </HeaderContainer>
