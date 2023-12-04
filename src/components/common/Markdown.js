@@ -12,7 +12,7 @@ export const Link = styled((props) => (
   />
 ))`
   text-decoration: none;
-  color: #045dc1;
+  color: ${({ theme }) => theme.link};
 `
 
 const InlineCode = styled.em`

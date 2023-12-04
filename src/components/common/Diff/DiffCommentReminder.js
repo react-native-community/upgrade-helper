@@ -32,11 +32,11 @@ const DiffCommentReminder = styled(
   }
 )`
   display: inline;
-  background-color: #fffbe6;
+  background-color: ${({ theme }) => theme.yellowBackground};
   padding: 5px;
   border-radius: 3px;
   margin-left: 10px;
-  border: 1px solid #ffe58f;
+  border: 1px solid ${({ theme }) => theme.yellowBorder};
 
   & > .icon {
     margin-right: 6px;

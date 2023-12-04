@@ -56,11 +56,11 @@ const CompletedFilesCounter = styled(
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: #d5eafd;
+  background: ${({ theme }) => theme.popover.background};
   padding: 10px;
-  border: 1px solid #1890ff;
+  border: 1px solid ${({ theme }) => theme.popover.border};
   border-radius: 20px;
-  color: #7dadda;
+  color: ${({ theme }) => theme.popover.text};
   transform: ${({ completed }) =>
     completed ? 'translateY(0px)' : 'translateY(70px)'};
   display: flex;
@@ -76,7 +76,7 @@ const CompletedFilesCounter = styled(
     `}
 
   .completedAmount {
-    color: #1890ff;
+    color: ${({ theme }) => theme.popover.border};
   }
 `
 

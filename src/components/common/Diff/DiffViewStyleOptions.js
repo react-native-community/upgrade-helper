@@ -32,7 +32,7 @@ const DiffViewStyleOptions = styled(
   &,
   &:hover,
   &:focus {
-    color: #24292e;
+    color: ${({ theme }) => theme.text};
   }
 `
 export default DiffViewStyleOptions

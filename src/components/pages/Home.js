@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useDeferredValue } from 'react'
 import styled from '@emotion/styled'
-import { Card, Input, Typography } from 'antd'
+import { ThemeProvider } from '@emotion/react'
+import { Card, Input, Typography, ConfigProvider, theme } from 'antd'
 import GitHubButton from 'react-github-btn'
 import ReactGA from 'react-ga'
+import createPersistedState from 'use-persisted-state'
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
 import Settings from '../common/Settings'
@@ -16,10 +18,13 @@ import {
   PACKAGE_NAMES,
 } from '../../constants'
 import { TroubleshootingGuidesButton } from '../common/TroubleshootingGuidesButton'
+import { DarkModeButton } from '../common/DarkModeButton'
 import { updateURL } from '../../utils/update-url'
 import { deviceSizes } from '../../utils/device-sizes'
+import { lightTheme, darkTheme } from '../../theme'
 
 const Page = styled.div`
+  background-color: ${({ theme }) => theme.body};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,9 +33,10 @@ const Page = styled.div`
 `
 
 const Container = styled(Card)`
+  background-color: ${({ theme }) => theme.background};
   width: 90%;
   border-radius: 3px;
-  border-color: #e8e8e8;
+  border-color: ${({ theme }) => theme.border};
 `
 
 const HeaderContainer = styled.div`
@@ -110,6 +116,10 @@ const StarButton = styled(({ className, ...props }) => (
   margin-right: auto;
 `
 
+// Set up a persisted state hook for for dark mode so users coming back
+// will have dark mode automatically if they've selected it previously.
+const useDarkModeState = createPersistedState('darkMode')
+
 const Home = () => {
   const { packageName: defaultPackageName, isPackageNameDefinedInURL } =
     useGetPackageNameFromURL()
@@ -181,95 +191,128 @@ const Home = () => {
     setSettings(normalizedIncomingSettings)
   }
 
+  // Dark Mode Setup:
+  const { defaultAlgorithm, darkAlgorithm } = theme // Get default and dark mode states from antd.
+  const [isDarkMode, setIsDarkMode] = useDarkModeState(false) // Remembers dark mode state between sessions.
+  const toggleDarkMode = () => setIsDarkMode((previousValue) => !previousValue)
+  const themeString = isDarkMode ? 'dark' : 'light'
+  useEffect(() => {
+    // Set the document's background color to the theme's body color.
+    document.body.style.backgroundColor = isDarkMode
+      ? darkTheme.background
+      : lightTheme.background
+  }, [isDarkMode])
+
   return (
-    <Page>
-      <Container>
-        <HeaderContainer>
-          <TitleContainer>
-            <LogoImg
-              alt="React Native Upgrade Helper logo"
-              title="React Native Upgrade Helper logo"
-              src={logo}
-            />
-            <a href={homepageUrl}>
-              <TitleHeader>React Native Upgrade Helper</TitleHeader>
-            </a>
-          </TitleContainer>
+    <ConfigProvider
+      theme={{
+        algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm,
+      }}
+    >
+      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <Page>
+          <Container>
+            <HeaderContainer>
+              <TitleContainer>
+                <LogoImg
+                  alt="React Native Upgrade Helper logo"
+                  title="React Native Upgrade Helper logo"
+                  src={logo}
+                />
+                <a href={homepageUrl}>
+                  <TitleHeader>React Native Upgrade Helper</TitleHeader>
+                </a>
+              </TitleContainer>
 
-          <SettingsContainer>
-            <StarButton
-              href="https://github.com/react-native-community/upgrade-helper"
-              data-icon="octicon-star"
-              data-show-count="true"
-              aria-label="Star react-native-community/upgrade-helper on GitHub"
-            >
-              Star
-            </StarButton>
-            {packageName === PACKAGE_NAMES.RN && (
-              <TroubleshootingGuidesButton />
-            )}
-            <Settings
-              handleSettingsChange={handleSettingsChange}
+              <SettingsContainer>
+                <StarButton
+                  href="https://github.com/react-native-community/upgrade-helper"
+                  data-icon="octicon-star"
+                  data-show-count="true"
+                  aria-label="Star react-native-community/upgrade-helper on GitHub"
+                  data-color-scheme={`no-preference: ${themeString}; light: ${themeString}; dark: ${themeString};`}
+                >
+                  Star
+                </StarButton>
+                {packageName === PACKAGE_NAMES.RN && (
+                  <TroubleshootingGuidesButton />
+                )}
+                <Settings
+                  handleSettingsChange={handleSettingsChange}
+                  packageName={packageName}
+                  onChangePackageNameAndLanguage={
+                    handlePackageNameAndLanguageChange
+                  }
+                  language={language}
+                />
+                <DarkModeButton
+                  isDarkMode={isDarkMode}
+                  onClick={toggleDarkMode}
+                />
+              </SettingsContainer>
+            </HeaderContainer>
+
+            <AppDetailsContainer>
+              <AppNameField>
+                <Typography.Title level={5}>
+                  What's your app name?
+                </Typography.Title>
+
+                <Input
+                  size="large"
+                  placeholder={DEFAULT_APP_NAME}
+                  value={appName}
+                  onChange={({ target }) => setAppName((value) => target.value)}
+                />
+              </AppNameField>
+
+              <AppPackageField>
+                <Typography.Title level={5}>
+                  What's your app package?
+                </Typography.Title>
+
+                <Input
+                  size="large"
+                  placeholder={DEFAULT_APP_PACKAGE}
+                  value={appPackage}
+                  onChange={({ target }) =>
+                    setAppPackage((value) => target.value)
+                  }
+                />
+              </AppPackageField>
+            </AppDetailsContainer>
+            <VersionSelector
+              key={packageName}
+              showDiff={handleShowDiff}
+              showReleaseCandidates={settings[SHOW_LATEST_RCS]}
               packageName={packageName}
-              onChangePackageNameAndLanguage={
-                handlePackageNameAndLanguageChange
-              }
               language={language}
+              isPackageNameDefinedInURL={isPackageNameDefinedInURL}
             />
-          </SettingsContainer>
-        </HeaderContainer>
-
-        <AppDetailsContainer>
-          <AppNameField>
-            <Typography.Title level={5}>What's your app name?</Typography.Title>
-
-            <Input
-              size="large"
-              placeholder={DEFAULT_APP_NAME}
-              value={appName}
-              onChange={({ target }) => setAppName((value) => target.value)}
-            />
-          </AppNameField>
-
-          <AppPackageField>
-            <Typography.Title level={5}>
-              What's your app package?
-            </Typography.Title>
-
-            <Input
-              size="large"
-              placeholder={DEFAULT_APP_PACKAGE}
-              value={appPackage}
-              onChange={({ target }) => setAppPackage((value) => target.value)}
-            />
-          </AppPackageField>
-        </AppDetailsContainer>
-        <VersionSelector
-          key={packageName}
-          showDiff={handleShowDiff}
-          showReleaseCandidates={settings[SHOW_LATEST_RCS]}
-          packageName={packageName}
-          language={language}
-          isPackageNameDefinedInURL={isPackageNameDefinedInURL}
-        />
-      </Container>
-      {/*
+          </Container>
+          {/*
         Pass empty values for app name and package if they're the defaults to 
         hint to diffing components they don't need to further patch the 
         rn-diff-purge output.
       */}
-      <DiffViewer
-        shouldShowDiff={shouldShowDiff}
-        fromVersion={fromVersion}
-        toVersion={toVersion}
-        appName={deferredAppName !== DEFAULT_APP_NAME ? deferredAppName : ''}
-        appPackage={
-          deferredAppPackage !== DEFAULT_APP_PACKAGE ? deferredAppPackage : ''
-        }
-        packageName={packageName}
-        language={language}
-      />
-    </Page>
+          <DiffViewer
+            shouldShowDiff={shouldShowDiff}
+            fromVersion={fromVersion}
+            toVersion={toVersion}
+            appName={
+              deferredAppName !== DEFAULT_APP_NAME ? deferredAppName : ''
+            }
+            appPackage={
+              deferredAppPackage !== DEFAULT_APP_PACKAGE
+                ? deferredAppPackage
+                : ''
+            }
+            packageName={packageName}
+            language={language}
+          />
+        </Page>
+      </ThemeProvider>
+    </ConfigProvider>
   )
 }
 

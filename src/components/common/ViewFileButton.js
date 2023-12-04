@@ -22,7 +22,6 @@ const ViewFileButton = styled(
   }
 )`
   font-size: 12px;
-  color: #24292e;
 `
 
 export default ViewFileButton
