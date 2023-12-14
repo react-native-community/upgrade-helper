@@ -18,16 +18,16 @@ import { PACKAGE_NAMES } from '../../constants'
 const Container = styled.div`
   position: relative;
   margin-top: 16px;
-  color: rgba(0, 0, 0, 0.65);
   overflow: hidden;
 `
 
 const InnerContainer = styled.div`
-  color: rgba(0, 0, 0, 0.65);
-  background-color: #fffbe6;
+  color: ${({ theme }) =>
+    theme.text + 'D9'}; // the D9 adds some transparency to the text color
+  background-color: ${({ theme }) => theme.yellowBackground};
   border-width: 1px;
   border-left-width: 7px;
-  border-color: #ffe58f;
+  border-color: ${({ theme }) => theme.yellowBorder};
   border-style: solid;
   border-radius: 3px;
   transition: padding 0.25s ease-out;
@@ -112,16 +112,12 @@ const HideContentButton = styled(
   border-width: 0px;
   width: 20px;
   height: 20px;
-  color: rgba(0, 0, 0, 0.45);
-  &:hover,
-  &:focus {
-    color: #24292e;
-  }
+  color: ${({ theme }) => theme.text + '73'}; // 45% opacity
 `
 
 const Separator = styled.hr`
   margin: 15px 0;
-  background-color: #e1e4e8;
+  background-color: ${({ theme }) => theme.border};
   height: 0.25em;
   border: 0;
 `

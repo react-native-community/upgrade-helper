@@ -6,7 +6,7 @@ import { PACKAGE_NAMES } from '../../constants'
 
 const Separator = styled.hr`
   margin: 15px 0;
-  background-color: #e1e4e8;
+  background-color: ${({ theme }) => theme.border};
   height: 0.25em;
   border: 0;
 `

@@ -20,7 +20,7 @@ const Container = styled(motion.div)`
 
 const Content = styled(motion.div)`
   h4 {
-    border-bottom: 1px solid #e8e8e8;
+    border-bottom: 1px solid ${({ theme }) => theme.border};
     padding-bottom: 6px;
   }
 `

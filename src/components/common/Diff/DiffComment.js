@@ -4,37 +4,40 @@ import { motion } from 'framer-motion'
 import { removeAppPathPrefix, getVersionsContentInDiff } from '../../../utils'
 import Markdown from '../Markdown'
 
-const lineColors = {
-  add: '#d6fedb',
-  delete: '#fdeff0',
-  neutral: '#ffffff',
-}
-
-const Container = styled(({ isCommentOpen, children, ...props }) => (
-  <motion.div
-    {...props}
-    variants={{
-      open: {
-        height: 'auto',
-      },
-      hidden: { height: 10 },
-    }}
-    initial={isCommentOpen ? 'open' : 'hidden'}
-    animate={isCommentOpen ? 'open' : 'hidden'}
-    transition={{
-      duration: 0.5,
-    }}
-    inherit={false}
-  >
-    <div children={children} />
-  </motion.div>
-))`
+const Container = styled(({ isCommentOpen, children, ...props }) => {
+  return (
+    <motion.div
+      {...props}
+      variants={{
+        open: {
+          height: 'auto',
+        },
+        hidden: { height: 10 },
+      }}
+      initial={isCommentOpen ? 'open' : 'hidden'}
+      animate={isCommentOpen ? 'open' : 'hidden'}
+      transition={{
+        duration: 0.5,
+      }}
+      inherit={false}
+    >
+      <div children={children} />
+    </motion.div>
+  )
+})`
   overflow: hidden;
 
   & > div {
     display: flex;
     flex-direction: row;
-    background-color: ${({ lineChangeType }) => lineColors[lineChangeType]};
+    background-color: ${({ lineChangeType, theme }) => {
+      const colorMap = {
+        add: theme.diff.codeInsertBackground,
+        delete: theme.diff.codeDeleteBackground,
+      }
+
+      return colorMap[lineChangeType] || theme.background
+    }};
     cursor: pointer;
   }
 `
@@ -43,8 +46,8 @@ const ContentContainer = styled.div`
   flex: 1;
   position: relative;
   padding: 16px;
-  color: #000;
-  background-color: #fffbe6;
+  color: ${({ theme }) => theme.text};
+  background-color: ${({ theme }) => theme.yellowBackground};}
   user-select: none;
 `
 
@@ -67,7 +70,7 @@ const ShowButton = styled(({ isCommentOpen, ...props }) => (
     }}
   />
 ))`
-  background-color: #ffe58f;
+  background-color: ${({ theme }) => theme.yellowBorder};
   margin-left: 20px;
   width: 10px;
   cursor: pointer;
