@@ -315,6 +315,7 @@ const VersionSelector = ({
     <Fragment>
       <Selectors>
         <FromVersionSelector
+          showSearch
           data-testid={testIDs.fromVersionSelector}
           title={`What's your current ${packageName} version?`}
           loading={isLoading}
@@ -326,6 +327,7 @@ const VersionSelector = ({
         />
 
         <ToVersionSelector
+          showSearch
           data-testid={testIDs.toVersionSelector}
           title="To which version would you like to upgrade?"
           loading={isLoading}
