@@ -15,10 +15,10 @@
     "test-e2e": "docker-compose run tests"
   },
   "dependencies": {
-    "@ant-design/icons": "4.0.3",
+    "@ant-design/icons": "^5.3.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "antd": "5.2.3",
+    "antd": "^5.14.0",
     "date-fns": "^2.29.3",
     "framer-motion": "^11.0.3",
     "markdown-to-jsx": "7.1.9",
