@@ -16,8 +16,16 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "@emotion/react",
-    "typeRoots": ["./node_modules/@types", "./@types"]
+    "typeRoots": ["./node_modules/@types", "./@types"],
+    "paths": {
+      "react": ["./node_modules/@types/react"]
+    }
   },
-  "include": ["./src"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+  "include": ["./src", "./assets"],
   "exclude": ["./src/__tests__/*"]
 }

@@ -4,12 +4,15 @@ import { SHOW_LATEST_RCS } from '../../utils'
 import styled from '@emotion/styled'
 import { WindowsFilled } from '@ant-design/icons'
 import { PACKAGE_NAMES, LANGUAGE_NAMES } from '../../constants'
+import { CheckboxValueType } from 'antd/es/checkbox/Group'
 
 const SettingsButton = styled(Button)`
   color: initial;
 `
 
-const SettingsIcon = styled((props) => <span {...props}>⚙️</span>)`
+const SettingsIcon = styled((props: React.HTMLAttributes<HTMLSpanElement>) => (
+  <span {...props}>⚙️</span>
+))`
   font-family: initial;
 `
 
@@ -31,12 +34,20 @@ const Settings = ({
   packageName,
   language,
   onChangePackageNameAndLanguage,
+}: {
+  handleSettingsChange: (checkboxValues: CheckboxValueType[]) => void
+  packageName: string
+  language: string
+  onChangePackageNameAndLanguage: (params: {
+    newPackageName?: string
+    newLanguage: string
+  }) => void
 }) => {
-  const [popoverVisibility, setVisibility] = useState(false)
+  const [popoverVisibility, setVisibility] = useState<boolean>(false)
   const [newPackageName, setNewPackageName] = useState(packageName)
   const [newLanguage, setNewLanguage] = useState(language)
 
-  const handleClickChange = (visibility) => {
+  const handleClickChange = (visibility: boolean) => {
     setVisibility(visibility)
 
     const processedNewLanguage =
@@ -56,7 +67,7 @@ const Settings = ({
     }
   }
 
-  const updateCheckboxValues = (checkboxValues) =>
+  const updateCheckboxValues = (checkboxValues: CheckboxValueType[]) =>
     handleSettingsChange(checkboxValues)
 
   return (

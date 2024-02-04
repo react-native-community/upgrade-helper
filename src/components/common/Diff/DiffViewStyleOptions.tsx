@@ -2,11 +2,11 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { Radio } from 'antd'
 import type { Theme } from '../../../theme'
+import type { ViewType } from 'react-diff-view'
 
-export type DiffViewStyle = 'split' | 'unified'
 interface DiffViewStyleOptionsProps {
-  handleViewStyleChange: (style: DiffViewStyle) => void
-  diffViewStyle: DiffViewStyle
+  handleViewStyleChange: (style: ViewType) => void
+  diffViewStyle: ViewType
   theme?: Theme
 }
 const DiffViewStyleOptions = styled(

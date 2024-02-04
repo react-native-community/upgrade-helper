@@ -6,6 +6,12 @@ export function updateURL({
   isPackageNameDefinedInURL,
   fromVersion,
   toVersion,
+}: {
+  packageName: string
+  language: string
+  isPackageNameDefinedInURL: boolean
+  fromVersion: string
+  toVersion: string
 }) {
   const url = new URL(window.location.origin)
   url.pathname = window.location.pathname
@@ -24,5 +30,5 @@ export function updateURL({
     url.searchParams.set('language', language)
   }
 
-  window.history.replaceState(null, null, url.toString())
+  window.history.replaceState(null, '', url.toString())
 }

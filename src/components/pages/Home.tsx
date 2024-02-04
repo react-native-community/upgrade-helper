@@ -8,6 +8,7 @@ import createPersistedState from 'use-persisted-state'
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
 import Settings from '../common/Settings'
+// @ts-ignore-next-line
 import logo from '../../assets/logo.svg'
 import { SHOW_LATEST_RCS } from '../../utils'
 import { useGetLanguageFromURL } from '../../hooks/get-language-from-url'
@@ -21,10 +22,11 @@ import { TroubleshootingGuidesButton } from '../common/TroubleshootingGuidesButt
 import { DarkModeButton } from '../common/DarkModeButton'
 import { updateURL } from '../../utils/update-url'
 import { deviceSizes } from '../../utils/device-sizes'
-import { lightTheme, darkTheme } from '../../theme'
+import { lightTheme, darkTheme, type Theme } from '../../theme'
+import { CheckboxValueType } from 'antd/es/checkbox/Group'
 
 const Page = styled.div<{ theme?: Theme }>`
-  background-color: ${({ theme }) => theme.body};
+  background-color: ${({ theme }) => theme.background};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,7 +34,7 @@ const Page = styled.div<{ theme?: Theme }>`
   padding-top: 30px;
 `
 
-const Container = styled(Card)`
+const Container = styled(Card)<{ theme?: Theme }>`
   background-color: ${({ theme }) => theme.background};
   width: 90%;
   border-radius: 3px;
@@ -130,15 +132,15 @@ const Home = () => {
   const defaultLanguage = useGetLanguageFromURL()
   const [packageName, setPackageName] = useState(defaultPackageName)
   const [language, setLanguage] = useState(defaultLanguage)
-  const [fromVersion, setFromVersion] = useState('')
-  const [toVersion, setToVersion] = useState('')
-  const [shouldShowDiff, setShouldShowDiff] = useState(false)
+  const [fromVersion, setFromVersion] = useState<string>('')
+  const [toVersion, setToVersion] = useState<string>('')
+  const [shouldShowDiff, setShouldShowDiff] = useState<boolean>(false)
   const [settings, setSettings] = useState({
     [`${SHOW_LATEST_RCS}`]: false,
   })
 
-  const [appName, setAppName] = useState('')
-  const [appPackage, setAppPackage] = useState('')
+  const [appName, setAppName] = useState<string>('')
+  const [appPackage, setAppPackage] = useState<string>('')
 
   // Avoid UI lag when typing.
   const deferredAppName = useDeferredValue(appName)
@@ -153,7 +155,13 @@ const Home = () => {
     }
   }, [])
 
-  const handleShowDiff = ({ fromVersion, toVersion }) => {
+  const handleShowDiff = ({
+    fromVersion,
+    toVersion,
+  }: {
+    fromVersion: string
+    toVersion: string
+  }) => {
     if (fromVersion === toVersion) {
       return
     }
@@ -166,6 +174,9 @@ const Home = () => {
   const handlePackageNameAndLanguageChange = ({
     newPackageName,
     newLanguage,
+  }: {
+    newPackageName?: string
+    newLanguage: string
   }) => {
     let localPackageName =
       newPackageName === undefined ? packageName : newPackageName
@@ -186,7 +197,7 @@ const Home = () => {
     setShouldShowDiff(false)
   }
 
-  const handleSettingsChange = (settingsValues) => {
+  const handleSettingsChange = (settingsValues: CheckboxValueType[]) => {
     const normalizedIncomingSettings = settingsValues.reduce((acc, val) => {
       acc[val] = true
       return acc
@@ -198,7 +209,8 @@ const Home = () => {
   // Dark Mode Setup:
   const { defaultAlgorithm, darkAlgorithm } = theme // Get default and dark mode states from antd.
   const [isDarkMode, setIsDarkMode] = useDarkModeState(false) // Remembers dark mode state between sessions.
-  const toggleDarkMode = () => setIsDarkMode((previousValue) => !previousValue)
+  const toggleDarkMode = () =>
+    setIsDarkMode((previousValue: boolean) => !previousValue)
   const themeString = isDarkMode ? 'dark' : 'light'
   useEffect(() => {
     // Set the document's background color to the theme's body color.

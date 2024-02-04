@@ -12,7 +12,7 @@ const SelectBox = styled(AntdSelect)`
   width: 100%;
 `
 
-export interface SelectProps extends AntdSelectProps {
+export interface SelectProps extends AntdSelectProps<any, {}> {
   title: string
   options: string[]
 }

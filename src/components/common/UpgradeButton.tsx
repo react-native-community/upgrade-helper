@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { Button as AntdButton } from 'antd'
+import { Button as AntdButton, ButtonProps } from 'antd'
 
 export const testIDs = {
   upgradeButton: 'upgradeButton',
@@ -18,7 +18,14 @@ const Button = styled(AntdButton)`
   border-radius: 3px;
 `
 
-const UpgradeButton = React.forwardRef(({ onShowDiff, ...props }, ref) => (
+interface UpgradeButtonProps extends React.PropsWithRef<ButtonProps> {
+  onShowDiff: () => void
+}
+
+const UpgradeButton = React.forwardRef<
+  HTMLElement,
+  UpgradeButtonProps & React.RefAttributes<HTMLElement>
+>(({ onShowDiff, ...props }, ref) => (
   <Container>
     <Button
       {...props}

@@ -331,6 +331,7 @@ const Diff = ({
                   <Hunk
                     key={hunk.content}
                     hunk={hunk}
+                    // @ts-ignore-next-line
                     gutterEvents={{ onClick: onToggleChangeSelection }}
                   />,
                 ])}

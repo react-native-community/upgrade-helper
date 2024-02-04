@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react'
 import { getReleasesFileURL } from '../utils'
 
-export const useFetchReleaseVersions = ({ packageName }) => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [isDone, setIsDone] = useState(false)
-  const [releaseVersions, setReleaseVersions] = useState(undefined)
+export const useFetchReleaseVersions = ({
+  packageName,
+}: {
+  packageName: string
+}) => {
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isDone, setIsDone] = useState<boolean>(false)
+  const [releaseVersions, setReleaseVersions] = useState<string[]>([])
 
   useEffect(() => {
     const fetchReleaseVersions = async () => {

@@ -3,6 +3,8 @@ import { Typography } from 'antd'
 import styled from '@emotion/styled'
 import semver from 'semver'
 import Diff from './Diff'
+import type { File } from 'gitdiff-parser'
+import type { ViewType } from 'react-diff-view'
 
 export const testIDs = {
   diffSection: 'diffSection',
@@ -15,19 +17,19 @@ const Title = styled(Typography.Title)`
 interface DiffSectionProps {
   packageName: string
   diff: any
-  getDiffKey: (diffFile: any) => string
-  title: string
+  getDiffKey: (file: File) => string
+  title?: string
   completedDiffs: string[]
   isDoneSection: boolean
   fromVersion: string
   toVersion: string
   handleCompleteDiff: (diffKey: string) => void
   selectedChanges: string[]
-  onToggleChangeSelection: (diffKey: string, isSelected: boolean) => void
-  diffViewStyle: string
+  onToggleChangeSelection: (diffKey: string) => void
+  diffViewStyle: ViewType
   appName: string
   appPackage: string
-  doneTitleRef: React.RefObject<HTMLHeadingElement>
+  doneTitleRef?: React.RefObject<HTMLHeadingElement>
 }
 
 const DiffSection = ({
@@ -47,7 +49,9 @@ const DiffSection = ({
   appPackage,
   doneTitleRef,
 }: DiffSectionProps) => {
-  const [areAllCollapsed, setAllCollapsed] = useState(undefined)
+  const [areAllCollapsed, setAllCollapsed] = useState<boolean | undefined>(
+    undefined
+  )
 
   const getIsUpgradingFrom61To62 = useCallback(() => {
     const isUpgradingFrom61 = semver.satisfies(
@@ -70,7 +74,7 @@ const DiffSection = ({
         </Title>
       )}
 
-      {diff.map((diffFile) => {
+      {diff.map((diffFile: File) => {
         const diffKey = getDiffKey(diffFile)
         const isDiffCompleted = completedDiffs.includes(diffKey)
 
@@ -92,10 +96,11 @@ const DiffSection = ({
 
         return (
           <Diff
-            key={`${diffFile.oldRevision}${diffFile.newRevision}`}
+            key={diffKey}
             {...diffFile}
             packageName={packageName}
             // otakustay/react-diff-view#49
+            // @ts-ignore-next-line
             type={diffFile.type === 'new' ? 'add' : diffFile.type}
             diffKey={diffKey}
             diffViewStyle={diffViewStyle}

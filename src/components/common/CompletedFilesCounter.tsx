@@ -32,8 +32,8 @@ interface CompletedFilesCounterProps
   completed: number
   total: number
   popoverContent: string
-  popoverCursorType: string
-  theme: Theme
+  popoverCursorType: React.CSSProperties['cursor']
+  theme?: Theme
 }
 
 const CompletedFilesCounter = styled(

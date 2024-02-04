@@ -2,8 +2,8 @@ import fs from 'fs'
 import puppeteer from 'puppeteer'
 import { configureToMatchImageSnapshot } from 'jest-image-snapshot'
 
-let browser
-let page
+let browser: puppeteer.Browser
+let page: puppeteer.Page
 
 const URLs = {
   RELEASES:
@@ -22,7 +22,7 @@ const MOCK_RESPONSES = {
     fs.readFileSync('./src/mocks/repositoryInfo.json', 'utf-8'),
 }
 
-const mockResponses = (request) => {
+const mockResponses = (request: puppeteer.HTTPRequest) => {
   const requestedURL = request.url()
   const mockedURLs = Object.keys(MOCK_RESPONSES)
 

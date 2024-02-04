@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { Tag, Button, Popover } from 'antd'
-import type { ButtonProps } from 'antd'
+import type { ButtonProps, TagProps } from 'antd'
 import {
   CheckOutlined,
   DownOutlined,
@@ -17,6 +17,8 @@ import DownloadFileButton from '../DownloadFileButton'
 import ViewFileButton from '../ViewFileButton'
 import CopyFileButton from '../CopyFileButton'
 import type { Theme } from '../../../theme'
+import type { LineChangeT } from '../../../releases/types'
+import type { DiffType } from 'react-diff-view'
 
 export const testIDs = {
   collapseClickableArea: 'collapseClickableArea',
@@ -47,7 +49,15 @@ const FileRenameArrow = styled(RightOutlined)({
   color: '#f78206',
 })
 
-const FileName = ({ oldPath, newPath, type, appName }) => {
+const FileName = ({
+  oldPath,
+  newPath,
+  type,
+}: {
+  oldPath: string
+  newPath: string
+  type: LineChangeT
+}) => {
   if (type === 'delete') {
     return <span>{oldPath}</span>
   }
@@ -63,7 +73,7 @@ const FileName = ({ oldPath, newPath, type, appName }) => {
   return <span>{newPath}</span>
 }
 
-function generatePathId(oldPath, newPath) {
+function generatePathId(oldPath: string, newPath: string) {
   const isMoved = oldPath !== newPath
   if (newPath === '/dev/null') {
     newPath = 'deleted'
@@ -72,7 +82,12 @@ function generatePathId(oldPath, newPath) {
   return encodeURIComponent(path.replace(/[/\\]/g, '-'))
 }
 
-const FileStatus = ({ type, ...props }) => {
+const FileStatus = ({
+  type,
+  ...props
+}: {
+  type: DiffType
+} & TagProps) => {
   const colors = {
     add: 'blue',
     modify: 'green',
@@ -88,13 +103,16 @@ const FileStatus = ({ type, ...props }) => {
   }
 
   return (
-    <Tag {...props} color={colors[type]}>
-      {labels[type]}
+    <Tag {...props} color={colors[type as keyof typeof colors]}>
+      {labels[type as keyof typeof labels]}
     </Tag>
   )
 }
 
-const BinaryBadge = ({ open, ...props }) =>
+interface BinaryBadgeProps extends TagProps {
+  open: boolean
+}
+const BinaryBadge = ({ open, ...props }: BinaryBadgeProps) =>
   open ? (
     <Tag {...props} color="cyan">
       BINARY
@@ -206,7 +224,7 @@ const CopyAnchorLinksToClipboardButton = styled(
     const onCopyContent = () => setContent(copyAnchorLinks.copied)
 
     const url = React.useMemo(() => {
-      const url = new URL(window.location)
+      const url = new URL(window.location.toString())
       url.hash = id
       url.searchParams.set('from', fromVersion)
       url.searchParams.set('to', toVersion)
@@ -244,8 +262,15 @@ const CollapseClickableArea = styled.div`
   }
 `
 
-const CollapseDiffButton = styled(({ open, isDiffCollapsed, ...props }) =>
-  open ? <Button {...props} type="link" icon={<DownOutlined />} /> : null
+interface CollapseDiffButtonProps extends ButtonProps {
+  open: boolean
+  isDiffCollapsed: boolean
+  theme?: Theme
+}
+
+const CollapseDiffButton = styled(
+  ({ open, isDiffCollapsed, ...props }: CollapseDiffButtonProps) =>
+    open ? <Button {...props} type="link" icon={<DownOutlined />} /> : null
 )`
   color: ${({ theme }) => theme.text};
   margin-right: 2px;
@@ -266,7 +291,7 @@ interface DiffHeaderProps extends WrapperProps {
   newPath: string
   fromVersion: string
   toVersion: string
-  type: string
+  type: DiffType
   diffKey: string
   hasDiff: boolean
   isDiffCollapsed: boolean
@@ -330,7 +355,6 @@ const DiffHeader = ({
             oldPath={sanitizedFilePaths.oldPath}
             newPath={sanitizedFilePaths.newPath}
             type={type}
-            appName={appName}
           />{' '}
           <FileStatus type={type} />
           <BinaryBadge open={!hasDiff} />

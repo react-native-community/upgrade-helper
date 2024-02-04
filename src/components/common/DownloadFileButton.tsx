@@ -1,9 +1,21 @@
 import React from 'react'
-import { Button } from 'antd'
+import { Button, ButtonProps } from 'antd'
 import { DownloadOutlined } from '@ant-design/icons'
 import { getBinaryFileURL } from '../../utils'
 
-const DownloadFileButton = ({ open, version, path, packageName, ...props }) => {
+interface DownloadFileButtonProps extends ButtonProps {
+  open: boolean
+  version: string
+  path: string
+  packageName: string
+}
+const DownloadFileButton = ({
+  open,
+  version,
+  path,
+  packageName,
+  ...props
+}: DownloadFileButtonProps) => {
   return open ? (
     <Button
       {...props}

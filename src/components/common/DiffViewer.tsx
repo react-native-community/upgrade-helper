@@ -2,17 +2,18 @@ import React, { useState, useEffect, useRef, useReducer } from 'react'
 import styled from '@emotion/styled'
 import { Alert } from 'antd'
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
-import { withChangeSelect } from 'react-diff-view'
+import { type ViewType, withChangeSelect } from 'react-diff-view'
 import 'react-diff-view/style/index.css'
 import { getTransitionDuration, getChangelogURL } from '../../utils'
 import DiffSection from './Diff/DiffSection'
 import DiffLoading from './Diff/DiffLoading'
 import UsefulContentSection from './UsefulContentSection'
 import BinaryDownload from './BinaryDownload'
-import ViewStyleOptions, { DiffViewStyle } from './Diff/DiffViewStyleOptions'
+import ViewStyleOptions from './Diff/DiffViewStyleOptions'
 import CompletedFilesCounter from './CompletedFilesCounter'
 import { useFetchDiff } from '../../hooks/fetch-diff'
 import type { Theme } from '../../theme'
+import type { File } from 'gitdiff-parser'
 
 const Container = styled.div`
   width: 90%;
@@ -32,14 +33,20 @@ const Link = styled.a<{ theme?: Theme }>`
   color: ${({ theme }) => theme.link};
 `
 
-const getDiffKey = ({ oldRevision, newRevision }) =>
-  `${oldRevision}${newRevision}`
+const getDiffKey = ({
+  oldRevision,
+  newRevision,
+}: {
+  oldRevision: string
+  newRevision: string
+}) => `${oldRevision}${newRevision}`
 
-const scrollToRef = (ref) => ref.current.scrollIntoView({ behavior: 'smooth' })
+const scrollToRef = (ref?: React.RefObject<HTMLElement>) =>
+  ref?.current?.scrollIntoView({ behavior: 'smooth' })
 
 // Lazy loaded content won't respect anchor links in the URL, so we have to help
 // the viewport once we know our diff has loaded.
-const jumpToAnchor = (stopScrolling) => {
+const jumpToAnchor = (stopScrolling: boolean) => {
   if (!window.location.hash || stopScrolling) {
     return true
   }
@@ -51,6 +58,17 @@ const jumpToAnchor = (stopScrolling) => {
   return true
 }
 
+interface DiffViewerProps {
+  packageName: string
+  language: string
+  fromVersion: string
+  toVersion: string
+  shouldShowDiff: boolean
+  selectedChanges: string[]
+  onToggleChangeSelection: (change: string) => void
+  appName: string
+  appPackage: string
+}
 const DiffViewer = ({
   packageName,
   language,
@@ -61,7 +79,7 @@ const DiffViewer = ({
   onToggleChangeSelection,
   appName,
   appPackage,
-}) => {
+}: DiffViewerProps) => {
   const { isLoading, isDone, diff } = useFetchDiff({
     shouldShowDiff,
     packageName,
@@ -69,8 +87,8 @@ const DiffViewer = ({
     fromVersion,
     toVersion,
   })
-  const [completedDiffs, setCompletedDiffs] = useState([])
-  const [isGoToDoneClicked, setIsGoToDoneClicked] = useState(false)
+  const [completedDiffs, setCompletedDiffs] = useState<string[]>([])
+  const [isGoToDoneClicked, setIsGoToDoneClicked] = useState<boolean>(false)
   const donePopoverPossibleOpts = {
     done: {
       content: 'Scroll to Done section',
@@ -100,7 +118,7 @@ const DiffViewer = ({
     }
   }
 
-  const handleCompleteDiff = (diffKey) => {
+  const handleCompleteDiff = (diffKey: string) => {
     if (completedDiffs.includes(diffKey)) {
       return setCompletedDiffs((prevCompletedDiffs) =>
         prevCompletedDiffs.filter((completedDiff) => completedDiff !== diffKey)
@@ -110,7 +128,13 @@ const DiffViewer = ({
     setCompletedDiffs((prevCompletedDiffs) => [...prevCompletedDiffs, diffKey])
   }
 
-  const renderUpgradeDoneMessage = ({ diff, completedDiffs }) =>
+  const renderUpgradeDoneMessage = ({
+    diff,
+    completedDiffs,
+  }: {
+    diff: File[]
+    completedDiffs: string[]
+  }) =>
     diff.length === completedDiffs.length && (
       <Alert
         style={{ marginTop: 16 }}
@@ -123,11 +147,11 @@ const DiffViewer = ({
 
   const resetCompletedDiffs = () => setCompletedDiffs([])
 
-  const [diffViewStyle, setViewStyle] = useState<DiffViewStyle>(
-    (localStorage.getItem('viewStyle') || 'split') as DiffViewStyle
+  const [diffViewStyle, setViewStyle] = useState<ViewType>(
+    (localStorage.getItem('viewStyle') || 'split') as ViewType
   )
 
-  const handleViewStyleChange = (newViewStyle: DiffViewStyle) => {
+  const handleViewStyleChange = (newViewStyle: ViewType) => {
     setViewStyle(newViewStyle)
     localStorage.setItem('viewStyle', newViewStyle)
   }
@@ -199,7 +223,6 @@ const DiffViewer = ({
               fromVersion={fromVersion}
               toVersion={toVersion}
               appName={appName}
-              appPackage={appPackage}
               packageName={packageName}
             />
 

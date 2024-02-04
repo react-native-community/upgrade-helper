@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 import DownloadFileButton from './DownloadFileButton'
 import { removeAppPathPrefix } from '../../utils'
 import type { Theme } from '../../theme'
+import type { File } from 'gitdiff-parser'
 
 const Container = styled.div`
   padding-right: 10px;
@@ -41,7 +42,7 @@ const Popover = styled(({ className, ...props }: PopoverProps) => (
 `
 
 interface BinaryListProps {
-  binaryFiles: { newPath: string }[]
+  binaryFiles: File[]
   toVersion: string
   appName: string
   packageName: string

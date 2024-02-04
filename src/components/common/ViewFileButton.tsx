@@ -1,10 +1,16 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { Button } from 'antd'
+import { Button, ButtonProps } from 'antd'
 import { getBinaryFileURL } from '../../utils'
 
+interface ViewFileButtonProps extends ButtonProps {
+  open: boolean
+  version: string
+  path: string
+  packageName: string
+}
 const ViewFileButton = styled(
-  ({ open, version, path, packageName, ...props }) => {
+  ({ open, version, path, packageName, ...props }: ViewFileButtonProps) => {
     if (!open) {
       return null
     }

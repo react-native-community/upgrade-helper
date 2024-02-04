@@ -118,7 +118,12 @@ const getLineNumberWithType = ({
 }: {
   lineChangeType: LineChangeT
   lineNumber: number
-}) => `${LINE_CHANGE_TYPES[lineChangeType.toUpperCase()]}${lineNumber}`
+}) =>
+  `${
+    LINE_CHANGE_TYPES[
+      lineChangeType.toUpperCase() as keyof typeof LINE_CHANGE_TYPES
+    ]
+  }${lineNumber}`
 
 const getComments = ({
   packageName,
@@ -178,7 +183,7 @@ const DiffComment = ({
   content: any
   lineChangeType: LineChangeT
 }) => {
-  const [isCommentOpen, setIsCommentOpen] = useState(true)
+  const [isCommentOpen, setIsCommentOpen] = useState<boolean>(true)
 
   return (
     <Container

@@ -19,7 +19,6 @@ const UpgradeSupportAlert = styled((props: UpgradeSupportAlertProps) => (
           href="https://github.com/react-native-community/upgrade-support"
           target="_blank"
           rel="noopener noreferrer"
-          {...props}
         >
           Upgrade Support
         </a>

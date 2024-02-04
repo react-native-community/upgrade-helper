@@ -18,8 +18,8 @@ const Button = styled(AntdButton)`
 `
 
 const TroubleshootingGuidesButton = () => {
-  const [showContent, setShowContent] = useState(false)
-  const hasHandledClick = useRef(false)
+  const [showContent, setShowContent] = useState<boolean>(false)
+  const hasHandledClick = useRef<boolean>(false)
 
   const handlePopoverVisibilityChange = () => {
     if (hasHandledClick.current) {

@@ -40,6 +40,7 @@ interface ToVersionSelectorProps extends SelectProps {
 const ToVersionSelector = styled(
   ({ popover, ...props }: ToVersionSelectorProps) =>
     popover ? (
+      // @ts-ignore-next-line
       React.cloneElement(popover, {
         children: <Select {...props} />,
       })
@@ -75,12 +76,18 @@ const stripAnchorInUrl = () => {
   return true
 }
 
-const compareReleaseCandidateVersions = ({ version, versionToCompare }) =>
+const compareReleaseCandidateVersions = ({
+  version,
+  versionToCompare,
+}: {
+  version: string | semver.SemVer
+  versionToCompare: string | semver.SemVer
+}) =>
   ['prerelease', 'prepatch', null].includes(
     semver.diff(version, versionToCompare)
   )
 
-const getLatestMajorReleaseVersion = (releasedVersions) =>
+const getLatestMajorReleaseVersion = (releasedVersions: string[]) =>
   semver.valid(
     semver.coerce(
       releasedVersions.find(
@@ -92,7 +99,13 @@ const getLatestMajorReleaseVersion = (releasedVersions) =>
   )
 
 // Check if `from` rc version is one of the latest major release (ie. 0.60.0)
-const checkIfVersionIsALatestRC = ({ version, latestVersion }) =>
+const checkIfVersionIsALatestRC = ({
+  version,
+  latestVersion,
+}: {
+  version: string
+  latestVersion: string
+}) =>
   semver.prerelease(version) &&
   compareReleaseCandidateVersions({
     version: latestVersion,
@@ -106,6 +119,11 @@ const getReleasedVersionsWithCandidates = ({
   toVersion,
   latestVersion,
   showReleaseCandidates,
+}: {
+  releasedVersions: string[]
+  toVersion: string
+  latestVersion: string
+  showReleaseCandidates: boolean
 }) => {
   const isToVersionAReleaseCandidate = semver.prerelease(toVersion) !== null
   const isLatestAReleaseCandidate = semver.prerelease(latestVersion) !== null
@@ -136,11 +154,19 @@ const getReleasedVersionsWithCandidates = ({
   })
 }
 
-const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) => {
+const getReleasedVersions = ({
+  releasedVersions,
+  minVersion,
+  maxVersion,
+}: {
+  releasedVersions: string[]
+  minVersion?: string
+  maxVersion?: string
+}) => {
   const latestMajorReleaseVersion =
     getLatestMajorReleaseVersion(releasedVersions)
 
-  const isVersionAReleaseAndOfLatest = (version) =>
+  const isVersionAReleaseAndOfLatest = (version: string) =>
     version.includes('rc') &&
     semver.valid(semver.coerce(version)) === latestMajorReleaseVersion
 
@@ -155,7 +181,13 @@ const getReleasedVersions = ({ releasedVersions, minVersion, maxVersion }) => {
 }
 
 // Finds the first minor release (which in react-native is the major) when compared to another version
-const getFirstMajorRelease = ({ releasedVersions, versionToCompare }) =>
+const getFirstMajorRelease = ({
+  releasedVersions,
+  versionToCompare,
+}: {
+  releasedVersions: string[]
+  versionToCompare: string
+}) =>
   releasedVersions.find(
     (releasedVersion) =>
       semver.lt(releasedVersion, versionToCompare) &&
@@ -166,7 +198,15 @@ const getFirstMajorRelease = ({ releasedVersions, versionToCompare }) =>
   )
 
 // Return if version exists in the ones returned from GitHub
-const doesVersionExist = ({ version, allVersions, minVersion }) => {
+const doesVersionExist = ({
+  version,
+  allVersions,
+  minVersion,
+}: {
+  version: string
+  allVersions: string[]
+  minVersion?: string
+}) => {
   try {
     return (
       version &&
@@ -186,19 +226,25 @@ const VersionSelector = ({
   isPackageNameDefinedInURL,
   showDiff,
   showReleaseCandidates,
+}: {
+  packageName: string
+  language: string
+  isPackageNameDefinedInURL: boolean
+  showDiff: (args: { fromVersion: string; toVersion: string }) => void
+  showReleaseCandidates: boolean
 }) => {
   const { isLoading, isDone, releaseVersions } = useFetchReleaseVersions({
     packageName,
   })
-  const [allVersions, setAllVersions] = useState([])
+  const [allVersions, setAllVersions] = useState<string[]>([])
   const [fromVersionList, setFromVersionList] = useState([])
   const [toVersionList, setToVersionList] = useState([])
-  const [hasVersionsFromURL, setHasVersionsFromURL] = useState(false)
+  const [hasVersionsFromURL, setHasVersionsFromURL] = useState<boolean>(false)
 
-  const [localFromVersion, setLocalFromVersion] = useState('')
-  const [localToVersion, setLocalToVersion] = useState('')
+  const [localFromVersion, setLocalFromVersion] = useState<string>('')
+  const [localToVersion, setLocalToVersion] = useState<string>('')
 
-  const upgradeButtonEl = useRef(null)
+  const upgradeButtonEl = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const versionsInURL = getVersionsInURL()
@@ -258,7 +304,7 @@ const VersionSelector = ({
 
       const doesHaveVersionsInURL = hasFromVersionInURL && hasToVersionInURL
 
-      setHasVersionsFromURL(doesHaveVersionsInURL)
+      setHasVersionsFromURL(!!doesHaveVersionsInURL)
     }
 
     if (isDone) {
@@ -291,7 +337,7 @@ const VersionSelector = ({
     )
 
     if (hasVersionsFromURL) {
-      upgradeButtonEl.current.click()
+      upgradeButtonEl?.current?.click()
     }
   }, [
     isLoading,

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { ReleaseT } from '../types'
+import { ReleaseCommentT, ReleaseT } from '../types'
 
 const newArchitectureFiles = [
   'android/app/src/main/java/com/rndiffapp/newarchitecture/MainApplicationReactNativeHost.java',
@@ -72,17 +72,20 @@ const release: ReleaseT = {
         </Fragment>
       ),
     },
-    ...newArchitectureFiles.map((file) => ({
-      fileName: file,
+    ...newArchitectureFiles.map(
+      (file) =>
+        ({
+          fileName: file,
 
-      lineNumber: 1,
-      lineChangeType: 'add',
-      content: (
-        <Fragment>
-          This file is only required for the New Architecture setup.
-        </Fragment>
-      ),
-    })),
+          lineNumber: 1,
+          lineChangeType: 'add',
+          content: (
+            <Fragment>
+              This file is only required for the New Architecture setup.
+            </Fragment>
+          ),
+        } as ReleaseCommentT)
+    ),
   ],
 }
 
