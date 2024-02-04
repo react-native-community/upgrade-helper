@@ -41,6 +41,7 @@
     "@jest/globals": "^29.7.0",
     "@testing-library/react": "^14.0.0",
     "@types/jest": "^29.5.12",
+    "@types/jest-image-snapshot": "^6.4.0",
     "@types/markdown-to-jsx": "^7.0.1",
     "@types/node": "^20.11.16",
     "@types/react": "18.2.0",
@@ -55,7 +56,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "gh-pages": "5.0.0",
     "husky": "8.0.3",
-    "jest-image-snapshot": "6.1.0",
+    "jest-image-snapshot": "6.4.0",
     "prettier": "2.8.4",
     "pretty-quick": "3.1.3",
     "puppeteer": "10.0.0",
@@ -75,45 +76,10 @@
       "last 1 safari version"
     ]
   },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "extends": [
-      "react-app"
-    ],
-    "plugins": [
-      "prettier",
-      "@emotion"
-    ],
-    "rules": {
-      "prettier/prettier": "error",
-      "jsx-a11y/accessible-emoji": "off",
-      "import/no-anonymous-default-export": "off",
-      "react-hooks/exhaustive-deps": "off"
-    },
-    "overrides": [
-      {
-        "files": [
-          "src/__tests__/**/*"
-        ],
-        "env": {
-          "jest": true
-        }
-      }
-    ]
-  },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged --pattern \"src/**/*.*(js|jsx|ts|tsx)\"",
       "pre-push": "yarn run lint"
     }
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testMatch": [
-      "**/__tests__/**/*.spec.(js|jsx|ts|tsx)"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/jest.setup.js"
-    ]
   }
 }
