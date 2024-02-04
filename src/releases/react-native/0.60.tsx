@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
+import { ReleaseT } from '../types'
 
-export default {
+const release: ReleaseT = {
   usefulContent: {
     description:
       'React Native 0.60 includes Cocoapods integration by default, AndroidX support, auto-linking libraries, a brand new Start screen and more.',
@@ -43,3 +44,4 @@ export default {
     },
   ],
 }
+export default release

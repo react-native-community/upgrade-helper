@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
+import { ReleaseT } from '../types'
 
-export default {
+const release: ReleaseT = {
   usefulContent: {
     description: 'React Native 0.72 includes a new metro config setup',
     links: [
@@ -29,3 +30,5 @@ export default {
     },
   ],
 }
+
+export default release

@@ -1,4 +1,6 @@
-export default {
+import { ReleaseT } from '../types'
+
+const release: ReleaseT = {
   usefulContent: {
     description:
       'React Native 0.59 includes React Hooks, performance gains on Android and lots of cool stuff.',
@@ -15,3 +17,5 @@ export default {
     ],
   },
 }
+
+export default release

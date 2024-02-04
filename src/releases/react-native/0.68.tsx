@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { ReleaseT } from '../types'
 
 const newArchitectureFiles = [
   'android/app/src/main/java/com/rndiffapp/newarchitecture/MainApplicationReactNativeHost.java',
@@ -14,7 +15,7 @@ const newArchitectureFiles = [
   'android/app/src/main/jni/OnLoad.cpp',
 ]
 
-export default {
+const release: ReleaseT = {
   usefulContent: {
     description:
       'React Native 0.68 includes preview of the New Architecture opt-in.',
@@ -84,3 +85,5 @@ export default {
     })),
   ],
 }
+
+export default release

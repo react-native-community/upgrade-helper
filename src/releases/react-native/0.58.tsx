@@ -1,4 +1,6 @@
-export default {
+import { ReleaseT } from '../types'
+
+const release: ReleaseT = {
   usefulContent: {
     description:
       'React Native 0.58 is the first release of 2019, it includes work for modernizing and strengthening flow types for core components and  numerous crash fixes and resolutions for unexpected behaviors.',
@@ -10,3 +12,5 @@ export default {
     ],
   },
 }
+
+export default release

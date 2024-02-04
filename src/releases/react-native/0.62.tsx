@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
+import { ReleaseT } from '../types'
 
-export default {
+const release: ReleaseT = {
   usefulContent: {
     description:
       'React Native 0.62 includes built-in integration with Flipper.',
@@ -48,3 +49,5 @@ export default {
     },
   ],
 }
+
+export default release

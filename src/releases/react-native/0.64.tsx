@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
+import { ReleaseT } from '../types'
 
-export default {
+const release: ReleaseT = {
   usefulContent: {
     description:
       'React Native 0.64 includes Hermes opt-in on iOS and React 17.',
@@ -28,3 +29,5 @@ export default {
     },
   ],
 }
+
+export default release
