@@ -47,26 +47,32 @@ interface BinaryListProps {
   packageName: string
 }
 
-const BinaryList = ({
+const BinaryList: React.FC<BinaryListProps> = ({
   binaryFiles,
   toVersion,
   appName,
   packageName,
-}: BinaryListProps) =>
-  binaryFiles.map(({ newPath }, index) => {
-    return (
-      <BinaryRow key={index} index={index}>
-        {removeAppPathPrefix(newPath, appName)}
+}) => {
+  return (
+    <>
+      {binaryFiles.map(({ newPath }, index) => {
+        return (
+          <BinaryRow key={index} index={index}>
+            {removeAppPathPrefix(newPath, appName)}
 
-        <DownloadFileButton
-          open={true}
-          version={toVersion}
-          path={newPath}
-          packageName={packageName}
-        />
-      </BinaryRow>
-    )
-  })
+            <DownloadFileButton
+              open={true}
+              version={toVersion}
+              path={newPath}
+              packageName={packageName}
+            />
+          </BinaryRow>
+        )
+      })}
+    </>
+  )
+}
+
 interface BinaryDownloadProps {
   diff: any[]
   fromVersion: string

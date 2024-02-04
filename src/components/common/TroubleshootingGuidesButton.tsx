@@ -21,7 +21,7 @@ const TroubleshootingGuidesButton = () => {
   const [showContent, setShowContent] = useState(false)
   const hasHandledClick = useRef(false)
 
-  const handlePopoverVisibilityChange = (visibility) => {
+  const handlePopoverVisibilityChange = () => {
     if (hasHandledClick.current) {
       return
     }

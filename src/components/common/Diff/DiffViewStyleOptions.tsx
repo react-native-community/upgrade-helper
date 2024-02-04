@@ -3,9 +3,10 @@ import styled from '@emotion/styled'
 import { Radio } from 'antd'
 import type { Theme } from '../../../theme'
 
+export type DiffViewStyle = 'split' | 'unified'
 interface DiffViewStyleOptionsProps {
-  handleViewStyleChange: (style: string) => void
-  diffViewStyle: string
+  handleViewStyleChange: (style: DiffViewStyle) => void
+  diffViewStyle: DiffViewStyle
   theme?: Theme
 }
 const DiffViewStyleOptions = styled(

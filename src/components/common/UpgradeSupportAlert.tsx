@@ -1,8 +1,13 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { Tooltip } from 'antd'
+import type { Theme } from '../../theme'
 
-const UpgradeSupportAlert = styled((props) => (
+interface UpgradeSupportAlertProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  theme?: Theme
+}
+const UpgradeSupportAlert = styled((props: UpgradeSupportAlertProps) => (
   <div {...props}>
     <span>
       Check out{' '}

@@ -66,7 +66,8 @@ const Title = styled(({ isContentOpen, ...props }: TitleProps) => (
   padding: 18px 0px 0px 14px;
 `
 
-interface ContentContainerProps extends HTMLMotionProps<'div'> {
+interface ContentContainerProps
+  extends React.PropsWithChildren<HTMLMotionProps<'div'>> {
   isContentOpen: boolean
 }
 
@@ -89,7 +90,7 @@ const ContentContainer = styled(
       }}
       inherit={false}
     >
-      <div children={children} />
+      <div>{children}</div>
     </motion.div>
   )
 )`
@@ -243,7 +244,11 @@ class UsefulContentSection extends Component<
 
           <ContentContainer isContentOpen={isContentOpen}>
             {doesAnyVersionHaveUsefulLinks ? (
-              <UsefulLinks packageName={packageName} versions={versions} />
+              <UsefulLinks
+                packageName={packageName}
+                versions={versions}
+                toVersion={toVersion}
+              />
             ) : null}
 
             <AlignDepsAlert />

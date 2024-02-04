@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import styled from '@emotion/styled'
 import { getChangelogURL } from '../../utils'
 import { Link } from './Markdown'
@@ -23,12 +23,12 @@ interface UsefulLinksProps {
   toVersion: string
 }
 
-interface UsefulLinksState {}
-
-class UsefulLinks extends Component<UsefulLinksProps, UsefulLinksState> {
-  getChangelog = ({ version }) => {
-    const { packageName, toVersion } = this.props
-
+const UsefulLinks = ({
+  packageName,
+  toVersion,
+  versions,
+}: UsefulLinksProps) => {
+  const getChangelog = ({ version }: { version: string }) => {
     if (
       packageName === PACKAGE_NAMES.RNW ||
       packageName === PACKAGE_NAMES.RNM
@@ -57,52 +57,48 @@ class UsefulLinks extends Component<UsefulLinksProps, UsefulLinksState> {
     }
   }
 
-  render() {
-    const { versions } = this.props
+  const doesAnyVersionHaveUsefulContent = React.useMemo(
+    () => versions.some(({ usefulContent }) => !!usefulContent),
+    [versions]
+  )
 
-    const doesAnyVersionHaveUsefulContent = versions.some(
-      ({ usefulContent }) => !!usefulContent
-    )
+  const hasMoreThanOneRelease = versions.length > 1
 
-    if (!doesAnyVersionHaveUsefulContent) {
-      return null
-    }
-
-    const hasMoreThanOneRelease = versions.length > 1
-
-    return (
-      <>
-        {versions.map(({ usefulContent, version }, key) => {
-          if (!usefulContent) {
-            return null
-          }
-
-          const changelog = this.getChangelog({ version })
-
-          const links = [...usefulContent.links, changelog]
-
-          return (
-            <Fragment key={key}>
-              {key > 0 && <Separator />}
-
-              {hasMoreThanOneRelease && <h3>Release {changelog.version}</h3>}
-
-              <span>{usefulContent.description}</span>
-
-              <List>
-                {links.map(({ url, title }, key) => (
-                  <li key={`${url}${key}`}>
-                    <Link href={url}>{title}</Link>
-                  </li>
-                ))}
-              </List>
-            </Fragment>
-          )
-        })}
-        <Separator />
-      </>
-    )
+  if (!doesAnyVersionHaveUsefulContent) {
+    return null
   }
+  return (
+    <>
+      {versions.map(({ usefulContent, version }, key) => {
+        if (!usefulContent) {
+          return null
+        }
+
+        const changelog = getChangelog({ version })
+
+        const links = [...usefulContent.links, changelog]
+
+        return (
+          <Fragment key={key}>
+            {key > 0 && <Separator />}
+
+            {hasMoreThanOneRelease && <h3>Release {changelog.version}</h3>}
+
+            <span>{usefulContent.description}</span>
+
+            <List>
+              {links.map(({ url, title }, key) => (
+                <li key={`${url}${key}`}>
+                  <Link href={url}>{title}</Link>
+                </li>
+              ))}
+            </List>
+          </Fragment>
+        )
+      })}
+      <Separator />
+    </>
+  )
 }
 
 export default UsefulLinks

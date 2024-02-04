@@ -18,6 +18,6 @@
     "jsxImportSource": "@emotion/react",
     "typeRoots": ["./node_modules/@types", "./@types"]
   },
-  "include": ["src"],
+  "include": ["./src"],
   "exclude": ["./src/__tests__/*"]
 }

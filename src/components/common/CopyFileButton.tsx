@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { Button, Popover } from 'antd'
+import type { ButtonProps } from 'antd'
 import { getBinaryFileURL, replaceAppDetails } from '../../utils'
 import { CopyOutlined } from '@ant-design/icons'
 
@@ -9,8 +10,25 @@ const popoverContentOpts = {
   copied: 'Copied!',
 }
 
+interface CopyFileButtonProps extends ButtonProps {
+  open: boolean
+  version: string
+  path: string
+  packageName: string
+  appName: string
+  appPackage: string
+}
+
 const CopyFileButton = styled(
-  ({ open, version, path, packageName, appName, appPackage, ...props }) => {
+  ({
+    open,
+    version,
+    path,
+    packageName,
+    appName,
+    appPackage,
+    ...props
+  }: CopyFileButtonProps) => {
     const [popoverContent, setPopoverContent] = useState(
       popoverContentOpts.default
     )
