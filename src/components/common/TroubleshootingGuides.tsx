@@ -46,6 +46,7 @@ const TroubleshootingGuides = ({
 
   return (
     <Container
+      // @ts-ignore-next-line
       willHaveAnimation={willHaveAnimation.current}
       animate={containerAnimation}
     >

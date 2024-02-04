@@ -17,6 +17,7 @@ import DiffHeader from './DiffHeader'
 import { getComments } from './DiffComment'
 import { replaceAppDetails } from '../../../utils'
 import type { Theme } from '../../../theme'
+import type { ChangeEventArgs } from 'react-diff-view'
 import type { DefaultRenderToken } from 'react-diff-view/types/context'
 
 const copyPathPopoverContentOpts = {
@@ -194,7 +195,7 @@ interface DiffProps {
   isDiffCompleted: boolean
   onCompleteDiff: (diffKey: string) => void
   selectedChanges: string[]
-  onToggleChangeSelection: (change: string) => void
+  onToggleChangeSelection: (args: ChangeEventArgs) => void
   areAllCollapsed?: boolean
   setAllCollapsed: (collapse: boolean | undefined) => void
   diffViewStyle: ViewType
@@ -291,13 +292,13 @@ const Diff = ({
         diffKey={diffKey}
         hasDiff={hunks.length > 0}
         isDiffCollapsed={isDiffCollapsed}
-        setIsDiffCollapsed={(collapse, altKey) => {
+        setIsDiffCollapsed={(collapsed: boolean, altKey?: boolean) => {
           if (altKey) {
-            return setAllCollapsed(collapse)
+            return setAllCollapsed(collapsed)
           }
 
           setAllCollapsed(undefined)
-          setIsDiffCollapsed(collapse)
+          setIsDiffCollapsed(collapsed)
         }}
         isDiffCompleted={isDiffCompleted}
         onCopyPathToClipboard={handleCopyPathToClipboard}

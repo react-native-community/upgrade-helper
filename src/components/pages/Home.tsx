@@ -23,7 +23,6 @@ import { DarkModeButton } from '../common/DarkModeButton'
 import { updateURL } from '../../utils/update-url'
 import { deviceSizes } from '../../utils/device-sizes'
 import { lightTheme, darkTheme, type Theme } from '../../theme'
-import { CheckboxValueType } from 'antd/es/checkbox/Group'
 
 const Page = styled.div<{ theme?: Theme }>`
   background-color: ${({ theme }) => theme.background};
@@ -135,7 +134,7 @@ const Home = () => {
   const [fromVersion, setFromVersion] = useState<string>('')
   const [toVersion, setToVersion] = useState<string>('')
   const [shouldShowDiff, setShouldShowDiff] = useState<boolean>(false)
-  const [settings, setSettings] = useState({
+  const [settings, setSettings] = useState<Record<string, boolean>>({
     [`${SHOW_LATEST_RCS}`]: false,
   })
 
@@ -197,7 +196,7 @@ const Home = () => {
     setShouldShowDiff(false)
   }
 
-  const handleSettingsChange = (settingsValues: CheckboxValueType[]) => {
+  const handleSettingsChange = (settingsValues: string[]) => {
     const normalizedIncomingSettings = settingsValues.reduce((acc, val) => {
       acc[val] = true
       return acc
@@ -262,7 +261,7 @@ const Home = () => {
                   language={language}
                 />
                 <DarkModeButton
-                  isDarkMode={isDarkMode}
+                  isDarkMode={isDarkMode as boolean}
                   onClick={toggleDarkMode}
                 />
               </SettingsContainer>
@@ -312,6 +311,7 @@ const Home = () => {
         rn-diff-purge output.
       */}
           <DiffViewer
+            //@ts-ignore-next-line
             shouldShowDiff={shouldShowDiff}
             fromVersion={fromVersion}
             toVersion={toVersion}

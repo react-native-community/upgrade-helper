@@ -19,7 +19,7 @@ const DownloadFileButton = ({
   return open ? (
     <Button
       {...props}
-      type="ghost"
+      ghost
       shape="circle"
       icon={<DownloadOutlined />}
       target="_blank"

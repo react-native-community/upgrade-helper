@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import semver from 'semver'
 import Diff from './Diff'
 import type { File } from 'gitdiff-parser'
-import type { ViewType } from 'react-diff-view'
+import type { ChangeEventArgs, ViewType } from 'react-diff-view'
 
 export const testIDs = {
   diffSection: 'diffSection',
@@ -25,7 +25,7 @@ interface DiffSectionProps {
   toVersion: string
   handleCompleteDiff: (diffKey: string) => void
   selectedChanges: string[]
-  onToggleChangeSelection: (diffKey: string) => void
+  onToggleChangeSelection: (args: ChangeEventArgs) => void
   diffViewStyle: ViewType
   appName: string
   appPackage: string

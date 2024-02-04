@@ -17,7 +17,7 @@ import DownloadFileButton from '../DownloadFileButton'
 import ViewFileButton from '../ViewFileButton'
 import CopyFileButton from '../CopyFileButton'
 import type { Theme } from '../../../theme'
-import type { LineChangeT } from '../../../releases/types'
+import type { ReleaseCommentT } from '../../../releases/types'
 import type { DiffType } from 'react-diff-view'
 
 export const testIDs = {
@@ -56,7 +56,7 @@ const FileName = ({
 }: {
   oldPath: string
   newPath: string
-  type: LineChangeT
+  type: DiffType
 }) => {
   if (type === 'delete') {
     return <span>{oldPath}</span>
@@ -133,19 +133,9 @@ interface CompleteDiffButtonProps extends ButtonProps {
 const CompleteDiffButton = styled(
   ({ open, onClick, ...props }: CompleteDiffButtonProps) =>
     open ? (
-      <Button
-        {...props}
-        type="ghost"
-        icon={<RollbackOutlined />}
-        onClick={onClick}
-      />
+      <Button {...props} ghost icon={<RollbackOutlined />} onClick={onClick} />
     ) : (
-      <Button
-        {...props}
-        type="ghost"
-        icon={<CheckOutlined />}
-        onClick={onClick}
-      />
+      <Button {...props} ghost icon={<CheckOutlined />} onClick={onClick} />
     )
 )`
   ${defaultIconButtonStyle}
@@ -187,7 +177,7 @@ const CopyPathToClipboardButton = styled(
       >
         <Button
           {...props}
-          type="ghost"
+          ghost
           icon={<CopyOutlined />}
           onMouseOver={resetCopyPathPopoverContent}
         />
@@ -243,7 +233,7 @@ const CopyAnchorLinksToClipboardButton = styled(
         >
           <Button
             {...props}
-            type="ghost"
+            ghost
             icon={<LinkOutlined />}
             onMouseOver={resetContent}
           />
@@ -295,7 +285,7 @@ interface DiffHeaderProps extends WrapperProps {
   diffKey: string
   hasDiff: boolean
   isDiffCollapsed: boolean
-  setIsDiffCollapsed: (isDiffCollapsed: boolean, altKey: boolean) => void
+  setIsDiffCollapsed: (isDiffCollapsed: boolean, altKey?: boolean) => void
   isDiffCompleted: boolean
   onCompleteDiff: (diffKey: string) => void
   onCopyPathToClipboard: () => void
@@ -303,7 +293,7 @@ interface DiffHeaderProps extends WrapperProps {
   resetCopyPathPopoverContent: () => void
   appName: string
   appPackage: string
-  diffComments: string[]
+  diffComments: ReleaseCommentT[]
   packageName: string
 }
 

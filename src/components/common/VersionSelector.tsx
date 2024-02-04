@@ -53,15 +53,18 @@ const ToVersionSelector = styled(
   }
 `
 
-const getVersionsInURL = () => {
+const getVersionsInURL = (): {
+  fromVersion: string
+  toVersion: string
+} => {
   // Parses `/?from=VERSION&to=VERSION` from URL
   const { from: fromVersion, to: toVersion } = queryString.parse(
     window.location.search
   )
 
   return {
-    fromVersion,
-    toVersion,
+    fromVersion: fromVersion as string,
+    toVersion: toVersion as string,
   }
 }
 
@@ -69,7 +72,7 @@ const getVersionsInURL = () => {
 // to files that may or may not change.
 const stripAnchorInUrl = () => {
   if (window.location.hash) {
-    const url = new URL(window.location)
+    const url = new URL(window.location.toString())
     url.hash = ''
     window.history.pushState({}, '', url)
   }

@@ -4,9 +4,10 @@ import { motion, HTMLMotionProps } from 'framer-motion'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { getTransitionDuration } from '../../../utils'
 import type { Theme } from '../../../theme'
+import type { ReleaseCommentT } from '../../../releases/types'
 
 interface DiffCommentReminderProps extends HTMLMotionProps<'div'> {
-  comments: Record<string, string>
+  comments: ReleaseCommentT[]
   isDiffCollapsed: boolean
   uncollapseDiff: () => void
   theme?: Theme

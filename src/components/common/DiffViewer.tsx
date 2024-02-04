@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef, useReducer } from 'react'
 import styled from '@emotion/styled'
 import { Alert } from 'antd'
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
-import { type ViewType, withChangeSelect } from 'react-diff-view'
+import {
+  type ViewType,
+  withChangeSelect,
+  ChangeEventArgs,
+} from 'react-diff-view'
 import 'react-diff-view/style/index.css'
 import { getTransitionDuration, getChangelogURL } from '../../utils'
 import DiffSection from './Diff/DiffSection'
@@ -65,7 +69,7 @@ interface DiffViewerProps {
   toVersion: string
   shouldShowDiff: boolean
   selectedChanges: string[]
-  onToggleChangeSelection: (change: string) => void
+  onToggleChangeSelection: (args: ChangeEventArgs) => void
   appName: string
   appPackage: string
 }
@@ -248,6 +252,7 @@ const DiffViewer = ({
             packageName={packageName}
             isDoneSection={true}
             title="Done"
+            diffViewStyle={diffViewStyle}
             appName={appName}
             appPackage={appPackage}
             doneTitleRef={doneTitleRef}
@@ -266,4 +271,5 @@ const DiffViewer = ({
   )
 }
 
+// @ts-ignore-next-line
 export default withChangeSelect({ multiple: true })(DiffViewer)
