@@ -3,11 +3,12 @@ import styled from '@emotion/styled'
 import { Popover } from 'antd'
 import semver from 'semver/preload'
 import queryString from 'query-string'
-import { Select } from './'
+import { Select } from '.'
 import UpgradeButton from './UpgradeButton'
 import { useFetchReleaseVersions } from '../../hooks/fetch-release-versions'
 import { updateURL } from '../../utils/update-url'
 import { deviceSizes } from '../../utils/device-sizes'
+import type { SelectProps } from './Select'
 
 export const testIDs = {
   fromVersionSelector: 'fromVersionSelector',
@@ -32,14 +33,19 @@ const FromVersionSelector = styled(Select)`
   }
 `
 
-const ToVersionSelector = styled(({ popover, ...props }) =>
-  popover ? (
-    React.cloneElement(popover, {
-      children: <Select {...props} />,
-    })
-  ) : (
-    <Select {...props} />
-  )
+interface ToVersionSelectorProps extends SelectProps {
+  popover?: React.ReactNode
+}
+
+const ToVersionSelector = styled(
+  ({ popover, ...props }: ToVersionSelectorProps) =>
+    popover ? (
+      React.cloneElement(popover, {
+        children: <Select {...props} />,
+      })
+    ) : (
+      <Select {...props} />
+    )
 )`
   @media ${deviceSizes.tablet} {
     padding-left: 5px;

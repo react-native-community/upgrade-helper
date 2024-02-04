@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { Select as AntdSelect, Typography } from 'antd'
+import type { SelectProps as AntdSelectProps } from 'antd'
 
 const { Option } = AntdSelect
 
@@ -11,7 +12,12 @@ const SelectBox = styled(AntdSelect)`
   width: 100%;
 `
 
-const Select = ({ title, options, ...props }) => (
+export interface SelectProps extends AntdSelectProps {
+  title: string
+  options: string[]
+}
+
+const Select = ({ title, options, ...props }: SelectProps) => (
   <SelectBoxContainer>
     <Typography.Title level={5}>{title}</Typography.Title>
 

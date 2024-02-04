@@ -26,8 +26,22 @@ const shake = keyframes`
   }
 `
 
+interface CompletedFilesCounterProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  completed: number
+  total: number
+  popoverContent: string
+  popoverCursorType: string
+}
+
 const CompletedFilesCounter = styled(
-  ({ completed, total, popoverContent, popoverCursorType, ...props }) => (
+  ({
+    completed,
+    total,
+    popoverContent,
+    popoverCursorType,
+    ...props
+  }: CompletedFilesCounterProps) => (
     <div {...props}>
       <Popover
         content={popoverContent}
