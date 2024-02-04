@@ -74,7 +74,7 @@ const BinaryList: React.FC<BinaryListProps> = ({
 }
 
 interface BinaryDownloadProps {
-  diff: any[]
+  diff: File[]
   fromVersion: string
   toVersion: string
   appName: string

@@ -24,7 +24,7 @@ export const useFetchDiff = ({
 }: UseFetchDiffProps) => {
   const [isLoading, setIsLoading] = useState(true)
   const [isDone, setIsDone] = useState(false)
-  const [diff, setDiff] = useState<File[] | undefined>(undefined)
+  const [diff, setDiff] = useState<File[]>([])
 
   useEffect(() => {
     const fetchDiff = async () => {

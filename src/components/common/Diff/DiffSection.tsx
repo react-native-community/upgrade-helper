@@ -12,6 +12,24 @@ const Title = styled(Typography.Title)`
   margin-top: 0.5em;
 `
 
+interface DiffSectionProps {
+  packageName: string
+  diff: any
+  getDiffKey: (diffFile: any) => string
+  title: string
+  completedDiffs: string[]
+  isDoneSection: boolean
+  fromVersion: string
+  toVersion: string
+  handleCompleteDiff: (diffKey: string) => void
+  selectedChanges: string[]
+  onToggleChangeSelection: (diffKey: string, isSelected: boolean) => void
+  diffViewStyle: string
+  appName: string
+  appPackage: string
+  doneTitleRef: React.RefObject<HTMLHeadingElement>
+}
+
 const DiffSection = ({
   packageName,
   diff,
@@ -28,7 +46,7 @@ const DiffSection = ({
   appName,
   appPackage,
   doneTitleRef,
-}) => {
+}: DiffSectionProps) => {
   const [areAllCollapsed, setAllCollapsed] = useState(undefined)
 
   const getIsUpgradingFrom61To62 = useCallback(() => {

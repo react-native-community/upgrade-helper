@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, Fragment } from 'react'
 import styled from '@emotion/styled'
 import {
   Diff as RDiff,
@@ -11,11 +11,13 @@ import {
   ViewType,
   DiffType,
   HunkTokens,
+  TokenNode,
 } from 'react-diff-view'
 import DiffHeader from './DiffHeader'
 import { getComments } from './DiffComment'
 import { replaceAppDetails } from '../../../utils'
 import type { Theme } from '../../../theme'
+import type { DefaultRenderToken } from 'react-diff-view/types/context'
 
 const copyPathPopoverContentOpts = {
   default: 'Click to copy file path',
@@ -54,8 +56,7 @@ const DiffView = styled(RDiff)<DiffViewProps>`
   }
 
   td.diff-gutter .diff-line-normal {
-    background-color: ${({ theme }) => theme.gutterInsertBackground};
-    // background-color: ${({ theme }) => theme.diff.gutterInsertBackground};
+    background-color: ${({ theme }) => theme.diff.gutterInsertBackground};
     border-color: ${({ theme }) => theme.greenBorder};
   }
 
@@ -80,26 +81,25 @@ const DiffView = styled(RDiff)<DiffViewProps>`
 
   // From diff global
   .diff {
-    background-color: ${({ theme }) => theme.diff.backgroundColor};
-    color: ${({ theme }) => theme.diff.text};
+    background-color: ${({ theme }) => theme.background};
+    color: ${({ theme }) => theme.text};
     tab-size: 4;
     hyphens: none;
   }
 
   .diff::selection {
-    background-color: ${({ theme }) => theme.diff.selectionMackground};
+    background-color: ${({ theme }) => theme.diff.selectionBackground};
   }
 
   .diff-decoration {
     line-height: 2;
     font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier,
       monospace;
-    background-color: ${({ theme }) => theme.diff.decorationBackground};
   }
 
   .diff-decoration-content {
     padding-left: 0.5em;
-    background-color: ${({ theme }) => theme.diff.contentBackground};
+    background-color: ${({ theme }) => theme.diff.decorationContentBackground};
     color: ${({ theme }) => theme.diff.decorationContent};
   }
 
@@ -160,6 +160,27 @@ const isDiffCollapsedByDefault = ({
   type: DiffType
   hunks: HunkData[]
 }) => (type === 'delete' || hunks.length > 5 ? true : undefined)
+
+const renderToken = (
+  token: TokenNode,
+  renderDefault: DefaultRenderToken,
+  index: number
+) => {
+  switch (token.type) {
+    case 'space':
+      console.log(token)
+      return (
+        <span key={index} className="space">
+          {token.children &&
+            token.children.map((token, index) =>
+              renderToken(token, renderDefault, index)
+            )}
+        </span>
+      )
+    default:
+      return renderDefault(token, index)
+  }
+}
 
 interface DiffProps {
   packageName: string
@@ -250,6 +271,15 @@ const Diff = ({
     toVersion,
   })
 
+  const updatedHunks = React.useMemo(() => getHunksWithAppName(hunks), [hunks])
+  const tokens: HunkTokens = React.useMemo(
+    () =>
+      tokenize(hunks, {
+        enhancers: [markEdits(updatedHunks)],
+      }),
+    [hunks, updatedHunks]
+  )
+
   return (
     <Container>
       <DiffHeader
@@ -285,21 +315,15 @@ const Diff = ({
           viewType={diffViewStyle}
           diffType={type}
           hunks={hunks}
+          renderToken={renderToken}
+          tokens={tokens}
           widgets={diffComments}
           optimizeSelection={true}
           selectedChanges={selectedChanges}
         >
-          {(originalHunks: HunkData[]) => {
-            const updatedHunks = getHunksWithAppName(originalHunks)
-
-            const options = {
-              enhancers: [markEdits(updatedHunks)],
-            }
-
-            const tokens: HunkTokens = tokenize(updatedHunks, options)
-
-            return (
-              <>
+          {(hunks: HunkData[]) =>
+            hunks.map((hunk) => (
+              <Fragment key={hunk.content}>
                 {updatedHunks.map((hunk) => [
                   <Decoration key={'decoration-' + hunk.content}>
                     <More>{hunk.content}</More>
@@ -307,13 +331,12 @@ const Diff = ({
                   <Hunk
                     key={hunk.content}
                     hunk={hunk}
-                    tokens={tokens}
                     gutterEvents={{ onClick: onToggleChangeSelection }}
                   />,
                 ])}
-              </>
-            )
-          }}
+              </Fragment>
+            ))
+          }
         </DiffView>
       )}
     </Container>
