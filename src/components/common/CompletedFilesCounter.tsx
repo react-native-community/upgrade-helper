@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { keyframes, css } from '@emotion/react'
 import Confetti from 'react-dom-confetti'
 import { Popover } from 'antd'
+import type { Theme } from '../../theme'
 
 const shake = keyframes`
   0% {
@@ -32,6 +33,7 @@ interface CompletedFilesCounterProps
   total: number
   popoverContent: string
   popoverCursorType: string
+  theme: Theme
 }
 
 const CompletedFilesCounter = styled(

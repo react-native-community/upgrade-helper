@@ -1,7 +1,8 @@
 import React, { useRef } from 'react'
 import styled from '@emotion/styled'
 import { Link } from './Markdown'
-import { motion, useAnimation } from 'framer-motion'
+import { HTMLMotionProps, motion, useAnimation } from 'framer-motion'
+import type { Theme } from '../../theme'
 
 const TROUBLESHOOTING_GUIDES = [
   {
@@ -14,11 +15,14 @@ const TROUBLESHOOTING_GUIDES = [
   },
 ]
 
-const Container = styled(motion.div)`
+const Container = styled(motion.div)<HTMLMotionProps<'div'>>`
   width: 250px;
 `
 
-const Content = styled(motion.div)`
+interface ContentProps extends HTMLMotionProps<'div'> {
+  theme?: Theme
+}
+const Content = styled(motion.div)<ContentProps>`
   h4 {
     border-bottom: 1px solid ${({ theme }) => theme.border};
     padding-bottom: 6px;
@@ -31,7 +35,11 @@ const ListContainer = styled.ul`
   list-style: disc;
 `
 
-const TroubleshootingGuides = ({ isTooltipOpen }) => {
+const TroubleshootingGuides = ({
+  isTooltipOpen,
+}: {
+  isTooltipOpen: boolean
+}) => {
   const willHaveAnimation = useRef(isTooltipOpen)
 
   const containerAnimation = useAnimation()

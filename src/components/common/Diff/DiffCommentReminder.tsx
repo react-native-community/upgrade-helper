@@ -1,11 +1,24 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { motion } from 'framer-motion'
+import { motion, HTMLMotionProps } from 'framer-motion'
 import { InfoCircleOutlined } from '@ant-design/icons'
 import { getTransitionDuration } from '../../../utils'
+import type { Theme } from '../../../theme'
+
+interface DiffCommentReminderProps extends HTMLMotionProps<'div'> {
+  comments: Record<string, string>
+  isDiffCollapsed: boolean
+  uncollapseDiff: () => void
+  theme?: Theme
+}
 
 const DiffCommentReminder = styled(
-  ({ comments, isDiffCollapsed, uncollapseDiff, ...props }) => {
+  ({
+    comments,
+    isDiffCollapsed,
+    uncollapseDiff,
+    ...props
+  }: DiffCommentReminderProps) => {
     const numberOfComments = Object.keys(comments).length
     const isOpen = isDiffCollapsed && numberOfComments > 0
 
@@ -16,7 +29,7 @@ const DiffCommentReminder = styled(
           open: { opacity: 1, cursor: 'pointer' },
           closed: { opacity: 0, cursor: 'initial' },
         }}
-        animate={isOpen > 0 ? 'open' : 'closed'}
+        animate={isOpen ? 'open' : 'closed'}
         transition={{
           duration: getTransitionDuration(0.5),
         }}

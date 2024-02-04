@@ -7,13 +7,20 @@ const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 const movePackageJsonToTop = (parsedDiff) =>
   parsedDiff.sort(({ newPath }) => (newPath.includes('package.json') ? -1 : 1))
 
+interface UseFetchDiffProps {
+  shouldShowDiff: boolean
+  packageName: string
+  language: string
+  fromVersion: string
+  toVersion: string
+}
 export const useFetchDiff = ({
   shouldShowDiff,
   packageName,
   language,
   fromVersion,
   toVersion,
-}) => {
+}: UseFetchDiffProps) => {
   const [isLoading, setIsLoading] = useState(true)
   const [isDone, setIsDone] = useState(false)
   const [diff, setDiff] = useState(undefined)

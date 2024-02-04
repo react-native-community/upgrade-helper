@@ -1,14 +1,21 @@
 import React from 'react'
 import { Button, Popover as AntdPopover, Tooltip } from 'antd'
+import type { PopoverProps as AntdPopoverProps } from 'antd'
 import styled from '@emotion/styled'
 import DownloadFileButton from './DownloadFileButton'
 import { removeAppPathPrefix } from '../../utils'
+import type { Theme } from '../../theme'
 
 const Container = styled.div`
   padding-right: 10px;
 `
 
-const BinaryRow = styled.div`
+interface BinaryRowProps {
+  index: number
+  theme?: Theme
+}
+
+const BinaryRow = styled.div<BinaryRowProps>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,8 +29,10 @@ const BinaryRow = styled.div`
   padding: 10px 15px;
   border-bottom: 1px solid ${({ theme }) => theme.border};
 `
-
-const Popover = styled(({ className, ...props }) => (
+interface PopoverProps extends Omit<AntdPopoverProps, 'overlayClassName'> {
+  className?: string
+}
+const Popover = styled(({ className, ...props }: PopoverProps) => (
   <AntdPopover overlayClassName={className} {...props} />
 ))`
   .ant-popover-inner-content {
@@ -31,7 +40,19 @@ const Popover = styled(({ className, ...props }) => (
   }
 `
 
-const BinaryList = ({ binaryFiles, toVersion, appName, packageName }) =>
+interface BinaryListProps {
+  binaryFiles: { newPath: string }[]
+  toVersion: string
+  appName: string
+  packageName: string
+}
+
+const BinaryList = ({
+  binaryFiles,
+  toVersion,
+  appName,
+  packageName,
+}: BinaryListProps) =>
   binaryFiles.map(({ newPath }, index) => {
     return (
       <BinaryRow key={index} index={index}>
@@ -46,14 +67,20 @@ const BinaryList = ({ binaryFiles, toVersion, appName, packageName }) =>
       </BinaryRow>
     )
   })
-
+interface BinaryDownloadProps {
+  diff: any[]
+  fromVersion: string
+  toVersion: string
+  appName: string
+  packageName: string
+}
 const BinaryDownload = ({
   diff,
   fromVersion,
   toVersion,
   appName,
   packageName,
-}) => {
+}: BinaryDownloadProps) => {
   const binaryFiles = diff.filter(
     ({ hunks, type }) => hunks.length === 0 && type !== 'delete'
   )

@@ -50,8 +50,8 @@ export const getBinaryFileURL = ({ packageName, language, version, path }) => {
   })}/release/${branch}/${path}`
 }
 
-export const removeAppPathPrefix = (path, appName) =>
-  path.replace(new RegExp(`${appName || DEFAULT_APP_NAME}/`), '')
+export const removeAppPathPrefix = (path: string, appName = DEFAULT_APP_NAME) =>
+  path.replace(new RegExp(`${appName}/`), '')
 
 /**
  * Replaces DEFAULT_APP_PACKAGE and DEFAULT_APP_NAME in str with custom

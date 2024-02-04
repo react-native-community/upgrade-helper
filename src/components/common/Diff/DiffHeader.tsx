@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { Tag, Button, Popover } from 'antd'
+import type { ButtonProps } from 'antd'
 import {
   CheckOutlined,
   DownOutlined,
@@ -15,12 +16,15 @@ import DiffCommentReminder from './DiffCommentReminder'
 import DownloadFileButton from '../DownloadFileButton'
 import ViewFileButton from '../ViewFileButton'
 import CopyFileButton from '../CopyFileButton'
+import type { Theme } from '../../../theme'
 
 export const testIDs = {
   collapseClickableArea: 'collapseClickableArea',
 }
-
-const Wrapper = styled.div`
+interface WrapperProps extends React.HTMLAttributes<HTMLDivElement> {
+  theme?: Theme
+}
+const Wrapper = styled.div<WrapperProps>`
   display: flex;
   justify-content: space-between;
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
@@ -101,22 +105,30 @@ const defaultIconButtonStyle = `
   font-size: 13px;
 `
 
-const CompleteDiffButton = styled(({ open, onClick, ...props }) =>
-  open ? (
-    <Button
-      {...props}
-      type="ghost"
-      icon={<RollbackOutlined />}
-      onClick={onClick}
-    />
-  ) : (
-    <Button
-      {...props}
-      type="ghost"
-      icon={<CheckOutlined />}
-      onClick={onClick}
-    />
-  )
+interface CompleteDiffButtonProps extends ButtonProps {
+  open: boolean
+  onClick: () => void
+  isDiffCompleted?: boolean
+  theme?: Theme
+}
+
+const CompleteDiffButton = styled(
+  ({ open, onClick, ...props }: CompleteDiffButtonProps) =>
+    open ? (
+      <Button
+        {...props}
+        type="ghost"
+        icon={<RollbackOutlined />}
+        onClick={onClick}
+      />
+    ) : (
+      <Button
+        {...props}
+        type="ghost"
+        icon={<CheckOutlined />}
+        onClick={onClick}
+      />
+    )
 )`
   ${defaultIconButtonStyle}
   &,
@@ -127,6 +139,15 @@ const CompleteDiffButton = styled(({ open, onClick, ...props }) =>
   }
 `
 
+interface CopyPathToClipboardButtonProps extends Omit<ButtonProps, 'type'> {
+  oldPath: string
+  newPath: string
+  onCopy: () => void
+  copyPathPopoverContent: string
+  resetCopyPathPopoverContent: () => void
+  type: string
+}
+
 const CopyPathToClipboardButton = styled(
   ({
     oldPath,
@@ -136,7 +157,7 @@ const CopyPathToClipboardButton = styled(
     copyPathPopoverContent,
     resetCopyPathPopoverContent,
     ...props
-  }) => (
+  }: CopyPathToClipboardButtonProps) => (
     <CopyToClipboard text={type === 'add' ? newPath : oldPath} onCopy={onCopy}>
       <Popover
         content={copyPathPopoverContent}
@@ -164,8 +185,22 @@ const copyAnchorLinks = {
   copied: 'Anchor link copied!',
 }
 
+interface CopyAnchorLinksToClipboardButtonProps
+  extends Omit<ButtonProps, 'type'> {
+  id: string
+  fromVersion: string
+  toVersion: string
+  type: string
+}
 const CopyAnchorLinksToClipboardButton = styled(
-  ({ id, type, onCopy, fromVersion, toVersion, ...props }) => {
+  ({
+    id,
+    type,
+    onCopy,
+    fromVersion,
+    toVersion,
+    ...props
+  }: CopyAnchorLinksToClipboardButtonProps) => {
     const [content, setContent] = React.useState(copyAnchorLinks.default)
     const resetContent = () => setContent(copyAnchorLinks.default)
     const onCopyContent = () => setContent(copyAnchorLinks.copied)
@@ -226,6 +261,26 @@ const CollapseDiffButton = styled(({ open, isDiffCollapsed, ...props }) =>
     color: ${({ theme }) => theme.text};
   }
 `
+interface DiffHeaderProps extends WrapperProps {
+  oldPath: string
+  newPath: string
+  fromVersion: string
+  toVersion: string
+  type: string
+  diffKey: string
+  hasDiff: boolean
+  isDiffCollapsed: boolean
+  setIsDiffCollapsed: (isDiffCollapsed: boolean, altKey: boolean) => void
+  isDiffCompleted: boolean
+  onCompleteDiff: (diffKey: string) => void
+  onCopyPathToClipboard: () => void
+  copyPathPopoverContent: string
+  resetCopyPathPopoverContent: () => void
+  appName: string
+  appPackage: string
+  diffComments: string[]
+  packageName: string
+}
 
 const DiffHeader = ({
   oldPath,
@@ -247,7 +302,7 @@ const DiffHeader = ({
   diffComments,
   packageName,
   ...props
-}) => {
+}: DiffHeaderProps) => {
   const sanitizedFilePaths = getFilePathsToShow({
     oldPath,
     newPath,

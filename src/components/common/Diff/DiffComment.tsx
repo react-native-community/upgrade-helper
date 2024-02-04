@@ -1,30 +1,38 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import { motion } from 'framer-motion'
+import { HTMLMotionProps, motion } from 'framer-motion'
 import { removeAppPathPrefix, getVersionsContentInDiff } from '../../../utils'
 import Markdown from '../Markdown'
+import type { Theme } from '../../../theme'
+interface ContainerProps extends HTMLMotionProps<'div'> {
+  isCommentOpen: boolean
+  lineChangeType: 'add' | 'delete'
+  theme?: Theme
+}
 
-const Container = styled(({ isCommentOpen, children, ...props }) => {
-  return (
-    <motion.div
-      {...props}
-      variants={{
-        open: {
-          height: 'auto',
-        },
-        hidden: { height: 10 },
-      }}
-      initial={isCommentOpen ? 'open' : 'hidden'}
-      animate={isCommentOpen ? 'open' : 'hidden'}
-      transition={{
-        duration: 0.5,
-      }}
-      inherit={false}
-    >
-      <div children={children} />
-    </motion.div>
-  )
-})`
+const Container = styled(
+  ({ isCommentOpen, children, ...props }: ContainerProps) => {
+    return (
+      <motion.div
+        {...props}
+        variants={{
+          open: {
+            height: 'auto',
+          },
+          hidden: { height: 10 },
+        }}
+        initial={isCommentOpen ? 'open' : 'hidden'}
+        animate={isCommentOpen ? 'open' : 'hidden'}
+        transition={{
+          duration: 0.5,
+        }}
+        inherit={false}
+      >
+        <div children={children} />
+      </motion.div>
+    )
+  }
+)`
   overflow: hidden;
 
   & > div {
@@ -42,7 +50,10 @@ const Container = styled(({ isCommentOpen, children, ...props }) => {
   }
 `
 
-const ContentContainer = styled.div`
+interface ContentContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+  theme?: Theme
+}
+const ContentContainer = styled.div<ContentContainerProps>`
   flex: 1;
   position: relative;
   padding: 16px;
@@ -51,7 +62,12 @@ const ContentContainer = styled.div`
   user-select: none;
 `
 
-const ShowButton = styled(({ isCommentOpen, ...props }) => (
+interface ShowButtonProps extends DivProps {
+  isCommentOpen: boolean
+  theme?: Theme
+}
+
+const ShowButton = styled(({ isCommentOpen, ...props }: ShowButtonProps) => (
   <motion.div
     {...props}
     variants={{
@@ -92,10 +108,25 @@ const LINE_CHANGE_TYPES = {
   NEUTRAL: 'N',
 }
 
-const getLineNumberWithType = ({ lineChangeType, lineNumber }) =>
-  `${LINE_CHANGE_TYPES[lineChangeType.toUpperCase()]}${lineNumber}`
+const getLineNumberWithType = ({
+  lineChangeType,
+  lineNumber,
+}: {
+  lineChangeType: 'add' | 'delete' | 'neutral'
+  lineNumber: number
+}) => `${LINE_CHANGE_TYPES[lineChangeType.toUpperCase()]}${lineNumber}`
 
-const getComments = ({ packageName, newPath, fromVersion, toVersion }) => {
+const getComments = ({
+  packageName,
+  newPath,
+  fromVersion,
+  toVersion,
+}: {
+  packageName: string
+  newPath: string
+  fromVersion: string
+  toVersion: string
+}) => {
   const newPathSanitized = removeAppPathPrefix(newPath)
 
   const versionsInDiff = getVersionsContentInDiff({

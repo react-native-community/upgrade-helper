@@ -1,4 +1,42 @@
-export const lightTheme = {
+export interface Theme {
+  background: string
+  text: string
+  textHover: string
+  link: string
+  linkHover: string
+  border: string
+  greenBorder: string
+  yellowBorder: string
+  yellowBackground: string
+
+  diff: {
+    textColor: string
+    selectionBackground: string
+    gutterInsertBackground: string
+    gutterDeleteBackground: string
+    gutterSelectedBackground: string
+    codeInsertBackground: string
+    codeDeleteBackground: string
+    codeInsertEditBackground: string
+    codeDeleteEditBackground: string
+    codeSelectedBackground: string
+    omitBackground: string
+    decorationGutterBackground: string
+    decorationGutter: string
+    decorationContentBackground: string
+    decorationContent: string
+  }
+
+  rowEven: string
+  rowOdd: string
+
+  popover: {
+    text: string
+    background: string
+    border: string
+  }
+}
+export const lightTheme: Theme = {
   background: '#FFFFFF',
 
   text: '#363537',
@@ -39,7 +77,7 @@ export const lightTheme = {
     border: '#1890ff',
   },
 }
-export const darkTheme = {
+export const darkTheme: Theme = {
   background: '#0d1117',
 
   text: '#FAFAFA',

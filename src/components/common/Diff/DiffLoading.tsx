@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { motion } from 'framer-motion'
+import { HTMLMotionProps, motion } from 'framer-motion'
 import ContentLoader from 'react-content-loader'
 import { getTransitionDuration } from '../../../utils'
 import { useTheme } from '@emotion/react'
+import type { Theme } from '../../../theme'
 
 const TitleLoader = () => {
-  const theme = useTheme()
+  const theme = useTheme() as Theme
 
   return (
     <ContentLoader
@@ -21,7 +22,7 @@ const TitleLoader = () => {
 }
 
 const DiffLoader = () => {
-  const theme = useTheme()
+  const theme = useTheme() as Theme
 
   return (
     <ContentLoader
@@ -41,13 +42,20 @@ const DiffLoader = () => {
   )
 }
 
-const Container = styled(motion.div)`
+interface ContainerProps extends HTMLMotionProps<'div'> {
+  theme?: Theme
+}
+
+const Container = styled(motion.div)<ContainerProps>`
   margin-top: 16px;
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 3px;
 `
 
-const Header = styled.div`
+interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+  theme?: Theme
+}
+const Header = styled.div<HeaderProps>`
   background-color: ${({ theme }) => theme.background};
   padding: 10px;
   height: 40px;

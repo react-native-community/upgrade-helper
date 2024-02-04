@@ -3,8 +3,9 @@ import styled from '@emotion/styled'
 import { getChangelogURL } from '../../utils'
 import { Link } from './Markdown'
 import { PACKAGE_NAMES } from '../../constants'
+import type { Theme } from '../../theme'
 
-const Separator = styled.hr`
+const Separator = styled.hr<{ theme?: Theme }>`
   margin: 15px 0;
   background-color: ${({ theme }) => theme.border};
   height: 0.25em;
@@ -16,7 +17,15 @@ const List = styled.ol`
   margin: 10px 0 0;
 `
 
-class UsefulLinks extends Component {
+interface UsefulLinksProps {
+  versions: any[]
+  packageName: string
+  toVersion: string
+}
+
+interface UsefulLinksState {}
+
+class UsefulLinks extends Component<UsefulLinksProps, UsefulLinksState> {
   getChangelog = ({ version }) => {
     const { packageName, toVersion } = this.props
 

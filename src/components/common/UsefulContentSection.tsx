@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import styled from '@emotion/styled'
 import { UpOutlined, DownOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
-import { motion } from 'framer-motion'
+import type { ButtonProps } from 'antd'
+import { HTMLMotionProps, motion } from 'framer-motion'
 
 import {
   getVersionsContentInDiff,
@@ -14,14 +15,15 @@ import UsefulLinks from './UsefulLinks'
 import AlignDepsAlert from './AlignDepsAlert'
 
 import { PACKAGE_NAMES } from '../../constants'
+import type { Theme } from '../../theme'
 
-const Container = styled.div`
+const Container = styled.div<{ isContentOpen: boolean }>`
   position: relative;
   margin-top: 16px;
   overflow: hidden;
 `
 
-const InnerContainer = styled.div`
+const InnerContainer = styled.div<{ theme?: Theme; isContentOpen: boolean }>`
   color: ${({ theme }) =>
     theme.text + 'D9'}; // the D9 adds some transparency to the text color
   background-color: ${({ theme }) => theme.yellowBackground};
@@ -33,7 +35,11 @@ const InnerContainer = styled.div`
   transition: padding 0.25s ease-out;
 `
 
-const Title = styled(({ isContentOpen, ...props }) => (
+interface TitleProps extends HTMLMotionProps<'h2'> {
+  isContentOpen: boolean
+}
+
+const Title = styled(({ isContentOpen, ...props }: TitleProps) => (
   <motion.h2
     {...props}
     variants={{
@@ -60,33 +66,39 @@ const Title = styled(({ isContentOpen, ...props }) => (
   padding: 18px 0px 0px 14px;
 `
 
-const ContentContainer = styled(({ isContentOpen, children, ...props }) => (
-  <motion.div
-    {...props}
-    variants={{
-      open: {
-        opacity: 1,
-        height: 'auto',
-        translateY: 0,
-      },
-      hidden: { opacity: 0, height: 0, translateY: -20 },
-    }}
-    initial={isContentOpen ? 'open' : 'hidden'}
-    animate={isContentOpen ? 'open' : 'hidden'}
-    transition={{
-      duration: getTransitionDuration(0.25),
-    }}
-    inherit={false}
-  >
-    <div children={children} />
-  </motion.div>
-))`
+interface ContentContainerProps extends HTMLMotionProps<'div'> {
+  isContentOpen: boolean
+}
+
+const ContentContainer = styled(
+  ({ isContentOpen, children, ...props }: ContentContainerProps) => (
+    <motion.div
+      {...props}
+      variants={{
+        open: {
+          opacity: 1,
+          height: 'auto',
+          translateY: 0,
+        },
+        hidden: { opacity: 0, height: 0, translateY: -20 },
+      }}
+      initial={isContentOpen ? 'open' : 'hidden'}
+      animate={isContentOpen ? 'open' : 'hidden'}
+      transition={{
+        duration: getTransitionDuration(0.25),
+      }}
+      inherit={false}
+    >
+      <div children={children} />
+    </motion.div>
+  )
+)`
   & > div {
     padding: 15px 24px 19px;
   }
 `
 
-const Icon = styled((props) => (
+const Icon = styled((props: React.HTMLAttributes<HTMLSpanElement>) => (
   <span {...props} role="img" aria-label="Megaphone emoji">
     📣
   </span>
@@ -94,8 +106,18 @@ const Icon = styled((props) => (
   margin: 0px 10px;
 `
 
+interface HideContentButtonProps extends ButtonProps {
+  isContentOpen: boolean
+  toggleContentVisibility: () => void
+  theme?: Theme
+}
+
 const HideContentButton = styled(
-  ({ toggleContentVisibility, isContentOpen, ...props }) => (
+  ({
+    toggleContentVisibility,
+    isContentOpen,
+    ...props
+  }: HideContentButtonProps) => (
     <Button
       {...props}
       type="link"
@@ -115,19 +137,36 @@ const HideContentButton = styled(
   color: ${({ theme }) => theme.text + '73'}; // 45% opacity
 `
 
-const Separator = styled.hr`
+const Separator = styled.hr<{ theme?: Theme }>`
   margin: 15px 0;
   background-color: ${({ theme }) => theme.border};
   height: 0.25em;
   border: 0;
 `
 
-class UsefulContentSection extends Component {
+interface UsefulContentSectionProps {
+  packageName: string
+  fromVersion: string
+  toVersion: string
+  isLoading: boolean
+}
+
+interface UsefulContentSectionState {
+  isContentOpen: boolean
+}
+
+class UsefulContentSection extends Component<
+  UsefulContentSectionProps,
+  UsefulContentSectionState
+> {
   state = {
     isContentOpen: true,
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(
+    nextProps: Partial<UsefulContentSectionProps>,
+    nextState: Partial<UsefulContentSectionState>
+  ) {
     // Only re-render component if it has reloaded the diff on the parent
     const hasLoaded = this.props.isLoading && !nextProps.isLoading
     // or if the content has been hidden

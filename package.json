@@ -7,6 +7,7 @@
     "build": "EXTEND_ESLINT=true react-app-rewired build",
     "docker-test-e2e": "yarn start-and-wait && react-app-rewired test --watchAll=false --onlyChanged=false --testPathPattern='/__tests__/.*(\\.|).e2e.spec.(js|jsx|ts|tsx)?$'",
     "lint": "eslint . --cache --report-unused-disable-directives",
+    "typecheck": "tsc --noEmit",
     "prepare": "husky install",
     "start": "EXTEND_ESLINT=true react-app-rewired start",
     "start-and-wait": "yarn start & wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 30 http://localhost:3000/",
@@ -15,8 +16,8 @@
   },
   "dependencies": {
     "@ant-design/icons": "4.0.3",
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
     "antd": "5.2.3",
     "date-fns": "^2.29.3",
     "framer-motion": "^2.9.5",
@@ -35,13 +36,14 @@
     "use-persisted-state": "^0.3.3"
   },
   "devDependencies": {
-    "@emotion/babel-preset-css-prop": "^11.10.0",
-    "@emotion/eslint-plugin": "^11.10.0",
+    "@emotion/babel-preset-css-prop": "^11.11.0",
+    "@emotion/eslint-plugin": "^11.11.0",
     "@jest/globals": "^29.7.0",
     "@testing-library/react": "^14.0.0",
     "@types/jest": "^29.5.12",
+    "@types/markdown-to-jsx": "^7.0.1",
     "@types/node": "^20.11.16",
-    "@types/react": "^18.2.52",
+    "@types/react": "18.2.0",
     "@types/react-copy-to-clipboard": "^5.0.7",
     "@types/react-dom": "^18.2.18",
     "@types/use-persisted-state": "^0.3.4",
@@ -73,7 +75,7 @@
     ]
   },
   "eslintConfig": {
-    "parser": "@babel/eslint-parser",
+    "parser": "@typescript-eslint/parser",
     "extends": [
       "react-app"
     ],

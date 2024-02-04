@@ -10,13 +10,14 @@ import {
 import DiffHeader from './DiffHeader'
 import { getComments } from './DiffComment'
 import { replaceAppDetails } from '../../../utils'
+import type { Theme } from '../../../theme'
 
 const copyPathPopoverContentOpts = {
   default: 'Click to copy file path',
   copied: 'File path copied!',
 }
 
-const Container = styled.div`
+const Container = styled.div<{ theme?: Theme }>`
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 3px;
   margin-bottom: 16px;

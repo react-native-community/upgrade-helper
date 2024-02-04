@@ -1,9 +1,15 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { Radio } from 'antd'
+import type { Theme } from '../../../theme'
 
+interface DiffViewStyleOptionsProps {
+  handleViewStyleChange: (style: string) => void
+  diffViewStyle: string
+  theme?: Theme
+}
 const DiffViewStyleOptions = styled(
-  ({ handleViewStyleChange, diffViewStyle }) => (
+  ({ handleViewStyleChange, diffViewStyle }: DiffViewStyleOptionsProps) => (
     <Radio.Group value={diffViewStyle}>
       <Radio.Button
         value="split"

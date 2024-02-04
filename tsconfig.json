@@ -14,7 +14,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
+    "typeRoots": ["./node_modules/@types", "./@types"]
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["./src/__tests__/*"]
 }

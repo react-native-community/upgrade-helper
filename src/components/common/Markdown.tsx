@@ -1,8 +1,13 @@
 import React from 'react'
-import Markdown from 'markdown-to-jsx'
+import Markdown, { MarkdownToJSX } from 'markdown-to-jsx'
 import styled from '@emotion/styled'
+import type { Theme } from '../../theme'
 
-export const Link = styled((props) => (
+interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  theme?: Theme
+}
+
+export const Link = styled((props: LinkProps) => (
   // eslint-disable-next-line jsx-a11y/anchor-has-content
   <a
     target="_blank"
@@ -23,8 +28,17 @@ const InlineCode = styled.em`
   margin: 0;
   padding: 0.2em 0.4em;
 `
+interface MarkdownComponentProps {
+  [key: string]: any
+  children: string
+  options?: MarkdownToJSX.Options
+}
 
-export default ({ forceBlock = false, options = {}, ...props }) => (
+const MarkdownComponent = ({
+  forceBlock = false,
+  options = {},
+  ...props
+}: MarkdownComponentProps) => (
   <Markdown
     {...props}
     options={{
@@ -42,3 +56,5 @@ export default ({ forceBlock = false, options = {}, ...props }) => (
     }}
   />
 )
+
+export default MarkdownComponent
