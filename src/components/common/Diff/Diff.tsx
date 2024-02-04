@@ -2,10 +2,15 @@ import React, { useState, useCallback } from 'react'
 import styled from '@emotion/styled'
 import {
   Diff as RDiff,
+  DiffProps as RDiffProps,
   Hunk,
   markEdits,
   tokenize,
   Decoration as DiffDecoration,
+  HunkData,
+  ViewType,
+  DiffType,
+  HunkTokens,
 } from 'react-diff-view'
 import DiffHeader from './DiffHeader'
 import { getComments } from './DiffComment'
@@ -30,12 +35,15 @@ const More = styled.div`
   padding-left: 4px;
 `
 
-const Decoration = styled(DiffDecoration)`
+const Decoration = styled(DiffDecoration)<{ theme?: Theme }>`
   background-color: ${({ theme }) => theme.diff.decorationContentBackground};
   color: ${({ theme }) => theme.diff.decorationContent};
 `
 
-const DiffView = styled(RDiff)`
+interface DiffViewProps extends RDiffProps {
+  theme?: Theme
+}
+const DiffView = styled(RDiff)<DiffViewProps>`
   .diff-gutter-col {
     width: 30px;
   }
@@ -47,6 +55,7 @@ const DiffView = styled(RDiff)`
 
   td.diff-gutter .diff-line-normal {
     background-color: ${({ theme }) => theme.gutterInsertBackground};
+    // background-color: ${({ theme }) => theme.diff.gutterInsertBackground};
     border-color: ${({ theme }) => theme.greenBorder};
   }
 
@@ -144,8 +153,33 @@ const DiffView = styled(RDiff)`
 `
 
 // Diff will be collapsed by default if the file has been deleted or has more than 5 hunks
-const isDiffCollapsedByDefault = ({ type, hunks }) =>
-  type === 'delete' || hunks.length > 5 ? true : undefined
+const isDiffCollapsedByDefault = ({
+  type,
+  hunks,
+}: {
+  type: DiffType
+  hunks: HunkData[]
+}) => (type === 'delete' || hunks.length > 5 ? true : undefined)
+
+interface DiffProps {
+  packageName: string
+  oldPath: string
+  newPath: string
+  type: DiffType
+  hunks: HunkData[]
+  fromVersion: string
+  toVersion: string
+  diffKey: string
+  isDiffCompleted: boolean
+  onCompleteDiff: (diffKey: string) => void
+  selectedChanges: string[]
+  onToggleChangeSelection: (change: string) => void
+  areAllCollapsed?: boolean
+  setAllCollapsed: (collapse: boolean | undefined) => void
+  diffViewStyle: ViewType
+  appName: string
+  appPackage: string
+}
 
 const Diff = ({
   packageName,
@@ -165,9 +199,9 @@ const Diff = ({
   diffViewStyle,
   appName,
   appPackage,
-}) => {
-  const [isDiffCollapsed, setIsDiffCollapsed] = useState(
-    isDiffCollapsedByDefault({ type, hunks })
+}: DiffProps) => {
+  const [isDiffCollapsed, setIsDiffCollapsed] = useState<boolean>(
+    isDiffCollapsedByDefault({ type, hunks }) || false
   )
 
   const [copyPathPopoverContent, setCopyPathPopoverContent] = useState(
@@ -185,7 +219,7 @@ const Diff = ({
   }
 
   const getHunksWithAppName = useCallback(
-    (originalHunks) => {
+    (originalHunks: HunkData[]) => {
       if (!appName && !appPackage) {
         // No patching of rn-diff-purge output required.
         return originalHunks
@@ -214,7 +248,6 @@ const Diff = ({
     newPath,
     fromVersion,
     toVersion,
-    appName,
   })
 
   return (
@@ -256,26 +289,30 @@ const Diff = ({
           optimizeSelection={true}
           selectedChanges={selectedChanges}
         >
-          {(originalHunks) => {
+          {(originalHunks: HunkData[]) => {
             const updatedHunks = getHunksWithAppName(originalHunks)
 
             const options = {
               enhancers: [markEdits(updatedHunks)],
             }
 
-            const tokens = tokenize(updatedHunks, options)
+            const tokens: HunkTokens = tokenize(updatedHunks, options)
 
-            return updatedHunks.map((hunk) => [
-              <Decoration key={'decoration-' + hunk.content}>
-                <More>{hunk.content}</More>
-              </Decoration>,
-              <Hunk
-                key={hunk.content}
-                hunk={hunk}
-                tokens={tokens}
-                gutterEvents={{ onClick: onToggleChangeSelection }}
-              />,
-            ])
+            return (
+              <>
+                {updatedHunks.map((hunk) => [
+                  <Decoration key={'decoration-' + hunk.content}>
+                    <More>{hunk.content}</More>
+                  </Decoration>,
+                  <Hunk
+                    key={hunk.content}
+                    hunk={hunk}
+                    tokens={tokens}
+                    gutterEvents={{ onClick: onToggleChangeSelection }}
+                  />,
+                ])}
+              </>
+            )
           }}
         </DiffView>
       )}
@@ -287,7 +324,7 @@ const Diff = ({
   Return true if passing `nextProps` to render would return
   the same result as passing prevProps to render, otherwise return false
 */
-const arePropsEqual = (prevProps, nextProps) =>
+const arePropsEqual = (prevProps: DiffProps, nextProps: DiffProps) =>
   prevProps.isDiffCompleted === nextProps.isDiffCompleted &&
   prevProps.areAllCollapsed === nextProps.areAllCollapsed &&
   prevProps.diffViewStyle === nextProps.diffViewStyle &&

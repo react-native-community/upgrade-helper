@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import { HTMLMotionProps, MotionProps, motion } from 'framer-motion'
+import { HTMLMotionProps, motion } from 'framer-motion'
 import { removeAppPathPrefix, getVersionsContentInDiff } from '../../../utils'
 import Markdown from '../Markdown'
 import type { Theme } from '../../../theme'
+import { LineChangeT, ReleaseCommentT, ReleaseT } from '../../../releases/types'
+
 interface ContainerProps
   extends React.PropsWithChildren<HTMLMotionProps<'div'>> {
   isCommentOpen: boolean
-  lineChangeType: 'add' | 'delete'
+  lineChangeType: LineChangeT
   theme?: Theme
 }
 
@@ -43,6 +45,7 @@ const Container = styled(
       const colorMap = {
         add: theme.diff.codeInsertBackground,
         delete: theme.diff.codeDeleteBackground,
+        neutral: undefined,
       }
 
       return colorMap[lineChangeType] || theme.background
@@ -113,7 +116,7 @@ const getLineNumberWithType = ({
   lineChangeType,
   lineNumber,
 }: {
-  lineChangeType: 'add' | 'delete' | 'neutral'
+  lineChangeType: LineChangeT
   lineNumber: number
 }) => `${LINE_CHANGE_TYPES[lineChangeType.toUpperCase()]}${lineNumber}`
 
@@ -135,15 +138,18 @@ const getComments = ({
     fromVersion,
     toVersion,
   }).filter(
-    ({ comments }) =>
+    ({ comments }: ReleaseT) =>
       comments &&
       comments.length > 0 &&
       comments.some(({ fileName }) => fileName === newPathSanitized)
   )
 
-  return versionsInDiff.reduce((allComments, version) => {
-    const comments = version.comments.reduce(
-      (versionComments, { fileName, lineChangeType, lineNumber, content }) => {
+  return versionsInDiff.reduce((allComments, version: ReleaseT) => {
+    const comments = version.comments?.reduce(
+      (
+        versionComments,
+        { fileName, lineChangeType, lineNumber, content }: ReleaseCommentT
+      ) => {
         if (fileName !== newPathSanitized) {
           return versionComments
         }
@@ -165,7 +171,13 @@ const getComments = ({
   }, {})
 }
 
-const DiffComment = ({ content, lineChangeType }) => {
+const DiffComment = ({
+  content,
+  lineChangeType,
+}: {
+  content: any
+  lineChangeType: LineChangeT
+}) => {
   const [isCommentOpen, setIsCommentOpen] = useState(true)
 
   return (
