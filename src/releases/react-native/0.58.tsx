@@ -1,4 +1,4 @@
-import { ReleaseT } from '../types'
+import type { ReleaseT } from '../types'
 
 const release: ReleaseT = {
   usefulContent: {

@@ -4,7 +4,11 @@ import { HTMLMotionProps, motion } from 'framer-motion'
 import { removeAppPathPrefix, getVersionsContentInDiff } from '../../../utils'
 import Markdown from '../Markdown'
 import type { Theme } from '../../../theme'
-import { LineChangeT, ReleaseCommentT, ReleaseT } from '../../../releases/types'
+import type {
+  LineChangeT,
+  ReleaseCommentT,
+  ReleaseT,
+} from '../../../releases/types'
 
 interface ContainerProps
   extends React.PropsWithChildren<HTMLMotionProps<'div'>> {
