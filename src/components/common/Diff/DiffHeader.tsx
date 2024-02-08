@@ -133,9 +133,9 @@ interface CompleteDiffButtonProps extends ButtonProps {
 const CompleteDiffButton = styled(
   ({ open, onClick, ...props }: CompleteDiffButtonProps) =>
     open ? (
-      <Button {...props} ghost icon={<RollbackOutlined />} onClick={onClick} />
+      <Button {...props} icon={<RollbackOutlined />} onClick={onClick} />
     ) : (
-      <Button {...props} ghost icon={<CheckOutlined />} onClick={onClick} />
+      <Button {...props} icon={<CheckOutlined />} onClick={onClick} />
     )
 )`
   ${defaultIconButtonStyle}
@@ -177,7 +177,6 @@ const CopyPathToClipboardButton = styled(
       >
         <Button
           {...props}
-          ghost
           icon={<CopyOutlined />}
           onMouseOver={resetCopyPathPopoverContent}
         />
@@ -233,7 +232,6 @@ const CopyAnchorLinksToClipboardButton = styled(
         >
           <Button
             {...props}
-            ghost
             icon={<LinkOutlined />}
             onMouseOver={resetContent}
           />

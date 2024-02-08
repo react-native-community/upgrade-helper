@@ -63,7 +63,6 @@ const CopyFileButton = styled(
       <Popover content={popoverContent} trigger="hover">
         <Button
           {...props}
-          ghost
           icon={<CopyOutlined />}
           onBlur={() => {
             setPopoverContent(popoverContentOpts.default)
