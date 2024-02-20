@@ -272,13 +272,17 @@ const Diff = ({
     toVersion,
   })
 
-  const updatedHunks = React.useMemo(() => getHunksWithAppName(hunks), [hunks])
+  const updatedHunks = React.useMemo(
+    () => getHunksWithAppName(hunks),
+    [hunks, getHunksWithAppName]
+  )
+
   const tokens: HunkTokens = React.useMemo(
     () =>
-      tokenize(hunks, {
+      tokenize(updatedHunks, {
         enhancers: [markEdits(updatedHunks)],
       }),
-    [hunks, updatedHunks]
+    [updatedHunks]
   )
 
   return (
