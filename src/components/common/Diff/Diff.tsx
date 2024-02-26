@@ -272,7 +272,10 @@ const Diff = ({
     toVersion,
   })
 
-  const updatedHunks = React.useMemo(() => getHunksWithAppName(hunks), [hunks])
+  const updatedHunks: HunkData[] = React.useMemo(
+    () => getHunksWithAppName(hunks),
+    [hunks]
+  )
   const tokens: HunkTokens = React.useMemo(
     () =>
       tokenize(hunks, {
@@ -323,21 +326,21 @@ const Diff = ({
           selectedChanges={selectedChanges}
         >
           {(hunks: HunkData[]) =>
-            hunks.map((hunk) => (
-              <Fragment key={hunk.content}>
-                {updatedHunks.map((hunk) => [
+            hunks
+              .map((_, i) => updatedHunks[i])
+              .map((hunk) => (
+                <Fragment key={hunk.content}>
                   <Decoration key={'decoration-' + hunk.content}>
                     <More>{hunk.content}</More>
-                  </Decoration>,
+                  </Decoration>
                   <Hunk
                     key={hunk.content}
                     hunk={hunk}
                     // @ts-ignore-next-line
                     gutterEvents={{ onClick: onToggleChangeSelection }}
-                  />,
-                ])}
-              </Fragment>
-            ))
+                  />
+                </Fragment>
+              ))
           }
         </DiffView>
       )}
