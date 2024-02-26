@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useDeferredValue } from 'react'
+import React, { useState, useEffect, useReducer, useDeferredValue } from 'react'
 import styled from '@emotion/styled'
 import { ThemeProvider } from '@emotion/react'
 import { Card, Input, Typography, ConfigProvider, theme } from 'antd'
@@ -125,6 +125,12 @@ const StarButton = styled(({ className, ...props }: StarButtonProps) => (
 // will have dark mode automatically if they've selected it previously.
 const useDarkModeState = createPersistedState('darkMode')
 
+// The value returns to `defaultValue` when an empty string is entered,
+// this makes our down-tree props behaviour simpler without having to swap
+// empty values for the default.
+const useDefaultState = (defaultValue: string) =>
+  useReducer((_, v: string) => (v === '' ? defaultValue : v), defaultValue)
+
 const Home = () => {
   const { packageName: defaultPackageName, isPackageNameDefinedInURL } =
     useGetPackageNameFromURL()
@@ -138,8 +144,8 @@ const Home = () => {
     [`${SHOW_LATEST_RCS}`]: false,
   })
 
-  const [appName, setAppName] = useState<string>('')
-  const [appPackage, setAppPackage] = useState<string>('')
+  const [appName, setAppName] = useDefaultState(DEFAULT_APP_NAME)
+  const [appPackage, setAppPackage] = useDefaultState(DEFAULT_APP_PACKAGE)
 
   // Avoid UI lag when typing.
   const deferredAppName = useDeferredValue(appName)
@@ -276,8 +282,8 @@ const Home = () => {
                 <Input
                   size="large"
                   placeholder={DEFAULT_APP_NAME}
-                  value={appName}
-                  onChange={({ target }) => setAppName((value) => target.value)}
+                  value={appName === DEFAULT_APP_NAME ? '' : appName}
+                  onChange={({ target }) => setAppName(target.value)}
                 />
               </AppNameField>
 
@@ -289,10 +295,8 @@ const Home = () => {
                 <Input
                   size="large"
                   placeholder={DEFAULT_APP_PACKAGE}
-                  value={appPackage}
-                  onChange={({ target }) =>
-                    setAppPackage((value) => target.value)
-                  }
+                  value={appPackage === DEFAULT_APP_PACKAGE ? '' : appPackage}
+                  onChange={({ target }) => setAppPackage(target.value)}
                 />
               </AppPackageField>
             </AppDetailsContainer>
@@ -315,14 +319,8 @@ const Home = () => {
             shouldShowDiff={shouldShowDiff}
             fromVersion={fromVersion}
             toVersion={toVersion}
-            appName={
-              deferredAppName !== DEFAULT_APP_NAME ? deferredAppName : ''
-            }
-            appPackage={
-              deferredAppPackage !== DEFAULT_APP_PACKAGE
-                ? deferredAppPackage
-                : ''
-            }
+            appName={deferredAppName}
+            appPackage={deferredAppPackage}
             packageName={packageName}
             language={language}
           />
