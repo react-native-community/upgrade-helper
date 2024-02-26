@@ -2,6 +2,7 @@ import { PACKAGE_NAMES } from '../constants'
 import '../releases/__mocks__/index'
 import {
   getVersionsContentInDiff,
+  removeAppPathPrefix,
   replaceAppDetails,
   getChangelogURL,
 } from '../utils'
@@ -131,4 +132,22 @@ describe('replaceAppDetails ', () => {
       expect(replaceAppDetails(path, appName, appPackage)).toEqual(newPath)
     }
   )
+})
+
+describe('removeAppPathPrefix', () => {
+  test.each([
+    ['RnDiffApp/package.json', 'package.json'],
+    ['RnDiffApp/RnDiffApp.ts', 'RnDiffApp.ts'],
+  ])('removeAppPathPrefix("%s") -> "%s"', (path, newPath) => {
+    expect(removeAppPathPrefix(path)).toEqual(newPath)
+  })
+
+  test('removeAppPathPrefix custom AppName', () => {
+    expect(removeAppPathPrefix('RnDiffApp/package.json', '')).toEqual(
+      'RnDiffApp/package.json'
+    )
+    expect(removeAppPathPrefix('Foobar/package.json', 'Foobar')).toEqual(
+      'package.json'
+    )
+  })
 })
