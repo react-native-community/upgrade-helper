@@ -5,6 +5,7 @@ import { Card, Input, Typography, ConfigProvider, theme } from 'antd'
 import GitHubButton, { ReactGitHubButtonProps } from 'react-github-btn'
 import ReactGA from 'react-ga'
 import createPersistedState from 'use-persisted-state'
+import queryString from 'query-string'
 import VersionSelector from '../common/VersionSelector'
 import DiffViewer from '../common/DiffViewer'
 import Settings from '../common/Settings'
@@ -107,6 +108,19 @@ const SettingsContainer = styled.div`
   flex: 1;
 `
 
+const getAppInfoInURL = (): {
+  appPackage: string
+  appName: string
+} => {
+  // Parses `/?name=RnDiffApp&package=com.rndiffapp` from URL
+  const { name, package: pkg } = queryString.parse(window.location.search)
+
+  return {
+    appPackage: pkg as string,
+    appName: name as string,
+  }
+}
+
 interface StarButtonProps extends ReactGitHubButtonProps {
   className?: string
 }
@@ -138,8 +152,9 @@ const Home = () => {
     [`${SHOW_LATEST_RCS}`]: false,
   })
 
-  const [appName, setAppName] = useState<string>('')
-  const [appPackage, setAppPackage] = useState<string>('')
+  const appInfoInURL = getAppInfoInURL()
+  const [appName, setAppName] = useState<string>(appInfoInURL.appName)
+  const [appPackage, setAppPackage] = useState<string>(appInfoInURL.appPackage)
 
   // Avoid UI lag when typing.
   const deferredAppName = useDeferredValue(appName)
@@ -303,6 +318,8 @@ const Home = () => {
               packageName={packageName}
               language={language}
               isPackageNameDefinedInURL={isPackageNameDefinedInURL}
+              appPackage={appPackage}
+              appName={appName}
             />
           </Container>
           {/*

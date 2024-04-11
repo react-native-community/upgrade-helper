@@ -229,12 +229,16 @@ const VersionSelector = ({
   isPackageNameDefinedInURL,
   showDiff,
   showReleaseCandidates,
+  appPackage,
+  appName,
 }: {
   packageName: string
   language: string
   isPackageNameDefinedInURL: boolean
   showDiff: (args: { fromVersion: string; toVersion: string }) => void
   showReleaseCandidates: boolean
+  appPackage: string
+  appName: string
 }) => {
   const { isLoading, isDone, releaseVersions } = useFetchReleaseVersions({
     packageName,
@@ -363,6 +367,8 @@ const VersionSelector = ({
       isPackageNameDefinedInURL,
       fromVersion: localFromVersion,
       toVersion: localToVersion,
+      appPackage,
+      appName,
     })
   }
 
