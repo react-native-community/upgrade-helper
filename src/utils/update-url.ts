@@ -6,12 +6,16 @@ export function updateURL({
   isPackageNameDefinedInURL,
   fromVersion,
   toVersion,
+  appPackage,
+  appName,
 }: {
   packageName: string
   language: string
   isPackageNameDefinedInURL: boolean
   fromVersion: string
   toVersion: string
+  appPackage: string
+  appName: string
 }) {
   const url = new URL(window.location.origin)
   url.pathname = window.location.pathname
@@ -28,6 +32,12 @@ export function updateURL({
   }
   if (packageName === PACKAGE_NAMES.RNW) {
     url.searchParams.set('language', language)
+  }
+  if (appPackage) {
+    url.searchParams.set('package', appPackage)
+  }
+  if (appName) {
+    url.searchParams.set('name', appName)
   }
 
   window.history.replaceState(null, '', url.toString())
