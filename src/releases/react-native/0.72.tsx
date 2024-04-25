@@ -3,11 +3,16 @@ import type { ReleaseT } from '../types'
 
 const release: ReleaseT = {
   usefulContent: {
-    description: 'React Native 0.72 includes a new metro config setup',
+    description:
+      'React Native 0.72 includes a new metro config setup and an updated process for the iOS privacy manifest, now required by Apple',
     links: [
       {
         title: 'Show about the major changes on React Native 0.72.0-rc.1',
         url: 'https://github.com/facebook/react-native/releases/tag/v0.72.0-rc.1',
+      },
+      {
+        title: "Learn how to update your app's Apple privacy settings",
+        url: 'https://github.com/react-native-community/discussions-and-proposals/discussions/776',
       },
     ],
   },
