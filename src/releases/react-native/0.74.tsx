@@ -15,8 +15,8 @@ const release: ReleaseT = {
   },
   comments: [
     {
-      fileName: '.yarnrc',
-      lineNumber: 3,
+      fileName: 'package.json',
+      lineNumber: 36,
       lineChangeType: 'add',
       content: (
         <Fragment>
