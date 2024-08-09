@@ -21,7 +21,7 @@ import type { ChangeEventArgs } from 'react-diff-view'
 import type { DefaultRenderToken } from 'react-diff-view/types/context'
 
 const copyPathPopoverContentOpts = {
-  default: 'Click to copy file path',
+  default: 'Copy file path',
   copied: 'File path copied!',
 }
 

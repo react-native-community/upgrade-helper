@@ -131,12 +131,18 @@ interface CompleteDiffButtonProps extends ButtonProps {
 }
 
 const CompleteDiffButton = styled(
-  ({ open, onClick, ...props }: CompleteDiffButtonProps) =>
-    open ? (
-      <Button {...props} icon={<RollbackOutlined />} onClick={onClick} />
-    ) : (
-      <Button {...props} icon={<CheckOutlined />} onClick={onClick} />
-    )
+  ({ open, onClick, ...props }: CompleteDiffButtonProps) => (
+    <Popover
+      content={open ? 'Mark as not viewed' : 'Mark as viewed'}
+      trigger="hover"
+    >
+      {open ? (
+        <Button {...props} icon={<RollbackOutlined />} onClick={onClick} />
+      ) : (
+        <Button {...props} icon={<CheckOutlined />} onClick={onClick} />
+      )}
+    </Popover>
+  )
 )`
   ${defaultIconButtonStyle}
   &,
@@ -171,7 +177,7 @@ const CopyPathToClipboardButton = styled(
         content={copyPathPopoverContent}
         trigger="hover"
         overlayStyle={{
-          width: '175px',
+          width: '140px',
           textAlign: 'center',
         }}
       >
@@ -188,7 +194,7 @@ const CopyPathToClipboardButton = styled(
 `
 
 const copyAnchorLinks = {
-  default: 'Click to copy anchor link',
+  default: 'Copy anchor link',
   copied: 'Anchor link copied!',
 }
 
@@ -199,6 +205,7 @@ interface CopyAnchorLinksToClipboardButtonProps
   toVersion: string
   type: string
 }
+
 const CopyAnchorLinksToClipboardButton = styled(
   ({
     id,
@@ -226,7 +233,7 @@ const CopyAnchorLinksToClipboardButton = styled(
           content={content}
           trigger="hover"
           overlayStyle={{
-            width: '175px',
+            width: '150px',
             textAlign: 'center',
           }}
         >
@@ -244,12 +251,17 @@ const CopyAnchorLinksToClipboardButton = styled(
 `
 
 const CollapseClickableArea = styled.div`
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+
   &:hover {
     cursor: pointer;
   }
-`
 
+  & > *:last-child {
+    margin-left: 8px;
+  }
+`
 interface CollapseDiffButtonProps extends ButtonProps {
   open: boolean
   isDiffCollapsed: boolean
@@ -258,10 +270,15 @@ interface CollapseDiffButtonProps extends ButtonProps {
 
 const CollapseDiffButton = styled(
   ({ open, isDiffCollapsed, ...props }: CollapseDiffButtonProps) =>
-    open ? <Button {...props} type="link" icon={<DownOutlined />} /> : null
+    open ? (
+      <Button
+        {...props}
+        type="link"
+        icon={<DownOutlined style={{ height: 12, width: 12 }} />}
+      />
+    ) : null
 )`
   color: ${({ theme }) => theme.text};
-  margin-right: 2px;
   font-size: 10px;
   transform: ${({ isDiffCollapsed }) =>
     isDiffCollapsed ? 'rotate(-90deg)' : 'initial'};
@@ -343,7 +360,7 @@ const DiffHeader = ({
             oldPath={sanitizedFilePaths.oldPath}
             newPath={sanitizedFilePaths.newPath}
             type={type}
-          />{' '}
+          />
           <FileStatus type={type} />
           <BinaryBadge open={!hasDiff} />
         </CollapseClickableArea>
@@ -354,14 +371,13 @@ const DiffHeader = ({
           onCopy={onCopyPathToClipboard}
           copyPathPopoverContent={copyPathPopoverContent}
           resetCopyPathPopoverContent={resetCopyPathPopoverContent}
-        />
+        />{' '}
         <CopyAnchorLinksToClipboardButton
           id={id}
           type={type}
           fromVersion={fromVersion}
           toVersion={toVersion}
         />
-
         <DiffCommentReminder
           comments={diffComments}
           isDiffCollapsed={isDiffCollapsed}
@@ -388,7 +404,7 @@ const DiffHeader = ({
           version={toVersion}
           path={newPath}
           packageName={packageName}
-        />
+        />{' '}
         <CompleteDiffButton
           open={isDiffCompleted}
           onClick={() => onCompleteDiff(diffKey)}

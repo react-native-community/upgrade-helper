@@ -18,20 +18,14 @@ export const testIDs = {
 const Selectors = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 15px;
+  gap: 16px;
 
   @media ${deviceSizes.tablet} {
     flex-direction: row;
-    gap: 0;
   }
 `
 
-const FromVersionSelector = styled(Select)`
-  @media ${deviceSizes.tablet} {
-    padding-right: 5px;
-  }
-`
+const FromVersionSelector = styled(Select)``
 
 interface ToVersionSelectorProps extends SelectProps {
   popover?: React.ReactNode
@@ -47,11 +41,7 @@ const ToVersionSelector = styled(
     ) : (
       <Select {...props} />
     )
-)`
-  @media ${deviceSizes.tablet} {
-    padding-left: 5px;
-  }
-`
+)``
 
 const getVersionsInURL = (): {
   fromVersion: string

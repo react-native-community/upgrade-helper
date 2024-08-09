@@ -8,11 +8,13 @@ const AlignDepsAlert = () => (
       @rnx-kit/align-deps --requirements react-native@[major.minor]`.
     </Markdown>
     <br />
+    <br />
     <Markdown>
-      `align-deps` is an OSS tool from Microsoft that automates dependency
-      management. It knows which packages\* versions are compatible with your
-      specific version of RN, and it uses that knowledge to align dependencies,
-      keeping your app healthy and up-to-date\*\*. [Find out more
+      [`align-deps`](https://microsoft.github.io/rnx-kit/docs/tools/align-deps)
+      is an OSS tool from Microsoft that automates dependency management. It
+      knows which packages\* versions are compatible with your specific version
+      of RN, and it uses that knowledge to align dependencies, keeping your app
+      healthy and up-to-date\*\*. [Find out more
       here](https://microsoft.github.io/rnx-kit/docs/guides/dependency-management).
     </Markdown>
     <br />
