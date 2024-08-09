@@ -73,29 +73,19 @@ const TitleContainer = styled.div`
 
 const AppNameField = styled.div`
   width: 100%;
-
-  @media ${deviceSizes.tablet} {
-    padding-right: 5px;
-  }
 `
 
 const AppPackageField = styled.div`
   width: 100%;
-
-  @media ${deviceSizes.tablet} {
-    padding-left: 5px;
-  }
 `
 
 const AppDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 15px;
+  gap: 16px;
 
   @media ${deviceSizes.tablet} {
     flex-direction: row;
-    gap: 0;
   }
 `
 

@@ -15,7 +15,7 @@ const Container = styled.div`
 `
 
 const Button = styled(AntdButton)`
-  border-radius: 3px;
+  border-radius: 5px;
 `
 
 interface UpgradeButtonProps extends React.PropsWithRef<ButtonProps> {

@@ -122,7 +122,13 @@ const HideContentButton = styled(
     <Button
       {...props}
       type="link"
-      icon={isContentOpen ? <UpOutlined /> : <DownOutlined />}
+      icon={
+        isContentOpen ? (
+          <UpOutlined style={{ height: 14, width: 14 }} />
+        ) : (
+          <DownOutlined style={{ height: 14, width: 14 }} />
+        )
+      }
       onClick={toggleContentVisibility}
     />
   )
