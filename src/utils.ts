@@ -5,6 +5,8 @@ import {
   DEFAULT_APP_PACKAGE,
   PACKAGE_NAMES,
   RN_CHANGELOG_URLS,
+  FIRST_PRE_060_VERSION,
+  FIRST_PRE_070_VERSION,
 } from './constants'
 import versions from './releases'
 
@@ -127,6 +129,27 @@ export const getVersionsContentInDiff = ({
   })
 }
 
+const getOldVersionsChangelogURL = ({
+  version,
+  packageName,
+}: {
+  version: string
+  packageName: string
+}) => {
+  const urlOldVersion = RN_CHANGELOG_URLS[packageName].replace('/CHANGELOG.md', '')
+  let formattedVersion = version.replaceAll('.', '')
+
+  if (version.split('.').length === 2) formattedVersion += '0'
+
+  if (version < FIRST_PRE_060_VERSION) {
+    return `${urlOldVersion}/CHANGELOG-pre-060.md#v${formattedVersion}`
+  }
+
+  if (version < FIRST_PRE_070_VERSION) {
+    return `${urlOldVersion}/CHANGELOG-pre-070.md#v${formattedVersion}`
+  }
+}
+
 export const getChangelogURL = ({
   version,
   packageName,
@@ -136,6 +159,10 @@ export const getChangelogURL = ({
 }) => {
   if (packageName === PACKAGE_NAMES.RNW || packageName === PACKAGE_NAMES.RNM) {
     return `${RN_CHANGELOG_URLS[packageName]}v${version}`
+  }
+
+  if (version < FIRST_PRE_070_VERSION) {
+    return getOldVersionsChangelogURL({ packageName, version })
   }
 
   return `${RN_CHANGELOG_URLS[packageName]}#v${version.replaceAll('.', '')}`
