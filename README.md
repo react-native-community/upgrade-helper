@@ -47,6 +47,7 @@ Aside from this, the tool provides you a couple of cool extra features:
 If you want to help us making this better, you can start by forking the project and follow these steps to testing it out locally:
 
 1. Clone the project
+1. Run `corepack enable`
 1. Run `yarn install`
 1. Run `yarn start`
 1. Open `http://localhost:3000`
