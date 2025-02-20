@@ -15,7 +15,7 @@ export function updateURL({
   fromVersion: string
   toVersion: string
   appPackage: string
-  appName: string
+  appName?: string
 }) {
   const url = new URL(window.location.origin)
   url.pathname = window.location.pathname
