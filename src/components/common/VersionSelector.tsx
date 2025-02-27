@@ -228,7 +228,7 @@ const VersionSelector = ({
   showDiff: (args: { fromVersion: string; toVersion: string }) => void
   showReleaseCandidates: boolean
   appPackage: string
-  appName: string
+  appName?: string
 }) => {
   const { isLoading, isDone, releaseVersions } = useFetchReleaseVersions({
     packageName,
