@@ -278,7 +278,7 @@ const Home = () => {
                 <Input
                   size="large"
                   placeholder={DEFAULT_APP_NAME}
-                  value={appName || ''}
+                  value={appName ?? ''}
                   onChange={({ target }) => setAppName((value) => target.value)}
                 />
               </AppNameField>
