@@ -2,6 +2,7 @@ import { PACKAGE_NAMES } from '../constants'
 
 const versionsWithContent = {
   [PACKAGE_NAMES.RN]: [
+    '0.77',
     '0.73',
     '0.74',
     '0.72',
