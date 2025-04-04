@@ -4,7 +4,7 @@ interface ReleaseLinkT {
 }
 
 interface ReleaseUsefulContentT {
-  description: string
+  description: string | React.ReactNode
   links: ReleaseLinkT[]
 }
 
