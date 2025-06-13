@@ -25,6 +25,7 @@ export const useFetchDiff = ({
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [isDone, setIsDone] = useState<boolean>(false)
   const [diff, setDiff] = useState<File[]>([])
+  const [rawDiff, setRawDiff] = useState<string>('')
 
   useEffect(() => {
     const fetchDiff = async () => {
@@ -36,9 +37,10 @@ export const useFetchDiff = ({
         delay(300),
       ])
 
-      const diff = await response.text()
+      const diffText = await response.text()
 
-      setDiff(movePackageJsonToTop(parseDiff(diff)))
+      setRawDiff(diffText)
+      setDiff(movePackageJsonToTop(parseDiff(diffText)))
 
       setIsLoading(false)
       setIsDone(true)
@@ -55,5 +57,6 @@ export const useFetchDiff = ({
     isLoading,
     isDone,
     diff,
+    rawDiff,
   }
 }

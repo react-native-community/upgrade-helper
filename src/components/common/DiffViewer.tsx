@@ -15,6 +15,7 @@ import UsefulContentSection from './UsefulContentSection'
 import BinaryDownload from './BinaryDownload'
 import ViewStyleOptions from './Diff/DiffViewStyleOptions'
 import CompletedFilesCounter from './CompletedFilesCounter'
+import PatchDownloadButton from './PatchDownloadButton'
 import { useFetchDiff } from '../../hooks/fetch-diff'
 import type { Theme } from '../../theme'
 import type { File } from 'gitdiff-parser'
@@ -84,7 +85,7 @@ const DiffViewer = ({
   appName,
   appPackage,
 }: DiffViewerProps) => {
-  const { isLoading, isDone, diff } = useFetchDiff({
+  const { isLoading, isDone, diff, rawDiff } = useFetchDiff({
     shouldShowDiff,
     packageName,
     language,
@@ -221,6 +222,18 @@ const DiffViewer = ({
 
           <TopContainer>
             {changelog}
+
+            <PatchDownloadButton
+              rawDiff={rawDiff}
+              fromVersion={fromVersion}
+              toVersion={toVersion}
+              appName={appName}
+              appPackage={appPackage}
+              disabled={isLoading || !isDone}
+              hasBinaryFiles={diff.some(
+                ({ hunks, type }) => hunks.length === 0 && type !== 'delete'
+              )}
+            />
 
             <BinaryDownload
               diff={diff}

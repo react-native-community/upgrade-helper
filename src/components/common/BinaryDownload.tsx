@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Popover as AntdPopover, Tooltip } from 'antd'
 import type { PopoverProps as AntdPopoverProps } from 'antd'
+import { InfoCircleOutlined } from '@ant-design/icons'
 import styled from '@emotion/styled'
 import DownloadFileButton from './DownloadFileButton'
 import { removeAppPathPrefix } from '../../utils'
@@ -98,25 +99,39 @@ const BinaryDownload = ({
 
   return (
     <Container>
-      <Popover
-        placement="bottomRight"
-        content={
-          <BinaryList
-            binaryFiles={binaryFiles}
-            toVersion={toVersion}
-            appName={appName}
-            packageName={packageName}
-          />
-        }
-        trigger="click"
-      >
+      <Button.Group>
+        <Popover
+          placement="bottomRight"
+          content={
+            <BinaryList
+              binaryFiles={binaryFiles}
+              toVersion={toVersion}
+              appName={appName}
+              packageName={packageName}
+            />
+          }
+          trigger="click"
+        >
+          <Button>Binaries ({binaryFiles.length})</Button>
+        </Popover>
         <Tooltip
           placement="top"
-          title="Binaries updated within the version range"
+          title={
+            <div style={{ maxWidth: 300 }}>
+              <div style={{ fontWeight: 'bold', marginBottom: 4 }}>
+                Binary Files (Images, Fonts, etc.)
+              </div>
+              <div>
+                Binary files can't be included in patch files. Download these
+                individually and place them manually in your project after
+                applying the patch.
+              </div>
+            </div>
+          }
         >
-          <Button>Binaries</Button>
+          <Button icon={<InfoCircleOutlined />} />
         </Tooltip>
-      </Popover>
+      </Button.Group>
     </Container>
   )
 }
