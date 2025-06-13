@@ -39,17 +39,30 @@ describe('Releases index', () => {
     )
   })
 
-  it('should maintain proper version ordering with 0.76 included', () => {
+  it('should include React Native 0.65 in the versions list', () => {
+    const rnReleases = releases[PACKAGE_NAMES.RN]
+    const version065 = rnReleases.find((release) => release.version === '0.65')
+    expect(version065).toBeDefined()
+    expect(version065?.usefulContent).toBeDefined()
+    expect(version065?.usefulContent.description).toBeDefined()
+    expect(version065?.usefulContent.links).toBeDefined()
+    expect(Array.isArray(version065?.usefulContent.links)).toBe(true)
+  })
+
+  it('should maintain proper version ordering with 0.76 and 0.65 included', () => {
     const rnReleases = releases[PACKAGE_NAMES.RN]
     const versions = rnReleases.map((release) => release.version)
 
+    expect(versions).toContain('0.65')
     expect(versions).toContain('0.76')
     expect(versions).toContain('0.77')
     expect(versions).toContain('0.74')
 
-    // 0.76 should be positioned between 0.77 and other versions
+    // All versions should be present
+    const index065 = versions.indexOf('0.65')
     const index076 = versions.indexOf('0.76')
     const index077 = versions.indexOf('0.77')
+    expect(index065).toBeGreaterThan(-1)
     expect(index076).toBeGreaterThan(-1)
     expect(index077).toBeGreaterThan(-1)
   })
