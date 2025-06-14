@@ -13,7 +13,7 @@ const AlignDepsAlert = () => (
       With these, you should be good to go with these messy XCode files!
       
       Explainer video: https://youtu.be/fmh_ZGHh_eg?t=1368
-    </Markdown>/>
+    </Markdown>
     <br />
     <br />
     <Markdown>
