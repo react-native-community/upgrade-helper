@@ -4,7 +4,7 @@ import Markdown from './Markdown'
 const AlignDepsAlert = () => (
   <>
     <Markdown>
-      **Diffs on .xcodeproj/project.pbxproj` files**
+      **Diffs on `.xcodeproj/project.pbxproj` files**
 
       - If you see anything `pods` related, don't worry about it, you can skip it. If your `pod install` worked, then you should already have the diff you need in your repo for that file.
       - If there's anything that's not `pods` related, then usually we will have a note to tell you how to add/remove any files using the XCode UI. This happens *very* rarely.
