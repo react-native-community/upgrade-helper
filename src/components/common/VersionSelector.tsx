@@ -155,7 +155,7 @@ const getReleasedVersions = ({
   releasedVersions: string[]
   minVersion?: string
   maxVersion?: string
-}) => {
+}): string[] => {
   const latestMajorReleaseVersion =
     getLatestMajorReleaseVersion(releasedVersions)
 
@@ -181,14 +181,17 @@ const getFirstMajorRelease = ({
   releasedVersions: string[]
   versionToCompare: string
 }) =>
-  releasedVersions.find(
-    (releasedVersion) =>
+  releasedVersions.find((releasedVersion) => {
+    const releasedVersionValid = semver.valid(semver.coerce(releasedVersion))
+    const versionToCompareValid = semver.valid(semver.coerce(versionToCompare))
+
+    return (
       semver.lt(releasedVersion, versionToCompare) &&
-      semver.diff(
-        semver.valid(semver.coerce(releasedVersion)),
-        semver.valid(semver.coerce(versionToCompare))
-      ) === 'minor'
-  )
+      releasedVersionValid &&
+      versionToCompareValid &&
+      semver.diff(releasedVersionValid, versionToCompareValid) === 'minor'
+    )
+  })
 
 // Return if version exists in the ones returned from GitHub
 const doesVersionExist = ({
@@ -196,17 +199,18 @@ const doesVersionExist = ({
   allVersions,
   minVersion,
 }: {
-  version: string
+  version: string | null
   allVersions: string[]
   minVersion?: string
-}) => {
+}): boolean => {
   try {
+    if (version === null) {
+      return false
+    }
+
     return (
-      version &&
       allVersions.includes(version) &&
-      // Also compare the version against a `minVersion`, this is used
-      // to not allow the user to have a `fromVersion` newer than `toVersion`
-      (!minVersion || (minVersion && semver.gt(version, minVersion)))
+      (!minVersion || semver.gt(version, minVersion))
     )
   } catch (_error) {
     return false
@@ -234,8 +238,8 @@ const VersionSelector = ({
     packageName,
   })
   const [allVersions, setAllVersions] = useState<string[]>([])
-  const [fromVersionList, setFromVersionList] = useState([])
-  const [toVersionList, setToVersionList] = useState([])
+  const [fromVersionList, setFromVersionList] = useState<string[]>([])
+  const [toVersionList, setToVersionList] = useState<string[]>([])
   const [hasVersionsFromURL, setHasVersionsFromURL] = useState<boolean>(false)
 
   const [localFromVersion, setLocalFromVersion] = useState<string>('')
@@ -281,7 +285,7 @@ const VersionSelector = ({
           getFirstMajorRelease({
             releasedVersions: sanitizedVersions,
             versionToCompare: toVersionToBeSet,
-          })
+          }) || sanitizedVersions[sanitizedVersions.length - 1] // Fallback to last version if no major release found
 
       setFromVersionList(
         getReleasedVersions({
