@@ -4,6 +4,19 @@ import Markdown from './Markdown'
 const AlignDepsAlert = () => (
   <>
     <Markdown>
+      **Diffs on .xcodeproj/project.pbxproj` files**
+
+      - If you see anything `pods` related, don't worry about it, you can skip it. If your `pod install` worked, then you should already have the diff you need in your repo for that file.
+      - If there's anything that's not `pods` related, then usually we will have a note to tell you how to add/remove any files using the XCode UI. This happens *very* rarely.
+      - Else, you can open an issue or a discussion with a specific line and question.
+
+      With these, you should be good to go with these messy XCode files!
+      
+      Explainer video: https://youtu.be/fmh_ZGHh_eg?t=1368
+    </Markdown>/>
+    <br />
+    <br />
+    <Markdown>
       You can use the following command to kick off the upgrade: `npx
       @rnx-kit/align-deps --requirements react-native@[major.minor]`.
     </Markdown>
