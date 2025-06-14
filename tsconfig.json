@@ -26,6 +26,6 @@
       "module": "commonjs"
     }
   },
-  "include": ["./src", "./assets"],
+  "include": ["./src", "./assets", "./@types"],
   "exclude": ["./src/__tests__/*"]
 }

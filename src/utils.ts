@@ -115,9 +115,15 @@ export const getVersionsContentInDiff = ({
   }
 
   const cleanedToVersion = semver.valid(semver.coerce(toVersion))
+  if (!cleanedToVersion) {
+    return []
+  }
 
   return versions[packageName].filter(({ version }) => {
     const cleanedVersion = semver.coerce(version)
+    if (!cleanedVersion) {
+      return false
+    }
 
     // `cleanedVersion` can't be newer than `cleanedToVersion` nor older (or equal) than `fromVersion`
     return (
