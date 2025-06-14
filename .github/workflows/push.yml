@@ -18,6 +18,7 @@ jobs:
         with:
           name: ${{ github.sha }}
           path: ./**
+          include-hidden-files: true
 
   install:
     needs: setup
