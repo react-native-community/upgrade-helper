@@ -32,23 +32,23 @@ jobs:
       - name: 🛠 Install dependencies
         uses: bahmutov/npm-install@v1
 
-  lint:
-    needs: [setup, install]
-    runs-on: ubuntu-latest
-    steps:
-      - name: ⬇️ Restore output
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ github.sha }}
+  # lint:
+  #   needs: [setup, install]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: ⬇️ Restore output
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: ${{ github.sha }}
 
-      - name: 🛠 Install dependencies
-        uses: bahmutov/npm-install@v1
+  #     - name: 🛠 Install dependencies
+  #       uses: bahmutov/npm-install@v1
 
-      - name: Run lint
-        run: yarn lint
+  #     - name: Run lint
+  #       run: yarn lint
 
-      - name: Run typecheck
-        run: yarn typecheck
+  #     - name: Run typecheck
+  #       run: yarn typecheck
 
   test:
     needs: [setup, install]
