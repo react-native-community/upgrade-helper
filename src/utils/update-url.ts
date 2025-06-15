@@ -14,7 +14,7 @@ export function updateURL({
   isPackageNameDefinedInURL: boolean
   fromVersion: string
   toVersion: string
-  appPackage: string
+  appPackage?: string
   appName?: string
 }) {
   const url = new URL(window.location.origin)

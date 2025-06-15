@@ -1,8 +1,12 @@
 interface Window {}
 
-interface Process {
-  env: {
-    PUBLIC_URL: string
-    NODE_ENV: 'development' | 'production'
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      PUBLIC_URL: string
+      NODE_ENV: 'development' | 'production'
+    }
   }
 }
+
+export {}

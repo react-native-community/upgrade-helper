@@ -24,6 +24,7 @@ import { DarkModeButton } from '../common/DarkModeButton'
 import { updateURL } from '../../utils/update-url'
 import { deviceSizes } from '../../utils/device-sizes'
 import { lightTheme, darkTheme, type Theme } from '../../theme'
+import { CheckboxValueType } from 'antd/es/checkbox/Group'
 
 const Page = styled.div<{ theme?: Theme }>`
   background-color: ${({ theme }) => theme.background};
@@ -104,7 +105,7 @@ const getAppInfoInURL = () => {
 
   return {
     appPackage: pkg as string,
-    appName: name as string | null,
+    appName: name as string | undefined,
   }
 }
 
@@ -198,9 +199,11 @@ const Home = () => {
     setShouldShowDiff(false)
   }
 
-  const handleSettingsChange = (settingsValues: string[]) => {
-    const normalizedIncomingSettings = settingsValues.reduce((acc, val) => {
-      acc[val] = true
+  const handleSettingsChange = (settingsValues: CheckboxValueType[]) => {
+    const normalizedIncomingSettings = settingsValues.reduce<
+      Record<string, boolean>
+    >((acc, val) => {
+      acc[String(val)] = true
       return acc
     }, {})
 
