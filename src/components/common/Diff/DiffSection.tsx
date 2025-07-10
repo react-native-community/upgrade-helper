@@ -50,7 +50,7 @@ const DiffSection = ({
   doneTitleRef,
 }: DiffSectionProps) => {
   const [areAllCollapsed, setAllCollapsed] = useState<boolean | undefined>(
-    undefined
+    isDoneSection ? true : undefined
   )
 
   const getIsUpgradingFrom61To62 = useCallback(() => {
