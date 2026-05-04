@@ -1,6 +1,9 @@
 export const DEFAULT_APP_NAME = 'RnDiffApp'
 export const DEFAULT_APP_PACKAGE = 'com.rndiffapp'
 
+export const FIRST_PRE_060_VERSION = '0.60'
+export const FIRST_PRE_070_VERSION = '0.70'
+
 export const PACKAGE_NAMES = {
   RN: 'react-native',
   RNM: 'react-native-macos',
