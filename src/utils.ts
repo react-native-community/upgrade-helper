@@ -1,4 +1,5 @@
 import semver from 'semver/preload'
+import type { Change, File, Hunk } from 'gitdiff-parser'
 import {
   RN_DIFF_REPOSITORIES,
   DEFAULT_APP_NAME,
@@ -177,4 +178,189 @@ export const getFilePathsToShow = ({
     oldPath: removeAppPathPrefix(oldPathSanitized, appName),
     newPath: removeAppPathPrefix(newPathSanitized, appName),
   }
+}
+
+const isBinaryFile = (file: File) =>
+  !!file.isBinary ||
+  (file.hunks.length === 0 && !['rename', 'copy'].includes(file.type))
+
+const isDeletedBinaryFile = (file: File) => {
+  return (
+    isBinaryFile(file) &&
+    (file.type === 'delete' || file.newRevision === '000000')
+  )
+}
+
+const NO_LINE_LEVEL_PATCH_MESSAGE =
+  '- No line-level patch was included for this file.'
+
+const serializeChange = ({
+  change,
+  appName,
+  appPackage,
+}: {
+  change: Change
+  appName?: string
+  appPackage?: string
+}) => {
+  const prefix =
+    change.type === 'insert' ? '+' : change.type === 'delete' ? '-' : ' '
+
+  return `${prefix}${replaceAppDetails(change.content, appName, appPackage)}`
+}
+
+const serializeHunk = ({
+  hunk,
+  appName,
+  appPackage,
+}: {
+  hunk: Hunk
+  appName?: string
+  appPackage?: string
+}) =>
+  [hunk.content]
+    .concat(
+      hunk.changes.map((change) =>
+        serializeChange({ change, appName, appPackage })
+      )
+    )
+    .join('\n')
+
+const FILE_CHANGE_LABELS: Record<File['type'], string> = {
+  add: 'Added',
+  copy: 'Copied',
+  delete: 'Deleted',
+  modify: 'Modified',
+  rename: 'Renamed',
+}
+
+export const buildAiUpgradePrompt = ({
+  files,
+  packageName,
+  language,
+  fromVersion,
+  toVersion,
+  appName,
+  appPackage,
+}: {
+  files: File[]
+  packageName: string
+  language: string
+  fromVersion: string
+  toVersion: string
+  appName?: string
+  appPackage?: string
+}) => {
+  const effectiveAppName = appName || DEFAULT_APP_NAME
+  const effectiveAppPackage =
+    appPackage || `com.${effectiveAppName.toLowerCase()}`
+  const binaryFiles = files.filter(isBinaryFile)
+  const textFiles = files.filter((file) => !isBinaryFile(file))
+  const binaryInstructions =
+    binaryFiles.length > 0
+      ? [
+          '',
+          '## Binary file handling',
+          '- Binary files are listed separately because inline patch payloads are not useful here.',
+          ...binaryFiles.flatMap((file) => {
+            const localPaths = getFilePathsToShow({
+              oldPath: file.oldPath,
+              newPath: file.newPath,
+              appName,
+              appPackage,
+            })
+            const localPath = isDeletedBinaryFile(file)
+              ? localPaths.oldPath
+              : localPaths.newPath
+
+            if (isDeletedBinaryFile(file)) {
+              return [
+                '',
+                `### \`${localPath}\``,
+                '- Remove this file from the target project if it still exists.',
+              ]
+            }
+
+            const downloadURL = getBinaryFileURL({
+              packageName,
+              language,
+              version: toVersion,
+              path: file.newPath,
+            })
+
+            return [
+              '',
+              `### \`${localPath}\``,
+              '```bash',
+              `curl -L "${downloadURL}" -o "${localPath}"`,
+              '```',
+            ]
+          }),
+        ]
+      : []
+  const structuredFileChanges =
+    textFiles.length > 0
+      ? [
+          '',
+          '## File changes',
+          ...textFiles.flatMap((file) => {
+            const localPaths = getFilePathsToShow({
+              oldPath: file.oldPath,
+              newPath: file.newPath,
+              appName,
+              appPackage,
+            })
+            const localPath =
+              file.type === 'delete' ? localPaths.oldPath : localPaths.newPath
+            const fileChanges = [
+              `### \`${localPath}\``,
+              `- Change type: ${FILE_CHANGE_LABELS[file.type]}`,
+            ]
+
+            if (
+              ['rename', 'copy'].includes(file.type) &&
+              localPaths.oldPath !== localPaths.newPath
+            ) {
+              fileChanges.push(`- Previous path: \`${localPaths.oldPath}\``)
+            }
+
+            if (file.hunks.length > 0) {
+              fileChanges.push(
+                '```diff',
+                file.hunks
+                  .map((hunk) => serializeHunk({ hunk, appName, appPackage }))
+                  .join('\n'),
+                '```'
+              )
+            } else {
+              fileChanges.push(NO_LINE_LEVEL_PATCH_MESSAGE)
+            }
+
+            return ['', ...fileChanges]
+          }),
+        ]
+      : []
+
+  return [
+    '# React Native upgrade guidance request',
+    '',
+    'You are helping upgrade a React Native app using the provided template diff.',
+    '',
+    '## Task overview',
+    `- From version: ${fromVersion}`,
+    `- To version: ${toVersion}`,
+    `- App name input or fallback: ${effectiveAppName}`,
+    `- App package input or fallback: ${effectiveAppPackage}`,
+    '',
+    '## Important notes',
+    '- Use the structured file changes below as the source of truth for parsed template changes.',
+    '- This diff only represents the React Native bootstrap/template project between versions. First understand the current project structure and apply only the changes that are relevant to this codebase.',
+    '- Preserve project-specific code and merge carefully instead of blindly overwriting files.',
+    '- Review binary file changes separately if any are present.',
+    '- The app name and app package values may be inaccurate because the user may have left them unchanged, blank, or approximate. Verify them against the real project before applying changes.',
+    ...binaryInstructions,
+    ...structuredFileChanges,
+  ]
+    .filter((line) => line !== undefined)
+    .join('\n')
 }

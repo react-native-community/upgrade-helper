@@ -112,7 +112,17 @@ describe('Home', () => {
     expect(image).toMatchImageSnapshot()
   })
 
-  it('9. should scroll to the first file in diff', async () => {
+  it('9. should show the AI prompt copy button after diff loads', async () => {
+    await page.waitForSelector(
+      `[data-testid="${upgradeButtonTestIDs.aiPromptButton}"]`
+    )
+
+    const image = await page.screenshot()
+
+    expect(image).toMatchImageSnapshot()
+  })
+
+  it('10. should scroll to the first file in diff', async () => {
     await page.evaluate((testID) => {
       document
         .querySelector(`[data-testid="${testID}"]`)
@@ -125,7 +135,7 @@ describe('Home', () => {
     expect(image).toMatchImageSnapshot()
   })
 
-  it('10. should collapse first file in diff', async () => {
+  it('11. should collapse first file in diff', async () => {
     await page.click(
       `[data-testid="${diffHeaderTestIDs.collapseClickableArea}"]`
     )

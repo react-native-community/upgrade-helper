@@ -8,7 +8,7 @@ let page: puppeteer.Page
 const URLs = {
   RELEASES:
     'https://raw.githubusercontent.com/react-native-community/rn-diff-purge/master/RELEASES',
-  DIFF: 'https://raw.githubusercontent.com/react-native-community/rn-diff-purge/diffs/diffs/0.62.2..0.63.3.diff',
+  DIFF: 'https://raw.githubusercontent.com/react-native-community/rn-diff-purge/diffs/diffs/0.63.2..0.64.2.diff',
   REPOSITORY_INFO:
     'https://api.github.com/repos/react-native-community/upgrade-helper',
 }
