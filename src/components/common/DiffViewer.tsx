@@ -18,6 +18,12 @@ import CompletedFilesCounter from './CompletedFilesCounter'
 import { useFetchDiff } from '../../hooks/fetch-diff'
 import type { Theme } from '../../theme'
 import type { File } from 'gitdiff-parser'
+import {
+  getCompletedDiffsStorageKey,
+  pruneCompletedDiffs,
+  readCompletedDiffs,
+  writeCompletedDiffs,
+} from '../../utils/completed-diffs-storage'
 
 const Container = styled.div`
   width: 90%;
@@ -91,7 +97,19 @@ const DiffViewer = ({
     fromVersion,
     toVersion,
   })
-  const [completedDiffs, setCompletedDiffs] = useState<string[]>([])
+  const completedDiffsStorageKey = React.useMemo(
+    () =>
+      getCompletedDiffsStorageKey({
+        packageName,
+        language,
+        fromVersion,
+        toVersion,
+      }),
+    [fromVersion, language, packageName, toVersion]
+  )
+  const [completedDiffs, setCompletedDiffs] = useState<string[]>(() =>
+    readCompletedDiffs(completedDiffsStorageKey)
+  )
   const [isGoToDoneClicked, setIsGoToDoneClicked] = useState<boolean>(false)
   const donePopoverPossibleOpts = {
     done: {
@@ -123,13 +141,17 @@ const DiffViewer = ({
   }
 
   const handleCompleteDiff = (diffKey: string) => {
-    if (completedDiffs.includes(diffKey)) {
-      return setCompletedDiffs((prevCompletedDiffs) =>
-        prevCompletedDiffs.filter((completedDiff) => completedDiff !== diffKey)
-      )
-    }
+    setCompletedDiffs((prevCompletedDiffs) => {
+      const nextCompletedDiffs = prevCompletedDiffs.includes(diffKey)
+        ? prevCompletedDiffs.filter(
+            (completedDiff) => completedDiff !== diffKey
+          )
+        : [...prevCompletedDiffs, diffKey]
 
-    setCompletedDiffs((prevCompletedDiffs) => [...prevCompletedDiffs, diffKey])
+      writeCompletedDiffs(completedDiffsStorageKey, nextCompletedDiffs)
+
+      return nextCompletedDiffs
+    })
   }
 
   const renderUpgradeDoneMessage = ({
@@ -175,8 +197,17 @@ const DiffViewer = ({
   useEffect(() => {
     if (!isDone) {
       resetCompletedDiffs()
+      return
     }
-  }, [isDone])
+
+    const completedDiffs = pruneCompletedDiffs(
+      readCompletedDiffs(completedDiffsStorageKey),
+      diff.map(getDiffKey)
+    )
+
+    setCompletedDiffs(completedDiffs)
+    writeCompletedDiffs(completedDiffsStorageKey, completedDiffs)
+  }, [completedDiffsStorageKey, diff, isDone])
 
   if (!shouldShowDiff) {
     return null
