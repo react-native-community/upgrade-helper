@@ -5,6 +5,7 @@ import semver from 'semver/preload'
 import queryString from 'query-string'
 import { Select } from '.'
 import UpgradeButton from './UpgradeButton'
+import FetchErrorAlert from './FetchErrorAlert'
 import { useFetchReleaseVersions } from '../../hooks/fetch-release-versions'
 import { updateURL } from '../../utils/update-url'
 import { deviceSizes } from '../../utils/device-sizes'
@@ -234,9 +235,10 @@ const VersionSelector = ({
   appPackage: string
   appName?: string
 }) => {
-  const { isLoading, isDone, releaseVersions } = useFetchReleaseVersions({
-    packageName,
-  })
+  const { isLoading, isDone, releaseVersions, error, retry } =
+    useFetchReleaseVersions({
+      packageName,
+    })
   const [allVersions, setAllVersions] = useState<string[]>([])
   const [fromVersionList, setFromVersionList] = useState<string[]>([])
   const [toVersionList, setToVersionList] = useState<string[]>([])
@@ -308,11 +310,12 @@ const VersionSelector = ({
       setHasVersionsFromURL(!!doesHaveVersionsInURL)
     }
 
-    if (isDone) {
+    if (isDone && !error) {
       fetchVersions()
     }
   }, [
     isDone,
+    error,
     releaseVersions,
     setLocalFromVersion,
     setLocalToVersion,
@@ -403,7 +406,11 @@ const VersionSelector = ({
         />
       </Selectors>
 
-      <UpgradeButton ref={upgradeButtonEl} onShowDiff={onShowDiff} />
+      {error ? (
+        <FetchErrorAlert error={error} onRetry={retry} />
+      ) : (
+        <UpgradeButton ref={upgradeButtonEl} onShowDiff={onShowDiff} />
+      )}
     </Fragment>
   )
 }
