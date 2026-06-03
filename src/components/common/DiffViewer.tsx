@@ -15,6 +15,7 @@ import UsefulContentSection from './UsefulContentSection'
 import BinaryDownload from './BinaryDownload'
 import ViewStyleOptions from './Diff/DiffViewStyleOptions'
 import CompletedFilesCounter from './CompletedFilesCounter'
+import FetchErrorAlert from './FetchErrorAlert'
 import { useFetchDiff } from '../../hooks/fetch-diff'
 import type { Theme } from '../../theme'
 import type { File } from 'gitdiff-parser'
@@ -84,7 +85,7 @@ const DiffViewer = ({
   appName,
   appPackage,
 }: DiffViewerProps) => {
-  const { isLoading, isDone, diff } = useFetchDiff({
+  const { isLoading, isDone, diff, error, retry } = useFetchDiff({
     shouldShowDiff,
     packageName,
     language,
@@ -188,6 +189,14 @@ const DiffViewer = ({
         <AnimatePresence>
           <DiffLoading />
         </AnimatePresence>
+      </Container>
+    )
+  }
+
+  if (error) {
+    return (
+      <Container>
+        <FetchErrorAlert error={error} onRetry={retry} />
       </Container>
     )
   }
