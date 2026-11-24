@@ -3,7 +3,6 @@ import styled from '@emotion/styled'
 import { ThemeProvider } from '@emotion/react'
 import { Card, Input, Typography, ConfigProvider, theme } from 'antd'
 import GitHubButton, { ReactGitHubButtonProps } from 'react-github-btn'
-import ReactGA from 'react-ga'
 import createPersistedState from 'use-persisted-state'
 import queryString from 'query-string'
 import VersionSelector from '../common/VersionSelector'
@@ -149,13 +148,6 @@ const Home = () => {
   const deferredAppPackage = useDeferredValue(appPackage)
 
   const homepageUrl = process.env.PUBLIC_URL
-
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'production') {
-      ReactGA.initialize('UA-136307971-1')
-      ReactGA.pageview('/')
-    }
-  }, [])
 
   const handleShowDiff = ({
     fromVersion,
