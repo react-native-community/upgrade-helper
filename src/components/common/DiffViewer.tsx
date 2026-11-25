@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useReducer } from 'react'
+import React, { useState, useMemo, useRef, useReducer } from 'react'
 import styled from '@emotion/styled'
 import { Alert } from 'antd'
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
@@ -16,6 +16,11 @@ import BinaryDownload from './BinaryDownload'
 import ViewStyleOptions from './Diff/DiffViewStyleOptions'
 import CompletedFilesCounter from './CompletedFilesCounter'
 import { useFetchDiff } from '../../hooks/fetch-diff'
+import {
+  getDiffIdentity,
+  useCompletedDiffs,
+} from '../../hooks/use-completed-diffs'
+import { PACKAGE_NAMES } from '../../constants'
 import type { Theme } from '../../theme'
 import type { File } from 'gitdiff-parser'
 
@@ -36,14 +41,6 @@ const Link = styled.a<{ theme?: Theme }>`
   padding: 4px 15px;
   color: ${({ theme }) => theme.link};
 `
-
-const getDiffKey = ({
-  oldRevision,
-  newRevision,
-}: {
-  oldRevision: string
-  newRevision: string
-}) => `${oldRevision}${newRevision}`
 
 const scrollToRef = (ref?: React.RefObject<HTMLElement>) =>
   ref?.current?.scrollIntoView({ behavior: 'smooth' })
@@ -91,7 +88,17 @@ const DiffViewer = ({
     fromVersion,
     toVersion,
   })
-  const [completedDiffs, setCompletedDiffs] = useState<string[]>([])
+  const validDiffKeys = useMemo(() => diff.map(getDiffIdentity), [diff])
+  const { completedDiffs, handleCompleteDiff } = useCompletedDiffs({
+    context: {
+      packageName,
+      language: packageName === PACKAGE_NAMES.RNW ? language : undefined,
+      fromVersion,
+      toVersion,
+    },
+    isDone,
+    validDiffKeys,
+  })
   const [isGoToDoneClicked, setIsGoToDoneClicked] = useState<boolean>(false)
   const donePopoverPossibleOpts = {
     done: {
@@ -122,16 +129,6 @@ const DiffViewer = ({
     }
   }
 
-  const handleCompleteDiff = (diffKey: string) => {
-    if (completedDiffs.includes(diffKey)) {
-      return setCompletedDiffs((prevCompletedDiffs) =>
-        prevCompletedDiffs.filter((completedDiff) => completedDiff !== diffKey)
-      )
-    }
-
-    setCompletedDiffs((prevCompletedDiffs) => [...prevCompletedDiffs, diffKey])
-  }
-
   const renderUpgradeDoneMessage = ({
     diff,
     completedDiffs,
@@ -148,8 +145,6 @@ const DiffViewer = ({
         closable
       />
     )
-
-  const resetCompletedDiffs = () => setCompletedDiffs([])
 
   const [diffViewStyle, setViewStyle] = useState<ViewType>(
     (localStorage.getItem('viewStyle') || 'split') as ViewType
@@ -172,12 +167,6 @@ const DiffViewer = ({
     )
   }
 
-  useEffect(() => {
-    if (!isDone) {
-      resetCompletedDiffs()
-    }
-  }, [isDone])
-
   if (!shouldShowDiff) {
     return null
   }
@@ -194,7 +183,7 @@ const DiffViewer = ({
 
   const diffSectionProps = {
     diff: diff,
-    getDiffKey: getDiffKey,
+    getDiffKey: getDiffIdentity,
     completedDiffs: completedDiffs,
     fromVersion: fromVersion,
     toVersion: toVersion,
