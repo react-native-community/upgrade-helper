@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useDeferredValue } from 'react'
+import React, { useState, useEffect, useDeferredValue, useMemo } from 'react'
 import styled from '@emotion/styled'
 import { ThemeProvider } from '@emotion/react'
 import { Card, Input, Typography, ConfigProvider, theme } from 'antd'
@@ -10,7 +10,7 @@ import DiffViewer from '../common/DiffViewer'
 import Settings from '../common/Settings'
 // @ts-ignore-next-line
 import logo from '../../assets/logo.svg'
-import { SHOW_LATEST_RCS } from '../../utils'
+import { SHOW_LATEST_RCS, buildAiUpgradePrompt } from '../../utils'
 import { useGetLanguageFromURL } from '../../hooks/get-language-from-url'
 import { useGetPackageNameFromURL } from '../../hooks/get-package-name-from-url'
 import {
@@ -24,6 +24,7 @@ import { updateURL } from '../../utils/update-url'
 import { deviceSizes } from '../../utils/device-sizes'
 import { lightTheme, darkTheme, type Theme } from '../../theme'
 import { CheckboxValueType } from 'antd/es/checkbox/Group'
+import type { File } from 'gitdiff-parser'
 
 const Page = styled.div<{ theme?: Theme }>`
   background-color: ${({ theme }) => theme.background};
@@ -135,6 +136,7 @@ const Home = () => {
   const [fromVersion, setFromVersion] = useState<string>('')
   const [toVersion, setToVersion] = useState<string>('')
   const [shouldShowDiff, setShouldShowDiff] = useState<boolean>(false)
+  const [resolvedDiff, setResolvedDiff] = useState<File[]>([])
   const [settings, setSettings] = useState<Record<string, boolean>>({
     [`${SHOW_LATEST_RCS}`]: false,
   })
@@ -146,22 +148,62 @@ const Home = () => {
   // Avoid UI lag when typing.
   const deferredAppName = useDeferredValue(appName || DEFAULT_APP_NAME)
   const deferredAppPackage = useDeferredValue(appPackage)
+  const normalizedAppPackage =
+    deferredAppPackage !== DEFAULT_APP_PACKAGE ? deferredAppPackage : undefined
+  const aiPrompt = useMemo(() => {
+    if (
+      !shouldShowDiff ||
+      !fromVersion ||
+      !toVersion ||
+      resolvedDiff.length === 0
+    ) {
+      return ''
+    }
+
+    return buildAiUpgradePrompt({
+      files: resolvedDiff,
+      packageName,
+      language,
+      fromVersion,
+      toVersion,
+      appName: deferredAppName,
+      appPackage: normalizedAppPackage,
+    })
+  }, [
+    shouldShowDiff,
+    fromVersion,
+    toVersion,
+    resolvedDiff,
+    packageName,
+    language,
+    deferredAppName,
+    normalizedAppPackage,
+  ])
 
   const homepageUrl = process.env.PUBLIC_URL
 
   const handleShowDiff = ({
-    fromVersion,
-    toVersion,
+    fromVersion: nextFromVersion,
+    toVersion: nextToVersion,
   }: {
     fromVersion: string
     toVersion: string
   }) => {
-    if (fromVersion === toVersion) {
+    if (nextFromVersion === nextToVersion) {
       return
     }
 
-    setFromVersion(fromVersion)
-    setToVersion(toVersion)
+    if (
+      shouldShowDiff &&
+      fromVersion === nextFromVersion &&
+      toVersion === nextToVersion
+    ) {
+      return
+    }
+
+    setFromVersion(nextFromVersion)
+    setToVersion(nextToVersion)
+    setResolvedDiff([])
     setShouldShowDiff(true)
   }
 
@@ -188,6 +230,7 @@ const Home = () => {
     setLanguage(localLanguage)
     setFromVersion('')
     setToVersion('')
+    setResolvedDiff([])
     setShouldShowDiff(false)
   }
 
@@ -302,6 +345,10 @@ const Home = () => {
               isPackageNameDefinedInURL={isPackageNameDefinedInURL}
               appPackage={appPackage}
               appName={appName}
+              isAiPromptReady={!!aiPrompt}
+              aiPrompt={aiPrompt}
+              resolvedFromVersion={fromVersion}
+              resolvedToVersion={toVersion}
             />
           </Container>
           {/*
@@ -322,6 +369,7 @@ const Home = () => {
             }
             packageName={packageName}
             language={language}
+            onDiffResolved={setResolvedDiff}
           />
         </Page>
       </ThemeProvider>
